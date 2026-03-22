@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/get-started">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — IntelliTC Solutions</title>
+<meta name="description" content="Find your personalized calculator path. Tell us your role, experience, and goals — we'll recommend the right tools and learning path for you.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Get Started — IntelliTC Solutions">
+<meta property="og:description" content="Find your personalized calculator path. Tell us your role, experience, and goals — we'll recommend the right tools and learning path for you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/get-started">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Get Started — IntelliTC Solutions">
+<meta name="twitter:description" content="Find your personalized calculator path. Tell us your role, experience, and goals — we'll recommend the right tools and learning path for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+/* ── Onboarding Wizard ── */
+.wizard-container { max-width:720px; margin:0 auto; padding:var(--space-8) var(--space-6) var(--space-16); }
+
+/* Step indicator */
+.step-bar { display:flex; align-items:center; justify-content:center; gap:var(--space-2); margin-bottom:var(--space-8); }
+.step-dot { display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; font-size:var(--text-xs); font-weight:600; transition:all .3s; flex-shrink:0; }
+.step-dot.completed { background:var(--color-primary); color:#fff; }
+.step-dot.active { background:var(--color-primary); color:#fff; box-shadow:0 0 0 4px var(--color-primary-surface); }
+.step-dot.upcoming { background:var(--color-surface-offset); color:var(--color-text-muted); }
+.step-line { width:40px; height:2px; border-radius:1px; transition:background .3s; }
+.step-line.done { background:var(--color-primary); }
+.step-line.pending { background:var(--color-divider); }
+.step-label { font-size:11px; font-weight:500; margin-top:2px; display:none; }
+@media(min-width:640px){ .step-label{display:block;} }
+.step-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+
+/* Step content area */
+.step-panel { display:none; animation:fadeSlide .3s ease; }
+.step-panel.active { display:block; }
+@keyframes fadeSlide { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+.step-title { font-size:clamp(1.25rem,3vw,1.75rem); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); }
+.step-desc { font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-6); }
+
+/* Selection cards */
+.option-grid { display:grid; gap:var(--space-3); }
+.option-grid.cols-2 { grid-template-columns:repeat(2,1fr); }
+@media(max-width:640px){ .option-grid.cols-2{grid-template-columns:1fr;} }
+
+.option-card { background:var(--color-surface); border:2px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-5); cursor:pointer; transition:all .2s; text-align:left; display:flex; gap:var(--space-3); align-items:flex-start; }
+.option-card:hover { border-color:var(--color-primary); box-shadow:var(--shadow-sm); }
+.option-card.selected { border-color:var(--color-primary); background:var(--color-primary-surface); }
+.option-card .icon-wrap { width:36px; height:36px; border-radius:var(--radius-md); background:var(--color-primary-surface); color:var(--color-primary); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px; }
+.option-card.selected .icon-wrap { background:var(--color-primary); color:#fff; }
+.option-card h3 { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0 0 2px; }
+.option-card p { font-size:var(--text-xs); color:var(--color-text-muted); margin:0; line-height:1.5; }
+
+/* Goal cards (step 3) */
+.goal-card { background:var(--color-surface); border:2px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-4); cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:var(--space-3); }
+.goal-card:hover { border-color:var(--color-primary); }
+.goal-card.selected { border-color:var(--color-primary); background:var(--color-primary-surface); }
+.goal-card.disabled { opacity:0.4; cursor:not-allowed; }
+.goal-check { width:20px; height:20px; border:2px solid var(--color-border); border-radius:var(--radius-sm); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.goal-card.selected .goal-check { background:var(--color-primary); border-color:var(--color-primary); color:#fff; }
+.goal-label { font-size:var(--text-sm); font-weight:500; color:var(--color-text); }
+
+/* Navigation */
+.wizard-nav { display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-8); }
+.wizard-nav .btn { min-width:120px; }
+
+/* Results panel (step 4) */
+.path-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-xl); padding:var(--space-6); margin-bottom:var(--space-6); }
+.path-header { display:flex; align-items:center; gap:var(--space-3); margin-bottom:var(--space-3); }
+.path-icon { width:40px; height:40px; border-radius:var(--radius-md); background:var(--color-primary-surface); color:var(--color-primary); display:flex; align-items:center; justify-content:center; font-size:20px; }
+.path-badge { display:inline-block; font-size:var(--text-xs); font-weight:500; padding:2px 8px; border-radius:var(--radius-full); background:var(--color-primary-surface); color:var(--color-primary); }
+.path-title { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:var(--space-1) 0; }
+.path-desc { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.6; margin-bottom:var(--space-3); }
+.path-meta { display:flex; gap:var(--space-4); font-size:var(--text-xs); color:var(--color-text-muted); }
+.path-meta span { display:flex; align-items:center; gap:4px; }
+
+.rec-label { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin-bottom:var(--space-3); }
+.rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--space-3); margin-bottom:var(--space-6); }
+.rec-card { background:var(--color-surface); border:1px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-4); text-decoration:none; color:inherit; transition:all .2s; display:flex; flex-direction:column; gap:var(--space-1); }
+.rec-card:hover { border-color:var(--color-primary); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
+.rec-card h4 { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0; }
+.rec-card p { font-size:var(--text-xs); color:var(--color-text-muted); margin:0; line-height:1.5; flex:1; }
+.rec-card .card-cta { font-size:var(--text-xs); font-weight:600; color:var(--color-primary); margin-top:var(--space-2); }
+
+.results-actions { display:flex; gap:var(--space-3); flex-wrap:wrap; }
+@media(max-width:640px){ .results-actions{flex-direction:column;} .results-actions .btn{width:100%;} }
+
+/* Nav header addition */
+.header-nav { display:flex; align-items:center; gap:var(--space-4); }
+.header-nav a { font-size:var(--text-sm); font-weight:500; color:var(--color-text-muted); text-decoration:none; transition:color .2s; }
+.header-nav a:hover, .header-nav a.active { color:var(--color-primary); }
+</style>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav class="header-nav">
+      <a href="../get-started/index.html" class="active">Get Started</a>
+      <a href="../workflows/index.html">Workflows</a>
+      <a href="../learning-paths/index.html">Learn</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+        <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch theme" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="wizard-container">
+  <!-- Step Indicator -->
+  <div class="step-bar" id="stepBar">
+    <div class="step-item"><div class="step-dot active" data-step="0">1</div><span class="step-label">Role</span></div>
+    <div class="step-line pending"></div>
+    <div class="step-item"><div class="step-dot upcoming" data-step="1">2</div><span class="step-label">Experience</span></div>
+    <div class="step-line pending"></div>
+    <div class="step-item"><div class="step-dot upcoming" data-step="2">3</div><span class="step-label">Goals</span></div>
+    <div class="step-line pending"></div>
+    <div class="step-item"><div class="step-dot upcoming" data-step="3">4</div><span class="step-label">Your Path</span></div>
+  </div>
+
+  <!-- STEP 0: Role Selection -->
+  <div class="step-panel active" id="step0">
+    <h1 class="step-title">What's your role?</h1>
+    <p class="step-desc">Select the option that best describes you. We'll personalize your calculator recommendations.</p>
+    <div class="option-grid cols-2">
+      <button class="option-card" data-role="investor" onclick="selectRole(this)">
+        <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div><h3>Investor</h3><p>Analyze deals, compare strategies, and build wealth through real estate</p></div>
+      </button>
+      <button class="option-card" data-role="agent" onclick="selectRole(this)">
+        <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <div><h3>Agent</h3><p>Win more listings, provide data-backed CMAs, and close deals faster</p></div>
+      </button>
+      <button class="option-card" data-role="homeowner" onclick="selectRole(this)">
+        <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div><h3>Homeowner / Buyer</h3><p>Understand your buying power, mortgage options, and home equity</p></div>
+      </button>
+      <button class="option-card" data-role="lender" onclick="selectRole(this)">
+        <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div><h3>Lender</h3><p>Qualify borrowers, assess risk, and structure creative financing</p></div>
+      </button>
+    </div>
+    <div class="wizard-nav">
+      <span></span>
+      <button class="btn btn-primary" id="nextBtn0" disabled onclick="goToStep(1)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 1: Experience Level -->
+  <div class="step-panel" id="step1">
+    <h1 class="step-title">What's your experience level?</h1>
+    <p class="step-desc">This helps us recommend the right starting point and complexity level.</p>
+    <div class="option-grid">
+      <button class="option-card" data-level="beginner" onclick="selectLevel(this)">
+        <div class="icon-wrap">🌱</div>
+        <div><h3>Beginner</h3><p>I'm just getting started in real estate</p></div>
+      </button>
+      <button class="option-card" data-level="intermediate" onclick="selectLevel(this)">
+        <div class="icon-wrap">📊</div>
+        <div><h3>Intermediate</h3><p>I understand the basics and want to go deeper</p></div>
+      </button>
+      <button class="option-card" data-level="advanced" onclick="selectLevel(this)">
+        <div class="icon-wrap">🏗️</div>
+        <div><h3>Advanced</h3><p>I'm experienced and need sophisticated analysis tools</p></div>
+      </button>
+    </div>
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" onclick="goToStep(0)">← Back</button>
+      <button class="btn btn-primary" id="nextBtn1" disabled onclick="goToStep(2)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Goals -->
+  <div class="step-panel" id="step2">
+    <h1 class="step-title">What are you looking to do?</h1>
+    <p class="step-desc">Select up to 3 goals. We'll recommend the best calculators and learning path for you.</p>
+    <div class="option-grid" id="goalsGrid"></div>
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" onclick="goToStep(1)">← Back</button>
+      <button class="btn btn-primary" id="nextBtn2" disabled onclick="goToStep(3)">See My Results ✦</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Results -->
+  <div class="step-panel" id="step3">
+    <h1 class="step-title">Your Personalized Path</h1>
+    <p class="step-desc">Based on your selections, here are your recommended tools and learning path.</p>
+    <div id="resultsContent"></div>
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" onclick="goToStep(2)">← Back</button>
+      <div class="results-actions">
+        <a href="../workflows/index.html" class="btn btn-ghost">Explore Workflows →</a>
+        <button class="btn btn-primary" id="startLearningBtn" onclick="startLearning()">Start Learning →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+<script>
+// ── State ──
+let currentStep = 0;
+let selectedRole = '';
+let selectedLevel = '';
+let selectedGoals = [];
+
+// ── Goal-to-Calculator Mapping ──
+const goalsByRole = {
+  investor: [
+    'Find my first rental property',
+    'Analyze a BRRRR deal',
+    'Compare fix & flip opportunities',
+    'Build a rental portfolio',
+    'Explore creative financing (Subject-To, Seller Finance)',
+    'Evaluate short-term rental / Airbnb income'
+  ],
+  agent: [
+    'Prepare comparative market analysis',
+    'Help clients understand investment returns',
+    'Analyze rental properties for investor clients',
+    'Calculate commissions and deal economics'
+  ],
+  homeowner: [
+    'Decide whether to rent or buy',
+    'Determine how much home I can afford',
+    'Compare mortgage options',
+    'Understand my home equity',
+    'Evaluate refinancing options',
+    'Estimate closing costs'
+  ],
+  lender: [
+    'Qualify borrowers quickly',
+    'Assess investment property risk',
+    'Structure subject-to deals',
+    'Evaluate seller financing terms',
+    'Analyze debt service coverage'
+  ]
+};
+
+// Maps goal text → calculator folder names (matching actual site directories)
+const goalCalcMap = {
+  'Find my first rental property': [
+    {name:'Comp Analysis / CMA',slug:'cma'},
+    {name:'Rental Analysis',slug:'rental-analysis'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'Affordability Calculator',slug:'affordability'},
+    {name:'DTI & Payment Stress Test',slug:'dti-stress-test'}
+  ],
+  'Analyze a BRRRR deal': [
+    {name:'Comp Analysis / CMA',slug:'cma'},
+    {name:'BRRRR Calculator',slug:'brrrr'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Refinance Analyzer',slug:'refinance'},
+    {name:'Deal Grading',slug:'deal-grading'},
+    {name:'Cash-on-Cash Breakdown',slug:'cash-on-cash-breakdown'},
+    {name:'Sensitivity Grid',slug:'sensitivity-grid'}
+  ],
+  'Compare fix & flip opportunities': [
+    {name:'Fix & Flip',slug:'fixflip'},
+    {name:'Deal Grading',slug:'deal-grading'},
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'Cash-on-Cash Breakdown',slug:'cash-on-cash-breakdown'},
+    {name:'Distressed Asset',slug:'distressed-asset'},
+    {name:'Private Money Lending',slug:'private-money'}
+  ],
+  'Build a rental portfolio': [
+    {name:'Portfolio Manager',slug:'portfolio-manager'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'1031 Exchange',slug:'1031-exchange'},
+    {name:'Rental Analysis',slug:'rental-analysis'},
+    {name:'RE Investment Analyzer',slug:'real-estate-investment-analyzer'}
+  ],
+  'Explore creative financing (Subject-To, Seller Finance)': [
+    {name:'Subject-To Calculator',slug:'subject-to'},
+    {name:'Seller Financing',slug:'seller-financing'},
+    {name:'Wrap Mortgage Calculator',slug:'wrap-calculator'},
+    {name:'Lease Option',slug:'lease-option'},
+    {name:'Private Money Lending',slug:'private-money'},
+    {name:'Cash Flow Calculator',slug:'cashflow'}
+  ],
+  'Evaluate short-term rental / Airbnb income': [
+    {name:'Short-Term Rental',slug:'short-term-rental'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'Sensitivity Grid',slug:'sensitivity-grid'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'Cash-on-Cash Breakdown',slug:'cash-on-cash-breakdown'}
+  ],
+  'Prepare comparative market analysis': [
+    {name:'Comp Analysis / CMA',slug:'cma'},
+    {name:'Seller Net Sheet',slug:'seller-net-sheet'},
+    {name:'Commission Calculator',slug:'commission'},
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'Cap Rate Comparison',slug:'caprate'}
+  ],
+  'Help clients understand investment returns': [
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Cash-on-Cash Breakdown',slug:'cash-on-cash-breakdown'},
+    {name:'Rental Analysis',slug:'rental-analysis'},
+    {name:'RE Investment Analyzer',slug:'real-estate-investment-analyzer'}
+  ],
+  'Analyze rental properties for investor clients': [
+    {name:'Rental Analysis',slug:'rental-analysis'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'Investment Analysis',slug:'investment-analysis'},
+    {name:'BRRRR Calculator',slug:'brrrr'},
+    {name:'Short-Term Rental',slug:'short-term-rental'}
+  ],
+  'Calculate commissions and deal economics': [
+    {name:'Commission Calculator',slug:'commission'},
+    {name:'Seller Net Sheet',slug:'seller-net-sheet'},
+    {name:'Cash-to-Close',slug:'cash-to-close'},
+    {name:'Affordability Calculator',slug:'affordability'}
+  ],
+  'Decide whether to rent or buy': [
+    {name:'Rent vs. Buy Calculator',slug:'rent-vs-buy'},
+    {name:'Affordability Calculator',slug:'affordability'},
+    {name:'True Cost of Ownership',slug:'true-cost-ownership'},
+    {name:'Cash-to-Close',slug:'cash-to-close'},
+    {name:'DTI & Payment Stress Test',slug:'dti-stress-test'}
+  ],
+  'Determine how much home I can afford': [
+    {name:'Affordability Calculator',slug:'affordability'},
+    {name:'Rent vs. Buy Calculator',slug:'rent-vs-buy'},
+    {name:'DTI & Payment Stress Test',slug:'dti-stress-test'},
+    {name:'Cash-to-Close',slug:'cash-to-close'},
+    {name:'Loan Qualification',slug:'qualification-analysis'},
+    {name:'True Cost of Ownership',slug:'true-cost-ownership'},
+    {name:'Government Loans',slug:'government-loans'}
+  ],
+  'Compare mortgage options': [
+    {name:'Rate Buydown',slug:'rate-buydown'},
+    {name:'Government Loans',slug:'government-loans'},
+    {name:'Loan Qualification',slug:'qualification-analysis'},
+    {name:'Refinance Analyzer',slug:'refinance'},
+    {name:'DSCR Loan Calculator',slug:'dscr-loan'},
+    {name:'DTI & Payment Stress Test',slug:'dti-stress-test'}
+  ],
+  'Understand my home equity': [
+    {name:'Home Equity Calculator',slug:'home-equity'},
+    {name:'HELOC Optimizer',slug:'heloc-optimizer'},
+    {name:'Refinance Analyzer',slug:'refinance'},
+    {name:'Buy Before You Sell',slug:'buy-before-you-sell'}
+  ],
+  'Evaluate refinancing options': [
+    {name:'Refinance Analyzer',slug:'refinance'},
+    {name:'Rate Buydown',slug:'rate-buydown'},
+    {name:'Home Equity Calculator',slug:'home-equity'},
+    {name:'HELOC Optimizer',slug:'heloc-optimizer'}
+  ],
+  'Estimate closing costs': [
+    {name:'Cash-to-Close',slug:'cash-to-close'},
+    {name:'Seller Net Sheet',slug:'seller-net-sheet'},
+    {name:'True Cost of Ownership',slug:'true-cost-ownership'},
+    {name:'Affordability Calculator',slug:'affordability'}
+  ],
+  'Qualify borrowers quickly': [
+    {name:'Loan Qualification',slug:'qualification-analysis'},
+    {name:'DTI & Payment Stress Test',slug:'dti-stress-test'},
+    {name:'DSCR Loan Calculator',slug:'dscr-loan'},
+    {name:'Government Loans',slug:'government-loans'},
+    {name:'Affordability Calculator',slug:'affordability'}
+  ],
+  'Assess investment property risk': [
+    {name:'DSCR Loan Calculator',slug:'dscr-loan'},
+    {name:'Sensitivity Grid',slug:'sensitivity-grid'},
+    {name:'Cap Rate Comparison',slug:'caprate'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Deal Grading',slug:'deal-grading'}
+  ],
+  'Structure subject-to deals': [
+    {name:'Subject-To Calculator',slug:'subject-to'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Wrap Mortgage Calculator',slug:'wrap-calculator'},
+    {name:'Seller Financing',slug:'seller-financing'}
+  ],
+  'Evaluate seller financing terms': [
+    {name:'Seller Financing',slug:'seller-financing'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Private Money Lending',slug:'private-money'},
+    {name:'Wrap Mortgage Calculator',slug:'wrap-calculator'}
+  ],
+  'Analyze debt service coverage': [
+    {name:'DSCR Loan Calculator',slug:'dscr-loan'},
+    {name:'Cash Flow Calculator',slug:'cashflow'},
+    {name:'Sensitivity Grid',slug:'sensitivity-grid'},
+    {name:'Cap Rate Comparison',slug:'caprate'}
+  ]
+};
+
+// Learning paths mapped to roles + levels
+const learningPaths = {
+  homeowner: {id:'can-i-buy',title:'Can I Buy a Home?',level:'Beginner',duration:'2 hrs',lessons:3,desc:'Understand your buying power, explore mortgage options, and learn what it takes to purchase your first home.'},
+  investor_beginner: {id:'first-rental',title:'My First Rental Property',level:'Beginner',duration:'3 hrs',lessons:5,desc:'Learn how to analyze, finance, and manage your first rental property investment from start to finish.'},
+  investor_intermediate: {id:'brrrr-deep-dive',title:'BRRRR Strategy Deep Dive',level:'Intermediate',duration:'3 hrs',lessons:4,desc:'Master the Buy, Rehab, Rent, Refinance, Repeat strategy with hands-on calculator workflows.'},
+  investor_advanced: {id:'creative-finance',title:'Creative Finance Toolkit',level:'Intermediate',duration:'4 hrs',lessons:6,desc:'Explore subject-to, seller financing, lease options, and other creative deal structures.'},
+  agent: {id:'agent-deals',title:'Agent Deal Analyzer',level:'Intermediate',duration:'2 hrs',lessons:3,desc:'Build data-backed CMAs, analyze investment properties, and provide clients with comprehensive market insights.'},
+  lender: {id:'lender-qualification',title:'Lender Qualification Suite',level:'Intermediate',duration:'3 hrs',lessons:4,desc:'Quickly qualify borrowers, assess risk, and structure financing using industry-standard metrics.'}
+};
+
+// ── Navigation ──
+function goToStep(n) {
+  // Validate before moving forward
+  if (n > 0 && !selectedRole) return;
+  if (n > 1 && !selectedLevel) return;
+  if (n > 2 && selectedGoals.length === 0) return;
+
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step' + currentStep).classList.add('active');
+  updateStepBar();
+  if (n === 2) renderGoals();
+  if (n === 3) renderResults();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateStepBar() {
+  const dots = document.querySelectorAll('.step-dot');
+  const lines = document.querySelectorAll('.step-line');
+  dots.forEach((dot, i) => {
+    dot.className = 'step-dot ' + (i < currentStep ? 'completed' : i === currentStep ? 'active' : 'upcoming');
+    if (i < currentStep) dot.innerHTML = '✓';
+    else dot.textContent = i + 1;
+  });
+  lines.forEach((line, i) => {
+    line.className = 'step-line ' + (i < currentStep ? 'done' : 'pending');
+  });
+}
+
+// ── Role Selection ──
+function selectRole(el) {
+  selectedRole = el.dataset.role;
+  selectedGoals = [];
+  document.querySelectorAll('#step0 .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('nextBtn0').disabled = false;
+}
+
+// ── Level Selection ──
+function selectLevel(el) {
+  selectedLevel = el.dataset.level;
+  document.querySelectorAll('#step1 .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('nextBtn1').disabled = false;
+}
+
+// ── Goals ──
+function renderGoals() {
+  const grid = document.getElementById('goalsGrid');
+  const goals = goalsByRole[selectedRole] || [];
+  grid.innerHTML = goals.map(g => `
+    <button class="goal-card${selectedGoals.includes(g) ? ' selected' : ''}" data-goal="${g}" onclick="toggleGoal(this)">
+      <div class="goal-check">${selectedGoals.includes(g) ? '✓' : ''}</div>
+      <span class="goal-label">${g}</span>
+    </button>
+  `).join('');
+  updateGoalStates();
+}
+
+function toggleGoal(el) {
+  const goal = el.dataset.goal;
+  if (el.classList.contains('disabled')) return;
+  if (selectedGoals.includes(goal)) {
+    selectedGoals = selectedGoals.filter(g => g !== goal);
+  } else if (selectedGoals.length < 3) {
+    selectedGoals.push(goal);
+  }
+  renderGoals();
+}
+
+function updateGoalStates() {
+  const cards = document.querySelectorAll('.goal-card');
+  cards.forEach(c => {
+    const goal = c.dataset.goal;
+    c.classList.toggle('selected', selectedGoals.includes(goal));
+    c.classList.toggle('disabled', !selectedGoals.includes(goal) && selectedGoals.length >= 3);
+    c.querySelector('.goal-check').innerHTML = selectedGoals.includes(goal) ? '✓' : '';
+  });
+  document.getElementById('nextBtn2').disabled = selectedGoals.length === 0;
+}
+
+// ── Results ──
+function getRecommendedPath() {
+  const key = selectedRole + '_' + selectedLevel;
+  return learningPaths[key] || learningPaths[selectedRole] || learningPaths.investor_beginner;
+}
+
+function getRecommendedCalcs() {
+  const seen = new Set();
+  const result = [];
+  // Priority: calculators from selected goals
+  selectedGoals.forEach(g => {
+    const calcs = goalCalcMap[g] || [];
+    calcs.forEach(c => {
+      if (!seen.has(c.slug)) { seen.add(c.slug); result.push(c); }
+    });
+  });
+  return result.slice(0, 8);
+}
+
+function renderResults() {
+  const path = getRecommendedPath();
+  const calcs = getRecommendedCalcs();
+  const container = document.getElementById('resultsContent');
+
+  let html = `
+    <div class="path-card">
+      <div class="path-header">
+        <div class="path-icon">🎓</div>
+        <div>
+          <span class="path-badge">${path.level}</span>
+          <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);margin-top:2px;">Recommended Learning Path</div>
+        </div>
+      </div>
+      <div class="path-title">${path.title}</div>
+      <div class="path-desc">${path.desc}</div>
+      <div class="path-meta">
+        <span>⏱ ${path.duration}</span>
+        <span>📚 ${path.lessons} lessons</span>
+      </div>
+    </div>
+    <div class="rec-label">Recommended Calculators</div>
+    <div class="rec-grid">`;
+
+  calcs.forEach(c => {
+    html += `
+      <a href="../${c.slug}/index.html" class="rec-card">
+        <h4>${c.name}</h4>
+        <span class="card-cta">Open Calculator →</span>
+      </a>`;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function startLearning() {
+  const path = getRecommendedPath();
+  window.location.href = '../learning-paths/' + path.id + '.html';
+}
+
+// ── Theme Toggle ──
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  function u(){if(!t)return;t.innerHTML=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
+  u();if(t)t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);u();});
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
