@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/private-money">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Money Lending Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Structure private/hard money loan terms and analyze yields from both lender and borrower perspectives.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Private Money Lending Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Structure private/hard money loan terms and analyze yields from both lender and borrower perspectives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/private-money">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Private Money Lending Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Structure private/hard money loan terms and analyze yields from both lender and borrower perspectives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Private Money Calculator",
+  "description": "Structure private money lending deals with points, terms, and return analysis.",
+  "url": "https://intellitcsolutions.com/private-money/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Private Money Lending Calculator</h1>
+      <p class="panel-subtitle">Structure private/hard money loan terms and analyze yields from both lender and borrower perspectives.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Loan Structure</h3>
+<div class="field">
+            <label for="loanAmt" title="Total loan principal">Loan Amount</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="loanAmt" value="200,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="propValue" title="Collateral property value for LTV calculation">Property Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="propValue" value="280,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="intRate" title="Annual interest rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="intRate" value="12" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="loanTerm" title="Loan duration in months">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="loanTerm" value="12" inputmode="decimal"><span class='unit'>mo</span></div>
+          </div>
+<div class="field">
+            <label for="points" title="Upfront origination points (1 pt = 1% of loan)">Points</label>
+            <div class="input-with-unit"><input type="text" id="points" value="2" inputmode="decimal"><span class='unit'>pts</span></div>
+          </div>
+<div class="field">
+            <label for="origFee" title="Flat origination/processing fee">Origination Fee</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="origFee" value="1,500" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Payment Type</h3>
+<div class="field">
+            <label for="pmtType">Payment Type</label>
+            <select id="pmtType"><option value="io">Interest-Only</option><option value="amort">Fully Amortized</option></select>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Borrower Exit</h3>
+<div class="field">
+            <label for="exitMonth" title="When borrower plans to repay/refinance">Expected Exit Month</label>
+            <div class="input-with-unit"><input type="text" id="exitMonth" value="10" inputmode="decimal"><span class='unit'>mo</span></div>
+          </div>
+<div class="field">
+            <label for="exitCosts" title="Costs to refinance or sell">Exit/Refi Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="exitCosts" value="3,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Lender Annual Yield</span>
+          <span class="kpi-value" id="kpiLenderYield">—</span>
+          <span class="kpi-delta" id="kpiLenderYieldDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Borrower Effective APR</span>
+          <span class="kpi-value" id="kpiBorrowerAPR">—</span>
+          <span class="kpi-delta" id="kpiBorrowerAPRDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Payment</span>
+          <span class="kpi-value" id="kpiMonthlyPmt">—</span>
+          <span class="kpi-delta" id="kpiMonthlyPmtDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">LTV Ratio</span>
+          <span class="kpi-value" id="kpiLTV">—</span>
+          <span class="kpi-delta" id="kpiLTVDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Lender Income Timeline</h3>
+          <p class="chart-subtitle">Monthly income over loan life</p>
+          <div class="chart-container">
+            <canvas id="chartIncome"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Borrower Cost Breakdown</h3>
+          <p class="chart-subtitle">Total cost of capital components</p>
+          <div class="chart-container">
+            <canvas id="chartCost"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6);max-height:350px;overflow-y:auto"><table class="results-table"><thead><tr><th>Month</th><th class="text-right">Payment</th><th class="text-right">Interest</th><th class="text-right">Principal</th><th class="text-right">Balance</th></tr></thead><tbody id="schedBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Understand Private Money?",
+    "purpose": "Private money lenders are individuals (not banks) who lend their own capital for real estate deals. This calculator models the terms and shows the true cost of borrowing — critical for comparing against hard money, bank loans, or seller financing.",
+    "whenToUse": [
+      "When evaluating a private lender's terms vs. traditional financing",
+      "To calculate the total cost of borrowing for a short-term project (flip or BRRRR)",
+      "When pitching a deal to a private lender — show them their return on investment"
+    ],
+    "keyInsight": "Private money is faster and more flexible than bank loans, but more expensive (8-15%+ with points). The key question: does the deal generate enough profit to cover the higher financing cost AND leave a healthy margin?"
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "Private money is the most common funding source for flips"
+    },
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Use private money for the buy + rehab phase, then refinance out"
+    },
+    {
+      "name": "Seller Financing",
+      "folder": "seller-financing",
+      "reason": "Compare private money cost vs. seller financing terms"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

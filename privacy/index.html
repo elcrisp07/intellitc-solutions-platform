@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/privacy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — IntelliTC Solutions</title>
+<meta name="description" content="Privacy Policy for IntelliTC Solutions. Learn how we collect, use, protect, and share your personal information when you use our real estate calculator platform.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Privacy Policy — IntelliTC Solutions">
+<meta property="og:description" content="Privacy Policy for IntelliTC Solutions. Learn how we collect, use, protect, and share your personal information when you use our real estate calculator platform.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/privacy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy Policy — IntelliTC Solutions">
+<meta name="twitter:description" content="Privacy Policy for IntelliTC Solutions. Learn how we collect, use, protect, and share your personal information when you use our real estate calculator platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+/* ── Legal page layout ── */
+.legal-hero {
+  text-align: center;
+  padding: var(--space-16) var(--space-6) var(--space-8);
+  max-width: var(--content-wide);
+  margin: 0 auto;
+}
+.legal-hero .legal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+.legal-hero h1 {
+  font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.02em;
+}
+.legal-hero .subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.legal-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-12);
+}
+.legal-content section {
+  margin-bottom: var(--space-8);
+}
+.legal-content h2 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+}
+.legal-content h3 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--space-4) 0 var(--space-2);
+}
+.legal-content p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-3);
+  max-width: none;
+}
+.legal-content ul, .legal-content ol {
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+.legal-content li {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-1);
+  max-width: none;
+}
+.legal-content strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+.legal-content a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.legal-content a:hover {
+  text-decoration: underline;
+}
+.legal-toc {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+.legal-toc h3 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--space-3);
+  border: none;
+  padding: 0;
+}
+.legal-toc ol {
+  padding-left: var(--space-5);
+  margin: 0;
+  columns: 2;
+  column-gap: var(--space-6);
+}
+.legal-toc li {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+  break-inside: avoid;
+}
+.legal-toc a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.legal-toc a:hover {
+  text-decoration: underline;
+}
+.effective-date {
+  display: inline-block;
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+}
+
+/* Data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+}
+.data-table th, .data-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.data-table th {
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Nav hover */
+.header-inner nav a:hover { color: var(--color-primary) !important; }
+
+@media(max-width:640px) {
+  .legal-toc ol { columns: 1; }
+  .data-table { font-size: var(--text-xs); }
+  .data-table th, .data-table td { padding: var(--space-2) var(--space-3); }
+}
+</style>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Get Started</a>
+      <a href="../workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="../learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="legal-hero">
+  <span class="legal-badge">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Privacy
+  </span>
+  <h1>Privacy Policy</h1>
+  <p class="subtitle">How we collect, use, protect, and share your information when you use the IntelliTC Solutions platform.</p>
+  <span class="effective-date">Effective Date: March 18, 2026</span>
+</div>
+
+<div class="legal-content">
+
+  <div class="legal-toc">
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#info-collect">Information We Collect</a></li>
+      <li><a href="#how-use">How We Use Your Information</a></li>
+      <li><a href="#legal-basis">Legal Basis for Processing</a></li>
+      <li><a href="#sharing">Information Sharing</a></li>
+      <li><a href="#cookies">Cookies &amp; Tracking</a></li>
+      <li><a href="#data-retention">Data Retention</a></li>
+      <li><a href="#security">Data Security</a></li>
+      <li><a href="#your-rights">Your Rights</a></li>
+      <li><a href="#children">Children's Privacy</a></li>
+      <li><a href="#third-party">Third-Party Links</a></li>
+      <li><a href="#changes">Changes to This Policy</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <section id="overview">
+    <h2>1. Overview</h2>
+    <p>IntelliTC Solutions ("Company," "we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, calculators, learning paths, scenario labs, certification program, and related services (collectively, the "Platform").</p>
+    <p>Please read this Privacy Policy carefully. By using the Platform, you consent to the data practices described in this policy. If you do not agree, please discontinue use of the Platform.</p>
+  </section>
+
+  <section id="info-collect">
+    <h2>2. Information We Collect</h2>
+
+    <h3>2.1 Information You Provide Directly</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>When Collected</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Full name, email address</td>
+          <td>Account registration, certification</td>
+          <td>Account management, credential issuance</td>
+        </tr>
+        <tr>
+          <td>Calculator inputs (property values, loan amounts, income figures)</td>
+          <td>When you use any calculator</td>
+          <td>Generating calculation results</td>
+        </tr>
+        <tr>
+          <td>Assessment responses</td>
+          <td>Certification exams</td>
+          <td>Scoring, credential issuance</td>
+        </tr>
+        <tr>
+          <td>Contact information</td>
+          <td>When you reach out to us</td>
+          <td>Responding to inquiries</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2.2 Information Collected Automatically</h3>
+    <p>When you access the Platform, we may automatically collect certain information, including:</p>
+    <ul>
+      <li><strong>Device information:</strong> browser type, operating system, screen resolution, and device identifiers</li>
+      <li><strong>Usage data:</strong> pages visited, calculators used, time spent on each tool, learning path progress, and interaction patterns</li>
+      <li><strong>Log data:</strong> IP address, access times, referring URLs, and error logs</li>
+      <li><strong>Location data:</strong> approximate geographic location derived from your IP address</li>
+    </ul>
+
+    <h3>2.3 Information from Third Parties</h3>
+    <p>We may receive information about you from third-party services if you choose to link or connect them to your account, such as authentication providers or analytics platforms.</p>
+  </section>
+
+  <section id="how-use">
+    <h2>3. How We Use Your Information</h2>
+    <p>We use the information we collect for the following purposes:</p>
+    <ul>
+      <li><strong>Provide and maintain the Platform:</strong> Process calculator inputs, deliver results, track learning progress, and issue certifications</li>
+      <li><strong>Improve our services:</strong> Analyze usage patterns to enhance calculator accuracy, optimize learning paths, and develop new features</li>
+      <li><strong>Communications:</strong> Send service-related notices, updates, and respond to your inquiries</li>
+      <li><strong>Security:</strong> Detect, prevent, and address fraud, abuse, and technical issues</li>
+      <li><strong>Compliance:</strong> Fulfill legal obligations and enforce our Terms of Service</li>
+      <li><strong>Analytics:</strong> Understand how users interact with the Platform to improve user experience</li>
+    </ul>
+  </section>
+
+  <section id="legal-basis">
+    <h2>4. Legal Basis for Processing</h2>
+    <p>We process your personal information based on the following legal grounds:</p>
+    <ul>
+      <li><strong>Consent:</strong> When you voluntarily provide information or agree to cookies and tracking</li>
+      <li><strong>Contractual necessity:</strong> To fulfill our obligations under the Terms of Service (e.g., providing calculator results, issuing certifications)</li>
+      <li><strong>Legitimate interests:</strong> To improve and secure the Platform, conduct analytics, and develop new features</li>
+      <li><strong>Legal obligation:</strong> To comply with applicable laws and regulations</li>
+    </ul>
+  </section>
+
+  <section id="sharing">
+    <h2>5. Information Sharing</h2>
+    <p>We do not sell your personal information. We may share your information in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Service providers:</strong> Third-party vendors who assist with hosting, analytics, email delivery, and other operational services, bound by contractual confidentiality obligations</li>
+      <li><strong>Legal requirements:</strong> When required by law, regulation, legal process, or governmental request</li>
+      <li><strong>Protection of rights:</strong> When necessary to protect the safety, rights, or property of IntelliTC Solutions, our users, or the public</li>
+      <li><strong>Business transfers:</strong> In connection with a merger, acquisition, reorganization, or sale of assets, where your information may be transferred as a business asset</li>
+      <li><strong>With your consent:</strong> When you explicitly authorize us to share your information</li>
+    </ul>
+  </section>
+
+  <section id="cookies">
+    <h2>6. Cookies and Tracking Technologies</h2>
+    <h3>6.1 What We Use</h3>
+    <p>The Platform uses the following technologies to enhance your experience:</p>
+    <ul>
+      <li><strong>Local storage:</strong> To save your theme preference (light/dark mode), calculator inputs, and learning progress within your browser</li>
+      <li><strong>Session cookies:</strong> To maintain your session state while using the Platform</li>
+      <li><strong>Analytics cookies:</strong> To understand usage patterns and improve the Platform (if analytics services are enabled)</li>
+    </ul>
+
+    <h3>6.2 Your Choices</h3>
+    <p>Most web browsers allow you to control cookies through their settings. You can set your browser to refuse cookies or alert you when cookies are being sent. Note that disabling cookies may affect certain features of the Platform, such as theme preferences and saved calculation data.</p>
+  </section>
+
+  <section id="data-retention">
+    <h2>7. Data Retention</h2>
+    <p>We retain your personal information for as long as necessary to fulfill the purposes described in this Privacy Policy, unless a longer retention period is required or permitted by law. Specifically:</p>
+    <ul>
+      <li><strong>Account data:</strong> Retained while your account is active and for a reasonable period afterward</li>
+      <li><strong>Calculator data:</strong> Processed in real-time within your browser; we do not store individual calculation inputs on our servers unless you explicitly save them to your account</li>
+      <li><strong>Certification records:</strong> Retained indefinitely to maintain the integrity of the ICREA credential program</li>
+      <li><strong>Usage analytics:</strong> Retained in aggregated, anonymized form</li>
+    </ul>
+  </section>
+
+  <section id="security">
+    <h2>8. Data Security</h2>
+    <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:</p>
+    <ul>
+      <li>HTTPS encryption for all data transmitted between your browser and our servers</li>
+      <li>Secure hosting infrastructure with access controls</li>
+      <li>Regular security assessments and updates</li>
+      <li>Limited employee access to personal data on a need-to-know basis</li>
+    </ul>
+    <p>However, no method of electronic storage or transmission is 100% secure. While we strive to protect your information, we cannot guarantee its absolute security.</p>
+  </section>
+
+  <section id="your-rights">
+    <h2>9. Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+    <ul>
+      <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+      <li><strong>Correction:</strong> Request correction of inaccurate or incomplete personal information</li>
+      <li><strong>Deletion:</strong> Request deletion of your personal information, subject to certain legal exceptions</li>
+      <li><strong>Data portability:</strong> Request a copy of your data in a structured, commonly used format</li>
+      <li><strong>Opt-out:</strong> Opt out of marketing communications at any time</li>
+      <li><strong>Withdraw consent:</strong> Withdraw your consent for data processing where consent is the legal basis</li>
+    </ul>
+
+    <h3>9.1 California Residents (CCPA)</h3>
+    <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information is collected, the right to delete, and the right to opt out of the sale of personal information. We do not sell personal information.</p>
+
+    <h3>9.2 European Residents (GDPR)</h3>
+    <p>If you are located in the European Economic Area (EEA), you have rights under the General Data Protection Regulation (GDPR), including the rights listed above plus the right to lodge a complaint with a supervisory authority.</p>
+
+    <h3>9.3 How to Exercise Your Rights</h3>
+    <p>To exercise any of these rights, please contact us at the email address listed in the Contact section below. We will respond to your request within 30 days.</p>
+  </section>
+
+  <section id="children">
+    <h2>10. Children's Privacy</h2>
+    <p>The Platform is not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have inadvertently collected personal information from a child under 18, we will take steps to delete that information as quickly as possible.</p>
+  </section>
+
+  <section id="third-party">
+    <h2>11. Third-Party Links</h2>
+    <p>The Platform may contain links to third-party websites or services. We are not responsible for the privacy practices of those third parties. We encourage you to read the privacy policies of any third-party services you access through the Platform.</p>
+  </section>
+
+  <section id="changes">
+    <h2>12. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of material changes by updating the "Effective Date" at the top of this page. We encourage you to review this Privacy Policy periodically.</p>
+  </section>
+
+  <section id="contact">
+    <h2>13. Contact Us</h2>
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+    <p><strong>IntelliTC Solutions</strong><br>
+    Email: privacy@intellitcsolutions.com<br>
+    Website: <a href="../index.html">intellitcsolutions.com</a></p>
+    <p>For Terms of Service inquiries, please see our <a href="../terms/index.html">Terms of Service</a> page.</p>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+/* Dark mode toggle */
+(function(){
+  const toggle=document.querySelector('[data-theme-toggle]');
+  const html=document.documentElement;
+  const stored=window.__themePref||null;
+  if(stored){html.setAttribute('data-theme',stored);}
+  else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){html.setAttribute('data-theme','dark');}
+  toggle.addEventListener('click',()=>{
+    const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+    html.setAttribute('data-theme',next);
+    window.__themePref=next;
+  });
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
