@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/rv-park-investment">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RV Park Investment Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Analyze RV park acquisitions — revenue projections, NOI, cap rate, cash-on-cash return, and occupancy sensitivity.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="RV Park Investment Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Analyze RV park acquisitions — revenue projections, NOI, cap rate, cash-on-cash return, and occupancy sensitivity.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/rv-park-investment">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RV Park Investment Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze RV park acquisitions — revenue projections, NOI, cap rate, cash-on-cash return, and occupancy sensitivity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RV Park Investment Calculator",
+  "description": "Analyze RV park and campground investment opportunities with seasonal modeling.",
+  "url": "https://intellitcsolutions.com/rv-park-investment/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">RV Park Investment Analyzer</h1>
+      <p class="panel-subtitle">Analyze RV park acquisitions — revenue projections, NOI, cap rate, cash-on-cash return, and occupancy sensitivity.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property & Financing</h3>
+<div class="field">
+            <label for="sites" title="Number of RV sites/pads">Total Sites</label>
+            <div class="input-with-unit"><input type="text" id="sites" value="50" inputmode="decimal"><span class='unit'>sites</span></div>
+          </div>
+<div class="field">
+            <label for="price" title="Total acquisition price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="1,200,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dp" title="Down payment percentage">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="25" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Annual mortgage rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term" title="Amortization period">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="25" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Revenue</h3>
+<div class="field">
+            <label for="avgRent" title="Average lot rent per occupied site">Avg Monthly Rent/Site</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="avgRent" value="550" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="occupancy" title="Current occupancy percentage">Occupancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="occupancy" value="75" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="otherIncome" title="Laundry, storage, propane, etc.">Other Monthly Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="otherIncome" value="2,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Expenses</h3>
+<div class="field">
+            <label for="expenseRatio" title="Operating expenses as % of gross revenue">Expense Ratio</label>
+            <div class="input-with-unit"><input type="text" id="expenseRatio" value="40" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Net Operating Income</span>
+          <span class="kpi-value" id="kpiNOI">—</span>
+          <span class="kpi-delta" id="kpiNOIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cap Rate</span>
+          <span class="kpi-value" id="kpiCapRate">—</span>
+          <span class="kpi-delta" id="kpiCapRateDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Revenue / Site</span>
+          <span class="kpi-value" id="kpiRevPerSite">—</span>
+          <span class="kpi-delta" id="kpiRevPerSiteDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cash-on-Cash Return</span>
+          <span class="kpi-value" id="kpiCoC">—</span>
+          <span class="kpi-delta" id="kpiCoCDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Revenue by Occupancy</h3>
+          <p class="chart-subtitle">Net cash flow at varying occupancy levels</p>
+          <div class="chart-container">
+            <canvas id="chartOccupancy"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Expense Breakdown</h3>
+          <p class="chart-subtitle">Annual expense vs income distribution</p>
+          <div class="chart-container">
+            <canvas id="chartExpenses"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze RV Park Investments?",
+    "purpose": "RV parks are a niche asset class with unique economics — low per-site costs, seasonal demand, and utility infrastructure requirements. This calculator models the specific revenue and cost structure of RV park ownership.",
+    "whenToUse": [
+      "When evaluating an RV park purchase or development opportunity",
+      "To model occupancy rates across seasonal patterns",
+      "When comparing RV park returns to traditional multifamily or self-storage"
+    ],
+    "keyInsight": "RV parks can generate strong cap rates (8-12%) with low maintenance costs per site. The key metrics are per-site revenue, occupancy by season, and utility infrastructure costs. Unlike apartments, tenants bring their own 'unit.'"
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Compare RV park cap rates to other commercial asset classes"
+    },
+    {
+      "name": "Self-Storage",
+      "folder": "self-storage",
+      "reason": "Compare two niche asset classes with similar economics"
+    },
+    {
+      "name": "Land Development",
+      "folder": "land-development",
+      "reason": "If developing raw land into an RV park, model the development costs"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
