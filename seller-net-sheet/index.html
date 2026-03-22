@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/seller-net-sheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Net Sheet Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Estimate your net proceeds after selling — see exactly how much you'll walk away with.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Seller Net Sheet Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Estimate your net proceeds after selling — see exactly how much you'll walk away with.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/seller-net-sheet">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Seller Net Sheet Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Estimate your net proceeds after selling — see exactly how much you'll walk away with.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Seller Net Sheet",
+  "description": "Detailed closing cost breakdown showing seller net proceeds after all expenses.",
+  "url": "https://intellitcsolutions.com/seller-net-sheet/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Seller Net Sheet Calculator</h1>
+      <p class="panel-subtitle">Estimate your net proceeds after selling — see exactly how much you'll walk away with.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Sale Details</h3>
+<div class="field">
+            <label for="salePrice" title="Your home's expected sale price">Sale Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="salePrice" value="450,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="mortPayoff" title="Remaining balance on your first mortgage">Mortgage Payoff Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="mortPayoff" value="280,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="secondMort" title="Any second mortgage or HELOC balance">Second Mortgage / HELOC</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="secondMort" value="0" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Commissions & Title</h3>
+<div class="field">
+            <label for="listComm" title="Your listing agent's commission rate">Listing Agent Commission</label>
+            <div class="input-with-unit"><input type="text" id="listComm" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="buyerComm" title="Buyer's agent commission rate">Buyer Agent Commission</label>
+            <div class="input-with-unit"><input type="text" id="buyerComm" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="titleIns" title="Title insurance policy for the buyer">Title Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="titleIns" value="2,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="escrowFees" title="Escrow company or attorney fees">Escrow / Settlement Fees</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="escrowFees" value="1,500" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Taxes & Fees</h3>
+<div class="field">
+            <label for="transferTax" title="Varies by state and county">Transfer Tax</label>
+            <div class="input-with-unit"><input type="text" id="transferTax" value="0.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="recordingFees" title="County recording charges">Recording Fees</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="recordingFees" value="200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="hoaTransfer" title="Fee to transfer HOA to new owner">HOA Transfer Fee</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hoaTransfer" value="500" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Other Costs</h3>
+<div class="field">
+            <label for="warranty" title="Often provided as a buyer incentive">Home Warranty (to buyer)</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="warranty" value="550" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="repairCredits" title="Agreed repair credits to buyer">Repair Credits</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="repairCredits" value="0" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="stagingPrep" title="Professional staging, painting, cleaning">Staging / Prep Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="stagingPrep" value="0" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="liens" title="Tax liens, mechanic's liens, judgments">Outstanding Liens / Judgments</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="liens" value="0" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="proratedTax" title="Your share of property taxes to closing date">Prorated Taxes Owed</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="proratedTax" value="0" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Estimated Net Proceeds</span>
+          <span class="kpi-value" id="kpiNet">—</span>
+          <span class="kpi-delta" id="kpiNetDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Total Selling Costs</span>
+          <span class="kpi-value" id="kpiCosts">—</span>
+          <span class="kpi-delta" id="kpiCostsDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cost as % of Sale</span>
+          <span class="kpi-value" id="kpiCostPct">—</span>
+          <span class="kpi-delta" id="kpiCostPctDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Per Dollar Kept</span>
+          <span class="kpi-value" id="kpiPerDollar">—</span>
+          <span class="kpi-delta" id="kpiPerDollarDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Proceeds Waterfall</h3>
+          <p class="chart-subtitle">From sale price to your net proceeds</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartWaterfall"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Cost Breakdown</h3>
+          <p class="chart-subtitle">Where your selling costs go</p>
+          <div class="chart-container">
+            <canvas id="chartCosts"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Amount</th><th class="text-right">Running Total</th></tr></thead><tbody id="netBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "salePrice": "<strong>Sale Price</strong> — The expected or agreed-upon selling price. This is the starting point — every cost below gets subtracted from this number.",
+    "mortgageBalance": "<strong>Remaining Mortgage Balance</strong> — What you still owe on your current loan. Call your lender for the exact payoff amount — it includes accrued interest.",
+    "agentCommission": "<strong>Agent Commission %</strong> — Total commission split between listing and buyer's agents. Traditionally 5-6%, but this is always negotiable. Recent NAR settlement changes may affect this.",
+    "closingCostPct": "<strong>Seller Closing Costs %</strong> — Title fees, escrow, recording, and transfer taxes. Typically 1-3% of sale price, varies by state.",
+    "repairs": "<strong>Agreed Repairs</strong> — Concessions made after the inspection. Buyers may request $0 to $20K+ depending on what the inspection reveals.",
+    "otherFees": "<strong>Other Fees</strong> — HOA transfer fees, home warranty for buyer, staging costs, or any other agreed-upon expenses."
+  },
+  "examples": [
+    {
+      "name": "Selling After 5 Years",
+      "desc": "Bought at $280K, selling at $350K — see the actual profit after all costs",
+      "values": {
+        "salePrice": 350000,
+        "mortgageBalance": 245000,
+        "agentCommission": "5.5",
+        "closingCostPct": "2.0",
+        "repairs": 3500,
+        "otherFees": 500
+      }
+    },
+    {
+      "name": "Downsizing in Retirement",
+      "desc": "Long-held home with low balance — maximizing proceeds for next chapter",
+      "values": {
+        "salePrice": 475000,
+        "mortgageBalance": 85000,
+        "agentCommission": "5.0",
+        "closingCostPct": "1.8",
+        "repairs": 0,
+        "otherFees": 1200
+      }
+    },
+    {
+      "name": "Underwater Scenario",
+      "desc": "Market dipped — selling at a potential loss. Net sheet reveals the reality.",
+      "values": {
+        "salePrice": 250000,
+        "mortgageBalance": 265000,
+        "agentCommission": "5.0",
+        "closingCostPct": "2.0",
+        "repairs": 2000,
+        "otherFees": 0
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Use a Seller Net Sheet?",
+    "purpose": "The sale price is not your profit. After agent commissions, closing costs, mortgage payoff, and repair credits, your actual take-home (net proceeds) can be 8-15% less than the sale price. This calculator shows the real number.",
+    "whenToUse": [
+      "Before listing your home — know what you'll actually walk away with",
+      "When evaluating multiple offers — a higher offer with more concessions may net you less",
+      "When planning your next purchase — your net proceeds become the down payment on your next home"
+    ],
+    "keyInsight": "On a $400K sale with 5.5% commission, you'll pay $22,000 in agent fees alone. Add closing costs and repairs, and 8-10% of the sale price never reaches your pocket. Always calculate net proceeds, not gross sale price.",
+    "proTip": "If you're buying and selling simultaneously, your net proceeds from the sale directly impact your buying power for the next home. Run this calculator first, then plug the net into the Affordability Calculator."
+  },
+  "kpiExplains": {
+    "kpiNetProceeds": "Your <strong>actual take-home money</strong> after every cost is deducted from the sale price. This is the check you walk away with.",
+    "kpiTotalCosts": "The <strong>total amount deducted</strong> from your sale price — commissions, closing costs, repairs, and mortgage payoff combined.",
+    "kpiCommission": "The <strong>total agent commission</strong> — typically the single largest selling expense. Worth negotiating, especially on high-value properties.",
+    "kpiEquity": "Your <strong>equity position</strong> — the difference between sale price and mortgage balance, before selling costs. If this is negative, you're 'underwater.'"
+  },
+  "coupled": [
+    {
+      "name": "Commission Calculator",
+      "folder": "commission",
+      "reason": "Break down the agent commission structure and negotiate effectively"
+    },
+    {
+      "name": "Affordability Calculator",
+      "folder": "affordability",
+      "reason": "Use your net proceeds as the down payment to see what you can buy next"
+    },
+    {
+      "name": "1031 Exchange",
+      "folder": "1031-exchange",
+      "reason": "If selling an investment property, see how to defer capital gains taxes"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
