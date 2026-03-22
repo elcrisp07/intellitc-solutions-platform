@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/learning-paths/agent-deals.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Deal Analyzer — Learning Path — IntelliTC Solutions</title>
+<meta name="description" content="Tools every real estate agent needs. Calculate your commission, grade deals objectively, produce seller net sheets, and stress-test deal variables with sensitivity analysis.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Agent Deal Analyzer — Learning Path — IntelliTC Solutions">
+<meta property="og:description" content="Tools every real estate agent needs. Calculate your commission, grade deals objectively, produce seller net sheets, and stress-test deal variables with sensitivity analysis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/learning-paths/agent-deals.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agent Deal Analyzer — Learning Path — IntelliTC Solutions">
+<meta name="twitter:description" content="Tools every real estate agent needs. Calculate your commission, grade deals objectively, produce seller net sheets, and stress-test deal variables with sensitivity analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+.path-hero{text-align:center;padding:var(--space-10) var(--space-6) var(--space-8);max-width:var(--content-wide);margin:0 auto}
+.path-hero h1{font-size:clamp(1.75rem,1.3rem + 2vw,2.5rem);font-weight:700;color:var(--color-text);margin:0 0 var(--space-3);letter-spacing:-0.02em}
+.path-hero .subtitle{font-size:var(--text-base);color:var(--color-text-muted);max-width:640px;margin:0 auto;line-height:1.6}
+.path-meta{display:flex;justify-content:center;gap:var(--space-4);margin-top:var(--space-4);flex-wrap:wrap}
+.path-meta .badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1) var(--space-3);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:600}
+.badge-steps{background:var(--color-primary-surface);color:var(--color-primary)}
+.badge-intermediate{background:#fff3e0;color:#e65100}
+[data-theme="dark"] .badge-intermediate{background:rgba(150,66,25,0.2);color:#ffab40}
+.badge-audience{background:var(--color-surface-offset);color:var(--color-text-muted)}
+.progress-bar{position:sticky;top:53px;z-index:90;background:var(--color-surface);border-bottom:1px solid var(--color-divider);padding:var(--space-3) var(--space-6)}
+.progress-inner{max-width:var(--content-wide);margin:0 auto;display:flex;align-items:center;gap:var(--space-4)}
+.progress-label{font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);white-space:nowrap}
+.progress-track{flex:1;height:6px;background:var(--color-surface-offset);border-radius:var(--radius-full);overflow:hidden}
+.progress-fill{height:100%;background:var(--color-primary);border-radius:var(--radius-full);transition:width 0.4s cubic-bezier(0.16,1,0.3,1)}
+.path-layout{max-width:var(--content-wide);margin:0 auto;padding:var(--space-6);display:grid;grid-template-columns:260px 1fr;gap:var(--space-8);align-items:start}
+.path-sidebar{position:sticky;top:110px}
+.step-nav{list-style:none;display:flex;flex-direction:column;gap:var(--space-1)}
+.step-nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-lg);cursor:pointer;font-size:var(--text-sm);color:var(--color-text-muted);transition:background var(--transition-interactive),color var(--transition-interactive);border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.step-nav-item:hover{background:var(--color-surface-offset);color:var(--color-text)}
+.step-nav-item.active{background:var(--color-primary-surface);color:var(--color-primary);font-weight:600}
+.step-nav-item.completed{color:var(--color-success)}
+.step-num{width:28px;height:28px;border-radius:var(--radius-full);border:2px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;flex-shrink:0;transition:all var(--transition-interactive)}
+.step-nav-item.active .step-num{background:var(--color-primary);color:var(--color-text-inverse);border-color:var(--color-primary)}
+.step-nav-item.completed .step-num{background:var(--color-success);color:white;border-color:var(--color-success)}
+.step-content{display:none}.step-content.active{display:block}
+.step-content h2{font-size:var(--text-xl);font-weight:700;letter-spacing:-0.02em;margin-bottom:var(--space-4)}
+.step-intro{font-size:var(--text-base);color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-6);max-width:72ch}
+.edu-box{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin-bottom:var(--space-6)}
+.edu-box h3{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2)}
+.edu-box h3 svg{width:20px;height:20px;color:var(--color-primary);flex-shrink:0}
+.edu-box ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
+.edu-box li{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6;padding-left:var(--space-5);position:relative}
+.edu-box li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:var(--radius-full);background:var(--color-primary-surface);border:2px solid var(--color-primary)}
+.edu-box.concepts{border-left:4px solid var(--color-primary)}
+.edu-box.look-for{border-left:4px solid var(--color-warning)}
+.edu-box.look-for h3 svg{color:var(--color-warning)}
+.edu-box.look-for li::before{background:#fff3e0;border-color:var(--color-warning)}
+[data-theme="dark"] .edu-box.look-for li::before{background:rgba(150,66,25,0.2)}
+.calc-link{display:inline-flex;align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-6);background:var(--color-primary);color:var(--color-text-inverse);border-radius:var(--radius-lg);font-size:var(--text-base);font-weight:600;text-decoration:none;transition:background var(--transition-interactive),transform var(--transition-interactive);margin-bottom:var(--space-6)}
+.calc-link:hover{background:var(--color-primary-hover);transform:translateY(-1px)}
+.calc-link svg{width:20px;height:20px}
+.step-actions{display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-divider)}
+.step-btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all var(--transition-interactive)}
+.step-btn-prev{background:var(--color-surface-offset);color:var(--color-text-muted)}
+.step-btn-prev:hover{background:var(--color-border);color:var(--color-text)}
+.step-btn-next{background:var(--color-primary);color:var(--color-text-inverse);margin-left:auto}
+.step-btn-next:hover{background:var(--color-primary-hover)}
+.step-btn svg{width:16px;height:16px}
+.back-link{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none;margin-bottom:var(--space-4)}
+.back-link:hover{color:var(--color-primary)}
+.back-link svg{width:16px;height:16px}
+@media(max-width:768px){.path-layout{grid-template-columns:1fr;gap:var(--space-4);padding:var(--space-4)}.path-sidebar{position:static}.step-nav{flex-direction:row;overflow-x:auto;gap:var(--space-2);padding-bottom:var(--space-2)}.step-nav-item{flex-shrink:0;padding:var(--space-2) var(--space-3)}.step-nav-item .step-label{display:none}.step-nav-item .step-num{width:32px;height:32px}.path-hero{padding:var(--space-8) var(--space-4) var(--space-6)}.progress-bar{top:49px}}
+</style>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo" style="text-decoration:none">
+        <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+        <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+      </a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="path-hero">
+    <a href="index.html" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> All Learning Paths</a>
+    <h1>Agent Deal Analyzer</h1>
+    <p class="subtitle">Tools every real estate agent needs. Calculate your commission, grade deals objectively, produce seller net sheets, and stress-test deal variables with sensitivity analysis.</p>
+    <div class="path-meta">
+      <span class="badge badge-steps">4 steps</span>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="badge badge-audience">Real Estate Agents</span>
+    </div>
+  </section>
+
+  <div class="progress-bar">
+    <div class="progress-inner">
+      <span class="progress-label" id="progressLabel">Step 1 of 4</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+    </div>
+  </div>
+
+  <div class="path-layout">
+    <nav class="path-sidebar">
+      <ol class="step-nav" id="stepNav">
+        <button class="step-nav-item active" data-step="0"><span class="step-num">1</span><span class="step-label">Commission</span></button>
+        <button class="step-nav-item" data-step="1"><span class="step-num">2</span><span class="step-label">Deal Grading</span></button>
+        <button class="step-nav-item" data-step="2"><span class="step-num">3</span><span class="step-label">Seller Net Sheet</span></button>
+        <button class="step-nav-item" data-step="3"><span class="step-num">4</span><span class="step-label">Sensitivity</span></button>
+      </ol>
+    </nav>
+
+    <article class="path-content">
+
+      <!-- Step 1: Commission Calculator -->
+      <div class="step-content active" data-step="0">
+        <h2>Step 1: Know Your Commission</h2>
+        <p class="step-intro">Understanding how commissions work — from total deal commission to your personal take-home — is fundamental to running your business. After the NAR settlement changes, commission transparency is more important than ever. Know your numbers before every listing appointment.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Commission Split Flow</strong> — Total commission (e.g., 5%) splits between listing and buyer sides, then each side splits with their brokerage. A 5% commission at 50/50 split and 70/30 brokerage split = 1.75% to the agent on each side.</li>
+            <li><strong>Post-NAR Landscape</strong> — Buyer agent compensation is no longer guaranteed through MLS. Agents must articulate and negotiate their value. Understand what you're worth and why.</li>
+            <li><strong>Effective Hourly Rate</strong> — Track your hours per transaction. If you earn $8,000 on a deal that takes 80 hours, your effective rate is $100/hr. If it takes 200 hours, it's $40/hr. Time management is money management.</li>
+            <li><strong>Annual Income Planning</strong> — Work backwards: if you need $100K/year and your average commission is $8K/deal, you need 12.5 closings/year, or roughly 1 per month.</li>
+          </ul>
+        </div>
+
+        <a href="../commission/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open Commission Calculator</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Calculate your take-home after brokerage split, franchise fees, E&O insurance, and taxes. Many agents are shocked to see only 40–50% of the gross commission reaches their pocket.</li>
+            <li>Model different price points. Moving from $300K average to $400K average sales price can mean the same income with 25% fewer transactions.</li>
+            <li>Compare flat-fee vs. percentage splits at different volume levels. At high volume, a flat monthly desk fee often beats a percentage split.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <div></div>
+          <button class="step-btn step-btn-next" onclick="goStep(1)">Next: Deal Grading <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 2: Deal Grading -->
+      <div class="step-content" data-step="1">
+        <h2>Step 2: Grade Deals Objectively</h2>
+        <p class="step-intro">Not every deal is worth your time. Learning to quickly evaluate and grade opportunities lets you focus on high-probability, high-value transactions. Use objective criteria instead of gut feelings — your business will thank you.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Deal Grading Criteria</strong> — Evaluate motivation (how badly does the client need to buy/sell?), timeline (urgency = closing probability), price point (commission potential), and complexity (your time investment).</li>
+            <li><strong>A/B/C System</strong> — A deals: motivated, pre-approved, clear timeline, realistic expectations. B deals: somewhat motivated, need guidance, 60–90 day horizon. C deals: tire-kickers, unrealistic expectations, vague timeline. Focus 80% of time on A deals.</li>
+            <li><strong>Conversion Rates</strong> — Track your historical conversion rate by deal grade. If A deals close 80% of the time and C deals close 10%, the math becomes obvious.</li>
+            <li><strong>Opportunity Cost</strong> — Every hour spent on a C deal is an hour NOT spent prospecting for A deals. Saying no to bad deals is saying yes to better ones.</li>
+          </ul>
+        </div>
+
+        <a href="../re-investment-analyzer/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open RE Investment Analyzer</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Run numbers for the client's scenario. Can they actually qualify for the price range they want? If not, manage expectations early rather than showing 20 homes they can't afford.</li>
+            <li>For sellers: what's their realistic net after all costs? If they owe $280K and the realistic sale price is $300K, the net proceeds may not support their next move.</li>
+            <li>Time-to-close is a key factor. A $200K deal closing in 30 days earns more per hour than a $500K deal that drags on for 6 months.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <button class="step-btn step-btn-next" onclick="goStep(2)">Next: Seller Net Sheet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 3: Seller Net Sheet -->
+      <div class="step-content" data-step="2">
+        <h2>Step 3: Produce Accurate Net Sheets</h2>
+        <p class="step-intro">A seller net sheet is the most important document in a listing presentation. It shows the seller exactly how much money they'll walk away with after all costs. Being able to produce this quickly and accurately builds trust and closes listings.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>The Waterfall</strong> — Start with sale price, subtract every cost: agent commissions (both sides), title insurance, escrow fees, transfer taxes, recording fees, HOA transfer, repair credits, staging costs, mortgage payoff, and prorated taxes.</li>
+            <li><strong>Commission Scenarios</strong> — Show the net at multiple commission structures. Under the new NAR rules, sellers want to see the impact of different buyer agent compensation offers on their bottom line.</li>
+            <li><strong>Per-Dollar Metric</strong> — "You keep $0.82 of every dollar" is more impactful than a list of costs. It contextualizes the total cost of selling and makes it tangible.</li>
+            <li><strong>Price Sensitivity</strong> — Show net proceeds at the list price, 5% below, and 10% below. This helps sellers understand the real cost of pricing too high and eventually reducing.</li>
+          </ul>
+        </div>
+
+        <a href="../seller-net-sheet/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open Seller Net Sheet Calculator</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Always include repair credits and staging in your estimate. Sellers who see the full picture are less likely to be surprised at closing — and less likely to blame you.</li>
+            <li>Check the transfer tax for your specific county/state. This is one of the most commonly missed costs, and it can be significant ($2–10 per $1,000 of sale price).</li>
+            <li>Present multiple scenarios side-by-side: "At $450K you net $X. At $425K you net $Y. The $25K price drop only costs you $Z in net." This data-driven approach builds credibility.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <button class="step-btn step-btn-next" onclick="goStep(3)">Next: Sensitivity <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 4: Sensitivity Analysis -->
+      <div class="step-content" data-step="3">
+        <h2>Step 4: Stress-Test Deal Variables</h2>
+        <p class="step-intro">Markets shift, deals change, and assumptions break. Sensitivity analysis lets you model "what if" scenarios so you can advise clients with confidence. What if rates rise? What if the appraisal comes in low? What if the inspection reveals issues?</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Rate Sensitivity</strong> — Show buyers how a 0.5% rate change affects their payment and purchasing power. This helps set urgency and manage expectations about "waiting for rates to drop."</li>
+            <li><strong>Price Sensitivity</strong> — For sellers: model net proceeds at multiple price points. For buyers: show how each $10K in price affects monthly payment and total cost.</li>
+            <li><strong>Appraisal Gap</strong> — Model scenarios where the appraisal comes in $10K, $20K, or $30K below offer price. Who covers the gap? How does it affect the buyer's cash-to-close?</li>
+            <li><strong>Inspection Negotiations</strong> — If the inspection reveals $15K in issues, model the deal with: seller credit, price reduction, or walk-away. Show each party's outcome objectively.</li>
+          </ul>
+        </div>
+
+        <a href="../dti-stress-test/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open DTI Stress Test Calculator</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Run the buyer's numbers at +0.5% and +1% rates. If the deal breaks at +0.5%, the buyer should lock their rate ASAP. If it still works at +1%, they have some breathing room.</li>
+            <li>For competitive offers, model the appraisal gap scenario. If the buyer is offering $20K over asking, show how an appraisal at asking price affects their cash needs. This prevents buyer's remorse and deal fallout.</li>
+            <li>Use sensitivity data in negotiations. "Based on the analysis, a $10K price reduction would cost the seller $X net but save the buyer $Y/month. Here's why it makes sense for both sides."</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <a href="index.html" class="step-btn step-btn-next" style="text-decoration:none">Back to Learning Paths <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+  (function(){const t=document.querySelector('[data-theme-toggle]'),h=document.documentElement,s=window.__themePref||null;if(s){h.setAttribute('data-theme',s);}else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){h.setAttribute('data-theme','dark');}t.addEventListener('click',()=>{const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);window.__themePref=n;});})();
+  const TOTAL_STEPS=4;let currentStep=0;const navItems=document.querySelectorAll('.step-nav-item'),contents=document.querySelectorAll('.step-content'),progressFill=document.getElementById('progressFill'),progressLabel=document.getElementById('progressLabel');
+  function goStep(idx){if(idx<0||idx>=TOTAL_STEPS)return;for(let i=0;i<idx;i++){navItems[i].classList.add('completed');navItems[i].classList.remove('active');}navItems.forEach((item,i)=>{item.classList.toggle('active',i===idx);if(i>idx)item.classList.remove('completed');});contents.forEach((c,i)=>c.classList.toggle('active',i===idx));currentStep=idx;progressFill.style.width=((idx+1)/TOTAL_STEPS*100)+'%';progressLabel.textContent='Step '+(idx+1)+' of '+TOTAL_STEPS;window.scrollTo({top:document.querySelector('.progress-bar').offsetTop-60,behavior:'smooth'});}
+  navItems.forEach(item=>{item.addEventListener('click',()=>goStep(parseInt(item.dataset.step)));});
+  </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

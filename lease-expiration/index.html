@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/lease-expiration">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lease Expiration Schedule — IntelliTC Solutions</title>
+<meta name="description" content="Visualize lease rollover risk across your property — see when tenants expire, project vacancy exposure, and plan renewal strategies.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Lease Expiration Schedule — IntelliTC Solutions">
+<meta property="og:description" content="Visualize lease rollover risk across your property — see when tenants expire, project vacancy exposure, and plan renewal strategies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/lease-expiration">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lease Expiration Schedule — IntelliTC Solutions">
+<meta name="twitter:description" content="Visualize lease rollover risk across your property — see when tenants expire, project vacancy exposure, and plan renewal strategies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Lease Expiration Schedule",
+  "description": "Track and visualize lease expirations across your property portfolio with rollover risk analysis.",
+  "url": "https://intellitcsolutions.com/lease-expiration/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <!-- INPUT PANEL -->
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Lease Expiration Schedule</h1>
+      <p class="panel-subtitle">Visualize lease rollover risk across your property — see when tenants expire, project vacancy exposure, and plan renewal strategies.</p>
+      <div class="audience-tags">
+        <span class="audience-tag audience-investors">Investors</span>
+        <span class="audience-tag audience-agents">Agents</span>
+        <span class="audience-tag audience-lenders">Lenders</span>
+      </div>
+      <div class="divider"></div>
+      <div class="params-grid">
+        <div class="param-group">
+          <h3 class="param-group-title">Property Setup</h3>
+          <div class="field">
+            <label for="numTenants" title="Number of tenants or units in the property">Number of Tenants / Units</label>
+            <select id="numTenants">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rentGrowth" title="Expected annual rent growth for renewal projections">Annual Rent Growth Assumption</label>
+            <div class="input-with-unit"><input type="text" id="rentGrowth" value="3" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+          <div class="field">
+            <label for="vacancyCost" title="Estimated monthly cost during vacancy (carrying costs, lost rent, utilities)">Vacancy Cost / Month</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="vacancyCost" value="1,500" inputmode="numeric" data-currency></div>
+          </div>
+        </div>
+
+        <!-- Tenant Rows -->
+        <div class="param-group tenant-row" id="tenantRow1">
+          <h3 class="param-group-title">Tenant 1</h3>
+          <div class="field">
+            <label for="tName1" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName1" value="Tenant 1" placeholder="e.g. ABC Corp">
+          </div>
+          <div class="field">
+            <label for="tSuite1" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite1" value="101" placeholder="e.g. Suite 101">
+          </div>
+          <div class="field">
+            <label for="tRent1" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent1" value="2,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart1" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart1" value="2024-01">
+          </div>
+          <div class="field">
+            <label for="tEnd1" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd1" value="2027-01">
+          </div>
+          <div class="field">
+            <label for="tProb1" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb1" value="75" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow2">
+          <h3 class="param-group-title">Tenant 2</h3>
+          <div class="field">
+            <label for="tName2" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName2" value="Tenant 2" placeholder="e.g. XYZ Inc">
+          </div>
+          <div class="field">
+            <label for="tSuite2" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite2" value="102" placeholder="e.g. Suite 102">
+          </div>
+          <div class="field">
+            <label for="tRent2" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent2" value="3,500" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart2" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart2" value="2023-06">
+          </div>
+          <div class="field">
+            <label for="tEnd2" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd2" value="2026-06">
+          </div>
+          <div class="field">
+            <label for="tProb2" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb2" value="60" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow3">
+          <h3 class="param-group-title">Tenant 3</h3>
+          <div class="field">
+            <label for="tName3" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName3" value="Tenant 3" placeholder="e.g. Main St Deli">
+          </div>
+          <div class="field">
+            <label for="tSuite3" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite3" value="103" placeholder="e.g. Suite 103">
+          </div>
+          <div class="field">
+            <label for="tRent3" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent3" value="1,800" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart3" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart3" value="2025-03">
+          </div>
+          <div class="field">
+            <label for="tEnd3" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd3" value="2028-03">
+          </div>
+          <div class="field">
+            <label for="tProb3" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb3" value="80" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow4">
+          <h3 class="param-group-title">Tenant 4</h3>
+          <div class="field">
+            <label for="tName4" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName4" value="Tenant 4" placeholder="e.g. ProFit Gym">
+          </div>
+          <div class="field">
+            <label for="tSuite4" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite4" value="104" placeholder="e.g. Suite 104">
+          </div>
+          <div class="field">
+            <label for="tRent4" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent4" value="2,500" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart4" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart4" value="2024-09">
+          </div>
+          <div class="field">
+            <label for="tEnd4" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd4" value="2026-09">
+          </div>
+          <div class="field">
+            <label for="tProb4" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb4" value="50" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow5" style="display:none">
+          <h3 class="param-group-title">Tenant 5</h3>
+          <div class="field">
+            <label for="tName5" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName5" value="Tenant 5" placeholder="e.g. Law Offices">
+          </div>
+          <div class="field">
+            <label for="tSuite5" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite5" value="105" placeholder="e.g. Suite 105">
+          </div>
+          <div class="field">
+            <label for="tRent5" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent5" value="4,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart5" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart5" value="2025-01">
+          </div>
+          <div class="field">
+            <label for="tEnd5" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd5" value="2030-01">
+          </div>
+          <div class="field">
+            <label for="tProb5" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb5" value="90" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow6" style="display:none">
+          <h3 class="param-group-title">Tenant 6</h3>
+          <div class="field">
+            <label for="tName6" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName6" value="Tenant 6" placeholder="e.g. Café Latte">
+          </div>
+          <div class="field">
+            <label for="tSuite6" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite6" value="106" placeholder="e.g. Suite 106">
+          </div>
+          <div class="field">
+            <label for="tRent6" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent6" value="2,200" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart6" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart6" value="2024-06">
+          </div>
+          <div class="field">
+            <label for="tEnd6" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd6" value="2027-06">
+          </div>
+          <div class="field">
+            <label for="tProb6" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb6" value="65" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow7" style="display:none">
+          <h3 class="param-group-title">Tenant 7</h3>
+          <div class="field">
+            <label for="tName7" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName7" value="Tenant 7" placeholder="e.g. Tech Startup">
+          </div>
+          <div class="field">
+            <label for="tSuite7" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite7" value="107" placeholder="e.g. Suite 107">
+          </div>
+          <div class="field">
+            <label for="tRent7" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent7" value="3,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart7" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart7" value="2025-06">
+          </div>
+          <div class="field">
+            <label for="tEnd7" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd7" value="2028-06">
+          </div>
+          <div class="field">
+            <label for="tProb7" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb7" value="70" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group tenant-row" id="tenantRow8" style="display:none">
+          <h3 class="param-group-title">Tenant 8</h3>
+          <div class="field">
+            <label for="tName8" title="Name or identifier for this tenant">Tenant Name</label>
+            <input type="text" id="tName8" value="Tenant 8" placeholder="e.g. Dr. Smith">
+          </div>
+          <div class="field">
+            <label for="tSuite8" title="Suite or unit number">Suite / Unit</label>
+            <input type="text" id="tSuite8" value="108" placeholder="e.g. Suite 108">
+          </div>
+          <div class="field">
+            <label for="tRent8" title="Monthly base rent for this tenant">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="tRent8" value="1,500" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="tStart8" title="Lease commencement date">Lease Start</label>
+            <input type="month" id="tStart8" value="2026-01">
+          </div>
+          <div class="field">
+            <label for="tEnd8" title="Lease expiration date">Lease End</label>
+            <input type="month" id="tEnd8" value="2029-01">
+          </div>
+          <div class="field">
+            <label for="tProb8" title="Estimated probability that this tenant renews their lease">Renewal Probability</label>
+            <div class="input-with-unit"><input type="text" id="tProb8" value="55" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+        </div>
+
+      </div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+
+    <!-- RESULTS PANEL -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-card">
+          <span class="kpi-label">Total Annual Rent</span>
+          <span class="kpi-value" id="kpiTotalRent">—</span>
+          <span class="kpi-delta" id="kpiTotalRentDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Expiring Within 12 Months</span>
+          <span class="kpi-value" id="kpiExpiring">—</span>
+          <span class="kpi-delta" id="kpiExpiringDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Wtd. Avg Remaining Term</span>
+          <span class="kpi-value" id="kpiWART">—</span>
+          <span class="kpi-delta" id="kpiWARTDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Annualized Vacancy Risk</span>
+          <span class="kpi-value" id="kpiVacRisk">—</span>
+          <span class="kpi-delta" id="kpiVacRiskDetail"></span>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Lease Expiration Timeline</h3>
+          <p class="chart-subtitle">Horizontal view of each tenant's lease period</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartTimeline"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Annual Rollover Exposure</h3>
+          <p class="chart-subtitle">Dollar amount of rent expiring by year</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartRollover"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- RESULTS TABLE -->
+      <div class="table-wrap" style="margin-top:var(--space-6)">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Tenant</th>
+              <th>Suite</th>
+              <th class="text-right">Monthly Rent</th>
+              <th>Lease Start</th>
+              <th>Lease End</th>
+              <th class="text-right">Remaining Mo.</th>
+              <th class="text-right">Renewal Prob.</th>
+              <th class="text-right">Annualized Risk</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+  <p style="margin-top:var(--space-2);font-size:var(--text-xs)"><a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "numTenants": "<strong>Number of Tenants / Units</strong> — How many individual tenants or leasable units in the property. Adjust this to match your property's unit count (2–8).",
+    "rentGrowth": "<strong>Annual Rent Growth Assumption</strong> — The expected yearly increase in market rents. Used to project future renewal rates. Typical commercial growth is 2–4% annually.",
+    "vacancyCost": "<strong>Vacancy Cost / Month</strong> — The monthly carrying cost when a unit sits empty: mortgage, taxes, insurance, utilities, and lost rent. This drives the annualized vacancy risk calculation.",
+    "tName1": "<strong>Tenant Name</strong> — The name or identifier for this tenant. Helps you distinguish tenants in the results table and timeline chart.",
+    "tSuite1": "<strong>Suite / Unit</strong> — The suite or unit number for this tenant's space within the property.",
+    "tRent1": "<strong>Monthly Rent</strong> — The current monthly base rent this tenant pays. Used to calculate total income and rollover exposure.",
+    "tStart1": "<strong>Lease Start</strong> — When this tenant's lease began. Used to plot the lease timeline and calculate the lease duration.",
+    "tEnd1": "<strong>Lease End</strong> — When this tenant's lease expires. Drives the expiration schedule, remaining months, and rollover exposure calculations.",
+    "tProb1": "<strong>Renewal Probability</strong> — Your estimated likelihood (0–100%) that this tenant will renew. Lower probability means higher vacancy risk for that unit."
+  },
+  "examples": [
+    {
+      "name": "Small Office Building",
+      "desc": "4-unit office building with staggered lease expirations — typical suburban professional office",
+      "values": {
+        "numTenants": "4",
+        "rentGrowth": "3",
+        "vacancyCost": 2000,
+        "tenants": [
+          {"name": "Smith & Associates", "suite": "101", "rent": 2800, "start": "2024-03", "end": "2027-03", "prob": "80"},
+          {"name": "Bright Marketing", "suite": "102", "rent": 2200, "start": "2023-09", "end": "2026-09", "prob": "55"},
+          {"name": "Dr. Chen DDS", "suite": "103", "rent": 3500, "start": "2025-01", "end": "2030-01", "prob": "90"},
+          {"name": "QuickBooks CPA", "suite": "104", "rent": 1800, "start": "2024-07", "end": "2026-07", "prob": "40"}
+        ]
+      }
+    },
+    {
+      "name": "Strip Mall",
+      "desc": "6-unit retail strip with anchor tenant and smaller shops — mixed renewal risk profile",
+      "values": {
+        "numTenants": "6",
+        "rentGrowth": "2.5",
+        "vacancyCost": 3000,
+        "tenants": [
+          {"name": "SaveMart Grocery", "suite": "A", "rent": 8500, "start": "2022-01", "end": "2032-01", "prob": "95"},
+          {"name": "Panda Express", "suite": "B", "rent": 4200, "start": "2023-06", "end": "2028-06", "prob": "75"},
+          {"name": "Nails & Spa", "suite": "C", "rent": 2000, "start": "2024-01", "end": "2027-01", "prob": "60"},
+          {"name": "Cell Phone Repair", "suite": "D", "rent": 1500, "start": "2025-03", "end": "2027-03", "prob": "35"},
+          {"name": "H&R Block", "suite": "E", "rent": 2800, "start": "2024-09", "end": "2029-09", "prob": "85"},
+          {"name": "Pizza Place", "suite": "F", "rent": 2200, "start": "2023-11", "end": "2026-11", "prob": "50"}
+        ]
+      }
+    },
+    {
+      "name": "Mixed-Use Property",
+      "desc": "3-unit mixed-use: ground floor retail + 2 upper-level office suites with varying terms",
+      "values": {
+        "numTenants": "3",
+        "rentGrowth": "3.5",
+        "vacancyCost": 2500,
+        "tenants": [
+          {"name": "Corner Café", "suite": "GF-1", "rent": 4500, "start": "2024-06", "end": "2029-06", "prob": "70"},
+          {"name": "Tech Startup Inc", "suite": "201", "rent": 3200, "start": "2025-01", "end": "2027-01", "prob": "45"},
+          {"name": "Wellness Center", "suite": "202", "rent": 2800, "start": "2023-09", "end": "2026-09", "prob": "65"}
+        ]
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Lease Expiration Scheduling?",
+    "purpose": "Concentrated lease expirations are one of the biggest hidden risks in commercial real estate. This calculator maps when your rental income is at risk, quantifies the dollar exposure, and helps you plan renewal strategies before vacancies hit.",
+    "whenToUse": [
+      "Before acquiring a multi-tenant property — understand the rollover risk you're buying into",
+      "During annual business planning — identify which leases need renewal attention this year",
+      "When presenting to lenders or investors — show a clear picture of income stability and risk"
+    ],
+    "keyInsight": "A property where 60% of leases expire in the same year faces catastrophic vacancy risk. Even with strong tenants, staggering expirations across different years dramatically reduces income volatility.",
+    "proTip": "Target no more than 25–30% of total rent expiring in any single year. If you see concentration, offer early renewal incentives to spread expirations — a small rent discount now beats months of vacancy later."
+  },
+  "kpiExplains": {
+    "kpiTotalRent": "<strong>Total Annual Rent</strong> — The sum of all tenants' monthly rents multiplied by 12. This is your gross scheduled income assuming full occupancy.",
+    "kpiExpiring": "<strong>Leases Expiring Within 12 Months</strong> — The count and percentage of leases ending in the next 12 months. High concentration here signals immediate rollover risk that needs attention.",
+    "kpiWART": "<strong>Weighted Average Remaining Term</strong> — The average months remaining across all leases, weighted by each tenant's rent. Higher-paying tenants have more influence. Longer is generally safer.",
+    "kpiVacRisk": "<strong>Annualized Vacancy Risk</strong> — The expected annual dollar cost of vacancy, calculated by multiplying the vacancy cost per month by the probability of non-renewal for each tenant, summed across all units."
+  },
+  "coupled": [
+    {
+      "name": "Cash Flow Calculator",
+      "folder": "cashflow",
+      "reason": "Model the property's full income and expense picture to see how lease expirations impact cash flow"
+    },
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Project long-term rental income growth and compare against your lease expiration schedule"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the overall investment quality — lease rollover risk is a key factor in deal evaluation"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

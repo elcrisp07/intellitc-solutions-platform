@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/learning-paths/first-rental.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My First Rental Property — Learning Path — IntelliTC Solutions</title>
+<meta name="description" content="Go from understanding your budget to analyzing rental deals like a pro. Learn cash flow analysis, investor financing, and the five profit centers of real estate investing.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="My First Rental Property — Learning Path — IntelliTC Solutions">
+<meta property="og:description" content="Go from understanding your budget to analyzing rental deals like a pro. Learn cash flow analysis, investor financing, and the five profit centers of real estate investing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/learning-paths/first-rental.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="My First Rental Property — Learning Path — IntelliTC Solutions">
+<meta name="twitter:description" content="Go from understanding your budget to analyzing rental deals like a pro. Learn cash flow analysis, investor financing, and the five profit centers of real estate investing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+.path-hero{text-align:center;padding:var(--space-10) var(--space-6) var(--space-8);max-width:var(--content-wide);margin:0 auto}
+.path-hero h1{font-size:clamp(1.75rem,1.3rem + 2vw,2.5rem);font-weight:700;color:var(--color-text);margin:0 0 var(--space-3);letter-spacing:-0.02em}
+.path-hero .subtitle{font-size:var(--text-base);color:var(--color-text-muted);max-width:640px;margin:0 auto;line-height:1.6}
+.path-meta{display:flex;justify-content:center;gap:var(--space-4);margin-top:var(--space-4);flex-wrap:wrap}
+.path-meta .badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1) var(--space-3);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:600}
+.badge-steps{background:var(--color-primary-surface);color:var(--color-primary)}
+.badge-beginner{background:#e8f5e9;color:#2e7d32}
+[data-theme="dark"] .badge-beginner{background:rgba(67,122,34,0.2);color:#7bc74d}
+.badge-audience{background:var(--color-surface-offset);color:var(--color-text-muted)}
+.progress-bar{position:sticky;top:53px;z-index:90;background:var(--color-surface);border-bottom:1px solid var(--color-divider);padding:var(--space-3) var(--space-6)}
+.progress-inner{max-width:var(--content-wide);margin:0 auto;display:flex;align-items:center;gap:var(--space-4)}
+.progress-label{font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);white-space:nowrap}
+.progress-track{flex:1;height:6px;background:var(--color-surface-offset);border-radius:var(--radius-full);overflow:hidden}
+.progress-fill{height:100%;background:var(--color-primary);border-radius:var(--radius-full);transition:width 0.4s cubic-bezier(0.16,1,0.3,1)}
+.path-layout{max-width:var(--content-wide);margin:0 auto;padding:var(--space-6);display:grid;grid-template-columns:260px 1fr;gap:var(--space-8);align-items:start}
+.path-sidebar{position:sticky;top:110px}
+.step-nav{list-style:none;display:flex;flex-direction:column;gap:var(--space-1)}
+.step-nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-lg);cursor:pointer;font-size:var(--text-sm);color:var(--color-text-muted);transition:background var(--transition-interactive),color var(--transition-interactive);border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.step-nav-item:hover{background:var(--color-surface-offset);color:var(--color-text)}
+.step-nav-item.active{background:var(--color-primary-surface);color:var(--color-primary);font-weight:600}
+.step-nav-item.completed{color:var(--color-success)}
+.step-num{width:28px;height:28px;border-radius:var(--radius-full);border:2px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;flex-shrink:0;transition:all var(--transition-interactive)}
+.step-nav-item.active .step-num{background:var(--color-primary);color:var(--color-text-inverse);border-color:var(--color-primary)}
+.step-nav-item.completed .step-num{background:var(--color-success);color:white;border-color:var(--color-success)}
+.step-content{display:none}.step-content.active{display:block}
+.step-content h2{font-size:var(--text-xl);font-weight:700;letter-spacing:-0.02em;margin-bottom:var(--space-4)}
+.step-intro{font-size:var(--text-base);color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-6);max-width:72ch}
+.edu-box{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin-bottom:var(--space-6)}
+.edu-box h3{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2)}
+.edu-box h3 svg{width:20px;height:20px;color:var(--color-primary);flex-shrink:0}
+.edu-box ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
+.edu-box li{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6;padding-left:var(--space-5);position:relative}
+.edu-box li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:var(--radius-full);background:var(--color-primary-surface);border:2px solid var(--color-primary)}
+.edu-box.concepts{border-left:4px solid var(--color-primary)}
+.edu-box.look-for{border-left:4px solid var(--color-warning)}
+.edu-box.look-for h3 svg{color:var(--color-warning)}
+.edu-box.look-for li::before{background:#fff3e0;border-color:var(--color-warning)}
+[data-theme="dark"] .edu-box.look-for li::before{background:rgba(150,66,25,0.2)}
+.calc-link{display:inline-flex;align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-6);background:var(--color-primary);color:var(--color-text-inverse);border-radius:var(--radius-lg);font-size:var(--text-base);font-weight:600;text-decoration:none;transition:background var(--transition-interactive),transform var(--transition-interactive);margin-bottom:var(--space-6)}
+.calc-link:hover{background:var(--color-primary-hover);transform:translateY(-1px)}
+.calc-link svg{width:20px;height:20px}
+.step-actions{display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-divider)}
+.step-btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all var(--transition-interactive)}
+.step-btn-prev{background:var(--color-surface-offset);color:var(--color-text-muted)}
+.step-btn-prev:hover{background:var(--color-border);color:var(--color-text)}
+.step-btn-next{background:var(--color-primary);color:var(--color-text-inverse);margin-left:auto}
+.step-btn-next:hover{background:var(--color-primary-hover)}
+.step-btn svg{width:16px;height:16px}
+.back-link{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none;margin-bottom:var(--space-4)}
+.back-link:hover{color:var(--color-primary)}
+.back-link svg{width:16px;height:16px}
+@media(max-width:768px){.path-layout{grid-template-columns:1fr;gap:var(--space-4);padding:var(--space-4)}.path-sidebar{position:static}.step-nav{flex-direction:row;overflow-x:auto;gap:var(--space-2);padding-bottom:var(--space-2)}.step-nav-item{flex-shrink:0;padding:var(--space-2) var(--space-3)}.step-nav-item .step-label{display:none}.step-nav-item .step-num{width:32px;height:32px}.path-hero{padding:var(--space-8) var(--space-4) var(--space-6)}.progress-bar{top:49px}}
+</style>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo" style="text-decoration:none">
+        <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+        <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+      </a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="path-hero">
+    <a href="index.html" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> All Learning Paths</a>
+    <h1>My First Rental Property</h1>
+    <p class="subtitle">Go from understanding your budget to analyzing rental deals like a pro. Learn cash flow analysis, investor financing, and the five profit centers of real estate investing.</p>
+    <div class="path-meta">
+      <span class="badge badge-steps">5 steps</span>
+      <span class="badge badge-beginner">Beginner</span>
+      <span class="badge badge-audience">Beginner Investors</span>
+    </div>
+  </section>
+
+  <div class="progress-bar">
+    <div class="progress-inner">
+      <span class="progress-label" id="progressLabel">Step 1 of 5</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+    </div>
+  </div>
+
+  <div class="path-layout">
+    <nav class="path-sidebar">
+      <ol class="step-nav" id="stepNav">
+        <button class="step-nav-item active" data-step="0"><span class="step-num">1</span><span class="step-label">Affordability</span></button>
+        <button class="step-nav-item" data-step="1"><span class="step-num">2</span><span class="step-label">Cash Flow</span></button>
+        <button class="step-nav-item" data-step="2"><span class="step-num">3</span><span class="step-label">DSCR Loans</span></button>
+        <button class="step-nav-item" data-step="3"><span class="step-num">4</span><span class="step-label">Rental Analysis</span></button>
+        <button class="step-nav-item" data-step="4"><span class="step-num">5</span><span class="step-label">Cash-on-Cash</span></button>
+      </ol>
+    </nav>
+
+    <article class="path-content">
+
+      <!-- Step 1: Affordability -->
+      <div class="step-content active" data-step="0">
+        <h2>Step 1: What Can You Invest?</h2>
+        <p class="step-intro">Before you can be a landlord, you need to know how much capital you have to work with. Investment properties typically require 15–25% down and higher rates than primary residences. Start by understanding your personal financial picture and how much buying power you have.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Investor Down Payments</strong> — Lenders require 15–25% down for investment properties vs. 3–20% for primary residences. This is your biggest capital hurdle.</li>
+            <li><strong>Debt-to-Income for Investors</strong> — Lenders count 75% of projected rental income to offset the new mortgage payment. This helps your DTI ratio but doesn't eliminate it.</li>
+            <li><strong>Reserve Requirements</strong> — Most lenders require 6 months of PITI in reserves for each investment property you own. Plan your cash accordingly.</li>
+            <li><strong>House Hacking</strong> — Buying a duplex/triplex and living in one unit lets you use owner-occupied financing (3.5% FHA down) while collecting rent. The best first-time investor strategy.</li>
+          </ul>
+        </div>
+
+        <a href="../affordability/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open Affordability Calculator</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Run numbers at the investor rate (typically 0.5–1% higher than primary residence rates). Your buying power drops significantly.</li>
+            <li>Check how much cash you'd need for 20% down plus reserves. This is the real barrier to entry — not the monthly payment.</li>
+            <li>If you can house-hack, re-run at primary residence rates. The difference in buying power can be $50K–$100K+.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <div></div>
+          <button class="step-btn step-btn-next" onclick="goStep(1)">Next: Cash Flow <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 2: Cash Flow Analysis -->
+      <div class="step-content" data-step="1">
+        <h2>Step 2: Will It Cash Flow?</h2>
+        <p class="step-intro">Cash flow is the lifeblood of rental investing. A property that looks great on paper can lose money every month once you account for vacancies, repairs, management, and capital expenses. Learn to analyze a deal like a seasoned investor.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Net Operating Income (NOI)</strong> — Gross rent minus all operating expenses (not including mortgage). This is the property's earning power before financing.</li>
+            <li><strong>Cash Flow</strong> — NOI minus debt service (mortgage payment). Positive cash flow = you make money each month. Negative = you're subsidizing the property.</li>
+            <li><strong>The 50% Rule</strong> — A quick estimate: about 50% of gross rent goes to operating expenses (taxes, insurance, vacancy, repairs, management, CapEx). So if rent is $1,500/mo, expect ~$750 in expenses before the mortgage.</li>
+            <li><strong>Vacancy Rate</strong> — Budget 5–10% for vacancy. Even great properties sit empty between tenants. One month vacant = 8.3% vacancy rate.</li>
+          </ul>
+        </div>
+
+        <a href="../re-investment-analyzer/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open RE Investment Analyzer</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Does the deal produce positive cash flow after ALL expenses? $100–$200/month per unit is a common minimum target for beginners.</li>
+            <li>Check the cap rate (NOI / purchase price). Below 5% is expensive; 7%+ is solid for most markets.</li>
+            <li>Look at the expense ratio. If it's below 40%, you may be under-estimating costs. If it's above 60%, the property may have structural expense issues.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <button class="step-btn step-btn-next" onclick="goStep(2)">Next: DSCR Loans <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 3: DSCR Loan Qualification -->
+      <div class="step-content" data-step="2">
+        <h2>Step 3: Investor-Friendly Financing</h2>
+        <p class="step-intro">DSCR (Debt Service Coverage Ratio) loans qualify you based on the property's income, not yours. This means self-employed investors, those with complex tax returns, or anyone scaling a portfolio can get financing without traditional income verification.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>DSCR Ratio</strong> — Net Operating Income / Annual Debt Service. A DSCR of 1.25 means the property earns 25% more than the mortgage costs. Most lenders require 1.0–1.25 minimum.</li>
+            <li><strong>No Income Verification</strong> — DSCR loans don't look at your W-2 or tax returns. They only care if the rent covers the payment. Game-changer for self-employed investors.</li>
+            <li><strong>Trade-offs</strong> — DSCR loans typically have higher rates (0.5–2% above conventional), require 20–25% down, and may have prepayment penalties. The cost of convenience.</li>
+            <li><strong>Scaling Advantage</strong> — Conventional loans limit you to 10 financed properties. DSCR loans have no such cap, making them essential for portfolio growth.</li>
+          </ul>
+        </div>
+
+        <a href="../dscr-loan/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open DSCR Loan Calculator</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Check your DSCR ratio at the property's realistic rent (not the listing agent's optimistic estimate). A DSCR below 1.0 means the property doesn't cover its own mortgage.</li>
+            <li>Compare the DSCR loan rate and payment to a conventional investor loan. Sometimes conventional is cheaper if you qualify.</li>
+            <li>Factor in the prepayment penalty. If you plan to refinance within 3–5 years, a 3-year prepay penalty could cost thousands.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <button class="step-btn step-btn-next" onclick="goStep(3)">Next: Rental Analysis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 4: Rental Property Analysis -->
+      <div class="step-content" data-step="3">
+        <h2>Step 4: Analyzing Deals Like a Pro</h2>
+        <p class="step-intro">Now it's time to put it all together. A thorough rental analysis considers all five profit centers of real estate: cash flow, appreciation, mortgage paydown, tax benefits, and inflation hedging. This is how professionals evaluate whether a deal is worth pursuing.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>The 5 Profit Centers</strong> — Cash flow (monthly income), appreciation (property value growth), mortgage paydown (tenant pays your loan), tax benefits (depreciation, deductions), and inflation hedging (rents rise with inflation, mortgage stays fixed).</li>
+            <li><strong>Cap Rate</strong> — NOI / Purchase Price. Lets you compare properties of different sizes and prices on an apples-to-apples basis.</li>
+            <li><strong>Cash-on-Cash Return</strong> — Annual cash flow / Total cash invested. This is YOUR return on the money you put in. A 10% CoC means you earn $10K/year on a $100K investment.</li>
+            <li><strong>The 1% Rule</strong> — Monthly rent should be at least 1% of purchase price. A $200K property should rent for $2,000/mo. It's a quick filter, not gospel — many good deals are at 0.7–0.8%.</li>
+          </ul>
+        </div>
+
+        <a href="../re-investment-analyzer/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open RE Investment Analyzer</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Don't just look at cash flow. A property with thin cash flow but strong appreciation in a growing market might outperform a high-cash-flow property in a declining area over 10 years.</li>
+            <li>Run the numbers with conservative estimates: market-rate rent (not above-market), 8% vacancy, 10% management, 5% maintenance, 5% CapEx.</li>
+            <li>Check the total return (all 5 profit centers combined). Many rental properties return 15–25% annually when you factor in equity buildup and tax benefits.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <button class="step-btn step-btn-next" onclick="goStep(4)">Next: Cash-on-Cash <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Step 5: Cash-on-Cash Return -->
+      <div class="step-content" data-step="4">
+        <h2>Step 5: Measuring Your Return</h2>
+        <p class="step-intro">Cash-on-Cash return is the investor's bottom line metric. It tells you exactly how hard your invested dollars are working — and lets you compare real estate returns to stocks, bonds, or any other investment. This is how you decide if a deal is worth your capital.</p>
+
+        <div class="edu-box concepts">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Key Concepts</h3>
+          <ul>
+            <li><strong>Cash-on-Cash Formula</strong> — Annual Pre-Tax Cash Flow / Total Cash Invested. If you invest $50K and earn $5K/year in cash flow, your CoC is 10%.</li>
+            <li><strong>Total Cash Invested</strong> — Down payment + closing costs + any initial rehab or repairs. This is your skin in the game.</li>
+            <li><strong>Leverage Effect</strong> — A 20% down deal multiplies your return by 5x compared to an all-cash purchase. That's the power (and risk) of leverage.</li>
+            <li><strong>Benchmarks</strong> — 8–12% CoC is considered good for a rental property. Below 6% may not justify the risk and effort vs. passive index funds. Above 15% is exceptional.</li>
+          </ul>
+        </div>
+
+        <a href="../re-investment-analyzer/index.html" class="calc-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Open RE Investment Analyzer</a>
+
+        <div class="edu-box look-for">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> What to Look For</h3>
+          <ul>
+            <li>Compare the CoC at different down payment amounts. More down = lower CoC but better cash flow. Less down = higher CoC but tighter margins. Find your sweet spot.</li>
+            <li>Run the sensitivity analysis: what happens to your CoC if vacancy doubles or rent drops 10%? Stress-test the deal.</li>
+            <li>Consider the opportunity cost. If your CoC is 7%, you could arguably get similar returns in the stock market with zero effort. Real estate needs to beat that to justify the work.</li>
+          </ul>
+        </div>
+
+        <div class="step-actions">
+          <button class="step-btn step-btn-prev" onclick="goStep(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous</button>
+          <a href="index.html" class="step-btn step-btn-next" style="text-decoration:none">Back to Learning Paths <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+  (function(){const t=document.querySelector('[data-theme-toggle]'),h=document.documentElement,s=window.__themePref||null;if(s){h.setAttribute('data-theme',s);}else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){h.setAttribute('data-theme','dark');}t.addEventListener('click',()=>{const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);window.__themePref=n;});})();
+  const TOTAL_STEPS=5;let currentStep=0;const navItems=document.querySelectorAll('.step-nav-item'),contents=document.querySelectorAll('.step-content'),progressFill=document.getElementById('progressFill'),progressLabel=document.getElementById('progressLabel');
+  function goStep(idx){if(idx<0||idx>=TOTAL_STEPS)return;for(let i=0;i<idx;i++){navItems[i].classList.add('completed');navItems[i].classList.remove('active');}navItems.forEach((item,i)=>{item.classList.toggle('active',i===idx);if(i>idx)item.classList.remove('completed');});contents.forEach((c,i)=>c.classList.toggle('active',i===idx));currentStep=idx;progressFill.style.width=((idx+1)/TOTAL_STEPS*100)+'%';progressLabel.textContent='Step '+(idx+1)+' of '+TOTAL_STEPS;window.scrollTo({top:document.querySelector('.progress-bar').offsetTop-60,behavior:'smooth'});}
+  navItems.forEach(item=>{item.addEventListener('click',()=>goStep(parseInt(item.dataset.step)));});
+  </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
