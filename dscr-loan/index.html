@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/dscr-loan">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSCR Loan Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Determine if your investment property qualifies for a DSCR loan — analyze debt service coverage ratio and max loan amount.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="DSCR Loan Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Determine if your investment property qualifies for a DSCR loan — analyze debt service coverage ratio and max loan amount.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/dscr-loan">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DSCR Loan Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Determine if your investment property qualifies for a DSCR loan — analyze debt service coverage ratio and max loan amount.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DSCR Loan Calculator",
+  "description": "Debt Service Coverage Ratio analysis for investor loan qualification.",
+  "url": "https://intellitcsolutions.com/dscr-loan/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">DSCR Loan Calculator</h1>
+      <p class="panel-subtitle">Determine if your investment property qualifies for a DSCR loan — analyze debt service coverage ratio and max loan amount.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Income</h3>
+<div class="field">
+            <label for="grossRent" title="Total monthly rental income">Gross Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="grossRent" value="3,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="vacancy" title="Expected vacancy percentage">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vacancy" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="taxes" title="Annual property tax">Property Taxes / Year</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="taxes" value="4,200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="insurance" title="Annual property insurance">Insurance / Year</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insurance" value="1,800" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="hoa" title="Monthly HOA dues">HOA / Month</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hoa" value="0" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="mgmt" title="Property management as % of effective rent">Management Fee</label>
+            <div class="input-with-unit"><input type="text" id="mgmt" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Loan Terms</h3>
+<div class="field">
+            <label for="loanAmt" title="Requested loan amount">Loan Amount</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="loanAmt" value="320,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Annual interest rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term" title="Amortization period">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="minDSCR" title="Lender minimum DSCR requirement">Min DSCR Required</label>
+            <div class="input-with-unit"><input type="text" id="minDSCR" value="1.25" inputmode="decimal"><span class='unit'>x</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Your DSCR</span>
+          <span class="kpi-value" id="kpiDSCR">—</span>
+          <span class="kpi-delta" id="kpiDSCRDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Max Loan Amount</span>
+          <span class="kpi-value" id="kpiMaxLoan">—</span>
+          <span class="kpi-delta" id="kpiMaxLoanDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Annual NOI</span>
+          <span class="kpi-value" id="kpiNOI">—</span>
+          <span class="kpi-delta" id="kpiNOIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Qualification</span>
+          <span class="kpi-value" id="kpiQualify">—</span>
+          <span class="kpi-delta" id="kpiQualifyDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">DSCR Sensitivity</h3>
+          <p class="chart-subtitle">DSCR at different rate levels</p>
+          <div class="chart-container">
+            <canvas id="chartDSCR"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Income vs Expenses</h3>
+          <p class="chart-subtitle">Annual income and expense breakdown</p>
+          <div class="chart-container">
+            <canvas id="chartBreakdown"></canvas>
+          </div>
+        </div>
+</div>
+
+      <h3 style="font-size:var(--text-lg);font-weight:700;margin:var(--space-6) 0 var(--space-4)">DSCR Analysis</h3><div class="table-wrap"><table class="results-table"><thead><tr><th>Line Item</th><th class="text-right">Annual</th><th class="text-right">Notes</th></tr></thead><tbody id="dscrBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Use the DSCR Loan Calculator?",
+    "purpose": "DSCR (Debt Service Coverage Ratio) loans qualify you based on the property's income, not your personal income. This calculator shows whether a property's rental income is sufficient to qualify for financing — essential for investors who own multiple properties.",
+    "whenToUse": [
+      "When you own 4+ properties and conventional lending limits are reached",
+      "To check if a rental property's income qualifies for a DSCR loan before making an offer",
+      "When comparing DSCR loan terms against conventional or portfolio lending"
+    ],
+    "keyInsight": "Most DSCR lenders require a ratio of 1.2x or higher — meaning the rent must be at least 120% of the total mortgage payment (PITIA). A DSCR of 1.0 means break-even. Below 1.0, you'll likely be declined."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "The cash flow determines whether the DSCR qualifies"
+    },
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Project the long-term performance of the DSCR-financed property"
+    },
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Compare yield metrics alongside debt service coverage"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

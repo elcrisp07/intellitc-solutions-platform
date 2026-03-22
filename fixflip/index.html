@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+  <meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/fixflip">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix &amp; Flip Calculator — IntelliTC Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Fix & Flip Calculator",
+  "description": "Full project timeline analysis with rehab costs, holding costs, and profit projections.",
+  "url": "https://intellitcsolutions.com/fixflip/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- ===== INPUT PANEL ===== -->
+  <section id="inputPanel" class="panel">
+    <h1 class="panel-title">Fix &amp; Flip Calculator</h1>
+    <p class="panel-subtitle">Analyze rehab profit, risk, and margin for your next flip deal.</p>
+
+    <div class="params-grid">
+
+      <!-- Purchase & Value -->
+      <div class="param-group">
+        <h2 class="param-group-title">Purchase &amp; Value</h2>
+        <div class="field">
+          <label>Purchase Price <span class="tooltip info-badge" data-tip="The price you will pay to acquire the property">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="purchasePrice" value="200,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>After Repair Value (ARV) <span class="tooltip info-badge" data-tip="Expected market value once all renovations are complete">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="arv" value="300,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Repair Costs <span class="tooltip info-badge" data-tip="Total estimated cost of all repairs and renovations">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="repairCosts" value="50,000" data-currency></div>
+        </div>
+      </div>
+
+      <!-- Holding Costs -->
+      <div class="param-group">
+        <h2 class="param-group-title">Holding Costs</h2>
+        <div class="field">
+          <label>Holding Period <span class="tooltip info-badge" data-tip="Months from purchase to sale (rehab + marketing time)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="holdingMonths" value="6" min="1" max="36" step="1"><span class="unit">mo</span></div>
+        </div>
+        <div class="field">
+          <label>Insurance / Month <span class="tooltip info-badge" data-tip="Monthly property insurance premium during holding period">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdInsurance" value="150" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Property Taxes / Month <span class="tooltip info-badge" data-tip="Monthly property tax during holding period">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdTaxes" value="250" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Utilities / Month <span class="tooltip info-badge" data-tip="Monthly utilities (electric, water, gas) during rehab">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdUtilities" value="200" data-currency></div>
+        </div>
+      </div>
+
+      <!-- Closing Costs -->
+      <div class="param-group">
+        <h2 class="param-group-title">Closing Costs</h2>
+        <div class="field">
+          <label>Closing Costs — Buy Side <span class="tooltip info-badge" data-tip="Buyer-side closing costs as % of purchase price (title, escrow, etc.)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="closingBuyPct" value="2" min="0" max="10" step="0.1"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Closing Costs — Sell Side <span class="tooltip info-badge" data-tip="Seller-side closing costs as % of ARV (agent commissions, title, transfer tax)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="closingSellPct" value="8" min="0" max="15" step="0.1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+      <!-- Hard Money Financing -->
+      <div class="param-group">
+        <h2 class="param-group-title">Hard Money Financing</h2>
+        <div class="field">
+          <label>Interest Rate <span class="tooltip info-badge" data-tip="Annual interest rate on the hard money loan">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmRate" value="12" min="0" max="30" step="0.25"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Points <span class="tooltip info-badge" data-tip="Upfront origination fee (1 point = 1% of loan amount)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmPoints" value="2" min="0" max="10" step="0.5"><span class="unit">pts</span></div>
+        </div>
+        <div class="field">
+          <label>Loan-to-Value (LTV) <span class="tooltip info-badge" data-tip="Percentage of purchase price financed by the lender">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmLTV" value="80" min="0" max="100" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+      <!-- Profit Target -->
+      <div class="param-group">
+        <h2 class="param-group-title">Profit Target</h2>
+        <div class="field">
+          <label>Desired Profit Margin <span class="tooltip info-badge" data-tip="Your target net profit as a percentage of ARV">?</span></label>
+          <div class="input-with-unit"><input type="number" id="desiredMargin" value="15" min="0" max="50" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="errorMsg" class="hidden" style="color:var(--color-error);text-align:center;margin-top:var(--space-4);font-size:var(--text-sm);font-weight:500;"></div>
+
+    <button id="calcBtn" class="btn btn-primary btn-run">
+      Calculate Flip Analysis
+    </button>
+  </section>
+
+  <!-- ===== RESULTS PANEL ===== -->
+  <section id="resultsPanel" class="panel hidden" style="margin-top:var(--space-6);">
+
+    <div class="results-header">
+      <div>
+        <h2 class="panel-title">Flip Analysis Results</h2>
+        <p class="panel-subtitle" id="resultsSummary"></p>
+      </div>
+      <button class="btn btn-ghost" id="btnModify">← Modify Inputs</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3 class="chart-title">Cost Breakdown Waterfall</h3>
+        <p class="chart-subtitle">How every dollar adds up from purchase to profit</p>
+        <div class="chart-container chart-container-bar"><canvas id="waterfallChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Profit Sensitivity</h3>
+        <p class="chart-subtitle">Net profit at varying ARV levels (±5%, ±10%, ±15%)</p>
+        <div class="chart-container chart-container-bar"><canvas id="sensitivityChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Deal Scorecard -->
+    <div class="chart-card" style="margin-bottom:var(--space-6);">
+      <h3 class="chart-title">Deal Scorecard</h3>
+      <p class="chart-subtitle">Pass/fail thresholds for key deal metrics</p>
+      <div id="scorecardBody"></div>
+    </div>
+
+    <!-- Cost Itemization Table -->
+    <h3 style="font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-4);">Full Cost Itemization</h3>
+    <div class="table-wrap" style="margin-bottom:var(--space-6);">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Line Item</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">% of Total Cost</th>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody"></tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-ghost" id="btnModify2">← Modify Inputs</button>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "purchasePrice": "<strong>Purchase Price</strong> — What you're paying for the property. The profit in a flip is made at the purchase, not the sale. Buy below 70% of ARV minus repairs.",
+    "rehabCost": "<strong>Rehab Cost</strong> — Total renovation budget. Get multiple contractor bids. Add 15-20% contingency — rehabs almost always cost more than estimated.",
+    "arv": "<strong>After-Repair Value</strong> — What the home will sell for after renovation. Pull recent comps (sold, not listed). This is the most important number in the entire analysis.",
+    "holdingMonths": "<strong>Holding Period</strong> — Months from purchase to sale. Average flip takes 4-6 months. Every extra month costs you in holding expenses.",
+    "sellingCosts": "<strong>Selling Costs %</strong> — Agent commissions + closing costs when you sell. Typically 8-10% of the sale price.",
+    "financingCost": "<strong>Financing Costs</strong> — Hard money loan interest, points, and fees. Hard money rates run 10-14% with 1-3 points upfront."
+  },
+  "examples": [
+    {
+      "name": "Bread & Butter Flip",
+      "desc": "$130K buy, $40K rehab, $225K ARV — clean cosmetic flip with good margins",
+      "values": {
+        "purchasePrice": 130000,
+        "rehabCost": 40000,
+        "arv": 225000,
+        "holdingMonths": "5",
+        "sellingCosts": "9",
+        "financingCost": 8500
+      }
+    },
+    {
+      "name": "Tight Margin Flip",
+      "desc": "Numbers look okay until you add all costs — see the real profit",
+      "values": {
+        "purchasePrice": 195000,
+        "rehabCost": 55000,
+        "arv": 290000,
+        "holdingMonths": "7",
+        "sellingCosts": "9",
+        "financingCost": 14000
+      }
+    },
+    {
+      "name": "Luxury Flip",
+      "desc": "High-end renovation — bigger investment, bigger potential return",
+      "values": {
+        "purchasePrice": 320000,
+        "rehabCost": 120000,
+        "arv": 575000,
+        "holdingMonths": "8",
+        "sellingCosts": "8",
+        "financingCost": 28000
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Use the Fix & Flip Calculator?",
+    "purpose": "Flipping looks profitable on TV, but the margins are thinner than most people think. This calculator reveals the true profit after accounting for rehab, holding costs, financing, and selling expenses — the costs that turn a 'great deal' into a break-even.",
+    "whenToUse": [
+      "Before making an offer on a flip property — know your maximum allowable offer (MAO)",
+      "To compare potential flip deals and prioritize the most profitable one",
+      "When deciding: should I flip this property or hold it as a BRRRR rental?"
+    ],
+    "keyInsight": "The 70% Rule: Never pay more than 70% of ARV minus repair costs. On a $200K ARV property needing $30K in work: Max offer = ($200K × 0.70) - $30K = $110K. This rule leaves room for holding costs, selling costs, and profit.",
+    "proTip": "Your holding costs are a ticking clock. Every month you hold adds mortgage payments, insurance, utilities, and taxes. Finish the rehab on time and price it to sell fast. A quick nickel beats a slow dime."
+  },
+  "kpiExplains": {
+    "kpiProfit": "Your <strong>net profit</strong> — what you keep after every single cost. If this number is below $20K, the risk may not be worth it.",
+    "kpiROI": "<strong>Return on investment</strong> — profit ÷ total cash invested. Compare this annualized to other investment options.",
+    "kpiMargin": "<strong>Profit margin</strong> — profit as a percentage of the sale price. Experienced flippers target 10-15% minimum.",
+    "kpiMAO": "<strong>Maximum Allowable Offer</strong> — the most you should pay using the 70% rule. Offer above this and your margins evaporate."
+  },
+  "coupled": [
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Compare: should you flip (sell) or BRRRR (hold and rent)?"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the flip opportunity across multiple risk dimensions"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "If the flip doesn't sell quickly, can you hold it as a rental?"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
