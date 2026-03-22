@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/distressed-asset">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distressed Asset Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Foreclosure and REO acquisition opportunity analysis with risk assessment.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Distressed Asset Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Foreclosure and REO acquisition opportunity analysis with risk assessment.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/distressed-asset">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Distressed Asset Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Foreclosure and REO acquisition opportunity analysis with risk assessment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Distressed Asset Calculator",
+  "description": "Analyze distressed property deals including foreclosures, short sales, and REO properties.",
+  "url": "https://intellitcsolutions.com/distressed-asset/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Distressed Asset Calculator</h1>
+      <p class="panel-subtitle">Foreclosure and REO acquisition opportunity analysis with risk assessment.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Acquisition</h3>
+<div class="field">
+            <label for="marketValue" title="Estimated current market value">Market Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="marketValue" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="purchasePrice" title="Your offer / auction bid">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="purchasePrice" value="250,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="repairCosts" title="Renovation budget">Repair/Rehab Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="repairCosts" value="45,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="backTaxes" title="Delinquent property taxes">Back Taxes Owed</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="backTaxes" value="5,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="liens" title="Judgments, mechanic liens, etc.">Other Liens</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="liens" value="0" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="closingPct" title="Buying closing costs">Closing Costs</label>
+            <div class="input-with-unit"><input type="text" id="closingPct" value="3" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Exit Strategy</h3>
+<div class="field">
+            <label for="exitStrategy">Exit Strategy</label>
+            <select id="exitStrategy"><option value="flip">Fix & Flip</option><option value="rent">Buy & Hold Rental</option></select>
+          </div>
+<div class="field">
+            <label for="arv" title="After repair value">ARV (if flipping)</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="arv" value="380,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="sellCostPct" title="Agent commission + closing">Selling Costs</label>
+            <div class="input-with-unit"><input type="text" id="sellCostPct" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="monthlyRent" title="Expected rent after rehab">Monthly Rent (if holding)</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyRent" value="2,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="vacancy">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vacancy" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="expenses" title="As % of effective rent">Operating Expenses</label>
+            <div class="input-with-unit"><input type="text" id="expenses" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Financing</h3>
+<div class="field">
+            <label for="dp">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="25" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Hard money or conventional">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Acquisition Discount</span>
+          <span class="kpi-value" id="kpiDiscount">—</span>
+          <span class="kpi-delta" id="kpiDiscountDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Projected Profit</span>
+          <span class="kpi-value" id="kpiProfit">—</span>
+          <span class="kpi-delta" id="kpiProfitDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">ROI</span>
+          <span class="kpi-value" id="kpiROI">—</span>
+          <span class="kpi-delta" id="kpiROIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Risk Score</span>
+          <span class="kpi-value" id="kpiRisk">—</span>
+          <span class="kpi-delta" id="kpiRiskDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Cost vs Value</h3>
+          <p class="chart-subtitle">Total investment versus exit value</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartCostValue"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Risk Assessment</h3>
+          <p class="chart-subtitle">Exposure relative to value</p>
+          <div class="chart-container">
+            <canvas id="chartRisk"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+function calculate(){
+  const mv=parseNum(document.getElementById('marketValue').value);
+  const pp=parseNum(document.getElementById('purchasePrice').value);
+  const repair=parseNum(document.getElementById('repairCosts').value);
+  const backTax=parseNum(document.getElementById('backTaxes').value);
+  const liens=parseNum(document.getElementById('liens').value);
+  const closePct=parseNum(document.getElementById('closingPct').value)/100;
+  const exit=document.getElementById('exitStrategy').value;
+  const arv=parseNum(document.getElementById('arv').value);
+  const sellPct=parseNum(document.getElementById('sellCostPct').value)/100;
+  const rent=parseNum(document.getElementById('monthlyRent').value);
+  const vacPct=parseNum(document.getElementById('vacancy').value)/100;
+  const expPct=parseNum(document.getElementById('expenses').value)/100;
+  const dpPct=parseNum(document.getElementById('dp').value)/100;
+  const rate=parseNum(document.getElementById('rate').value)/100;
+  const trm=parseNum(document.getElementById('term').value);
+
+  const closing=pp*closePct;
+  const totalCost=pp+repair+backTax+liens+closing;
+  const discount=mv>0?((mv-pp)/mv*100):0;
+  const cashIn=pp*dpPct+repair+backTax+liens+closing;
+
+  let profit,roi;
+  if(exit==='flip'){
+    const sellCost=arv*sellPct;
+    profit=arv-totalCost-sellCost;
+    roi=cashIn>0?profit/cashIn*100:0;
+  }else{
+    const loan=pp*(1-dpPct);const mr=rate/12;const n=trm*12;
+    const mortPmt=mr>0?loan*(mr*Math.pow(1+mr,n))/(Math.pow(1+mr,n)-1):loan/n;
+    const egi=rent*(1-vacPct);const exp=egi*expPct;
+    const cfMo=egi-exp-mortPmt;profit=cfMo*12;
+    roi=cashIn>0?profit/cashIn*100:0;
+  }
+
+  const riskExposure=totalCost/(exit==='flip'?arv:mv);
+  const riskScore=riskExposure<0.65?'Low':riskExposure<0.8?'Medium':'High';
+
+  document.getElementById('kpiDiscount').textContent=formatPct(discount);
+  document.getElementById('kpiDiscountDetail').textContent=formatCurrency(mv-pp)+' below market';
+  document.getElementById('kpiProfit').textContent=formatCurrency(profit);
+  document.getElementById('kpiProfitDetail').textContent=exit==='flip'?'On flip':'Annual cash flow';
+  document.getElementById('kpiProfit').className='kpi-value '+(profit>=0?'kpi-positive':'kpi-negative');
+  document.getElementById('kpiROI').textContent=formatPct(roi);
+  document.getElementById('kpiRisk').textContent=riskScore;
+  document.getElementById('kpiRisk').className='kpi-value '+(riskScore==='Low'?'kpi-positive':riskScore==='High'?'kpi-negative':'');
+  document.getElementById('kpiRiskDetail').textContent='Exposure: '+formatPct(riskExposure*100)+' of '+(exit==='flip'?'ARV':'value');
+
+  destroyCharts();const cs=getCS();
+  const exitVal=exit==='flip'?arv:mv;
+  window.__charts.cv=new Chart(document.getElementById('chartCostValue'),{
+    type:'bar',data:{labels:['Total Cost','Exit Value','Profit'],datasets:[{data:[totalCost,exitVal,profit],backgroundColor:[cs.c2,cs.c1,profit>=0?cs.c1:cs.c2]}]},
+    options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{x:{ticks:{color:cs.text},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}
+  });
+  window.__charts.risk=new Chart(document.getElementById('chartRisk'),{
+    type:'doughnut',data:{labels:['Exposure','Safety Margin'],datasets:[{data:[riskExposure*100,(1-riskExposure)*100],backgroundColor:[cs.c2,cs.c1]}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,labels:{color:cs.text}}}}
+  });
+
+  const tbody=document.getElementById('costBody');tbody.innerHTML='';
+  [['Purchase Price',pp],['Repair Costs',repair],['Back Taxes',backTax],['Liens',liens],['Closing Costs',closing],['Total Investment',totalCost],['---'],['Market Value',mv],['Acquisition Discount %',discount.toFixed(1)+'%'],['Cash Required',cashIn]].forEach(([l,v])=>{
+    if(l==='---'){tbody.innerHTML+='<tr><td colspan="2" style="border-bottom:2px solid var(--color-divider)"></td></tr>';return;}
+    tbody.innerHTML+=`<tr><td>${l}</td><td class="text-right">${typeof v==='number'?formatCurrency(v):v}</td></tr>`;
+  });
+  showResults();
+}
+
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze Distressed Assets?",
+    "purpose": "Distressed properties (foreclosures, REOs, tax sales) offer the deepest discounts but carry the highest risk. This calculator helps you evaluate whether the discount is large enough to compensate for the unknowns.",
+    "whenToUse": [
+      "When bidding on a foreclosure or REO property",
+      "To estimate total investment including hidden repair costs",
+      "When comparing distressed vs. market-price investment opportunities"
+    ],
+    "keyInsight": "Distressed properties often can't be inspected before purchase. Budget 20-30% of purchase price for unknowns — mold, foundation, plumbing, and electrical issues are common. The discount must cover these risks."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "Distressed properties are the ideal fix & flip pipeline"
+    },
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Distressed assets are also BRRRR candidates — rehab, rent, refinance"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the risk-adjusted return of the distressed deal"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

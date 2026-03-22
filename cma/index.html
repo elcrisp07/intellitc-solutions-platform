@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/cma">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comp Analysis / CMA Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Determine property value using comparable sales. Enter a subject property and 3-6 comps with line-item adjustments to produce an adjusted value range with confidence indicators.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Comp Analysis / CMA Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Determine property value using comparable sales. Enter a subject property and 3-6 comps with line-item adjustments to produce an adjusted value range with confidence indicators.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/cma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Comp Analysis / CMA Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Determine property value using comparable sales. Enter a subject property and 3-6 comps with line-item adjustments to produce an adjusted value range with confidence indicators.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<style>
+/* CMA-specific styles */
+.cma-step-nav { display:flex; gap:var(--space-2); margin-bottom:var(--space-6); flex-wrap:wrap; }
+.cma-step-btn { padding:var(--space-2) var(--space-4); border-radius:var(--radius-md); border:1.5px solid var(--color-divider); background:var(--color-surface); color:var(--color-text-muted); font:600 var(--text-sm)/1 'DM Sans',sans-serif; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:var(--space-2); }
+.cma-step-btn.active { border-color:var(--color-primary); background:var(--color-primary-surface); color:var(--color-primary); }
+.cma-step-btn .step-num { width:22px; height:22px; border-radius:50%; background:var(--color-divider); color:var(--color-text-muted); display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:all .2s; }
+.cma-step-btn.active .step-num { background:var(--color-primary); color:#fff; }
+.cma-step-btn.done .step-num { background:var(--color-success); color:#fff; }
+.cma-step { display:none; }
+.cma-step.active { display:block; }
+
+/* Comp cards */
+.comp-cards { display:flex; flex-direction:column; gap:var(--space-4); }
+.comp-card { border:1.5px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-4); background:var(--color-surface); }
+.comp-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-3); }
+.comp-card-title { font:600 var(--text-base)/1.3 'DM Sans',sans-serif; color:var(--color-text); }
+.comp-remove { background:none; border:none; color:var(--color-text-muted); cursor:pointer; font-size:var(--text-sm); padding:var(--space-1) var(--space-2); border-radius:var(--radius-sm); transition:all .15s; }
+.comp-remove:hover { background:var(--color-error-surface,#fce4ec); color:var(--color-error,#A12C7B); }
+.comp-fields { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:var(--space-3); }
+.add-comp-btn { width:100%; padding:var(--space-3); border:2px dashed var(--color-divider); border-radius:var(--radius-lg); background:transparent; color:var(--color-text-muted); font:500 var(--text-sm)/1 'DM Sans',sans-serif; cursor:pointer; transition:all .2s; }
+.add-comp-btn:hover { border-color:var(--color-primary); color:var(--color-primary); background:var(--color-primary-surface); }
+
+/* Adjustment worksheet */
+.adj-table { width:100%; border-collapse:collapse; font-size:var(--text-sm); }
+.adj-table th { text-align:left; font-weight:600; padding:var(--space-2) var(--space-3); background:var(--color-surface-alt); border-bottom:2px solid var(--color-divider); white-space:nowrap; }
+.adj-table td { padding:var(--space-2) var(--space-3); border-bottom:1px solid var(--color-divider); vertical-align:middle; }
+.adj-table .adj-input { width:90px; padding:var(--space-1) var(--space-2); border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); color:var(--color-text); font:400 var(--text-sm)/1.4 'JetBrains Mono',monospace; text-align:right; }
+.adj-table .adj-input:focus { outline:none; border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-surface); }
+.adj-table .row-label { font-weight:500; color:var(--color-text); white-space:nowrap; }
+.adj-table .row-sub { font-weight:400; color:var(--color-text-muted); font-size:12px; }
+.adj-table .cell-pos { color:var(--color-success); font-weight:600; font-family:'JetBrains Mono',monospace; }
+.adj-table .cell-neg { color:var(--color-error); font-weight:600; font-family:'JetBrains Mono',monospace; }
+.adj-table .cell-neutral { color:var(--color-text-muted); font-family:'JetBrains Mono',monospace; }
+.adj-table .total-row td { border-top:2px solid var(--color-text); font-weight:700; background:var(--color-surface-alt); }
+.adj-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+/* Value range display */
+.value-range-card { background:var(--color-surface); border:1.5px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-6); text-align:center; margin-bottom:var(--space-6); }
+.value-range-label { font:500 var(--text-sm)/1 'DM Sans',sans-serif; color:var(--color-text-muted); margin-bottom:var(--space-2); }
+.value-range-estimate { font:700 var(--text-2xl)/1.1 'DM Sans',sans-serif; color:var(--color-primary); margin-bottom:var(--space-1); }
+.value-range-spread { font:400 var(--text-sm)/1.4 'DM Sans',sans-serif; color:var(--color-text-muted); }
+
+/* Confidence meter */
+.confidence-meter { display:flex; align-items:center; gap:var(--space-3); justify-content:center; margin-top:var(--space-4); }
+.confidence-bar { width:200px; height:8px; border-radius:4px; background:var(--color-divider); overflow:hidden; }
+.confidence-fill { height:100%; border-radius:4px; transition:width .6s ease; }
+.confidence-label { font:600 var(--text-sm)/1 'DM Sans',sans-serif; }
+.conf-high { background:var(--color-success); }
+.conf-med { background:#D19900; }
+.conf-low { background:var(--color-error); }
+
+/* Feed buttons */
+.feed-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:var(--space-3); margin-top:var(--space-4); }
+.feed-btn { display:flex; align-items:center; gap:var(--space-2); padding:var(--space-3) var(--space-4); border:1.5px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); color:var(--color-text); font:500 var(--text-sm)/1.3 'DM Sans',sans-serif; cursor:pointer; transition:all .2s; text-decoration:none; }
+.feed-btn:hover { border-color:var(--color-primary); background:var(--color-primary-surface); color:var(--color-primary); }
+.feed-btn .feed-arrow { margin-left:auto; opacity:.5; }
+
+/* Condition select */
+.cond-select { width:100%; padding:var(--space-2); border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); color:var(--color-text); font:400 var(--text-sm)/1.4 'DM Sans',sans-serif; }
+
+@media(max-width:640px){
+  .comp-fields { grid-template-columns:1fr 1fr; }
+  .adj-table .adj-input { width:70px; }
+  .value-range-estimate { font-size:var(--text-xl); }
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Comparative Market Analysis",
+  "description": "Professional CMA tool for real estate agents with comparable property analysis and adjustments.",
+  "url": "https://intellitcsolutions.com/cma/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <!-- ===== INPUT PANEL ===== -->
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Comp Analysis / CMA Calculator</h1>
+      <p class="panel-subtitle">Determine property value using the Sales Comparison Approach. Enter your subject property, add 3–6 comparable sales, then adjust for differences to produce an estimated market value range.</p>
+      <div class="divider"></div>
+
+      <!-- Step navigation -->
+      <nav class="cma-step-nav" id="stepNav">
+        <button class="cma-step-btn active" data-step="1"><span class="step-num">1</span> Subject Property</button>
+        <button class="cma-step-btn" data-step="2"><span class="step-num">2</span> Comparable Sales</button>
+        <button class="cma-step-btn" data-step="3"><span class="step-num">3</span> Adjustments</button>
+      </nav>
+
+      <!-- STEP 1: Subject Property -->
+      <div class="cma-step active" id="step1">
+        <div class="params-grid">
+          <div class="param-group">
+            <h3 class="param-group-title">Property Identification</h3>
+            <div class="field">
+              <label for="subAddress" title="Street address of the subject property">Address</label>
+              <input type="text" id="subAddress" value="" placeholder="123 Main St, City, ST">
+            </div>
+          </div>
+          <div class="param-group">
+            <h3 class="param-group-title">Physical Characteristics</h3>
+            <div class="field">
+              <label for="subSqft" title="Total heated/cooled living area in square feet">Square Feet</label>
+              <div class="input-with-unit"><input type="text" id="subSqft" value="1,800" inputmode="numeric" data-currency><span class="unit">sf</span></div>
+            </div>
+            <div class="field">
+              <label for="subBeds" title="Number of bedrooms">Bedrooms</label>
+              <input type="text" id="subBeds" value="3" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="subBaths" title="Number of bathrooms (use .5 for half baths)">Bathrooms</label>
+              <input type="text" id="subBaths" value="2" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="subYear" title="Year the property was built">Year Built</label>
+              <input type="text" id="subYear" value="1998" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="subLot" title="Lot size in square feet">Lot Size (sf)</label>
+              <div class="input-with-unit"><input type="text" id="subLot" value="7,500" inputmode="numeric" data-currency><span class="unit">sf</span></div>
+            </div>
+            <div class="field">
+              <label for="subCondition" title="Overall condition of the property">Condition</label>
+              <select id="subCondition" class="cond-select">
+                <option value="1">Poor</option>
+                <option value="2">Fair</option>
+                <option value="3" selected>Average</option>
+                <option value="4">Good</option>
+                <option value="5">Excellent</option>
+              </select>
+            </div>
+          </div>
+          <div class="param-group">
+            <h3 class="param-group-title">Features</h3>
+            <div class="field">
+              <label for="subGarage" title="Number of garage spaces (0 if none)">Garage Spaces</label>
+              <input type="text" id="subGarage" value="2" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="subPool" title="Does the property have a pool?">Pool</label>
+              <select id="subPool" class="cond-select">
+                <option value="0" selected>No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="subBasement" title="Finished basement area in square feet (0 if none)">Finished Basement (sf)</label>
+              <div class="input-with-unit"><input type="text" id="subBasement" value="0" inputmode="numeric" data-currency><span class="unit">sf</span></div>
+            </div>
+          </div>
+          <div class="param-group">
+            <h3 class="param-group-title">Market Adjustment Settings</h3>
+            <div class="field">
+              <label for="mktAppreciation" title="Monthly market appreciation rate — used to time-adjust older comp sales to present value">Monthly Appreciation Rate</label>
+              <div class="input-with-unit"><input type="text" id="mktAppreciation" value="0.3" inputmode="decimal"><span class="unit">%</span></div>
+            </div>
+            <div class="field">
+              <label for="priceSqft" title="Estimated value per square foot for size adjustments. Leave at 0 to auto-calculate from comps.">Price Per Sq Ft Override</label>
+              <div class="input-with-unit"><span class="unit">$</span><input type="text" id="priceSqft" value="0" inputmode="decimal"></div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-run" onclick="goStep(2)">Next: Add Comparables →</button>
+      </div>
+
+      <!-- STEP 2: Comparable Sales -->
+      <div class="cma-step" id="step2">
+        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-4)">Add 3–6 recently sold properties similar to your subject. More comps = higher confidence.</p>
+        <div class="comp-cards" id="compCards">
+          <!-- Comp cards rendered by JS -->
+        </div>
+        <button class="add-comp-btn" id="addCompBtn" onclick="addComp()">+ Add Comparable Sale</button>
+        <div style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <button class="btn btn-ghost" onclick="goStep(1)">← Back</button>
+          <button class="btn btn-primary btn-run" onclick="goStep(3)">Next: Adjustments →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Adjustment Worksheet -->
+      <div class="cma-step" id="step3">
+        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-4)">Review auto-calculated adjustments or override with your own values. Positive = comp is inferior (add value). Negative = comp is superior (subtract value).</p>
+        <div class="adj-scroll">
+          <table class="adj-table" id="adjTable">
+            <!-- Built by JS -->
+          </table>
+        </div>
+        <div style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <button class="btn btn-ghost" onclick="goStep(2)">← Back</button>
+          <button class="btn btn-primary btn-run" id="calcBtn" onclick="calculate()">Calculate Value Range</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RESULTS PANEL ===== -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">CMA Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+
+      <!-- Value range -->
+      <div class="value-range-card" id="valueCard">
+        <div class="value-range-label">Estimated Market Value</div>
+        <div class="value-range-estimate" id="valEstimate">—</div>
+        <div class="value-range-spread" id="valSpread"></div>
+        <div class="confidence-meter" id="confMeter">
+          <span class="confidence-label" id="confLabel">—</span>
+          <div class="confidence-bar"><div class="confidence-fill" id="confFill" style="width:0"></div></div>
+        </div>
+      </div>
+
+      <!-- KPI row -->
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-card">
+          <span class="kpi-label">Comps Used</span>
+          <span class="kpi-value" id="kpiComps">—</span>
+          <span class="kpi-delta" id="kpiCompsDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Avg $/Sq Ft</span>
+          <span class="kpi-value" id="kpiPSF">—</span>
+          <span class="kpi-delta" id="kpiPSFDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Value Range</span>
+          <span class="kpi-value" id="kpiRange">—</span>
+          <span class="kpi-delta" id="kpiRangeDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Spread</span>
+          <span class="kpi-value" id="kpiSpread">—</span>
+          <span class="kpi-delta" id="kpiSpreadDetail"></span>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Adjusted Values vs Raw Sale Prices</h3>
+          <p class="chart-subtitle">Blue = raw sale price, Teal = after adjustments</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartAdj"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Adjustment Breakdown by Comp</h3>
+          <p class="chart-subtitle">Positive adjustments add value, negative subtract</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartBreakdown"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail table -->
+      <div class="table-wrap" style="margin-top:var(--space-6)">
+        <table class="results-table">
+          <thead><tr><th>Comp</th><th class="text-right">Sale Price</th><th class="text-right">$/SF</th><th class="text-right">Net Adj</th><th class="text-right">Adj Price</th><th class="text-right">Adj $/SF</th></tr></thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Feed into other calculators -->
+      <div style="margin-top:var(--space-6)">
+        <h3 style="font:600 var(--text-base)/1.3 'DM Sans',sans-serif;color:var(--color-text);margin-bottom:var(--space-2)">Use This Value In Other Calculators</h3>
+        <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3)">Feed your estimated value directly into these tools — the value is copied to your clipboard when you click.</p>
+        <div class="feed-grid" id="feedGrid"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice. Comparable sales analysis requires professional judgment and verified data.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "subSqft": "<strong>Living Area (Square Feet)</strong> — Total heated/cooled living area. This is the single most important factor in property valuation. Measure only finished, above-grade living space. Exclude garages, unfinished basements, and covered porches.",
+    "subBeds": "<strong>Bedrooms</strong> — Total bedroom count. Adding or losing a bedroom typically shifts value by $5,000–$15,000 depending on market. The biggest jump is from 2→3 bedrooms.",
+    "subBaths": "<strong>Bathrooms</strong> — Count full baths as 1, half baths (no tub/shower) as 0.5. An additional bathroom adds roughly $10,000–$25,000 in most markets.",
+    "subYear": "<strong>Year Built</strong> — Construction year affects value through expected remaining life, building code compliance, energy efficiency, and buyer perception. A 10-year age gap between subject and comp requires adjustment.",
+    "subLot": "<strong>Lot Size</strong> — Total lot area in square feet. Lot value varies dramatically by location — urban lots have higher per-sqft premiums than rural lots. Use recent lot sales to calibrate.",
+    "subCondition": "<strong>Condition Rating</strong> — Rate from Poor (1) to Excellent (5). Each level represents roughly a 5% value adjustment. 'Average' means functional with normal wear. 'Good' means updated kitchens/baths. 'Excellent' means recently renovated throughout.",
+    "subGarage": "<strong>Garage Spaces</strong> — Number of enclosed parking spaces. Each garage space adds roughly $5,000–$15,000 depending on market. Carports count as 0.5.",
+    "subPool": "<strong>Pool</strong> — In-ground pool. Adds value in warm climates ($15,000–$30,000) but can be neutral or negative in northern markets due to maintenance costs.",
+    "subBasement": "<strong>Finished Basement</strong> — Below-grade finished living area in square feet. Valued at roughly 50–70% of above-grade space. Only count heated, finished space with proper egress.",
+    "mktAppreciation": "<strong>Monthly Appreciation Rate</strong> — Average monthly price appreciation in your local market. Used to time-adjust older comp sales to present value. Check local MLS statistics or Zillow Home Value Index for recent trends. 0.3% monthly ≈ 3.6% annual.",
+    "compPrice": "<strong>Sale Price</strong> — The actual closed/recorded sale price of the comparable property. Use only arm's-length transactions — exclude foreclosures, short sales, family transfers, and REO unless the subject is also distressed.",
+    "compDate": "<strong>Sale Date</strong> — When the sale closed. More recent sales are stronger comps. Ideally within 6 months; up to 12 months in slow markets. Older sales are time-adjusted using the monthly appreciation rate."
+  },
+  "examples": [
+    {
+      "name": "Suburban 3BR Ranch",
+      "desc": "Classic residential comp analysis — 3BR/2BA ranch in a stable suburban neighborhood",
+      "values": {
+        "subSqft": 1800, "subBeds": 3, "subBaths": 2, "subYear": 1998,
+        "subLot": 7500, "subCondition": "3", "subGarage": 2, "subPool": "0", "subBasement": 0
+      }
+    },
+    {
+      "name": "Investment Duplex",
+      "desc": "Valuing a duplex for acquisition — larger property, older construction",
+      "values": {
+        "subSqft": 2400, "subBeds": 4, "subBaths": 3, "subYear": 1975,
+        "subLot": 8000, "subCondition": "2", "subGarage": 1, "subPool": "0", "subBasement": 400
+      }
+    },
+    {
+      "name": "Updated 4BR Colonial",
+      "desc": "Higher-end property with renovations — garage, pool, finished basement",
+      "values": {
+        "subSqft": 2800, "subBeds": 4, "subBaths": 3.5, "subYear": 2005,
+        "subLot": 12000, "subCondition": "4", "subGarage": 2, "subPool": "1", "subBasement": 600
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Does Comping / CMA Matter?",
+    "purpose": "The Comparative Market Analysis is the foundation of every real estate transaction. Whether you're buying, selling, investing, or refinancing, the first question is always: 'What is this property worth?' The Sales Comparison Approach — using recently sold comparable properties with adjustments for differences — is the method used by appraisers, agents, and investors to answer that question. Every other calculator on IntelliTC that asks for a 'purchase price' or 'ARV' depends on your ability to accurately comp a property.",
+    "whenToUse": [
+      "Before making an offer — determine the fair market value so you don't overpay",
+      "When estimating ARV (After-Repair Value) for BRRRR or Fix-and-Flip strategies",
+      "To set a listing price when selling a property",
+      "When challenging an appraisal that came in lower than expected",
+      "To evaluate whether a deal pencils before running it through the full analysis suite"
+    ],
+    "keyInsight": "The best investors comp properties before they run any financial analysis. If you don't know what a property is worth, no amount of cash flow or cap rate calculation will save a bad deal. Comping is the skill that separates experienced investors from beginners — and it's the one skill you'll use on every single deal.",
+    "proTip": "Your comps are only as good as your adjustments. A 'perfect comp' with identical features to your subject is rare — what matters is choosing comps that are close and making accurate, defensible adjustments for the differences. The narrower your adjusted value range, the more confident your estimate."
+  },
+  "kpiExplains": {
+    "kpiComps": "<strong>Number of Comps</strong> — More comps generally means higher confidence. 3 is the minimum for a credible CMA. 5-6 well-chosen comps gives the strongest basis for valuation.",
+    "kpiPSF": "<strong>Price Per Square Foot</strong> — The average adjusted price per square foot across your comps. This is the most commonly used quick-valuation metric in residential real estate.",
+    "kpiRange": "<strong>Value Range</strong> — The spread between the lowest and highest adjusted comp values. A tighter range indicates stronger market consensus on value.",
+    "kpiSpread": "<strong>Spread %</strong> — The range as a percentage of the mean. Under 10% is tight (high confidence). 10-20% is normal. Over 20% suggests your comps may not be similar enough or the market is volatile."
+  },
+  "coupled": [
+    {
+      "name": "BRRRR",
+      "folder": "brrrr",
+      "reason": "Feed your estimated ARV directly into the BRRRR strategy calculator"
+    },
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "Use the estimated value as ARV to calculate flip profit potential"
+    },
+    {
+      "name": "Investment Analysis",
+      "folder": "investment-analysis",
+      "reason": "Use as the purchase price to evaluate rental investment returns"
+    },
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Compare cap rates using the market value as the property price"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Grade the deal using the comp-derived value as the baseline"
+    },
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Model long-term rental returns with an accurate purchase price"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
