@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+  <meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/re-investment-analyzer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RE Investment Analyzer — IntelliTC Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RE Investment Analyzer",
+  "description": "Quick investment screening tool for rapid property evaluation.",
+  "url": "https://intellitcsolutions.com/re-investment-analyzer/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- ===== INPUT PANEL ===== -->
+  <section id="inputPanel" class="panel">
+    <h1 class="panel-title">RE Investment Analyzer</h1>
+    <p class="panel-subtitle">Streamlined rental &amp; income property underwriting — GRM, NOI, cap rate, DSCR, cash-on-cash, and 10-year projection.</p>
+
+    <div class="params-grid">
+
+      <!-- Purchase & Financing -->
+      <div class="param-group">
+        <h2 class="param-group-title">Purchase &amp; Financing</h2>
+        <div class="field">
+          <label>Purchase Price <span class="tooltip info-badge" data-tip="Total acquisition price of the property">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="purchasePrice" value="250,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Down Payment <span class="tooltip info-badge" data-tip="Percentage of purchase price paid upfront">?</span></label>
+          <div class="input-with-unit"><input type="number" id="downPaymentPct" value="25" min="0" max="100" step="1"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Interest Rate <span class="tooltip info-badge" data-tip="Annual mortgage interest rate">?</span></label>
+          <div class="input-with-unit"><input type="number" id="interestRate" value="7.0" min="0" max="20" step="0.125"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Loan Term <span class="tooltip info-badge" data-tip="Mortgage amortization period in years">?</span></label>
+          <div class="input-with-unit"><input type="number" id="loanTerm" value="30" min="1" max="40" step="1"><span class="unit">yr</span></div>
+        </div>
+        <div class="field">
+          <label>Closing Costs <span class="tooltip info-badge" data-tip="All acquisition closing costs (title, escrow, origination, etc.)">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="closingCosts" value="6,000" data-currency></div>
+        </div>
+      </div>
+
+      <!-- Income -->
+      <div class="param-group">
+        <h2 class="param-group-title">Rental Income</h2>
+        <div class="field">
+          <label>Gross Monthly Rent <span class="tooltip info-badge" data-tip="Total rent collected per month if fully occupied">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="grossRent" value="2,200" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Vacancy Rate <span class="tooltip info-badge" data-tip="Expected percentage of time the property is vacant">?</span></label>
+          <div class="input-with-unit"><input type="number" id="vacancyRate" value="5" min="0" max="50" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+      <!-- Operating Expenses -->
+      <div class="param-group">
+        <h2 class="param-group-title">Operating Expenses</h2>
+        <div class="field">
+          <label>Property Taxes / Year <span class="tooltip info-badge" data-tip="Annual property tax bill">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="taxesYear" value="3,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Insurance / Year <span class="tooltip info-badge" data-tip="Annual property insurance premium">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="insuranceYear" value="1,500" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Maintenance <span class="tooltip info-badge" data-tip="Annual maintenance &amp; repairs as % of gross rent">?</span></label>
+          <div class="input-with-unit"><input type="number" id="maintenancePct" value="10" min="0" max="50" step="1"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Property Management <span class="tooltip info-badge" data-tip="Management fee as % of collected rent">?</span></label>
+          <div class="input-with-unit"><input type="number" id="managementPct" value="8" min="0" max="30" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="errorMsg" class="hidden" style="color:var(--color-error);text-align:center;margin-top:var(--space-4);font-size:var(--text-sm);font-weight:500;"></div>
+
+    <button id="calcBtn" class="btn btn-primary btn-run">
+      Analyze Investment
+    </button>
+  </section>
+
+  <!-- ===== RESULTS PANEL ===== -->
+  <section id="resultsPanel" class="panel hidden" style="margin-top:var(--space-6);">
+
+    <div class="results-header">
+      <div>
+        <h2 class="panel-title">Investment Analysis Results</h2>
+        <p class="panel-subtitle" id="resultsSummary"></p>
+      </div>
+      <button class="btn btn-ghost" id="btnModify">&larr; Modify Inputs</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3 class="chart-title">Income vs Expenses</h3>
+        <p class="chart-subtitle">Annual breakdown of where every dollar goes</p>
+        <div class="chart-container"><canvas id="pieChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">10-Year Cash Flow Projection</h3>
+        <p class="chart-subtitle">Net cash flow with 3% annual rent growth and 2% expense growth</p>
+        <div class="chart-container"><canvas id="projectionChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Monthly P&L Table -->
+    <h3 style="font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-4);">Monthly P&amp;L Breakdown</h3>
+    <div class="table-wrap" style="margin-bottom:var(--space-6);">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th class="text-right">Monthly</th>
+            <th class="text-right">Annual</th>
+          </tr>
+        </thead>
+        <tbody id="plTableBody"></tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-ghost" id="btnModify2">&larr; Modify Inputs</button>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Use the RE Investment Analyzer?",
+    "purpose": "A streamlined investment analysis tool focused on key metrics that matter most — IRR, equity multiple, and cash-on-cash return. Designed for quick deal evaluation and comparison.",
+    "whenToUse": [
+      "For quick deal screening before doing a full investment analysis",
+      "To compare multiple deals side by side using standardized metrics",
+      "When you need a fast answer: is this deal worth pursuing?"
+    ],
+    "keyInsight": "Speed matters in competitive markets. This analyzer gives you the critical metrics in minutes, not hours. Use it to screen deals quickly, then do a deep-dive with the full Investment Analysis calculator on the winners."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Investment Analysis",
+      "folder": "investment-analysis",
+      "reason": "Full analysis once a deal passes initial screening"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the deal across multiple dimensions"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

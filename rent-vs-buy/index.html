@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/rent-vs-buy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent vs. Buy Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Should you rent or buy? Compare the true financial impact of renting vs. owning over time — including opportunity cost, equity buildup, tax benefits, and break-even analysis.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Rent vs. Buy Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Should you rent or buy? Compare the true financial impact of renting vs. owning over time — including opportunity cost, equity buildup, tax benefits, and break-even analysis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/rent-vs-buy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rent vs. Buy Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Should you rent or buy? Compare the true financial impact of renting vs. owning over time — including opportunity cost, equity buildup, tax benefits, and break-even analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Rent vs. Buy Calculator",
+  "description": "Comprehensive rent vs buy comparison with wealth accumulation modeling over time.",
+  "url": "https://intellitcsolutions.com/rent-vs-buy/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Get Started</a>
+      <a href="../workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="../learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+        <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Rent vs. Buy Calculator</h1>
+      <p class="panel-subtitle">Should you rent or buy? Compare the true financial impact over time — including opportunity cost, equity buildup, and the break-even point.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+
+<div class="param-group">
+<h3 class="param-group-title">Current Rent</h3>
+<div class="field">
+  <label for="monthlyRent" title="Your current or expected monthly rent payment">Monthly Rent</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyRent" value="1,800" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="rentIncrease" title="Expected annual rent increase (national avg ~3-5%)">Annual Rent Increase</label>
+  <div class="input-with-unit"><input type="text" id="rentIncrease" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="rentersIns" title="Monthly renter's insurance premium">Renter's Insurance / Mo</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rentersIns" value="25" inputmode="numeric" data-currency></div>
+</div>
+</div>
+
+<div class="param-group">
+<h3 class="param-group-title">Home Purchase</h3>
+<div class="field">
+  <label for="homePrice" title="Purchase price of the home you're considering">Home Price</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="homePrice" value="350,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="downPct" title="Down payment as a percentage of home price">Down Payment</label>
+  <div class="input-with-unit"><input type="text" id="downPct" value="10" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="mortRate" title="Fixed mortgage interest rate">Mortgage Rate</label>
+  <div class="input-with-unit"><input type="text" id="mortRate" value="6.75" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="loanTerm" title="Mortgage term in years">Loan Term</label>
+  <div class="input-with-unit"><input type="text" id="loanTerm" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+</div>
+<div class="field">
+  <label for="closingPct" title="Closing costs as percentage of home price (typical 2-5%)">Closing Costs</label>
+  <div class="input-with-unit"><input type="text" id="closingPct" value="3.0" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+</div>
+
+<div class="param-group">
+<h3 class="param-group-title">Ownership Costs</h3>
+<div class="field">
+  <label for="propTaxRate" title="Annual property tax as % of home value">Property Tax Rate</label>
+  <div class="input-with-unit"><input type="text" id="propTaxRate" value="1.2" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="homeInsYr" title="Annual homeowner's insurance premium">Home Insurance / Year</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="homeInsYr" value="1,800" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="maintPct" title="Annual maintenance as % of home value (rule of thumb: 1%)">Maintenance</label>
+  <div class="input-with-unit"><input type="text" id="maintPct" value="1.0" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="hoaMonth" title="Monthly HOA dues if applicable">HOA / Month</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hoaMonth" value="0" inputmode="numeric" data-currency></div>
+</div>
+</div>
+
+<div class="param-group">
+<h3 class="param-group-title">Appreciation & Investment</h3>
+<div class="field">
+  <label for="homeAppreciation" title="Expected annual home value appreciation (historical avg ~3-4%)">Home Appreciation</label>
+  <div class="input-with-unit"><input type="text" id="homeAppreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="investReturn" title="Expected return if you invest your down payment instead (S&P avg ~7-10%)">Investment Return</label>
+  <div class="input-with-unit"><input type="text" id="investReturn" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="sellingCosts" title="Cost to sell the home (agent commissions, fees — typically 6-8%)">Selling Costs</label>
+  <div class="input-with-unit"><input type="text" id="sellingCosts" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="taxBracket" title="Your marginal income tax rate (for mortgage interest deduction)">Tax Bracket</label>
+  <div class="input-with-unit"><input type="text" id="taxBracket" value="22" inputmode="decimal"><span class='unit'>%</span></div>
+</div>
+<div class="field">
+  <label for="timeHorizon" title="How many years you plan to live in the area">Time Horizon</label>
+  <div class="input-with-unit"><input type="text" id="timeHorizon" value="10" inputmode="decimal"><span class='unit'>yrs</span></div>
+</div>
+</div>
+
+</div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+
+      <!-- Verdict banner -->
+      <div id="verdictBanner" style="padding:var(--space-5) var(--space-6);border-radius:var(--radius-lg);margin-bottom:var(--space-6);text-align:center;border:1px solid var(--color-divider);background:var(--color-surface)">
+        <p id="verdictText" style="font-size:var(--text-lg);font-weight:700;color:var(--color-text);margin:0 0 var(--space-1)"></p>
+        <p id="verdictSub" style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0"></p>
+      </div>
+
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-card">
+          <span class="kpi-label">Break-Even Year</span>
+          <span class="kpi-value" id="kpiBreakeven">—</span>
+          <span class="kpi-delta" id="kpiBreakevenDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Net Wealth if Buying</span>
+          <span class="kpi-value" id="kpiBuyWealth">—</span>
+          <span class="kpi-delta" id="kpiBuyWealthDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Net Wealth if Renting</span>
+          <span class="kpi-value" id="kpiRentWealth">—</span>
+          <span class="kpi-delta" id="kpiRentWealthDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Advantage</span>
+          <span class="kpi-value" id="kpiAdvantage">—</span>
+          <span class="kpi-delta" id="kpiAdvantageDetail"></span>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card" style="grid-column:1/-1">
+          <h3 class="chart-title">Cumulative Cost: Renting vs. Buying</h3>
+          <p class="chart-subtitle">Total out-of-pocket costs over time — lower is better</p>
+          <div class="chart-container" style="height:340px">
+            <canvas id="chartCumCost"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Net Wealth Comparison</h3>
+          <p class="chart-subtitle">Equity + investments vs. investment-only portfolio</p>
+          <div class="chart-container" style="height:300px">
+            <canvas id="chartWealth"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Monthly Cost: Year 1 vs. Year 10</h3>
+          <p class="chart-subtitle">How costs shift over your time horizon</p>
+          <div class="chart-container" style="height:300px">
+            <canvas id="chartMonthly"></canvas>
+          </div>
+        </div>
+        <div class="chart-card" style="grid-column:1/-1">
+          <h3 class="chart-title">Opportunity Cost of Down Payment</h3>
+          <p class="chart-subtitle">What your down payment + closing costs could become if invested instead</p>
+          <div class="chart-container" style="height:280px">
+            <canvas id="chartOpportunity"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th class="text-right">Rent Cost (Cumul.)</th>
+              <th class="text-right">Buy Cost (Cumul.)</th>
+              <th class="text-right">Home Equity</th>
+              <th class="text-right">Renter Portfolio</th>
+              <th class="text-right">Net: Buy</th>
+              <th class="text-right">Net: Rent</th>
+              <th class="text-right">Advantage</th>
+            </tr>
+          </thead>
+          <tbody id="yearlyBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "monthlyRent": "<strong>Monthly Rent</strong> — Your current or expected monthly rent. This is the baseline cost that increases each year by the Annual Rent Increase rate. Include only base rent — utilities and renter's insurance are separate.",
+    "rentIncrease": "<strong>Annual Rent Increase</strong> — The expected yearly increase in your rent. National averages typically range from 3% to 5%. In competitive markets (NYC, SF, Austin), expect 5%+. In stable markets, 2-3% is common.",
+    "rentersIns": "<strong>Renter's Insurance</strong> — Protects your personal belongings. Typically $15-$30/month. Much cheaper than homeowner's insurance because it doesn't cover the building structure.",
+    "homePrice": "<strong>Home Price</strong> — The purchase price of the home you're considering. This drives your mortgage amount, property taxes, insurance, and maintenance costs.",
+    "downPct": "<strong>Down Payment</strong> — Percentage of the home price you'll pay upfront. 20% avoids PMI. This money is 'locked up' in the home — the calculator measures what it could have earned if invested instead.",
+    "mortRate": "<strong>Mortgage Rate</strong> — Your fixed interest rate. Even 0.5% changes the outcome significantly. Current rates strongly favor or penalize buying depending on where they stand relative to historical norms.",
+    "loanTerm": "<strong>Loan Term</strong> — Mortgage duration. 30 years gives lower payments but more interest. 15 years builds equity faster but has higher monthly costs. Most rent-vs-buy comparisons use 30 years.",
+    "closingPct": "<strong>Closing Costs</strong> — One-time fees at purchase: lender fees, title insurance, appraisal, attorney fees. Typically 2-5% of home price. This is additional cash needed upfront beyond your down payment.",
+    "propTaxRate": "<strong>Property Tax Rate</strong> — Annual property tax as a percentage of assessed value. Varies dramatically by location: 0.3% (Hawaii) to 2.5%+ (Texas, New Jersey). Check your county assessor's website.",
+    "homeInsYr": "<strong>Home Insurance</strong> — Annual premium to insure the home structure and contents. $1,200-$3,000+ depending on location, home value, and risk factors (flood zone, hurricane area).",
+    "maintPct": "<strong>Maintenance</strong> — Annual maintenance costs as a percentage of home value. The 1% rule is standard (a $350K home = $3,500/year). Older homes may need 1.5-2%. New construction may be lower.",
+    "hoaMonth": "<strong>HOA Fees</strong> — Monthly Homeowner Association dues for condos or planned communities. Can range from $100 to $1,000+. Covers shared amenities, exterior maintenance, and common area insurance.",
+    "homeAppreciation": "<strong>Home Appreciation</strong> — Expected annual increase in home value. Historical U.S. average is ~3-4%. Hot markets may see 5-8% short-term, but reversion to mean is common. Be conservative.",
+    "investReturn": "<strong>Investment Return</strong> — Expected annual return if you invest your down payment in the stock market instead of buying. The S&P 500 has averaged ~10% nominal, ~7% after inflation. This is the 'opportunity cost' of buying.",
+    "sellingCosts": "<strong>Selling Costs</strong> — The cost to sell the home when you leave, including agent commissions (5-6%), transfer taxes, repairs, and staging. Typically 7-8% total. This eats directly into your equity.",
+    "taxBracket": "<strong>Tax Bracket</strong> — Your marginal federal income tax rate. Used to calculate the value of the mortgage interest deduction. Only matters if you itemize deductions (mortgage interest exceeds the standard deduction of $14,600 single / $29,200 married in 2024).",
+    "timeHorizon": "<strong>Time Horizon</strong> — How many years you plan to stay. This is the single most important variable. Buying almost always loses for short stays (1-4 years) due to closing and selling costs. Longer stays favor buying as equity builds and rent keeps rising."
+  },
+  "examples": [
+    {
+      "name": "Young Professional, Expensive City",
+      "desc": "$2,400/mo rent, $450K condo, 5% down — tight market, high opportunity cost",
+      "values": {
+        "monthlyRent": 2400,
+        "rentIncrease": "4.5",
+        "rentersIns": 30,
+        "homePrice": 450000,
+        "downPct": "5",
+        "mortRate": "6.75",
+        "loanTerm": "30",
+        "closingPct": "3.5",
+        "propTaxRate": "1.4",
+        "homeInsYr": 2200,
+        "maintPct": "1.0",
+        "hoaMonth": 450,
+        "homeAppreciation": "3.0",
+        "investReturn": "8.0",
+        "sellingCosts": "7.0",
+        "taxBracket": "24",
+        "timeHorizon": "7"
+      }
+    },
+    {
+      "name": "Growing Family, Suburbs",
+      "desc": "$1,600/mo rent, $320K house, 20% down — stable area, long-term plan",
+      "values": {
+        "monthlyRent": 1600,
+        "rentIncrease": "3.0",
+        "rentersIns": 20,
+        "homePrice": 320000,
+        "downPct": "20",
+        "mortRate": "6.5",
+        "loanTerm": "30",
+        "closingPct": "2.5",
+        "propTaxRate": "1.0",
+        "homeInsYr": 1500,
+        "maintPct": "1.0",
+        "hoaMonth": 0,
+        "homeAppreciation": "3.5",
+        "investReturn": "7.0",
+        "sellingCosts": "7.0",
+        "taxBracket": "22",
+        "timeHorizon": "15"
+      }
+    },
+    {
+      "name": "Military / Relocating Soon",
+      "desc": "$1,400/mo rent, $280K home, 0% VA loan — moving in 3 years",
+      "values": {
+        "monthlyRent": 1400,
+        "rentIncrease": "3.0",
+        "rentersIns": 18,
+        "homePrice": 280000,
+        "downPct": "0",
+        "mortRate": "6.0",
+        "loanTerm": "30",
+        "closingPct": "2.0",
+        "propTaxRate": "1.1",
+        "homeInsYr": 1400,
+        "maintPct": "1.0",
+        "hoaMonth": 0,
+        "homeAppreciation": "3.0",
+        "investReturn": "7.0",
+        "sellingCosts": "7.0",
+        "taxBracket": "22",
+        "timeHorizon": "3"
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Use the Rent vs. Buy Calculator?",
+    "purpose": "This calculator answers the most fundamental housing question: given your specific situation, are you financially better off renting or buying over a given time period? It goes far beyond comparing rent to a mortgage payment by modeling equity buildup, opportunity cost of your down payment, tax benefits, maintenance, appreciation, and selling costs.",
+    "whenToUse": [
+      "Before deciding whether to buy — especially if you're unsure how long you'll stay in the area",
+      "When comparing a specific rental and a specific home — plug in real numbers, not hypotheticals",
+      "When interest rates change — a 1% rate shift can flip the verdict from 'buy' to 'rent'",
+      "When your landlord raises the rent — see whether the increase tips the balance toward buying"
+    ],
+    "keyInsight": "Time horizon is the single most important variable. Due to closing costs, selling costs, and the front-loaded nature of mortgage interest, buying almost always loses for stays under 4-5 years. The longer you stay, the more buying tends to win — as your equity grows, rent keeps rising, and fixed mortgage payments become relatively cheaper.",
+    "proTip": "Don't just compare monthly costs. A renter who invests the money they'd otherwise spend on a down payment, closing costs, and home maintenance can build significant wealth too. This calculator accounts for that 'invest the difference' strategy, which is what makes it more honest than a simple payment comparison."
+  },
+  "kpiExplains": {
+    "kpiBreakeven": "The <strong>break-even year</strong> is when buying becomes financially equal to renting. Before this point, you'd have been better off renting. After this point, every additional year favors buying. If the break-even year exceeds your time horizon, renting is the better financial choice.",
+    "kpiBuyWealth": "Your <strong>net wealth from buying</strong> at the end of your time horizon. This is your home equity (home value minus remaining mortgage minus selling costs) — the cash you'd walk away with if you sold.",
+    "kpiRentWealth": "Your <strong>net wealth from renting</strong> at the end of your time horizon. This is the value of your investment portfolio, built by investing your would-be down payment + closing costs and reinvesting the monthly savings whenever renting is cheaper than owning.",
+    "kpiAdvantage": "The <strong>dollar difference</strong> between buying and renting net wealth. Positive means buying wins. Negative means renting wins. The larger the number, the clearer the decision."
+  },
+  "coupled": [
+    {
+      "name": "Affordability Calculator",
+      "folder": "affordability",
+      "reason": "Once you decide to buy, see exactly how much house your income can support"
+    },
+    {
+      "name": "True Cost of Ownership",
+      "folder": "true-cost-ownership",
+      "reason": "Dive deeper into every hidden cost of owning — beyond what this comparison shows"
+    },
+    {
+      "name": "Cash to Close",
+      "folder": "cash-to-close",
+      "reason": "Get a line-by-line breakdown of every dollar needed at the closing table"
+    },
+    {
+      "name": "Cash Flow Calculator",
+      "folder": "cashflow",
+      "reason": "If you're considering buying as an investment property, model the rental income side"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
