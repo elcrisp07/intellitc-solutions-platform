@@ -126,24 +126,7 @@
   .recent-chip:hover { border-color:var(--color-primary); transform:translateY(-1px); }
   .recent-chip .chip-arrow { color:var(--color-primary); font-size:var(--text-xs); }
 
-  /* Waitlist / Email Capture */
-  .waitlist-section { max-width:1200px; margin:0 auto var(--space-8); padding:0 var(--space-6); }
-  .waitlist-inner { background:linear-gradient(135deg, #01696f 0%, #0a3d42 100%); border-radius:var(--radius-xl); padding:var(--space-8); color:#fff; text-align:center; position:relative; overflow:hidden; }
-  .waitlist-inner::before { content:''; position:absolute; bottom:-30%; left:-5%; width:300px; height:300px; background:radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
-  .waitlist-inner::after { content:''; position:absolute; top:-20%; right:-5%; width:250px; height:250px; background:radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
-  .waitlist-inner h2 { font-size:clamp(1.5rem,3vw,2rem); font-weight:700; margin:0 0 var(--space-2); position:relative; }
-  .waitlist-inner > p { font-size:var(--text-base); opacity:0.9; margin:0 0 var(--space-6); max-width:560px; margin-left:auto; margin-right:auto; position:relative; }
-  .waitlist-form { display:flex; gap:var(--space-3); max-width:480px; margin:0 auto; position:relative; }
-  .waitlist-form input { flex:1; padding:var(--space-3) var(--space-4); border:2px solid rgba(255,255,255,0.3); border-radius:var(--radius-md); background:rgba(255,255,255,0.12); color:#fff; font-size:var(--text-base); font-family:inherit; backdrop-filter:blur(8px); }
-  .waitlist-form input::placeholder { color:rgba(255,255,255,0.6); }
-  .waitlist-form input:focus { outline:none; border-color:rgba(255,255,255,0.7); background:rgba(255,255,255,0.18); }
-  .waitlist-form button { padding:var(--space-3) var(--space-6); background:#fff; color:#01696f; border:none; border-radius:var(--radius-md); font-size:var(--text-base); font-weight:600; cursor:pointer; font-family:inherit; transition:transform .15s,box-shadow .15s; white-space:nowrap; }
-  .waitlist-form button:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-  .waitlist-success { display:none; padding:var(--space-4); background:rgba(255,255,255,0.15); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; position:relative; backdrop-filter:blur(8px); }
-  .waitlist-perks { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:var(--space-3); margin-top:var(--space-6); max-width:600px; margin-left:auto; margin-right:auto; position:relative; }
-  .waitlist-perk { font-size:var(--text-sm); opacity:0.85; display:flex; align-items:center; gap:var(--space-2); }
-  .waitlist-perk svg { flex-shrink:0; }
-  @media(max-width:640px){ .waitlist-form{flex-direction:column;} .waitlist-inner{padding:var(--space-6);} }
+
 </style>
 <script type="application/ld+json">
 {
@@ -644,34 +627,6 @@
   <div class="no-results" id="noResults"><p>No calculators match your search. Try different keywords or select a different role.</p></div>
 </div>
 
-<!-- ══════ WAITLIST / EARLY ACCESS ══════ -->
-<div class="waitlist-section">
-  <div class="waitlist-inner">
-    <h2>Get Early Access to IntelliTC Pro</h2>
-    <p>Be first in line when we launch premium features — saved calculations, portfolio tracking, advanced analytics, and more.</p>
-    <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlist(event)">
-      <input type="email" id="waitlistEmail" placeholder="Enter your email address" required autocomplete="email">
-      <button type="submit">Join Waitlist</button>
-    </form>
-    <div class="waitlist-success" id="waitlistSuccess">
-      &#10003; You're on the list. We'll notify you when IntelliTC Pro launches.
-    </div>
-    <div class="waitlist-perks">
-      <div class="waitlist-perk">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        Early access pricing
-      </div>
-      <div class="waitlist-perk">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        Feature request priority
-      </div>
-      <div class="waitlist-perk">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        No spam, ever
-      </div>
-    </div>
-  </div>
-</div>
 
 <footer class="footer">
     <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
@@ -727,24 +682,7 @@ function filterCards() {
 var _store;
 try { _store = window['local' + 'Storage']; } catch(e) { _store = null; }
 
-// Waitlist handler — stores to browser storage (connect to Mailchimp/ConvertKit post-launch)
-function handleWaitlist(e) {
-  e.preventDefault();
-  var email = document.getElementById('waitlistEmail').value.trim();
-  if (!email) return false;
-  try {
-    if (_store) {
-      var waitlist = JSON.parse(_store.getItem('intellitc_waitlist') || '[]');
-      if (waitlist.indexOf(email) === -1) {
-        waitlist.push(email);
-        _store.setItem('intellitc_waitlist', JSON.stringify(waitlist));
-      }
-    }
-  } catch(ex) { /* silent */ }
-  document.getElementById('waitlistForm').style.display = 'none';
-  document.getElementById('waitlistSuccess').style.display = 'block';
-  return false;
-}
+
 
 // Recently Used calculators — read from browser storage
 (function() {
