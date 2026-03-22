@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/agility-index">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Agility Index — IntelliTC Solutions</title>
+<meta name="description" content="Market speed, scarcity, and competition scoring — weighted composite agility score (0-100) with market type classification.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Market Agility Index — IntelliTC Solutions">
+<meta property="og:description" content="Market speed, scarcity, and competition scoring — weighted composite agility score (0-100) with market type classification.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/agility-index">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Market Agility Index — IntelliTC Solutions">
+<meta name="twitter:description" content="Market speed, scarcity, and competition scoring — weighted composite agility score (0-100) with market type classification.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Market Agility Index",
+  "description": "Score market speed and scarcity to determine buyer vs seller market conditions.",
+  "url": "https://intellitcsolutions.com/agility-index/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Market Agility Index</h1>
+      <p class="panel-subtitle">Market speed, scarcity, and competition scoring — weighted composite agility score (0-100) with market type classification.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Speed Metrics</h3>
+<div class="field">
+            <label for="daysOnMarket" title="Average DOM for sold listings">Avg Days on Market</label>
+            <div class="input-with-unit"><input type="text" id="daysOnMarket" value="18" inputmode="decimal"><span class='unit'>days</span></div>
+          </div>
+<div class="field">
+            <label for="listToClose" title="Average days from list to closing">List-to-Close Time</label>
+            <div class="input-with-unit"><input type="text" id="listToClose" value="35" inputmode="decimal"><span class='unit'>days</span></div>
+          </div>
+<div class="field">
+            <label for="priceChangeFreq" title="% of listings with price drops">Price Reductions</label>
+            <div class="input-with-unit"><input type="text" id="priceChangeFreq" value="15" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Scarcity Metrics</h3>
+<div class="field">
+            <label for="monthsSupply" title="Active listings / monthly sales">Months of Supply</label>
+            <div class="input-with-unit"><input type="text" id="monthsSupply" value="2.5" inputmode="decimal"><span class='unit'>mo</span></div>
+          </div>
+<div class="field">
+            <label for="absorptionRate" title="% of new listings sold within 30 days">Absorption Rate</label>
+            <div class="input-with-unit"><input type="text" id="absorptionRate" value="45" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="newListings" title="Average new listings per month">New Listings (Monthly)</label>
+            <input type="text" id="newListings" value="150" inputmode="numeric">
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Competition Metrics</h3>
+<div class="field">
+            <label for="offersPerListing" title="Average number of offers received">Avg Offers per Listing</label>
+            <input type="text" id="offersPerListing" value="4.2" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="pctOverAsking">% Sold Over Asking</label>
+            <div class="input-with-unit"><input type="text" id="pctOverAsking" value="42" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="cashBuyerPct" title="% of transactions that are all-cash">Cash Buyer Percentage</label>
+            <div class="input-with-unit"><input type="text" id="cashBuyerPct" value="28" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Weights</h3>
+<div class="field">
+            <label for="wSpeed" title="Weight for speed subscore">Speed Weight</label>
+            <div class="input-with-unit"><input type="text" id="wSpeed" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="wScarcity" title="Weight for scarcity subscore">Scarcity Weight</label>
+            <div class="input-with-unit"><input type="text" id="wScarcity" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="wCompetition" title="Weight for competition subscore">Competition Weight</label>
+            <div class="input-with-unit"><input type="text" id="wCompetition" value="30" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Agility Score</span>
+          <span class="kpi-value" id="kpiAgilityScore">—</span>
+          <span class="kpi-delta" id="kpiAgilityScoreDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Speed Subscore</span>
+          <span class="kpi-value" id="kpiSpeedScore">—</span>
+          <span class="kpi-delta" id="kpiSpeedScoreDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Scarcity Subscore</span>
+          <span class="kpi-value" id="kpiScarcityScore">—</span>
+          <span class="kpi-delta" id="kpiScarcityScoreDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Market Type</span>
+          <span class="kpi-value" id="kpiMarketType">—</span>
+          <span class="kpi-delta" id="kpiMarketTypeDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Agility Radar</h3>
+          <p class="chart-subtitle">Factor-level breakdown across all 9 metrics</p>
+          <div class="chart-container">
+            <canvas id="chartRadar"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Subscore Comparison</h3>
+          <p class="chart-subtitle">Speed vs Scarcity vs Competition</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartSubscores"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Category</th><th>Factor</th><th class="text-right">Raw Value</th><th class="text-right">Score</th></tr></thead><tbody id="factorBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Track Market Agility?",
+    "purpose": "The Market Agility Index measures how quickly you can enter, execute, and exit deals in a specific market. It factors in days on market, inventory levels, financing availability, and regulatory environment.",
+    "whenToUse": [
+      "When comparing markets for investment — which allows the fastest deal execution?",
+      "For flippers: markets with high agility mean faster turns and less holding risk",
+      "When assessing whether a market suits your investment strategy timeline"
+    ],
+    "keyInsight": "High agility markets have fast sales, abundant inventory, and investor-friendly regulations. Low agility markets have long holding times, scarce inventory, and complex regulations. Match your strategy to the market's agility: flip in high-agility, hold in low-agility."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Strategic Market Valuation",
+      "folder": "strategic-market-valuation",
+      "reason": "Combine agility with valuation for a complete market assessment"
+    },
+    {
+      "name": "Buffett Indicator",
+      "folder": "buffett-indicator",
+      "reason": "National context for local market dynamics"
+    },
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "High agility markets are ideal for flipping strategies"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

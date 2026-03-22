@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/budget-variance">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget vs. Actual Variance Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Compare your projected budget against actual performance — identify overruns, savings, and variance drivers across income and expenses.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Budget vs. Actual Variance Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Compare your projected budget against actual performance — identify overruns, savings, and variance drivers across income and expenses.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/budget-variance">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Budget vs. Actual Variance Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Compare your projected budget against actual performance — identify overruns, savings, and variance drivers across income and expenses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Budget vs. Actual Variance Calculator",
+  "description": "Compare budgeted property figures against actual results with variance analysis and trend tracking.",
+  "url": "https://intellitcsolutions.com/budget-variance/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <!-- INPUT PANEL -->
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Budget vs. Actual Variance Calculator</h1>
+      <p class="panel-subtitle">Compare your projected budget against actual performance — identify overruns, savings, and variance drivers across income and expenses.</p>
+      <div class="audience-tags">
+        <span class="audience-tag audience-investors">Investors</span>
+        <span class="audience-tag audience-agents">Agents</span>
+      </div>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Income</h3>
+<!-- Column headers -->
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted)">&nbsp;</label>
+  <span style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted);text-align:center;display:block">Budget</span>
+  <span style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted);text-align:center;display:block">Actual</span>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Total gross rental income for the period">Gross Rental Income</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetGrossRent" value="120,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualGrossRent" value="115,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Laundry, parking, pet fees, late fees, etc.">Other Income</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetOtherIncome" value="6,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualOtherIncome" value="5,200" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Income lost due to vacancy during the period">Vacancy Loss</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetVacancy" value="6,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualVacancy" value="8,500" inputmode="numeric" data-currency></div>
+</div>
+</div>
+
+<div class="param-group">
+<h3 class="param-group-title">Operating Expenses</h3>
+<!-- Column headers -->
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted)">&nbsp;</label>
+  <span style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted);text-align:center;display:block">Budget</span>
+  <span style="font-weight:600;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-muted);text-align:center;display:block">Actual</span>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Annual property tax amount">Property Taxes</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetTaxes" value="12,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualTaxes" value="12,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Annual insurance premium for the property">Insurance</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetInsurance" value="4,800" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualInsurance" value="5,100" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Repairs, preventive maintenance, and unit turnovers">Maintenance &amp; Repairs</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetMaintenance" value="8,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualMaintenance" value="11,200" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Property management company fees">Property Management</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetManagement" value="9,600" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualManagement" value="9,200" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Landlord-paid utilities (water, electric, gas, trash)">Utilities</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetUtilities" value="3,600" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualUtilities" value="4,100" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="HOA dues or common area maintenance charges">HOA / Common Area</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetHOA" value="2,400" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualHOA" value="2,400" inputmode="numeric" data-currency></div>
+</div>
+<div class="field" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:center">
+  <label title="Reserves set aside for future capital expenditures">Capital Reserves</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="budgetCapReserves" value="6,000" inputmode="numeric" data-currency></div>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="actualCapReserves" value="6,000" inputmode="numeric" data-currency></div>
+</div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+
+    <!-- RESULTS PANEL -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+  <span class="kpi-label">Budget NOI vs Actual NOI</span>
+  <span class="kpi-value" id="kpiNOI">—</span>
+  <span class="kpi-delta" id="kpiNOIDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Total Income Variance</span>
+  <span class="kpi-value" id="kpiIncomeVar">—</span>
+  <span class="kpi-delta" id="kpiIncomeVarDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Total Expense Variance</span>
+  <span class="kpi-value" id="kpiExpenseVar">—</span>
+  <span class="kpi-delta" id="kpiExpenseVarDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Net Variance</span>
+  <span class="kpi-value" id="kpiNetVar">—</span>
+  <span class="kpi-delta" id="kpiNetVarDetail"></span>
+</div>
+      </div>
+      <div class="chart-grid">
+<div class="chart-card">
+  <h3 class="chart-title">Budget vs Actual</h3>
+  <p class="chart-subtitle">Grouped comparison for each line item</p>
+  <div class="chart-container chart-container-bar">
+    <canvas id="chartGroupedBar"></canvas>
+  </div>
+</div>
+<div class="chart-card">
+  <h3 class="chart-title">Variance by Category</h3>
+  <p class="chart-subtitle">Positive = favorable, Negative = unfavorable</p>
+  <div class="chart-container chart-container-bar">
+    <canvas id="chartVarianceBar"></canvas>
+  </div>
+</div>
+      </div>
+      <!-- RESULTS TABLE -->
+      <div class="table-wrap" style="margin-top:var(--space-6)">
+        <table class="results-table">
+          <thead><tr><th>Line Item</th><th class="text-right">Budget</th><th class="text-right">Actual</th><th class="text-right">Variance ($)</th><th class="text-right">Variance (%)</th><th class="text-right">Status</th></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+  <p style="margin-top:var(--space-2);font-size:var(--text-xs)"><a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "budgetGrossRent": "<strong>Gross Rental Income (Budget)</strong> — Your projected total rental income for the period. This is what you expected to collect from all units before vacancy or concessions.",
+    "actualGrossRent": "<strong>Gross Rental Income (Actual)</strong> — The actual rental income collected. Compare to budget to see if rents came in above or below projections.",
+    "budgetOtherIncome": "<strong>Other Income (Budget)</strong> — Projected ancillary income: laundry, parking, pet fees, late fees, application fees, etc.",
+    "actualOtherIncome": "<strong>Other Income (Actual)</strong> — Actual ancillary income received. Shortfalls here often signal underutilized amenities or declining tenant services.",
+    "budgetVacancy": "<strong>Vacancy Loss (Budget)</strong> — Your projected vacancy loss for the period. A higher actual vacancy means more lost income than expected.",
+    "actualVacancy": "<strong>Vacancy Loss (Actual)</strong> — Actual vacancy loss experienced. If significantly higher than budget, review your marketing and tenant retention strategy.",
+    "budgetTaxes": "<strong>Property Taxes (Budget)</strong> — Projected annual property tax expense. Watch for reassessments that can spike this line item.",
+    "actualTaxes": "<strong>Property Taxes (Actual)</strong> — Actual property taxes paid. On-target is ideal — surprises here are usually unfavorable.",
+    "budgetInsurance": "<strong>Insurance (Budget)</strong> — Projected insurance premium. Rate increases from claims or market conditions can cause overruns.",
+    "actualInsurance": "<strong>Insurance (Actual)</strong> — Actual insurance cost. Premiums often increase at renewal — budget accordingly.",
+    "budgetMaintenance": "<strong>Maintenance & Repairs (Budget)</strong> — Projected spend on repairs, preventive maintenance, and unit turnovers.",
+    "actualMaintenance": "<strong>Maintenance & Repairs (Actual)</strong> — Actual maintenance spend. This is the most volatile expense line — emergency repairs can blow budgets.",
+    "budgetManagement": "<strong>Property Management (Budget)</strong> — Projected management fees, typically a percentage of collected rent.",
+    "actualManagement": "<strong>Property Management (Actual)</strong> — Actual management fees paid. Lower fees may reflect lower collected rent, not savings.",
+    "budgetUtilities": "<strong>Utilities (Budget)</strong> — Projected landlord-paid utilities: water, electric, gas, trash, sewer.",
+    "actualUtilities": "<strong>Utilities (Actual)</strong> — Actual utility costs. Seasonal variation and rate hikes are common variance drivers.",
+    "budgetHOA": "<strong>HOA / Common Area (Budget)</strong> — Projected HOA dues or common area maintenance fees.",
+    "actualHOA": "<strong>HOA / Common Area (Actual)</strong> — Actual HOA costs. Special assessments can cause unexpected overruns.",
+    "budgetCapReserves": "<strong>Capital Reserves (Budget)</strong> — Planned reserves for future capital expenditures like roof, HVAC, or appliance replacement.",
+    "actualCapReserves": "<strong>Capital Reserves (Actual)</strong> — Actual amount funded to reserves. Under-funding now creates bigger problems later."
+  },
+  "examples": [
+    {
+      "name": "On-Track Property",
+      "desc": "Well-managed property with minor variances — budget closely matches actual performance",
+      "values": {
+        "budgetGrossRent": 120000, "actualGrossRent": 119000,
+        "budgetOtherIncome": 6000, "actualOtherIncome": 5800,
+        "budgetVacancy": 6000, "actualVacancy": 6200,
+        "budgetTaxes": 12000, "actualTaxes": 12000,
+        "budgetInsurance": 4800, "actualInsurance": 4800,
+        "budgetMaintenance": 8000, "actualMaintenance": 8400,
+        "budgetManagement": 9600, "actualManagement": 9500,
+        "budgetUtilities": 3600, "actualUtilities": 3700,
+        "budgetHOA": 2400, "actualHOA": 2400,
+        "budgetCapReserves": 6000, "actualCapReserves": 6000
+      }
+    },
+    {
+      "name": "Over-Budget Property",
+      "desc": "High vacancy and maintenance blowouts push actuals well above budget",
+      "values": {
+        "budgetGrossRent": 120000, "actualGrossRent": 108000,
+        "budgetOtherIncome": 6000, "actualOtherIncome": 4000,
+        "budgetVacancy": 6000, "actualVacancy": 14000,
+        "budgetTaxes": 12000, "actualTaxes": 12500,
+        "budgetInsurance": 4800, "actualInsurance": 5400,
+        "budgetMaintenance": 8000, "actualMaintenance": 18000,
+        "budgetManagement": 9600, "actualManagement": 8600,
+        "budgetUtilities": 3600, "actualUtilities": 5200,
+        "budgetHOA": 2400, "actualHOA": 3000,
+        "budgetCapReserves": 6000, "actualCapReserves": 6000
+      }
+    },
+    {
+      "name": "Under-Budget Property",
+      "desc": "Strong collections and controlled expenses deliver better-than-expected NOI",
+      "values": {
+        "budgetGrossRent": 120000, "actualGrossRent": 126000,
+        "budgetOtherIncome": 6000, "actualOtherIncome": 7500,
+        "budgetVacancy": 6000, "actualVacancy": 3000,
+        "budgetTaxes": 12000, "actualTaxes": 11800,
+        "budgetInsurance": 4800, "actualInsurance": 4600,
+        "budgetMaintenance": 8000, "actualMaintenance": 5500,
+        "budgetManagement": 9600, "actualManagement": 10000,
+        "budgetUtilities": 3600, "actualUtilities": 3200,
+        "budgetHOA": 2400, "actualHOA": 2400,
+        "budgetCapReserves": 6000, "actualCapReserves": 6000
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Budget vs. Actual Analysis?",
+    "purpose": "A budget is only useful if you track performance against it. This calculator reveals where your property is over-performing, where it's bleeding money, and which line items need immediate attention — turning your budget from a static plan into a dynamic management tool.",
+    "whenToUse": [
+      "Monthly or quarterly reviews — compare year-to-date actuals against your annual operating budget",
+      "Identifying problem areas — pinpoint which expense categories are driving overruns before they become crises",
+      "Asset management reporting — present clear variance data to investors, partners, or lenders"
+    ],
+    "keyInsight": "Maintenance & repairs is the #1 budget buster for most properties. A 20-40% overrun on this single line item can wipe out savings in every other category. Track it monthly, not annually.",
+    "proTip": "Focus on variance percentages, not just dollar amounts. A $500 overrun on a $2,400 HOA budget (21%) is more concerning than a $500 overrun on a $120,000 rent line (0.4%). Percentage variance reveals the true story."
+  },
+  "kpiExplains": {
+    "kpiNOI": "<strong>Budget NOI vs Actual NOI</strong> — Net Operating Income is total income minus total expenses. This KPI shows both your projected and actual NOI side by side, with the dollar difference. A negative delta means actual NOI fell short of budget.",
+    "kpiIncomeVar": "<strong>Total Income Variance</strong> — The difference between budgeted and actual total income (gross rent + other income − vacancy). Negative means you collected less than projected.",
+    "kpiExpenseVar": "<strong>Total Expense Variance</strong> — The difference between budgeted and actual total operating expenses. Positive means you spent less than budgeted (favorable). Negative means you overspent (unfavorable).",
+    "kpiNetVar": "<strong>Net Variance</strong> — The bottom-line difference between budget NOI and actual NOI. Positive = over-performed (under budget overall). Negative = under-performed (over budget overall)."
+  },
+  "coupled": [
+    {
+      "name": "Cash Flow Calculator",
+      "folder": "cashflow",
+      "reason": "See how budget variances impact your monthly and annual cash flow"
+    },
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Deeper rental projections to refine your income budget assumptions"
+    },
+    {
+      "name": "Sensitivity Grid",
+      "folder": "sensitivity-grid",
+      "reason": "Model how changes in key variables affect NOI — stress-test your budget"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>

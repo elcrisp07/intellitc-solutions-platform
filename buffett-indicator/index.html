@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/buffett-indicator">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buffett Indicator — IntelliTC Solutions</title>
+<meta name="description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Buffett Indicator — IntelliTC Solutions">
+<meta property="og:description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/buffett-indicator">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buffett Indicator — IntelliTC Solutions">
+<meta name="twitter:description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RE Buffett Indicator",
+  "description": "Macro market valuation signal using total housing value relative to GDP.",
+  "url": "https://intellitcsolutions.com/buffett-indicator/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Buffett Indicator</h1>
+      <p class="panel-subtitle">Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Market Data</h3>
+<div class="field">
+            <label for="totalHousingValue" title="Total US housing market value in trillions">Total Housing Market Value</label>
+            <div class="input-with-unit"><input type="text" id="totalHousingValue" value="45" inputmode="decimal"><span class='unit'>T</span></div>
+          </div>
+<div class="field">
+            <label for="gdp" title="Annual GDP in trillions">Gross Domestic Product</label>
+            <div class="input-with-unit"><input type="text" id="gdp" value="28" inputmode="decimal"><span class='unit'>T</span></div>
+          </div>
+<div class="field">
+            <label for="historicalAvg" title="Long-term average Housing/GDP ratio">Historical Average Ratio</label>
+            <div class="input-with-unit"><input type="text" id="historicalAvg" value="1.4" inputmode="decimal"><span class='unit'>x</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Local Market (Optional)</h3>
+<div class="field">
+            <label for="localMedianPrice">Local Median Home Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="localMedianPrice" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="localMedianIncome">Local Median Household Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="localMedianIncome" value="75,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="localPriceToIncome" title="Long-term local average">Historical Price-to-Income</label>
+            <div class="input-with-unit"><input type="text" id="localPriceToIncome" value="4.0" inputmode="decimal"><span class='unit'>x</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Housing/GDP Ratio</span>
+          <span class="kpi-value" id="kpiRatio">—</span>
+          <span class="kpi-delta" id="kpiRatioDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Valuation Zone</span>
+          <span class="kpi-value" id="kpiZone">—</span>
+          <span class="kpi-delta" id="kpiZoneDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Local Price-to-Income</span>
+          <span class="kpi-value" id="kpiLocalPI">—</span>
+          <span class="kpi-delta" id="kpiLocalPIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Deviation from Avg</span>
+          <span class="kpi-value" id="kpiDeviation">—</span>
+          <span class="kpi-delta" id="kpiDeviationDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Buffett Indicator Gauge</h3>
+          <p class="chart-subtitle">Current ratio vs historical zones</p>
+          <div class="chart-container">
+            <canvas id="chartGauge"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Local Market Context</h3>
+          <p class="chart-subtitle">Price-to-income vs historical norm</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartLocal"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Metric</th><th class="text-right">Value</th><th class="text-right">Assessment</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Track the Buffett Indicator?",
+    "purpose": "The Buffett Indicator (total market cap ÷ GDP) measures whether the stock market is overvalued relative to the economy. For real estate investors, this macro signal helps time entries — when stocks are overvalued, capital often rotates into real estate.",
+    "whenToUse": [
+      "When assessing whether to allocate more capital to stocks or real estate",
+      "As a macro market health indicator for your overall investment strategy",
+      "When evaluating market cycle timing for large real estate acquisitions"
+    ],
+    "keyInsight": "Warren Buffett called this 'the best single measure of where valuations stand at any given moment.' Above 120% historically signals overvaluation. Real estate investors watch this because capital flows between asset classes based on relative value."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Strategic Market Valuation",
+      "folder": "strategic-market-valuation",
+      "reason": "Broader market analysis to complement the Buffett signal"
+    },
+    {
+      "name": "Market Agility Index",
+      "folder": "agility-index",
+      "reason": "Local market conditions to pair with macro indicators"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
