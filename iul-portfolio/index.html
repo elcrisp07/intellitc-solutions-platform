@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/iul-portfolio">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IUL + Real Estate Portfolio Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Model combined wealth growth from Indexed Universal Life insurance and real estate investments over time.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="IUL + Real Estate Portfolio Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Model combined wealth growth from Indexed Universal Life insurance and real estate investments over time.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/iul-portfolio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IUL + Real Estate Portfolio Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Model combined wealth growth from Indexed Universal Life insurance and real estate investments over time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IUL Portfolio Calculator",
+  "description": "Model Indexed Universal Life insurance as a real estate investment funding strategy.",
+  "url": "https://intellitcsolutions.com/iul-portfolio/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">IUL + Real Estate Portfolio Analyzer</h1>
+      <p class="panel-subtitle">Model combined wealth growth from Indexed Universal Life insurance and real estate investments over time.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">IUL Policy</h3>
+<div class="field">
+            <label for="premium" title="Annual IUL premium payment">Annual Premium</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="premium" value="15,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="iulTerm" title="Years of premium payments">Accumulation Period</label>
+            <div class="input-with-unit"><input type="text" id="iulTerm" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="capRate" title="Maximum annual credited rate">IUL Cap Rate</label>
+            <div class="input-with-unit"><input type="text" id="capRate" value="12" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="floorRate" title="Minimum guaranteed rate">IUL Floor Rate</label>
+            <div class="input-with-unit"><input type="text" id="floorRate" value="0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="avgReturn" title="Expected average annual return">Avg Annual Return</label>
+            <div class="input-with-unit"><input type="text" id="avgReturn" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Real Estate Holdings</h3>
+<div class="field">
+            <label for="reValue" title="Current market value of RE holdings">Property Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="reValue" value="500,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="reCashFlow" title="Net annual cash flow from RE">Annual Cash Flow</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="reCashFlow" value="24,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="reAppreciation" title="Annual property appreciation rate">Appreciation Rate</label>
+            <div class="input-with-unit"><input type="text" id="reAppreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Personal</h3>
+<div class="field">
+            <label for="age">Current Age</label>
+            <div class="input-with-unit"><input type="text" id="age" value="35" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Combined Net Worth</span>
+          <span class="kpi-value" id="kpiCombinedNW">—</span>
+          <span class="kpi-delta" id="kpiCombinedNWDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">IUL Cash Value</span>
+          <span class="kpi-value" id="kpiIULCash">—</span>
+          <span class="kpi-delta" id="kpiIULCashDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Tax-Free Income</span>
+          <span class="kpi-value" id="kpiTaxFree">—</span>
+          <span class="kpi-delta" id="kpiTaxFreeDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Legacy Value</span>
+          <span class="kpi-value" id="kpiLegacy">—</span>
+          <span class="kpi-delta" id="kpiLegacyDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Combined Wealth Growth</h3>
+          <p class="chart-subtitle">Stacked growth of IUL + RE over time</p>
+          <div class="chart-container">
+            <canvas id="chartWealth"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Year-by-Year Projection</h3>
+          <p class="chart-subtitle">Annual cash value and RE equity trajectory</p>
+          <div class="chart-container">
+            <canvas id="chartProjection"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Combine IUL + Real Estate?",
+    "purpose": "An Indexed Universal Life (IUL) policy combined with real estate creates a unique wealth strategy — tax-advantaged insurance cash value plus real estate appreciation and cash flow. This calculator models the combined portfolio performance.",
+    "whenToUse": [
+      "When evaluating IUL as part of a broader investment strategy",
+      "To compare: real estate only vs. IUL + real estate combined portfolio",
+      "When your insurance advisor suggests IUL — run the numbers yourself"
+    ],
+    "keyInsight": "IUL policies offer tax-free loans against cash value, which can fund real estate down payments. But IUL fees are high, caps limit upside, and the strategy is complex. This calculator helps you see if the math actually works."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Investment Analysis",
+      "folder": "investment-analysis",
+      "reason": "Compare real estate only returns vs. the combined IUL strategy"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Model the real estate side of the portfolio"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
