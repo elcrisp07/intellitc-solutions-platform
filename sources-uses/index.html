@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/sources-uses">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sources & Uses Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Map exactly where your acquisition capital comes from and where it goes — the foundation of every real estate investment closing.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Sources & Uses Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Map exactly where your acquisition capital comes from and where it goes — the foundation of every real estate investment closing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/sources-uses">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sources & Uses Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Map exactly where your acquisition capital comes from and where it goes — the foundation of every real estate investment closing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Sources & Uses Calculator",
+  "description": "Map capital sources against project uses for development and acquisition financing.",
+  "url": "https://intellitcsolutions.com/sources-uses/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <!-- INPUT PANEL -->
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Sources & Uses Calculator</h1>
+      <p class="panel-subtitle">Map exactly where your acquisition capital comes from and where it goes — the foundation of every real estate investment closing.</p>
+      <div class="audience-tags">
+        <span class="audience-tag audience-investors">Investors</span>
+        <span class="audience-tag audience-agents">Agents</span>
+        <span class="audience-tag audience-lenders">Lenders</span>
+      </div>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Sources of Capital</h3>
+<div class="field">
+  <label for="equity" title="Cash or equity you are contributing to the deal">Equity / Cash Investment</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="equity" value="150,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="seniorLoan" title="Primary mortgage or acquisition loan from a bank or lender">Senior Loan</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="seniorLoan" value="600,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="mezzLoan" title="Subordinate debt behind the senior loan — higher rate, higher risk">Mezzanine / Second Loan</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="mezzLoan" value="0" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="sellerCredit" title="Credits or concessions from the seller applied at closing">Seller Credit</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="sellerCredit" value="0" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="otherSource" title="Any additional capital sources — grants, partners, tax credits, etc.">Other Source</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="otherSource" value="0" inputmode="numeric" data-currency></div>
+</div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Uses of Capital</h3>
+<div class="field">
+  <label for="purchasePrice" title="The agreed-upon acquisition price for the property">Purchase Price</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="purchasePrice" value="700,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="closingCosts" title="Attorney fees, recording fees, transfer taxes, and other closing expenses">Closing Costs</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="closingCosts" value="14,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="titleEscrow" title="Title insurance, escrow fees, and title search charges">Title & Escrow</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="titleEscrow" value="5,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="inspectionDD" title="Property inspection, environmental reports, appraisal, and other due diligence costs">Inspection / Due Diligence</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="inspectionDD" value="2,500" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="loanOrigFee" title="Upfront fee charged by the lender to originate the loan — typically 0.5% to 2% of the loan amount">Loan Origination Fee</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="loanOrigFee" value="6,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="initialRepairs" title="Immediate capital improvements or renovations planned after closing">Initial Repairs / Renovation</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="initialRepairs" value="15,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="opReserves" title="Cash reserves set aside for operating expenses, vacancies, or unexpected costs post-closing">Operating Reserves</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="opReserves" value="5,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="otherCosts" title="Any additional costs not captured above — survey, environmental, legal, etc.">Other Costs</label>
+  <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="otherCosts" value="2,500" inputmode="numeric" data-currency></div>
+</div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+
+    <!-- RESULTS PANEL -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+  <span class="kpi-label">Total Sources</span>
+  <span class="kpi-value" id="kpiTotalSources">—</span>
+  <span class="kpi-delta" id="kpiTotalSourcesDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Total Uses</span>
+  <span class="kpi-value" id="kpiTotalUses">—</span>
+  <span class="kpi-delta" id="kpiTotalUsesDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Surplus / Shortfall</span>
+  <span class="kpi-value" id="kpiSurplus">—</span>
+  <span class="kpi-delta" id="kpiSurplusDetail"></span>
+</div>
+<div class="kpi-card">
+  <span class="kpi-label">Loan-to-Cost Ratio</span>
+  <span class="kpi-value" id="kpiLTC">—</span>
+  <span class="kpi-delta" id="kpiLTCDetail"></span>
+</div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+  <h3 class="chart-title">Sources vs Uses</h3>
+  <p class="chart-subtitle">Stacked comparison of capital sources and deployment</p>
+  <div class="chart-container chart-container-bar">
+    <canvas id="chartSourcesUses"></canvas>
+  </div>
+</div>
+<div class="chart-card">
+  <h3 class="chart-title">Capital Structure</h3>
+  <p class="chart-subtitle">Equity vs debt breakdown</p>
+  <div class="chart-container">
+    <canvas id="chartCapStructure"></canvas>
+  </div>
+</div>
+</div>
+      <!-- RESULTS TABLES -->
+      <h3 style="margin-top:var(--space-6);font-size:var(--text-base);font-weight:600">Sources of Capital</h3>
+      <div class="table-wrap" style="margin-top:var(--space-3)">
+        <table class="results-table">
+          <thead><tr><th>Source</th><th class="text-right">Amount</th><th class="text-right">% of Total</th></tr></thead>
+          <tbody id="sourcesBody"></tbody>
+        </table>
+      </div>
+      <h3 style="margin-top:var(--space-6);font-size:var(--text-base);font-weight:600">Uses of Capital</h3>
+      <div class="table-wrap" style="margin-top:var(--space-3)">
+        <table class="results-table">
+          <thead><tr><th>Use</th><th class="text-right">Amount</th><th class="text-right">% of Total</th></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+  <p style="margin-top:var(--space-2);font-size:var(--text-xs)"><a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "equity": "<strong>Equity / Cash Investment</strong> — The total cash you (or your partners) bring to the table. This is your skin in the game — the portion of capital that isn't borrowed. Lenders typically require 20-35% equity for investment properties.",
+    "seniorLoan": "<strong>Senior Loan</strong> — The primary mortgage or acquisition loan, usually from a bank, credit union, or DSCR lender. This is the first lien on the property and has priority in repayment. Typical LTV: 65-80%.",
+    "mezzLoan": "<strong>Mezzanine / Second Loan</strong> — Subordinate debt that sits behind the senior loan. Higher interest rates because it's riskier — it gets repaid only after the senior lender. Common in commercial and value-add deals.",
+    "sellerCredit": "<strong>Seller Credit</strong> — A concession from the seller applied at closing to reduce your out-of-pocket costs. Often negotiated to cover closing costs or repairs. Lenders may limit seller credits to 2-6% of the purchase price.",
+    "otherSource": "<strong>Other Source</strong> — Any additional capital sources such as grants, partner contributions, tax credit equity, mezzanine equity, or other creative financing.",
+    "purchasePrice": "<strong>Purchase Price</strong> — The agreed-upon acquisition price for the property. This is typically the largest single use of capital and the basis for LTV and LTC calculations.",
+    "closingCosts": "<strong>Closing Costs</strong> — Attorney fees, recording fees, transfer taxes, and miscellaneous closing expenses. Typically 1-3% of the purchase price for investment properties.",
+    "titleEscrow": "<strong>Title & Escrow</strong> — Title insurance premiums, escrow fees, and title search charges. Protects against ownership disputes and liens.",
+    "inspectionDD": "<strong>Inspection / Due Diligence</strong> — Property inspection, environmental Phase I/II, appraisal, survey, and other investigation costs incurred before closing.",
+    "loanOrigFee": "<strong>Loan Origination Fee</strong> — The upfront fee charged by the lender to underwrite and fund the loan. Typically 0.5%-2% of the loan amount. Sometimes called 'points.'",
+    "initialRepairs": "<strong>Initial Repairs / Renovation</strong> — Capital improvements or renovations planned immediately after closing. Critical in value-add strategies where you improve the property to increase rents or value.",
+    "opReserves": "<strong>Operating Reserves</strong> — Cash set aside post-closing for operating expenses, vacancy cushion, or unexpected costs. Lenders often require 3-6 months of operating reserves.",
+    "otherCosts": "<strong>Other Costs</strong> — Miscellaneous costs not captured elsewhere — environmental remediation, zoning applications, legal fees, survey costs, etc."
+  },
+  "examples": [
+    {
+      "name": "All-Cash Purchase",
+      "desc": "No debt — buying a small multifamily property outright with cash reserves",
+      "values": {
+        "equity": 520000,
+        "seniorLoan": 0,
+        "mezzLoan": 0,
+        "sellerCredit": 0,
+        "otherSource": 0,
+        "purchasePrice": 475000,
+        "closingCosts": 9500,
+        "titleEscrow": 4000,
+        "inspectionDD": 2000,
+        "loanOrigFee": 0,
+        "initialRepairs": 20000,
+        "opReserves": 8000,
+        "otherCosts": 1500
+      }
+    },
+    {
+      "name": "Leveraged Acquisition",
+      "desc": "75% LTV senior debt on a stabilized rental property — typical investor structure",
+      "values": {
+        "equity": 200000,
+        "seniorLoan": 600000,
+        "mezzLoan": 0,
+        "sellerCredit": 5000,
+        "otherSource": 0,
+        "purchasePrice": 750000,
+        "closingCosts": 15000,
+        "titleEscrow": 5500,
+        "inspectionDD": 3000,
+        "loanOrigFee": 6000,
+        "initialRepairs": 10000,
+        "opReserves": 10000,
+        "otherCosts": 5500
+      }
+    },
+    {
+      "name": "Value-Add Deal",
+      "desc": "Heavy renovation with mezzanine debt and seller credits — aggressive capital stack",
+      "values": {
+        "equity": 250000,
+        "seniorLoan": 700000,
+        "mezzLoan": 150000,
+        "sellerCredit": 10000,
+        "otherSource": 0,
+        "purchasePrice": 900000,
+        "closingCosts": 18000,
+        "titleEscrow": 6000,
+        "inspectionDD": 4000,
+        "loanOrigFee": 8500,
+        "initialRepairs": 125000,
+        "opReserves": 15000,
+        "otherCosts": 3500
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Sources & Uses?",
+    "purpose": "Every real estate closing requires capital to flow from specific sources into specific uses. This calculator ensures your capital stack balances — that you have enough money committed from all sources to cover every cost of acquisition. A mismatch means the deal doesn't close.",
+    "whenToUse": [
+      "Before submitting a Letter of Intent — confirm you can actually fund the deal",
+      "When structuring a capital stack with multiple lenders or equity partners",
+      "At closing preparation — verify all sources are committed and uses are accounted for"
+    ],
+    "keyInsight": "Many deals fall apart because investors underestimate closing costs, renovation budgets, or required reserves. A proper Sources & Uses ensures there are no funding gaps on closing day.",
+    "proTip": "Always build in a 5-10% contingency buffer on your uses side. If sources exceed uses by a small surplus, that's healthy. A shortfall means you need to find more capital or renegotiate terms."
+  },
+  "kpiExplains": {
+    "kpiTotalSources": "<strong>Total Sources</strong> — The sum of all capital commitments (equity, loans, credits). This is the total pool of money available to fund the acquisition.",
+    "kpiTotalUses": "<strong>Total Uses</strong> — The sum of all costs associated with the acquisition (purchase price, closing costs, renovations, reserves). Every dollar must be accounted for.",
+    "kpiSurplus": "<strong>Surplus / Shortfall</strong> — Total Sources minus Total Uses. Positive (green) means you have excess capital — a healthy cushion. Negative (red) means a funding gap that must be closed before the deal can proceed.",
+    "kpiLTC": "<strong>Loan-to-Cost Ratio</strong> — Total debt (senior + mezzanine) divided by total project cost (total uses). Lenders use LTC to measure leverage. Typical max: 75-80% for conventional, 85-90% for bridge/construction."
+  },
+  "coupled": [
+    {
+      "name": "Cash Flow Calculator",
+      "folder": "cashflow",
+      "reason": "After closing, project the property's ongoing cash flow to confirm the investment performs"
+    },
+    {
+      "name": "Cash-to-Close",
+      "folder": "cash-to-close",
+      "reason": "Detailed breakdown of the exact cash needed from the buyer at closing"
+    },
+    {
+      "name": "Investment Analysis",
+      "folder": "investment-analysis",
+      "reason": "Full return analysis including IRR, equity multiple, and cash-on-cash return"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the overall deal quality across multiple financial dimensions"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
