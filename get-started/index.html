@@ -424,12 +424,12 @@ const goalCalcMap = {
 
 // Learning paths mapped to roles + levels
 const learningPaths = {
-  homeowner: {id:'can-i-buy',title:'Can I Buy a Home?',level:'Beginner',duration:'2 hrs',lessons:3,desc:'Understand your buying power, explore mortgage options, and learn what it takes to purchase your first home.'},
-  investor_beginner: {id:'first-rental',title:'My First Rental Property',level:'Beginner',duration:'3 hrs',lessons:5,desc:'Learn how to analyze, finance, and manage your first rental property investment from start to finish.'},
-  investor_intermediate: {id:'brrrr-deep-dive',title:'BRRRR Strategy Deep Dive',level:'Intermediate',duration:'3 hrs',lessons:4,desc:'Master the Buy, Rehab, Rent, Refinance, Repeat strategy with hands-on calculator workflows.'},
-  investor_advanced: {id:'creative-finance',title:'Creative Finance Toolkit',level:'Intermediate',duration:'4 hrs',lessons:6,desc:'Explore subject-to, seller financing, lease options, and other creative deal structures.'},
-  agent: {id:'agent-deals',title:'Agent Deal Analyzer',level:'Intermediate',duration:'2 hrs',lessons:3,desc:'Build data-backed CMAs, analyze investment properties, and provide clients with comprehensive market insights.'},
-  lender: {id:'lender-qualification',title:'Lender Qualification Suite',level:'Intermediate',duration:'3 hrs',lessons:4,desc:'Quickly qualify borrowers, assess risk, and structure financing using industry-standard metrics.'}
+  homeowner: {id:'can-i-buy',title:'Can I Buy a Home?',level:'Beginner',desc:'Understand your buying power, explore mortgage options, and learn what it takes to purchase your first home.'},
+  investor_beginner: {id:'first-rental',title:'My First Rental Property',level:'Beginner',desc:'Learn how to analyze, finance, and manage your first rental property investment from start to finish.'},
+  investor_intermediate: {id:'brrrr-deep-dive',title:'BRRRR Strategy Deep Dive',level:'Intermediate',desc:'Master the Buy, Rehab, Rent, Refinance, Repeat strategy with hands-on calculator workflows.'},
+  investor_advanced: {id:'creative-finance',title:'Creative Finance Toolkit',level:'Intermediate',desc:'Explore subject-to, seller financing, lease options, and other creative deal structures.'},
+  agent: {id:'agent-deals',title:'Agent Deal Analyzer',level:'Intermediate',desc:'Build data-backed CMAs, analyze investment properties, and provide clients with comprehensive market insights.'},
+  lender: {id:'lender-qualification',title:'Lender Qualification Suite',level:'Intermediate',desc:'Quickly qualify borrowers, assess risk, and structure financing using industry-standard metrics.'}
 };
 
 // ── Navigation ──
@@ -549,8 +549,6 @@ function renderResults() {
       <div class="path-title">${path.title}</div>
       <div class="path-desc">${path.desc}</div>
       <div class="path-meta">
-        <span>⏱ ${path.duration}</span>
-        <span>📚 ${path.lessons} lessons</span>
       </div>
     </div>
     <div class="rec-label">Recommended Calculators</div>
