@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/payment-reverse-engineering">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Reverse Engineering — IntelliTC Solutions</title>
+<meta name="description" content="Back into purchase price and loan terms from your target monthly payment.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Payment Reverse Engineering — IntelliTC Solutions">
+<meta property="og:description" content="Back into purchase price and loan terms from your target monthly payment.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/payment-reverse-engineering">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Payment Reverse Engineering — IntelliTC Solutions">
+<meta name="twitter:description" content="Back into purchase price and loan terms from your target monthly payment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Payment Reverse Engineering",
+  "description": "Work backwards from a desired monthly payment to determine maximum purchase price.",
+  "url": "https://intellitcsolutions.com/payment-reverse-engineering/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Payment Reverse Engineering</h1>
+      <p class="panel-subtitle">Back into purchase price and loan terms from your target monthly payment.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Target Payment</h3>
+<div class="field">
+            <label for="targetPmt" title="Your ideal total monthly housing cost">Target Monthly Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="targetPmt" value="2,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="taxRate" title="Annual property tax rate">Property Tax Rate</label>
+            <div class="input-with-unit"><input type="text" id="taxRate" value="1.1" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="insYr" title="Annual homeowner insurance">Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insYr" value="1,800" inputmode="numeric" data-currency><span class='unit'>/yr</span></div>
+          </div>
+<div class="field">
+            <label for="hoa" title="Monthly HOA dues">HOA</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hoa" value="0" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+<div class="field">
+            <label for="pmi" title="Private mortgage insurance">PMI (if <20% down)</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="pmi" value="0" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Loan Terms</h3>
+<div class="field">
+            <label for="rate" title="Current mortgage rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="dp" title="Down payment percentage">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="20" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Max Purchase Price</span>
+          <span class="kpi-value" id="kpiMaxPrice">—</span>
+          <span class="kpi-delta" id="kpiMaxPriceDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Max Loan Amount</span>
+          <span class="kpi-value" id="kpiMaxLoan">—</span>
+          <span class="kpi-delta" id="kpiMaxLoanDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Total Monthly PITI</span>
+          <span class="kpi-value" id="kpiTotalPITI">—</span>
+          <span class="kpi-delta" id="kpiTotalPITIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Total Interest Paid</span>
+          <span class="kpi-value" id="kpiTotalInt">—</span>
+          <span class="kpi-delta" id="kpiTotalIntDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Price Sensitivity by Rate</h3>
+          <p class="chart-subtitle">Max price at different rates</p>
+          <div class="chart-container">
+            <canvas id="chartSensitivity"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Payment Breakdown</h3>
+          <p class="chart-subtitle">PITI component distribution</p>
+          <div class="chart-container">
+            <canvas id="chartBreakdown"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Rate</th><th class="text-right">5% Down</th><th class="text-right">10% Down</th><th class="text-right">15% Down</th><th class="text-right">20% Down</th></tr></thead><tbody id="sensBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Reverse-Engineer a Payment?",
+    "purpose": "Instead of starting with price and calculating payment, this works backwards: you enter your ideal monthly payment, and the calculator tells you the maximum price, loan amount, or interest rate that produces that payment.",
+    "whenToUse": [
+      "When you know your monthly budget but need to find the right price range",
+      "When negotiating — determine what price makes a deal work at your target payment",
+      "To quickly see how much room you have if rates change"
+    ],
+    "keyInsight": "This is especially powerful for investors: if you need $200/month cash flow and the property rents for $1,400, you know the maximum mortgage payment can be ~$950-1,000 (after expenses). Reverse-engineer that to find your max purchase price."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Affordability",
+      "folder": "affordability",
+      "reason": "Traditional approach: start with income, find the payment. This calc does the reverse."
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "For investors: work backward from target cash flow to max price"
+    }
+  ]
+};</script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
