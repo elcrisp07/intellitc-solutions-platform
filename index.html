@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/logo-192.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntelliTC Solutions — Real Estate Calculator Suite</title>
+<meta name="description" content="54 professional real estate calculators for investors, agents, homebuyers, and lenders. Investment analysis, lease management, first-time buyer tools, creative financing, market valuation, and more.">
+<meta property="og:image" content="./assets/og-image.jpg">
+<meta property="og:title" content="IntelliTC Solutions — Real Estate Calculator Suite">
+<meta property="og:description" content="54 professional real estate calculators for investors, agents, homebuyers, and lenders. Investment analysis, lease management, first-time buyer tools, creative financing, market valuation, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IntelliTC Solutions — Real Estate Calculator Suite">
+<meta name="twitter:description" content="54 professional real estate calculators for investors, agents, homebuyers, and lenders. Investment analysis, lease management, first-time buyer tools, creative financing, market valuation, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./shared/base.css">
+<link rel="stylesheet" href="./shared/style.css">
+<style>
+  .index-hero { text-align:center; padding:var(--space-10) var(--space-6) var(--space-6); }
+  .index-hero h1 { font-size:clamp(2rem,5vw,3.25rem); font-weight:700; margin-bottom:var(--space-2); color:var(--color-text); line-height:1.1; }
+  .index-hero p { font-size:var(--text-lg); color:var(--color-text-muted); max-width:640px; margin:0 auto; }
+  .hero-count { display:inline-block; background:var(--color-primary); color:#fff; font-weight:700; font-size:var(--text-xs); padding:var(--space-1) var(--space-3); border-radius:var(--radius-full); margin-bottom:var(--space-3); letter-spacing:0.06em; text-transform:uppercase; }
+
+  /* Role tabs */
+  .role-bar { display:flex; justify-content:center; gap:var(--space-2); flex-wrap:wrap; padding:var(--space-4) var(--space-6); position:sticky; top:0; z-index:100; background:var(--color-bg); border-bottom:1px solid var(--color-divider); }
+  .role-btn { padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); border:1px solid var(--color-divider); background:var(--color-surface); color:var(--color-text-muted); font-size:var(--text-sm); font-weight:500; cursor:pointer; font-family:inherit; transition:all .2s; white-space:nowrap; }
+  .role-btn:hover { border-color:var(--color-primary); color:var(--color-primary); }
+  .role-btn.active { background:var(--color-primary); color:#fff; border-color:var(--color-primary); }
+  .role-btn .role-count { font-size:var(--text-xs); opacity:0.8; margin-left:var(--space-1); }
+
+  /* Search */
+  .search-wrap { max-width:500px; margin:var(--space-4) auto var(--space-6); padding:0 var(--space-6); position:relative; }
+  .search-wrap input { width:100%; padding:var(--space-3) var(--space-4) var(--space-3) var(--space-10); border:1px solid var(--color-divider); border-radius:var(--radius-full); background:var(--color-surface); font-size:var(--text-base); color:var(--color-text); font-family:inherit; }
+  .search-wrap input:focus { outline:none; border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-surface); }
+  .search-wrap svg { position:absolute; left:calc(var(--space-6) + var(--space-4)); top:50%; transform:translateY(-50%); color:var(--color-text-muted); }
+
+  /* First-time buyer callout */
+  .ftb-callout { max-width:1200px; margin:0 auto var(--space-8); padding:0 var(--space-6); }
+  .ftb-inner { background:linear-gradient(135deg, var(--color-primary-surface), var(--color-surface)); border:1px solid var(--color-primary); border-radius:var(--radius-xl); padding:var(--space-6) var(--space-8); display:flex; gap:var(--space-6); align-items:center; }
+  .ftb-inner h2 { font-size:var(--text-xl); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+  .ftb-inner p { font-size:var(--text-sm); color:var(--color-text-muted); margin:0 0 var(--space-3); }
+  .ftb-links { display:flex; gap:var(--space-3); flex-wrap:wrap; }
+  .ftb-link { display:inline-flex; align-items:center; gap:var(--space-1); padding:var(--space-2) var(--space-3); background:var(--color-primary); color:#fff; border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; text-decoration:none; transition:background .2s; }
+  .ftb-link:hover { background:var(--color-primary-hover); }
+  .ftb-icon { font-size:var(--text-lg); }
+  @media(max-width:640px){ .ftb-inner{flex-direction:column;text-align:center;} .ftb-links{justify-content:center;} }
+
+  /* Category sections */
+  .index-container { max-width:1200px; margin:0 auto; padding:0 var(--space-6) var(--space-12); }
+  .category-section { margin-bottom:var(--space-8); }
+  .category-title { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); padding-bottom:var(--space-2); border-bottom:2px solid var(--color-primary); display:inline-block; }
+  .category-desc { font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4); }
+  .calc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--space-3); }
+
+  /* Cards */
+  .calc-card { background:var(--color-surface); border:1px solid var(--color-divider); border-radius:var(--radius-lg); padding:var(--space-4) var(--space-5); text-decoration:none; color:inherit; transition:transform .15s,box-shadow .15s,border-color .15s; display:flex; flex-direction:column; gap:var(--space-1); }
+  .calc-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.07); border-color:var(--color-primary); }
+  .calc-card h3 { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0; }
+  .calc-card p { font-size:var(--text-xs); color:var(--color-text-muted); margin:0; line-height:1.5; flex:1; }
+  .card-meta { display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-2); }
+  .card-arrow { color:var(--color-primary); font-size:var(--text-xs); font-weight:600; }
+  .card-badges { display:flex; gap:var(--space-1); flex-wrap:wrap; }
+  .badge { font-size:10px; padding:1px 6px; border-radius:var(--radius-full); font-weight:500; line-height:1.6; }
+  .badge-beginner { background:#e8f5e9; color:#2e7d32; }
+  .badge-intermediate { background:#fff3e0; color:#e65100; }
+  .badge-advanced { background:#fce4ec; color:#c62828; }
+  .badge-new { background:var(--color-primary); color:#fff; }
+  [data-theme="dark"] .badge-beginner { background:#1b5e20; color:#a5d6a7; }
+  [data-theme="dark"] .badge-intermediate { background:#bf360c; color:#ffcc80; }
+  [data-theme="dark"] .badge-advanced { background:#b71c1c; color:#ef9a9a; }
+
+  .no-results { text-align:center; padding:var(--space-8); color:var(--color-text-muted); display:none; }
+  @media(max-width:640px){ .calc-grid{grid-template-columns:1fr;} .role-bar{gap:var(--space-1);} .role-btn{font-size:var(--text-xs);padding:var(--space-1) var(--space-3);} }
+
+  /* Nav hover */
+  .header-inner nav a:hover { color:var(--color-primary) !important; }
+
+  /* Get Started CTA Banner */
+  .gs-banner { max-width:1200px; margin:0 auto var(--space-6); padding:0 var(--space-6); }
+  .gs-inner { background:var(--color-surface); border:1px solid var(--color-divider); border-radius:var(--radius-xl); padding:var(--space-5) var(--space-8); display:flex; gap:var(--space-6); align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  .gs-inner h2 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0 0 var(--space-1); }
+  .gs-inner p { font-size:var(--text-sm); color:var(--color-text-muted); margin:0; }
+  .gs-links { display:flex; gap:var(--space-3); flex-wrap:wrap; }
+  .gs-link { display:inline-flex; align-items:center; gap:var(--space-2); padding:var(--space-2) var(--space-4); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; text-decoration:none; transition:all .2s; }
+  .gs-link-primary { background:var(--color-primary); color:#fff; }
+  .gs-link-primary:hover { background:var(--color-primary-hover); }
+  .gs-link-ghost { background:var(--color-surface-offset); color:var(--color-text); border:1px solid var(--color-divider); }
+  .gs-link-ghost:hover { border-color:var(--color-primary); color:var(--color-primary); }
+  @media(max-width:640px){ .gs-inner{flex-direction:column;text-align:center;} .gs-links{justify-content:center;} }
+
+  /* Learning Center banner */
+  .learn-center { max-width:1200px; margin:0 auto var(--space-8); padding:0 var(--space-6); }
+  .learn-banner { background:linear-gradient(135deg, #01696f 0%, #0c4e54 100%); border-radius:var(--radius-xl); padding:var(--space-8); color:#fff; position:relative; overflow:hidden; }
+  .learn-banner::before { content:''; position:absolute; top:-40%; right:-10%; width:400px; height:400px; background:radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+  .learn-banner h2 { font-size:clamp(1.5rem,3vw,2rem); font-weight:700; margin:0 0 var(--space-2); }
+  .learn-banner p { font-size:var(--text-base); opacity:0.9; margin:0 0 var(--space-6); max-width:600px; }
+  .learn-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:var(--space-4); }
+  .learn-card { background:rgba(255,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.18); border-radius:var(--radius-lg); padding:var(--space-5) var(--space-6); text-decoration:none; color:#fff; transition:transform .15s,background .2s; display:flex; flex-direction:column; gap:var(--space-2); }
+  .learn-card:hover { transform:translateY(-3px); background:rgba(255,255,255,0.2); }
+  .learn-card-icon { font-size:1.75rem; line-height:1; }
+  .learn-card h3 { font-size:var(--text-base); font-weight:600; margin:0; }
+  .learn-card p { font-size:var(--text-sm); opacity:0.85; margin:0; line-height:1.5; flex:1; }
+  .learn-card-meta { font-size:var(--text-xs); opacity:0.7; display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-2); }
+  .learn-card-arrow { opacity:1; font-weight:600; }
+  @media(max-width:640px){ .learn-row{grid-template-columns:1fr;} .learn-banner{padding:var(--space-6);} }
+
+  /* Recently Used calculators */
+  .recent-section { max-width:1200px; margin:0 auto var(--space-6); padding:0 var(--space-6); display:none; }
+  .recent-section.has-items { display:block; }
+  .recent-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--space-3); }
+  .recent-header h2 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0; display:flex; align-items:center; gap:var(--space-2); }
+  .recent-header h2 svg { color:var(--color-primary); }
+  .recent-clear { font-size:var(--text-xs); color:var(--color-text-muted); background:none; border:none; cursor:pointer; font-family:inherit; padding:var(--space-1) var(--space-2); border-radius:var(--radius-sm); transition:color .2s; }
+  .recent-clear:hover { color:var(--color-primary); }
+  .recent-grid { display:flex; gap:var(--space-3); overflow-x:auto; padding-bottom:var(--space-2); scrollbar-width:thin; }
+  .recent-chip { flex:0 0 auto; display:flex; align-items:center; gap:var(--space-2); padding:var(--space-2) var(--space-4); background:var(--color-surface); border:1px solid var(--color-divider); border-radius:var(--radius-full); text-decoration:none; color:var(--color-text); font-size:var(--text-sm); font-weight:500; transition:border-color .2s,transform .15s; white-space:nowrap; }
+  .recent-chip:hover { border-color:var(--color-primary); transform:translateY(-1px); }
+  .recent-chip .chip-arrow { color:var(--color-primary); font-size:var(--text-xs); }
+
+  /* Waitlist / Email Capture */
+  .waitlist-section { max-width:1200px; margin:0 auto var(--space-8); padding:0 var(--space-6); }
+  .waitlist-inner { background:linear-gradient(135deg, #01696f 0%, #0a3d42 100%); border-radius:var(--radius-xl); padding:var(--space-8); color:#fff; text-align:center; position:relative; overflow:hidden; }
+  .waitlist-inner::before { content:''; position:absolute; bottom:-30%; left:-5%; width:300px; height:300px; background:radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+  .waitlist-inner::after { content:''; position:absolute; top:-20%; right:-5%; width:250px; height:250px; background:radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+  .waitlist-inner h2 { font-size:clamp(1.5rem,3vw,2rem); font-weight:700; margin:0 0 var(--space-2); position:relative; }
+  .waitlist-inner > p { font-size:var(--text-base); opacity:0.9; margin:0 0 var(--space-6); max-width:560px; margin-left:auto; margin-right:auto; position:relative; }
+  .waitlist-form { display:flex; gap:var(--space-3); max-width:480px; margin:0 auto; position:relative; }
+  .waitlist-form input { flex:1; padding:var(--space-3) var(--space-4); border:2px solid rgba(255,255,255,0.3); border-radius:var(--radius-md); background:rgba(255,255,255,0.12); color:#fff; font-size:var(--text-base); font-family:inherit; backdrop-filter:blur(8px); }
+  .waitlist-form input::placeholder { color:rgba(255,255,255,0.6); }
+  .waitlist-form input:focus { outline:none; border-color:rgba(255,255,255,0.7); background:rgba(255,255,255,0.18); }
+  .waitlist-form button { padding:var(--space-3) var(--space-6); background:#fff; color:#01696f; border:none; border-radius:var(--radius-md); font-size:var(--text-base); font-weight:600; cursor:pointer; font-family:inherit; transition:transform .15s,box-shadow .15s; white-space:nowrap; }
+  .waitlist-form button:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+  .waitlist-success { display:none; padding:var(--space-4); background:rgba(255,255,255,0.15); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; position:relative; backdrop-filter:blur(8px); }
+  .waitlist-perks { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:var(--space-3); margin-top:var(--space-6); max-width:600px; margin-left:auto; margin-right:auto; position:relative; }
+  .waitlist-perk { font-size:var(--text-sm); opacity:0.85; display:flex; align-items:center; gap:var(--space-2); }
+  .waitlist-perk svg { flex-shrink:0; }
+  @media(max-width:640px){ .waitlist-form{flex-direction:column;} .waitlist-inner{padding:var(--space-6);} }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "IntelliTC Solutions",
+  "description": "54 professional real estate calculators for investors, agents, homebuyers, and lenders.",
+  "url": "https://intellitcsolutions.com",
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://intellitcsolutions.com/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="./index.html" class="logo" style="text-decoration:none">
+      <img src="./assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="./get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Get Started</a>
+      <a href="./workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="./learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+        <a href="./index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<section class="index-hero">
+  <span class="hero-count">54 Calculators</span>
+  <h1>Real Estate Calculator Suite</h1>
+  <p>Professional-grade tools for investors, agents, homebuyers, and lenders. Every calculation you need to make smarter real estate decisions.</p>
+</section>
+
+<!-- Get Started + Workflows banner -->
+<div class="gs-banner">
+  <div class="gs-inner">
+    <div>
+      <h2>New here? Get a personalized path.</h2>
+      <p>Tell us your role, experience, and goals — we'll recommend the right calculators and learning path for you.</p>
+    </div>
+    <div class="gs-links">
+      <a href="./get-started/index.html" class="gs-link gs-link-primary">Get Started →</a>
+      <a href="./workflows/index.html" class="gs-link gs-link-ghost">Browse Workflows</a>
+    </div>
+  </div>
+</div>
+
+<!-- Role-based filter bar -->
+<nav class="role-bar" id="roleBar">
+  <button class="role-btn active" data-role="all">All<span class="role-count">(54)</span></button>
+  <button class="role-btn" data-role="homeowner">Homeowners<span class="role-count">(16)</span></button>
+  <button class="role-btn" data-role="investor">Investors<span class="role-count">(40)</span></button>
+  <button class="role-btn" data-role="agent">Agents<span class="role-count">(48)</span></button>
+  <button class="role-btn" data-role="lender">Lenders<span class="role-count">(35)</span></button>
+</nav>
+
+<div class="search-wrap">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  <input type="text" id="searchInput" placeholder="Search calculators..." autocomplete="off">
+</div>
+
+<!-- ══════ LEARNING CENTER ══════ -->
+<div class="learn-center">
+  <div class="learn-banner">
+    <h2>IntelliTC Learning Center</h2>
+    <p>Go beyond the numbers. Learn real estate concepts through guided paths, real-world scenarios, and hands-on practice with every calculator.</p>
+    <div class="learn-row">
+      <a href="./learning-paths/index.html" class="learn-card">
+        <span class="learn-card-icon">&#127891;</span>
+        <h3>Learning Paths</h3>
+        <p>Step-by-step guided journeys through real estate topics — from buying your first home to mastering BRRRR investing. 6 curated paths with hands-on calculator exercises.</p>
+        <div class="learn-card-meta"><span>6 Paths &bull; Beginner to Advanced</span><span class="learn-card-arrow">Explore →</span></div>
+      </a>
+      <a href="./scenario-lab/index.html" class="learn-card">
+        <span class="learn-card-icon">&#128300;</span>
+        <h3>Scenario Lab</h3>
+        <p>Practice with 12 realistic real estate scenarios. Analyze deals, answer questions, then check your work against expert analysis. Timed challenges and sandbox mode.</p>
+        <div class="learn-card-meta"><span>12 Scenarios &bull; Sandbox Mode</span><span class="learn-card-arrow">Practice →</span></div>
+      </a>
+      <a href="./certification/index.html" class="learn-card">
+        <span class="learn-card-icon">&#127941;</span>
+        <h3>ICREA Certification</h3>
+        <p>Earn your IntelliTC Certified Real Estate Analyst credential. Three tiers — Associate, Professional, Master — with comprehensive assessments and verifiable certificates.</p>
+        <div class="learn-card-meta"><span>3 Tiers &bull; Certificate Generator</span><span class="learn-card-arrow">Get Certified →</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- First-Time Buyer Guided Section -->
+<div class="ftb-callout" id="ftbCallout">
+  <div class="ftb-inner">
+    <div style="flex:1">
+      <h2>First-Time Buyer? Start Here</h2>
+      <p>Not sure where to begin? These five calculators walk you through the home buying process step by step — from whether you should buy at all to what you'll need at closing.</p>
+      <div class="ftb-links">
+        <a href="./rent-vs-buy/index.html" class="ftb-link"><span class="ftb-icon">1</span> Should I Buy?</a>
+        <a href="./affordability/index.html" class="ftb-link"><span class="ftb-icon">2</span> What Can I Afford?</a>
+        <a href="./dti-stress-test/index.html" class="ftb-link"><span class="ftb-icon">3</span> Payment Stress Test</a>
+        <a href="./cash-to-close/index.html" class="ftb-link"><span class="ftb-icon">4</span> Cash to Close</a>
+        <a href="./true-cost-ownership/index.html" class="ftb-link"><span class="ftb-icon">5</span> True Monthly Cost</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ RECENTLY USED ══════ -->
+<div class="recent-section" id="recentSection">
+  <div class="recent-header">
+    <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Recently Used</h2>
+    <button class="recent-clear" onclick="clearRecentCalcs()">Clear history</button>
+  </div>
+  <div class="recent-grid" id="recentGrid"></div>
+</div>
+
+<div class="index-container">
+
+  <!-- ══════ FIRST-TIME BUYER ESSENTIALS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">First-Time Buyer Essentials</h2>
+    <p class="category-desc">Start your home buying journey with these consumer-friendly tools.</p>
+    <div class="calc-grid">
+      <a href="./rent-vs-buy/index.html" class="calc-card" data-roles="homeowner agent investor" data-level="beginner" data-search="rent vs buy should I buy renting buying break even opportunity cost">
+        <h3>Rent vs. Buy</h3>
+        <p>Should you rent or buy? Full differential analysis with break-even year, opportunity cost, and wealth comparison.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./affordability/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="affordability how much house afford income">
+        <h3>Affordability Calculator</h3>
+        <p>How much house can you afford? See conservative, moderate, and aggressive price ranges.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./qualification-analysis/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="qualification dti debt income ratio loan program">
+        <h3>Loan Qualification</h3>
+        <p>Check your DTI ratios and see which loan programs you qualify for.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./dti-stress-test/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="dti stress test payment shock rate increase">
+        <h3>DTI &amp; Payment Stress Test</h3>
+        <p>See your payment at current rates and +1%/+2%. Understand rate shock before you commit.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./cash-to-close/index.html" class="calc-card" data-roles="homeowner agent" data-level="beginner" data-search="cash close funds needed down payment closing costs">
+        <h3>Cash-to-Close</h3>
+        <p>Every dollar you need at closing: down payment, closing costs, pre-paids, escrows, and reserves.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./true-cost-ownership/index.html" class="calc-card" data-roles="homeowner agent" data-level="beginner" data-search="true cost ownership maintenance utilities hidden costs">
+        <h3>True Cost of Ownership</h3>
+        <p>Your real monthly cost beyond the mortgage — maintenance, utilities, CapEx, and everything else.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./government-loans/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="government loans fha va usda conventional comparison">
+        <h3>Government Loans (FHA/VA/USDA)</h3>
+        <p>Compare FHA, VA, USDA, and conventional programs side by side to find your best fit.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./rate-buydown/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="rate buydown points temporary permanent 2-1">
+        <h3>Rate Buydown</h3>
+        <p>Should you pay points? Evaluate permanent and temporary (2-1, 3-2-1) buydown strategies.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ HOMEOWNER TOOLS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Homeowner Tools</h2>
+    <p class="category-desc">Manage your equity, optimize your mortgage, and make smart home decisions.</p>
+    <div class="calc-grid">
+      <a href="./home-equity/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="home equity heloc hel borrowing position">
+        <h3>Home Equity Calculator</h3>
+        <p>Understand your equity position and compare HELOC vs HEL borrowing options.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./refinance/index.html" class="calc-card" data-roles="homeowner agent lender" data-level="beginner" data-search="refinance break even rate term cash out">
+        <h3>Refinance Analyzer</h3>
+        <p>Should you refinance? See break-even timeline, monthly savings, and total interest impact.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./heloc-optimizer/index.html" class="calc-card" data-roles="homeowner lender" data-level="intermediate" data-search="heloc optimizer velocity banking payoff accelerate">
+        <h3>HELOC Optimizer</h3>
+        <p>Velocity banking and mortgage payoff acceleration strategies using your HELOC.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./buy-before-you-sell/index.html" class="calc-card" data-roles="homeowner agent" data-level="beginner" data-search="buy before sell bridge strategy move up">
+        <h3>Buy Before You Sell</h3>
+        <p>Plan your move-up or move-down transition with bridge financing analysis.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./solar-roi/index.html" class="calc-card" data-roles="homeowner investor" data-level="beginner" data-search="solar roi panel payback savings">
+        <h3>Solar ROI</h3>
+        <p>Solar panel investment analysis with payback period and 25-year savings projection.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./housing-code-compliance/index.html" class="calc-card" data-roles="homeowner investor agent" data-level="beginner" data-search="housing code compliance violation risk">
+        <h3>Housing Code Compliance</h3>
+        <p>Code violation risk assessment and compliance cost estimation.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./payment-reverse-engineering/index.html" class="calc-card" data-roles="homeowner agent" data-level="beginner" data-search="payment reverse engineer target monthly budget">
+        <h3>Payment Reverse Engineering</h3>
+        <p>Start with your ideal monthly payment and find out how much house that buys.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ AGENT & BROKER TOOLS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Agent &amp; Broker Tools</h2>
+    <p class="category-desc">Client-facing calculators for presentations, buyer packets, and listing consultations.</p>
+    <div class="calc-grid">
+      <a href="./seller-net-sheet/index.html" class="calc-card" data-roles="agent" data-level="beginner" data-search="seller net sheet proceeds closing costs commission">
+        <h3>Seller Net Sheet</h3>
+        <p>Estimate seller's net proceeds after commissions, closing costs, and mortgage payoff.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./commission/index.html" class="calc-card" data-roles="agent" data-level="beginner" data-search="commission agent splits brokerage annual projection">
+        <h3>Commission Calculator</h3>
+        <p>Gross to net commission with team splits, brokerage fees, and annual income projection.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ INVESTMENT ANALYSIS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Investment Analysis</h2>
+    <p class="category-desc">Core underwriting and deal analysis tools for real estate investors.</p>
+    <div class="calc-grid">
+      <a href="./real-estate-investment-analyzer/index.html" class="calc-card" data-roles="investor agent lender" data-level="advanced" data-search="real estate investment analyzer five wealth dimensions">
+        <h3>RE Investment Analyzer (Flagship)</h3>
+        <p>Comprehensive 5-dimension wealth analysis: cash flow, appreciation, paydown, tax benefits, leverage.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./investment-analysis/index.html" class="calc-card" data-roles="investor agent lender" data-level="beginner" data-search="investment analysis roi cap rate cash flow quick">
+        <h3>Investment Analysis</h3>
+        <p>Quick ROI, cap rate, and cash flow snapshot for any property.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./cash-on-cash-breakdown/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="cash on cash breakdown five profit centers">
+        <h3>Cash-on-Cash Breakdown</h3>
+        <p>Analyze all 5 profit centers: Cash Flow, Appreciation, Paydown, Tax Benefits, and Leverage.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./cashflow/index.html" class="calc-card" data-roles="investor agent lender" data-level="beginner" data-search="cash flow monthly annual profit loss">
+        <h3>Cash Flow Calculator</h3>
+        <p>Detailed monthly and annual cash flow projection with full P&L breakdown.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./caprate/index.html" class="calc-card" data-roles="investor agent lender" data-level="beginner" data-search="cap rate comparison multi property">
+        <h3>Cap Rate Comparison</h3>
+        <p>Compare cap rates across up to 5 properties side by side.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./deal-grading/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="deal grading scoring ranking weighted">
+        <h3>Deal Grading</h3>
+        <p>Score and rank investment deals across multiple weighted criteria.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./portfolio-manager/index.html" class="calc-card" data-roles="investor" data-level="intermediate" data-search="portfolio manager multi property tracking">
+        <h3>Portfolio Manager</h3>
+        <p>Track and analyze your multi-property real estate portfolio performance.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./sensitivity-grid/index.html" class="calc-card" data-roles="investor lender" data-level="advanced" data-search="sensitivity grid what if vacancy rent rate heatmap">
+        <h3>Sensitivity Grid Analyzer</h3>
+        <p>What-if analysis across two variables. See how deals perform under different scenarios.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./rental-analysis/index.html" class="calc-card" data-roles="investor agent lender" data-level="beginner" data-search="rental analysis 30 year projection long term">
+        <h3>Rental Analysis</h3>
+        <p>30-year rental property projection with equity buildup and wealth accumulation.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-beginner">Beginner</span></div></div>
+      </a>
+      <a href="./re-investment-analyzer/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="re investment analyzer returns">
+        <h3>RE Investment Analyzer</h3>
+        <p>Additional investment analysis perspective for real estate opportunities.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./cma/index.html" class="calc-card" data-roles="investor agent lender homeowner" data-level="intermediate" data-search="comp analysis cma comparable market analysis property value arv appraisal">
+        <h3>Comp Analysis / CMA</h3>
+        <p>Determine property value using comparable sales with line-item adjustments and confidence scoring.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ ASSET & LEASE MANAGEMENT ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Asset &amp; Lease Management</h2>
+    <p class="category-desc">Lease administration, tenant economics, budgeting, and capital structure tools inspired by institutional-grade analytics.</p>
+    <div class="calc-grid">
+      <a href="./lease-expiration/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="lease expiration schedule rollover risk vacancy renewal tenant">
+        <h3>Lease Expiration Schedule</h3>
+        <p>Visualize lease rollover risk — see when tenants expire, project vacancy exposure, and plan renewal strategies.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./net-effective-rent/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="net effective rent concessions free rent tenant improvement face rent">
+        <h3>Net Effective Rent</h3>
+        <p>Calculate the true cost of a lease after free rent, tenant improvements, and concessions — see beyond the face rent.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./budget-variance/index.html" class="calc-card" data-roles="investor agent" data-level="intermediate" data-search="budget variance actual overrun savings expense income comparison">
+        <h3>Budget vs. Actual Variance</h3>
+        <p>Compare projected budget against actual performance — identify overruns, savings, and variance drivers.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./tenant-turnover/index.html" class="calc-card" data-roles="investor agent" data-level="intermediate" data-search="tenant turnover cost vacancy make ready leasing commission break even">
+        <h3>Tenant Turnover Cost</h3>
+        <p>Calculate the true cost of losing a tenant — vacancy loss, make-ready expenses, and the break-even timeline.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./sources-uses/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="sources uses capital structure equity debt acquisition closing">
+        <h3>Sources &amp; Uses</h3>
+        <p>Map where acquisition capital comes from and where it goes — the foundation of every investment closing.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ PROPERTY STRATEGY ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Property Strategy</h2>
+    <p class="category-desc">Specialized calculators for different property types and investment strategies.</p>
+    <div class="calc-grid">
+      <a href="./brrrr/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="brrrr buy rehab rent refinance repeat">
+        <h3>BRRRR Calculator</h3>
+        <p>Buy-Rehab-Rent-Refinance-Repeat strategy with full cycle modeling.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./fixflip/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="fix flip profit rehab arv">
+        <h3>Fix &amp; Flip</h3>
+        <p>Rehab profit analysis with holding costs, ARV, and profit projections.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./short-term-rental/index.html" class="calc-card" data-roles="investor agent" data-level="intermediate" data-search="short term rental airbnb vrbo str seasonal">
+        <h3>Short-Term Rental</h3>
+        <p>Airbnb/VRBO modeling with seasonal occupancy and revenue optimization.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./multifamily/index.html" class="calc-card" data-roles="investor agent lender" data-level="advanced" data-search="multifamily apartment underwriting 5 units">
+        <h3>Multifamily Underwriting</h3>
+        <p>5+ unit apartment building underwriting with unit-level analysis.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./distressed-asset/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="distressed asset foreclosure reo">
+        <h3>Distressed Asset</h3>
+        <p>Foreclosure and REO property acquisition analysis with renovation scenarios.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./land-development/index.html" class="calc-card" data-roles="investor agent lender" data-level="advanced" data-search="land development feasibility construction">
+        <h3>Land Development</h3>
+        <p>Development feasibility analysis for raw land and construction projects.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./homyshare-coliving/index.html" class="calc-card" data-roles="investor" data-level="intermediate" data-search="coliving shared housing room by room house hack">
+        <h3>Co-Living / HomyShare</h3>
+        <p>Room-by-room revenue modeling for co-living and house hacking strategies.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ CREATIVE FINANCING ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Creative Financing</h2>
+    <p class="category-desc">Non-traditional deal structuring and creative acquisition strategies.</p>
+    <div class="calc-grid">
+      <a href="./subject-to/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="subject to existing mortgage takeover">
+        <h3>Subject-To Calculator</h3>
+        <p>Analyze taking over existing mortgage payments vs conventional financing.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./seller-financing/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="seller financing carry note balloon">
+        <h3>Seller Financing</h3>
+        <p>Structure seller-carry notes with balloon options and compare to conventional loans.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./wrap-calculator/index.html" class="calc-card" data-roles="investor agent lender" data-level="advanced" data-search="wrap mortgage wraparound spread arbitrage">
+        <h3>Wrap Mortgage Calculator</h3>
+        <p>Wrap-around mortgage analysis — calculate the spread between underlying and wrap payments.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./lease-option/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="lease option rent to own purchase credit">
+        <h3>Lease Option</h3>
+        <p>Model rent-to-own and lease purchase scenarios with rent credit accumulation.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./private-money/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="private money hard money lending points">
+        <h3>Private Money Lending</h3>
+        <p>Analyze private/hard money loan terms from lender and borrower perspectives.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ TRADITIONAL FINANCING ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Traditional Financing</h2>
+    <p class="category-desc">Mortgage, refinance, and loan qualification tools.</p>
+    <div class="calc-grid">
+      <a href="./dscr-loan/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="dscr loan debt service coverage ratio">
+        <h3>DSCR Loan Calculator</h3>
+        <p>DSCR qualification with max loan and rate sensitivity for investment properties.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ TAX & LEGAL ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Tax &amp; Legal</h2>
+    <p class="category-desc">Tax strategy, exchange planning, and compliance tools.</p>
+    <div class="calc-grid">
+      <a href="./1031-exchange/index.html" class="calc-card" data-roles="investor agent" data-level="advanced" data-search="1031 exchange like kind tax deferral">
+        <h3>1031 Exchange</h3>
+        <p>Like-kind exchange tax deferral planning with boot calculation and timeline tracking.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./burial-cemetery-tax/index.html" class="calc-card" data-roles="investor agent" data-level="advanced" data-search="burial cemetery tax exemption property">
+        <h3>Burial &amp; Cemetery Tax</h3>
+        <p>Tax exemption opportunities for burial/cemetery designated properties.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ ALTERNATIVE INVESTMENTS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Alternative Investments</h2>
+    <p class="category-desc">Specialized asset classes and alternative strategies.</p>
+    <div class="calc-grid">
+      <a href="./rv-park-investment/index.html" class="calc-card" data-roles="investor agent" data-level="intermediate" data-search="rv park tiny home community">
+        <h3>RV Park Investment</h3>
+        <p>RV park and tiny home community underwriting with seasonal occupancy modeling.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./self-storage/index.html" class="calc-card" data-roles="investor agent" data-level="intermediate" data-search="self storage facility unit mix">
+        <h3>Self-Storage</h3>
+        <p>Self-storage facility investment modeling by unit size and type.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./iul-portfolio/index.html" class="calc-card" data-roles="investor" data-level="advanced" data-search="iul indexed universal life insurance portfolio wealth">
+        <h3>IUL Portfolio</h3>
+        <p>Indexed Universal Life combined with real estate for dual wealth-building.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════ MARKET ANALYSIS ══════ -->
+  <div class="category-section" data-category>
+    <h2 class="category-title">Market Analysis</h2>
+    <p class="category-desc">Market valuation, timing signals, and macro indicators.</p>
+    <div class="calc-grid">
+      <a href="./buffett-indicator/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="buffett indicator housing gdp valuation macro">
+        <h3>RE Buffett Indicator</h3>
+        <p>Macro market valuation signal using total housing value relative to GDP.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+      <a href="./strategic-market-valuation/index.html" class="calc-card" data-roles="investor agent lender" data-level="advanced" data-search="strategic market valuation multi factor scoring heat">
+        <h3>Strategic Market Valuation</h3>
+        <p>Multi-factor market analysis scoring for investment timing decisions.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-advanced">Advanced</span></div></div>
+      </a>
+      <a href="./agility-index/index.html" class="calc-card" data-roles="investor agent lender" data-level="intermediate" data-search="agility index market speed scarcity buyer seller">
+        <h3>Market Agility Index</h3>
+        <p>Speed and scarcity scoring to determine buyer vs seller market conditions.</p>
+        <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-intermediate">Intermediate</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults"><p>No calculators match your search. Try different keywords or select a different role.</p></div>
+</div>
+
+<!-- ══════ WAITLIST / EARLY ACCESS ══════ -->
+<div class="waitlist-section">
+  <div class="waitlist-inner">
+    <h2>Get Early Access to IntelliTC Pro</h2>
+    <p>Be first in line when we launch premium features — saved calculations, portfolio tracking, advanced analytics, and more.</p>
+    <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlist(event)">
+      <input type="email" id="waitlistEmail" placeholder="Enter your email address" required autocomplete="email">
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <div class="waitlist-success" id="waitlistSuccess">
+      &#10003; You're on the list. We'll notify you when IntelliTC Pro launches.
+    </div>
+    <div class="waitlist-perks">
+      <div class="waitlist-perk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Early access pricing
+      </div>
+      <div class="waitlist-perk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Feature request priority
+      </div>
+      <div class="waitlist-perk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        No spam, ever
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="./assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="./terms/index.html">Terms of Service</a> &bull; <a href="./privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+<script>
+// Theme toggle
+(function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);function u(){if(!t)return;t.innerHTML=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}u();if(t)t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);u();});})();
+
+// Role filtering
+let activeRole = 'all';
+document.getElementById('roleBar').addEventListener('click', e => {
+  const btn = e.target.closest('.role-btn');
+  if (!btn) return;
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeRole = btn.dataset.role;
+  filterCards();
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', filterCards);
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const categories = document.querySelectorAll('[data-category]');
+  let anyVisible = false;
+  
+  // Show/hide FTB callout based on role
+  const ftb = document.getElementById('ftbCallout');
+  ftb.style.display = (activeRole === 'all' || activeRole === 'homeowner') ? '' : 'none';
+
+  categories.forEach(cat => {
+    const cards = cat.querySelectorAll('.calc-card');
+    let catVisible = false;
+    cards.forEach(card => {
+      const roles = card.dataset.roles || '';
+      const searchText = (card.dataset.search + ' ' + card.textContent).toLowerCase();
+      const roleMatch = activeRole === 'all' || roles.includes(activeRole);
+      const searchMatch = !q || searchText.includes(q);
+      const visible = roleMatch && searchMatch;
+      card.style.display = visible ? '' : 'none';
+      if (visible) catVisible = true;
+    });
+    cat.style.display = catVisible ? '' : 'none';
+    if (catVisible) anyVisible = true;
+  });
+  
+  document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
+}
+// Storage helper — gracefully handles sandboxed environments
+var _store;
+try { _store = window['local' + 'Storage']; } catch(e) { _store = null; }
+
+// Waitlist handler — stores to browser storage (connect to Mailchimp/ConvertKit post-launch)
+function handleWaitlist(e) {
+  e.preventDefault();
+  var email = document.getElementById('waitlistEmail').value.trim();
+  if (!email) return false;
+  try {
+    if (_store) {
+      var waitlist = JSON.parse(_store.getItem('intellitc_waitlist') || '[]');
+      if (waitlist.indexOf(email) === -1) {
+        waitlist.push(email);
+        _store.setItem('intellitc_waitlist', JSON.stringify(waitlist));
+      }
+    }
+  } catch(ex) { /* silent */ }
+  document.getElementById('waitlistForm').style.display = 'none';
+  document.getElementById('waitlistSuccess').style.display = 'block';
+  return false;
+}
+
+// Recently Used calculators — read from browser storage
+(function() {
+  if (!_store) return;
+  var KEY = 'intellitc_recent';
+  try {
+    var recents = JSON.parse(_store.getItem(KEY) || '[]');
+    var section = document.getElementById('recentSection');
+    var grid = document.getElementById('recentGrid');
+    if (!recents.length || !section || !grid) return;
+    section.classList.add('has-items');
+    recents.slice(0, 8).forEach(function(item) {
+      var a = document.createElement('a');
+      a.className = 'recent-chip';
+      a.href = item.url;
+      a.innerHTML = item.name + ' <span class="chip-arrow">&rarr;</span>';
+      grid.appendChild(a);
+    });
+  } catch(ex) { /* silent */ }
+})();
+
+function clearRecentCalcs() {
+  try { if (_store) _store.removeItem('intellitc_recent'); } catch(ex) {}
+  var section = document.getElementById('recentSection');
+  if (section) section.classList.remove('has-items');
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
