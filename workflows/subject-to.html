@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/workflows/subject-to.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subject-To Acquisition — IntelliTC Workflow</title>
+<meta name="description" content="Structure a subject-to deal by analyzing the existing loan, modeling the takeover, and projecting equity growth.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Subject-To Acquisition — IntelliTC Workflow">
+<meta property="og:description" content="Structure a subject-to deal by analyzing the existing loan, modeling the takeover, and projecting equity growth.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/workflows/subject-to.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Subject-To Acquisition — IntelliTC Workflow">
+<meta name="twitter:description" content="Structure a subject-to deal by analyzing the existing loan, modeling the takeover, and projecting equity growth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+.wd-container { max-width:820px; margin:0 auto; padding:var(--space-8) var(--space-6) var(--space-16); }
+
+.wd-back { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); font-weight:500; color:var(--color-text-muted); text-decoration:none; margin-bottom:var(--space-6); }
+.wd-back:hover { color:var(--color-primary); }
+
+.wd-header { margin-bottom:var(--space-8); }
+.wd-header-row { display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-3); }
+.wd-icon { width:52px; height:52px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0; }
+.wd-header h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:700; color:var(--color-text); line-height:1.15; margin:0; }
+.wd-header .wd-subtitle { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.6; margin-top:var(--space-2); }
+.wd-meta { display:flex; gap:var(--space-3); flex-wrap:wrap; margin-top:var(--space-3); }
+.wd-tag { font-size:var(--text-xs); font-weight:500; padding:3px 12px; border-radius:var(--radius-full); }
+.wd-tag-steps { background:var(--color-primary-surface); color:var(--color-primary); }
+.wd-tag-time { background:var(--color-surface-offset); color:var(--color-text-muted); }
+.wd-tag-beginner { background:#e8f5e9; color:#2e7d32; }
+.wd-tag-intermediate { background:#fff3e0; color:#e65100; }
+.wd-tag-advanced { background:#fce4ec; color:#c62828; }
+[data-theme="dark"] .wd-tag-beginner { background:#1b5e20; color:#a5d6a7; }
+[data-theme="dark"] .wd-tag-intermediate { background:#bf360c; color:#ffcc80; }
+[data-theme="dark"] .wd-tag-advanced { background:#b71c1c; color:#ef9a9a; }
+
+/* Steps timeline */
+.wd-steps { position:relative; }
+.wd-step { display:flex; gap:var(--space-5); margin-bottom:var(--space-6); position:relative; }
+.wd-step:last-child { margin-bottom:0; }
+
+.wd-step-line { display:flex; flex-direction:column; align-items:center; flex-shrink:0; width:40px; }
+.wd-step-num { width:40px; height:40px; border-radius:50%; background:var(--color-surface); border:2px solid var(--color-divider); display:flex; align-items:center; justify-content:center; font-size:var(--text-sm); font-weight:700; color:var(--color-text-muted); transition:all .3s; z-index:1; position:relative; }
+.wd-step.active .wd-step-num { background:var(--color-primary); border-color:var(--color-primary); color:#fff; box-shadow:0 0 0 4px var(--color-primary-surface); }
+.wd-step.completed .wd-step-num { background:var(--color-primary); border-color:var(--color-primary); color:#fff; }
+.wd-connector { flex:1; width:2px; background:var(--color-divider); min-height:20px; }
+.wd-step.completed .wd-connector { background:var(--color-primary); }
+
+.wd-step-body { flex:1; padding-bottom:var(--space-2); }
+.wd-step-action { font-size:var(--text-xs); font-weight:600; color:var(--color-primary); text-transform:uppercase; letter-spacing:.05em; margin-bottom:var(--space-1); }
+.wd-step-calc { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin-bottom:var(--space-2); }
+.wd-step-detail { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.7; margin-bottom:var(--space-3); }
+.wd-step-link { display:inline-flex; align-items:center; gap:var(--space-1); font-size:var(--text-sm); font-weight:600; color:var(--color-primary); text-decoration:none; padding:var(--space-2) var(--space-4); background:var(--color-primary-surface); border-radius:var(--radius-md); transition:all .2s; }
+.wd-step-link:hover { background:var(--color-primary); color:#fff; }
+
+/* Connector arrow between steps */
+.wd-flow-label { font-size:10px; color:var(--color-text-faint); text-align:center; padding:var(--space-1) 0; letter-spacing:.04em; }
+
+/* Insight card */
+.wd-insight { background:linear-gradient(135deg, var(--color-primary-surface), var(--color-surface)); border:1px solid var(--color-primary); border-radius:var(--radius-xl); padding:var(--space-6); margin-top:var(--space-8); }
+.wd-insight-label { font-size:var(--text-xs); font-weight:700; color:var(--color-primary); text-transform:uppercase; letter-spacing:.06em; margin-bottom:var(--space-2); }
+.wd-insight p { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:0; }
+
+/* Navigation */
+.wd-nav { display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-8); padding-top:var(--space-6); border-top:1px solid var(--color-divider); }
+
+.header-nav { display:flex; align-items:center; gap:var(--space-4); }
+.header-nav a { font-size:var(--text-sm); font-weight:500; color:var(--color-text-muted); text-decoration:none; transition:color .2s; }
+.header-nav a:hover, .header-nav a.active { color:var(--color-primary); }
+
+/* Icon colors */
+.wf-icon-brrrr { background:#e0f2f1; color:#00796b; }
+.wf-icon-flip { background:#fff3e0; color:#e65100; }
+.wf-icon-rental { background:#e3f2fd; color:#1565c0; }
+.wf-icon-subto { background:#fce4ec; color:#c62828; }
+.wf-icon-seller { background:#f3e5f5; color:#7b1fa2; }
+.wf-icon-hack { background:#e8f5e9; color:#2e7d32; }
+.wf-icon-cma { background:#e8eaf6; color:#283593; }
+.wf-icon-portfolio { background:#fff8e1; color:#f57f17; }
+[data-theme="dark"] .wf-icon-brrrr { background:#1a3a38; color:#4db6ac; }
+[data-theme="dark"] .wf-icon-flip { background:#3e2a1a; color:#ffb74d; }
+[data-theme="dark"] .wf-icon-rental { background:#1a2e3e; color:#64b5f6; }
+[data-theme="dark"] .wf-icon-subto { background:#3a1a22; color:#ef9a9a; }
+[data-theme="dark"] .wf-icon-seller { background:#2e1a3e; color:#ce93d8; }
+[data-theme="dark"] .wf-icon-hack { background:#1a3a1e; color:#81c784; }
+[data-theme="dark"] .wf-icon-cma { background:#1a1e3e; color:#9fa8da; }
+[data-theme="dark"] .wf-icon-portfolio { background:#3a341a; color:#ffd54f; }
+</style>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav class="header-nav">
+      <a href="../get-started/index.html">Get Started</a>
+      <a href="../workflows/index.html" class="active">Workflows</a>
+      <a href="../learning-paths/index.html">Learn</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+        <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch theme" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="wd-container">
+  <a href="index.html" class="wd-back">← All Workflows</a>
+
+  <div class="wd-header">
+    <div class="wd-header-row">
+      <div class="wd-icon wf-icon-subto">🔑</div>
+      <h1>Subject-To Acquisition</h1>
+    </div>
+    <p class="wd-subtitle">Structure a subject-to deal by analyzing the existing loan, modeling the takeover, and projecting equity growth.</p>
+    <div class="wd-meta">
+      <span class="wd-tag wd-tag-steps">4 Steps</span>
+      <span class="wd-tag wd-tag-time">25 min</span>
+      <span class="wd-tag wd-tag-advanced">Advanced</span>
+    </div>
+  </div>
+
+  <div class="wd-steps">
+    <div class="wd-step">
+      <div class="wd-step-line">
+        <div class="wd-step-num">1</div>
+        <div class="wd-connector"></div>
+      </div>
+      <div class="wd-step-body">
+        <div class="wd-step-action">Step 1 — Analyze existing loan terms</div>
+        <div class="wd-step-calc">Loan Qualification</div>
+        <p class="wd-step-detail">Understand the current mortgage — rate, balance, payment, and remaining term — before structuring the takeover.</p>
+        <a href="../qualification-analysis/index.html" class="wd-step-link">Open Calculator →</a>
+      </div>
+    </div>
+    <div class="wd-step">
+      <div class="wd-step-line">
+        <div class="wd-step-num">2</div>
+        <div class="wd-connector"></div>
+      </div>
+      <div class="wd-step-body">
+        <div class="wd-step-action">Step 2 — Model the takeover structure</div>
+        <div class="wd-step-calc">Subject-To Calculator</div>
+        <p class="wd-step-detail">Calculate your effective cost basis, cash-to-close, and monthly obligation when taking the property subject to existing financing.</p>
+        <a href="../subject-to/index.html" class="wd-step-link">Open Calculator →</a>
+      </div>
+    </div>
+    <div class="wd-step">
+      <div class="wd-step-line">
+        <div class="wd-step-num">3</div>
+        <div class="wd-connector"></div>
+      </div>
+      <div class="wd-step-body">
+        <div class="wd-step-action">Step 3 — Validate profitability</div>
+        <div class="wd-step-calc">Cash Flow Calculator</div>
+        <p class="wd-step-detail">Run cash flow projections using the existing loan terms to ensure the deal generates positive returns.</p>
+        <a href="../cashflow/index.html" class="wd-step-link">Open Calculator →</a>
+      </div>
+    </div>
+    <div class="wd-step">
+      <div class="wd-step-line">
+        <div class="wd-step-num">4</div>
+        
+      </div>
+      <div class="wd-step-body">
+        <div class="wd-step-action">Step 4 — Track equity accumulation</div>
+        <div class="wd-step-calc">Rental Analysis</div>
+        <p class="wd-step-detail">Project how quickly you build equity through both mortgage paydown (paid by tenants) and property appreciation.</p>
+        <a href="../rental-analysis/index.html" class="wd-step-link">Open Calculator →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wd-insight">
+    <div class="wd-insight-label">💡 Key Insight</div>
+    <p>Verify the existing loan has no due-on-sale acceleration clause being enforced. Most lenders won't call the loan if payments remain current.</p>
+  </div>
+
+  <div class="wd-nav">
+    <a href="index.html" class="btn btn-ghost">← All Workflows</a>
+    <a href="../get-started/index.html" class="btn btn-primary">Get Started →</a>
+  </div>
+</div>
+
+<footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a></p>
+  </footer>
+
+<script>
+// Theme toggle
+(function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);function u(){if(!t)return;t.innerHTML=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}u();if(t)t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);u();});})();
+
+// Interactive step highlighting
+document.querySelectorAll('.wd-step').forEach((step, i) => {
+  step.addEventListener('click', () => {
+    document.querySelectorAll('.wd-step').forEach((s, j) => {
+      s.classList.toggle('completed', j < i);
+      s.classList.toggle('active', j === i);
+      s.classList.remove(j > i ? 'completed' : '');
+      if (j > i) { s.classList.remove('completed'); s.classList.remove('active'); }
+    });
+  });
+});
+
+// Activate first step by default
+document.querySelector('.wd-step')?.classList.add('active');
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
