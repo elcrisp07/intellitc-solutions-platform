@@ -909,7 +909,7 @@
       <div class="how-card">
         <div class="how-num">1</div>
         <h3>Complete Learning Paths</h3>
-        <p>Work through guided learning paths that teach real estate analysis concepts using IntelliTC's 49 calculators.</p>
+        <p>Work through guided learning paths that teach real estate analysis concepts using IntelliTC's 54 calculators.</p>
       </div>
       <div class="how-card">
         <div class="how-num">2</div>
@@ -1334,9 +1334,9 @@ const QUESTIONS = {
       explanation: "Payback = $15,000 discount / $4,200 annual tax savings = 3.57 years. After year 4, the tax savings are pure gain — a perpetual annual return. Over a 10-year hold, the $15,000 'discount' generates $42,000 in tax savings. The Burial & Cemetery Tax Calculator identifies these hidden value opportunities."
     },
     {
-      q: "An investor is building a certification-worthy portfolio analysis. They must demonstrate proficiency across all 49 calculators. Which approach best proves ICREA Master-level competency?",
+      q: "An investor is building a certification-worthy portfolio analysis. They must demonstrate proficiency across all 54 calculators. Which approach best proves ICREA Master-level competency?",
       choices: [
-        "Running all 49 calculators once with default values",
+        "Running all 54 calculators once with default values",
         "Completing all learning paths and scenario labs with 90%+ scores",
         "Analyzing 3 real deals end-to-end using calculator workflows, stress-testing assumptions, and documenting sensitivity analysis",
         "Memorizing all calculator formulas"
@@ -1726,14 +1726,19 @@ function generateCertificate() {
   ctx.lineWidth = 1;
   ctx.stroke();
 
+  ctx.font = '400 16px "DM Sans", sans-serif';
+  ctx.fillStyle = '#444';
+  ctx.fillText('Eric Crisp', 270, sigY - 12);
+  ctx.fillText('Eric Crisp M.S.', W - 270, sigY - 12);
+
   ctx.font = '600 12px "DM Sans", sans-serif';
   ctx.fillStyle = '#666';
-  ctx.fillText('IntelliTC Solutions', 270, sigY + 20);
+  ctx.fillText('Platform Administrator', 270, sigY + 20);
   ctx.fillText('ICREA Program Director', W - 270, sigY + 20);
 
   ctx.font = '400 11px "DM Sans", sans-serif';
   ctx.fillStyle = '#999';
-  ctx.fillText('Platform Administrator', 270, sigY + 36);
+  ctx.fillText('IntelliTC Solutions', 270, sigY + 36);
   ctx.fillText('Certification Authority', W - 270, sigY + 36);
 
   // Bottom accent bar
@@ -1743,7 +1748,7 @@ function generateCertificate() {
   // Footer
   ctx.font = '400 10px "DM Sans", sans-serif';
   ctx.fillStyle = '#bbb';
-  ctx.fillText('IntelliTC Solutions — 48 Professional Real Estate Calculators — intellitcsolutions.com', W / 2, H - 35);
+  ctx.fillText('IntelliTC Solutions — 54 Professional Real Estate Calculators — intellitcsolutions.com', W / 2, H - 35);
 
   document.getElementById('certPreviewWrap').classList.add('visible');
 }
