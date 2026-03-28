@@ -107,7 +107,13 @@
   /* ---- Position tooltip ---- */
   function showTooltip(target, text) {
     var tip = ensureTooltip();
+    // Hide first to reset position for accurate measurement
+    tip.classList.remove('visible');
     tip.textContent = text;
+    tip.style.left = '0px';
+    tip.style.top = '0px';
+    // Force layout recalculation
+    tip.offsetHeight;
     tip.classList.add('visible');
     tip.setAttribute('aria-hidden', 'false');
 
@@ -162,10 +168,16 @@
       icon.setAttribute('tabindex', '0');
       label.appendChild(icon);
 
+      // Tooltip on icon hover
       icon.addEventListener('mouseenter', function() { showTooltip(icon, match); });
       icon.addEventListener('mouseleave', hideTooltip);
       icon.addEventListener('focus', function() { showTooltip(icon, match); });
       icon.addEventListener('blur', hideTooltip);
+
+      // Also trigger on entire label hover for easier access
+      label.style.cursor = 'help';
+      label.addEventListener('mouseenter', function() { showTooltip(label, match); });
+      label.addEventListener('mouseleave', hideTooltip);
     });
   }
 
