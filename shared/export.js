@@ -142,7 +142,7 @@
     downloadBlob(blob, slugify(name) + '.csv');
   }
 
-  /* ---- PDF Export ---- */
+  /* ---- PDF Export — Professional Client-Ready Layout ---- */
   function exportPDF() {
     const name = getCalcName();
     const ts = getTimestamp();
@@ -150,180 +150,235 @@
     const kpis = collectKPIs();
     const tables = collectTables();
 
-    // Build PDF using jsPDF
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
     const margin = 18;
     const contentW = pageW - margin * 2;
     let y = margin;
 
+    /* -- Theme colors -- */
+    const TEAL = [1, 105, 111];
+    const DARK_TEAL = [0, 75, 80];
+    const LIGHT_BG = [247, 246, 242];
+    const WHITE = [255, 255, 255];
+    const DARK = [28, 25, 20];
+    const MID = [90, 90, 85];
+    const LIGHT = [160, 160, 155];
+
     function checkPage(needed) {
-      if (y + needed > doc.internal.pageSize.getHeight() - margin) {
+      if (y + needed > pageH - 20) {
         doc.addPage();
         y = margin;
       }
     }
 
-    // ---- Header ----
-    doc.setFillColor(1, 105, 111); // #01696f
-    doc.rect(0, 0, pageW, 28, 'F');
-    doc.setTextColor(255, 255, 255);
+    function drawSectionHeader(title) {
+      checkPage(16);
+      doc.setFillColor(...TEAL);
+      doc.roundedRect(margin, y - 1, contentW, 8, 1.5, 1.5, 'F');
+      doc.setTextColor(...WHITE);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title.toUpperCase(), margin + 4, y + 4.5);
+      y += 12;
+    }
+
+    /* ---- Page Header with accent bar ---- */
+    // Teal header block
+    doc.setFillColor(...TEAL);
+    doc.rect(0, 0, pageW, 32, 'F');
+    // Darker accent strip at bottom of header
+    doc.setFillColor(...DARK_TEAL);
+    doc.rect(0, 32, pageW, 1.5, 'F');
+
+    // Logo text
+    doc.setTextColor(...WHITE);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('IntelliTC', margin, 10);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.text('SOLUTIONS', margin + 24, 10);
+
+    // Report title
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text(name, margin, 14);
-    doc.setFontSize(9);
+    doc.text(name, margin, 22);
+
+    // Subtitle with date
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text('IntelliTC Solutions  |  ' + ts, margin, 22);
-    y = 36;
+    doc.text('Generated ' + ts, margin, 28);
 
-    // ---- Inputs Section ----
+    // Confidential marker (right side)
+    doc.setFontSize(7);
+    doc.setTextColor(200, 230, 232);
+    doc.text('CLIENT REPORT', pageW - margin, 10, { align: 'right' });
+
+    y = 40;
+
+    /* ---- Inputs Section ---- */
     if (inputs.length) {
-      doc.setTextColor(1, 105, 111);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Inputs', margin, y);
-      y += 2;
-      doc.setDrawColor(1, 105, 111);
-      doc.setLineWidth(0.5);
-      doc.line(margin, y, margin + contentW, y);
-      y += 5;
+      drawSectionHeader('Input Assumptions');
 
-      doc.setFontSize(9);
-      doc.setTextColor(60, 60, 60);
+      doc.setFontSize(8.5);
       const colW = contentW / 2;
       inputs.forEach((inp, i) => {
-        checkPage(6);
+        checkPage(7);
         const col = i % 2;
-        const xLabel = margin + col * colW;
-        const xVal = xLabel + colW - 2;
+        const xLabel = margin + col * colW + 2;
+        const xVal = xLabel + colW - 6;
+
+        // Alternating row shading for pairs
+        if (col === 0) {
+          const rowIdx = Math.floor(i / 2);
+          if (rowIdx % 2 === 0) {
+            doc.setFillColor(...LIGHT_BG);
+            doc.rect(margin, y - 3, contentW, 6, 'F');
+          }
+        }
+
+        doc.setTextColor(...MID);
         doc.setFont('helvetica', 'normal');
         doc.text(inp.name, xLabel, y);
+        doc.setTextColor(...DARK);
         doc.setFont('helvetica', 'bold');
         doc.text(inp.value, xVal, y, { align: 'right' });
-        if (col === 1 || i === inputs.length - 1) y += 5;
+        if (col === 1 || i === inputs.length - 1) y += 6;
       });
       y += 4;
     }
 
-    // ---- KPIs Section ----
+    /* ---- KPIs Section ---- */
     if (kpis.length) {
-      checkPage(25);
-      doc.setTextColor(1, 105, 111);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Key Results', margin, y);
-      y += 2;
-      doc.setDrawColor(1, 105, 111);
-      doc.setLineWidth(0.5);
-      doc.line(margin, y, margin + contentW, y);
-      y += 6;
+      drawSectionHeader('Key Results');
 
-      const kpiW = contentW / Math.min(kpis.length, 4);
+      const kpiPerRow = Math.min(kpis.length, 4);
+      const kpiW = contentW / kpiPerRow;
+      const kpiH = 18;
+
       kpis.forEach((kpi, i) => {
-        const col = i % 4;
-        if (col === 0 && i > 0) y += 18;
-        checkPage(18);
+        const col = i % kpiPerRow;
+        if (col === 0 && i > 0) y += kpiH + 4;
+        checkPage(kpiH + 4);
         const x = margin + col * kpiW;
 
-        // KPI box
-        doc.setFillColor(245, 245, 240);
-        doc.roundedRect(x, y - 2, kpiW - 3, 16, 2, 2, 'F');
+        // KPI card background
+        doc.setFillColor(...LIGHT_BG);
+        doc.roundedRect(x + 1, y - 2, kpiW - 4, kpiH, 2, 2, 'F');
+        // Left accent bar
+        doc.setFillColor(...TEAL);
+        doc.roundedRect(x + 1, y - 2, 1.5, kpiH, 0.75, 0.75, 'F');
 
-        doc.setFontSize(7);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(120, 120, 120);
-        doc.text(kpi.name.toUpperCase(), x + 3, y + 3);
-
-        doc.setFontSize(13);
+        // Label
+        doc.setFontSize(6.5);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(20, 20, 20);
-        doc.text(kpi.value, x + 3, y + 10);
+        doc.setTextColor(...LIGHT);
+        doc.text(kpi.name.toUpperCase(), x + 5, y + 3.5);
 
+        // Value
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...DARK);
+        doc.text(kpi.value, x + 5, y + 11);
+
+        // Detail
         if (kpi.detail) {
-          doc.setFontSize(6.5);
+          doc.setFontSize(6);
           doc.setFont('helvetica', 'normal');
-          doc.setTextColor(120, 120, 120);
-          doc.text(kpi.detail, x + 3, y + 13.5);
+          doc.setTextColor(...LIGHT);
+          doc.text(kpi.detail, x + 5, y + 15);
         }
       });
-      y += 22;
+      y += kpiH + 8;
     }
 
-    // ---- Tables ----
+    /* ---- Tables ---- */
     tables.forEach(t => {
-      checkPage(20);
       if (t.title) {
-        doc.setTextColor(1, 105, 111);
-        doc.setFontSize(11);
-        doc.setFont('helvetica', 'bold');
-        doc.text(t.title, margin, y);
-        y += 6;
+        drawSectionHeader(t.title);
       }
 
       if (t.headers.length && t.rows.length) {
         const colCount = t.headers.length;
         const colWidths = [];
-        // First column gets more space
-        colWidths.push(contentW * 0.45);
-        const remaining = contentW * 0.55;
+        // Smart column sizing
+        colWidths.push(contentW * 0.40);
+        const remaining = contentW * 0.60;
         for (let c = 1; c < colCount; c++) {
           colWidths.push(remaining / (colCount - 1));
         }
 
         // Header row
-        doc.setFillColor(1, 105, 111);
-        doc.rect(margin, y - 3.5, contentW, 6, 'F');
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(7.5);
+        checkPage(8);
+        doc.setFillColor(...TEAL);
+        doc.roundedRect(margin, y - 3.5, contentW, 7, 1, 1, 'F');
+        doc.setTextColor(...WHITE);
+        doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
-        let hx = margin + 2;
+        let hx = margin + 3;
         t.headers.forEach((h, i) => {
-          if (i === 0) doc.text(h, hx, y);
-          else doc.text(h, hx + colWidths[i] - 4, y, { align: 'right' });
+          if (i === 0) doc.text(h, hx, y + 0.5);
+          else doc.text(h, hx + colWidths[i] - 5, y + 0.5, { align: 'right' });
           hx += colWidths[i];
         });
-        y += 5;
+        y += 6;
 
         // Data rows
         doc.setFontSize(7.5);
         t.rows.forEach((row, ri) => {
-          checkPage(6);
+          checkPage(6.5);
+          // Alternating row shading
           if (ri % 2 === 0) {
-            doc.setFillColor(248, 248, 245);
-            doc.rect(margin, y - 3.5, contentW, 5.5, 'F');
+            doc.setFillColor(250, 249, 246);
+            doc.rect(margin, y - 3.5, contentW, 6, 'F');
           }
 
-          // Bold styling for totals/summary rows
+          // Bold totals/summary rows with accent line
           const isTotal = row[0] && (
             row[0].startsWith('Net ') || row[0].startsWith('Total ') ||
             row[0].startsWith('Effective ') || row[0].includes('DSCR') ||
             row[0].startsWith('Gross ')
           );
 
-          let rx = margin + 2;
+          if (isTotal) {
+            doc.setDrawColor(...TEAL);
+            doc.setLineWidth(0.3);
+            doc.line(margin, y - 3.5, margin + contentW, y - 3.5);
+          }
+
+          let rx = margin + 3;
           row.forEach((cell, ci) => {
-            doc.setTextColor(isTotal ? 20 : 60, isTotal ? 20 : 60, isTotal ? 20 : 60);
+            doc.setTextColor(isTotal ? DARK[0] : MID[0], isTotal ? DARK[1] : MID[1], isTotal ? DARK[2] : MID[2]);
             doc.setFont('helvetica', isTotal ? 'bold' : 'normal');
             if (ci === 0) doc.text(String(cell), rx, y);
-            else doc.text(String(cell), rx + colWidths[ci] - 4, y, { align: 'right' });
+            else doc.text(String(cell), rx + colWidths[ci] - 5, y, { align: 'right' });
             rx += colWidths[ci];
           });
-          y += 5;
+          y += 5.5;
         });
-        y += 4;
+        y += 6;
       }
     });
 
-    // ---- Footer ----
+    /* ---- Footer on all pages ---- */
     const pageCount = doc.internal.getNumberOfPages();
     for (let p = 1; p <= pageCount; p++) {
       doc.setPage(p);
-      const footY = doc.internal.pageSize.getHeight() - 8;
-      doc.setFontSize(7);
+      const footY = pageH - 8;
+
+      // Footer line
+      doc.setDrawColor(...TEAL);
+      doc.setLineWidth(0.3);
+      doc.line(margin, footY - 4, pageW - margin, footY - 4);
+
+      // Footer text
+      doc.setFontSize(6.5);
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(160, 160, 160);
-      doc.text('IntelliTC Solutions  •  intellitcsolutions.com  •  For educational purposes only — not financial advice', margin, footY);
+      doc.setTextColor(...LIGHT);
+      doc.text('IntelliTC Solutions  \u2022  intellitcsolutions.com  \u2022  For educational purposes only \u2014 not financial advice', margin, footY);
       doc.text('Page ' + p + ' of ' + pageCount, pageW - margin, footY, { align: 'right' });
     }
 

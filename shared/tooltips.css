@@ -1,0 +1,51 @@
+/* ============================================================
+   IntelliTC Solutions — Hover Tooltip Styles
+   ============================================================ */
+
+/* Floating tooltip element */
+.itc-hover-tooltip {
+  position: absolute;
+  z-index: 1000;
+  max-width: 320px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.itc-hover-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Info icon next to KPI labels */
+.itc-tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: var(--space-1);
+  vertical-align: middle;
+  color: var(--color-text-faint);
+  cursor: help;
+  transition: color var(--transition-interactive);
+  outline: none;
+}
+.itc-tooltip-icon:hover,
+.itc-tooltip-icon:focus {
+  color: var(--color-primary);
+}
+.itc-tooltip-icon svg {
+  display: inline-block;
+}
+
+/* Table header help cursor */
+#resultsPanel .results-table th[data-tooltip-bound] {
+  cursor: help;
+}

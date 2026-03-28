@@ -1,0 +1,49 @@
+/* ============================================================
+   IntelliTC Solutions — Progress Save Notification Styles
+   ============================================================ */
+
+.progress-restore-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--color-primary-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.progress-restore-notice.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.progress-restore-notice svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.progress-restore-notice span {
+  flex: 1;
+  font-weight: 500;
+}
+.progress-restore-dismiss {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 1;
+  color: var(--color-primary);
+  opacity: 0.6;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.progress-restore-dismiss:hover {
+  opacity: 1;
+  background: rgba(1, 105, 111, 0.1);
+}

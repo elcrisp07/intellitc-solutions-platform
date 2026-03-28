@@ -140,27 +140,30 @@ function calculate(){
     }
   }
 
-  /* Color coding */
+  /* Smooth green-to-red heat map coloring */
   function cellColor(v){
-    switch(metric){
-      case 'cashflow':
-        if(v>0)return 'background:rgba(16,185,129,0.18);color:var(--color-text)';
-        if(v>=-2400)return 'background:rgba(245,158,11,0.18);color:var(--color-text)';
-        return 'background:rgba(239,68,68,0.18);color:var(--color-text)';
-      case 'caprate':
-        if(v>6)return 'background:rgba(16,185,129,0.18);color:var(--color-text)';
-        if(v>=4)return 'background:rgba(245,158,11,0.18);color:var(--color-text)';
-        return 'background:rgba(239,68,68,0.18);color:var(--color-text)';
-      case 'coc':
-        if(v>8)return 'background:rgba(16,185,129,0.18);color:var(--color-text)';
-        if(v>=4)return 'background:rgba(245,158,11,0.18);color:var(--color-text)';
-        return 'background:rgba(239,68,68,0.18);color:var(--color-text)';
-      case 'dscr':
-        if(v>1.25)return 'background:rgba(16,185,129,0.18);color:var(--color-text)';
-        if(v>=1.0)return 'background:rgba(245,158,11,0.18);color:var(--color-text)';
-        return 'background:rgba(239,68,68,0.18);color:var(--color-text)';
-      default: return '';
+    /* Normalize value to 0-1 range across the grid */
+    var range=best-worst;
+    var t=range>0?(v-worst)/range:0.5;
+    /* Clamp */
+    t=Math.max(0,Math.min(1,t));
+    /* Green (good) to Yellow (mid) to Red (bad) gradient */
+    var r,g,b;
+    if(t>=0.5){
+      /* Yellow to Green */
+      var s=(t-0.5)*2;
+      r=Math.round(245-245*s+16*s);
+      g=Math.round(158+(185-158)*s);
+      b=Math.round(11+(129-11)*s);
+    } else {
+      /* Red to Yellow */
+      var s=t*2;
+      r=Math.round(239+(245-239)*s);
+      g=Math.round(68+(158-68)*s);
+      b=Math.round(68-(68-11)*s);
     }
+    var alpha=0.22;
+    return 'background:rgba('+r+','+g+','+b+','+alpha+');color:var(--color-text)';
   }
 
   /* KPIs */
@@ -191,6 +194,8 @@ function calculate(){
     html+='</tr>';
   }
   html+='</tbody></table>';
+  /* Heat map legend */
+  html+='<div class="heatmap-legend"><span class="heatmap-legend-label">Worst</span><div class="heatmap-legend-bar"></div><span class="heatmap-legend-label">Best</span></div>';
   container.innerHTML=html;
 
   /* Chart: Base Case Waterfall */

@@ -26,6 +26,14 @@
 <link rel="stylesheet" href="../shared/base.css">
 <link rel="stylesheet" href="../shared/style.css">
 <link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>
+.heatmap-legend{display:flex;align-items:center;gap:var(--space-2);justify-content:center;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted)}
+.heatmap-legend-bar{width:200px;height:12px;border-radius:var(--radius-full);background:linear-gradient(to right,rgba(239,68,68,0.35),rgba(245,158,11,0.35),rgba(16,185,129,0.35));border:1px solid var(--color-divider)}
+.heatmap-legend-label{font-weight:600;text-transform:uppercase;letter-spacing:0.05em;font-size:11px}
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
 {
@@ -228,5 +236,8 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
 </body>
 </html>
