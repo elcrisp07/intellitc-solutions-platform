@@ -216,11 +216,24 @@
     toggle.addEventListener('mouseleave', hideTooltip);
   }
 
+  /* ---- Learn mode toggle tooltip ---- */
+  function annotateLearnToggle() {
+    var wrap = document.querySelector('.learn-toggle-wrap');
+    if (!wrap || wrap.dataset.tooltipBound) return;
+    wrap.dataset.tooltipBound = '1';
+    wrap.addEventListener('mouseenter', function() {
+      var isActive = document.body.classList.contains('learn-active');
+      showTooltip(wrap, 'Toggle for Learning Tips');
+    });
+    wrap.addEventListener('mouseleave', hideTooltip);
+  }
+
   /* ---- Initialize ---- */
   function init() {
     annotateKPIs();
     annotateTables();
     annotateThemeToggle();
+    annotateLearnToggle();
 
     // Re-annotate after calculation (results may be rebuilt)
     var calcBtn = document.getElementById('calcBtn');
