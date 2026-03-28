@@ -204,10 +204,23 @@
     });
   }
 
+  /* ---- Theme toggle tooltip ---- */
+  function annotateThemeToggle() {
+    var toggle = document.querySelector('[data-theme-toggle]');
+    if (!toggle || toggle.dataset.tooltipBound) return;
+    toggle.dataset.tooltipBound = '1';
+    toggle.addEventListener('mouseenter', function() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      showTooltip(toggle, isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+    toggle.addEventListener('mouseleave', hideTooltip);
+  }
+
   /* ---- Initialize ---- */
   function init() {
     annotateKPIs();
     annotateTables();
+    annotateThemeToggle();
 
     // Re-annotate after calculation (results may be rebuilt)
     var calcBtn = document.getElementById('calcBtn');
