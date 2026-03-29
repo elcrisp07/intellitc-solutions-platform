@@ -1,0 +1,301 @@
+/* ============================================================
+   Workflow Context — Banner, Progress, Next-Step Prompts
+   ============================================================ */
+
+/* ---- Return-to-Workflow Banner ---- */
+#wf-banner {
+  background: linear-gradient(135deg, #01696f 0%, #018a82 100%);
+  color: #fff;
+  padding: 12px 0;
+  position: relative;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0,0,0,.12);
+}
+
+@keyframes wfBannerSlide {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.wf-banner-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--space-4, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wf-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.wf-banner-icon {
+  flex-shrink: 0;
+  opacity: .7;
+}
+
+.wf-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.wf-banner-workflow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wf-banner-step {
+  font-size: 11px;
+  opacity: .8;
+  white-space: nowrap;
+}
+
+.wf-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.wf-banner-progress {
+  width: 80px;
+  height: 4px;
+  background: rgba(255,255,255,.25);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.wf-banner-progress-bar {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  transition: width .5s ease;
+}
+
+.wf-banner-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #01696f;
+  background: #fff;
+  padding: 5px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .2s, transform .15s;
+}
+
+.wf-banner-btn:hover {
+  background: #e8f5f0;
+  transform: translateY(-1px);
+}
+
+/* ---- Prefill Notice ---- */
+.wf-prefill-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-primary-surface, #e8f5f0);
+  color: var(--color-primary, #01696f);
+  padding: 8px 14px;
+  border-radius: var(--radius-md, 8px);
+  font-size: 13px;
+  font-weight: 500;
+  margin: var(--space-3, 12px) 0;
+  animation: wfFadeIn .4s ease;
+  transition: opacity .3s;
+}
+
+.wf-prefill-notice svg {
+  flex-shrink: 0;
+  color: var(--color-primary, #01696f);
+}
+
+.wf-prefill-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--color-primary, #01696f);
+  cursor: pointer;
+  font-size: 14px;
+  opacity: .6;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.wf-prefill-dismiss:hover { opacity: 1; }
+
+/* ---- Next-Step Prompt ---- */
+.wf-next-prompt {
+  background: var(--color-surface, #fff);
+  border: 2px solid var(--color-primary, #01696f);
+  border-radius: var(--radius-xl, 16px);
+  padding: var(--space-5, 20px) var(--space-6, 24px);
+  margin: var(--space-6, 24px) auto;
+  max-width: 720px;
+  animation: wfPromptPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.wf-next-prompt.wf-complete {
+  border-color: #2e7d32;
+  background: linear-gradient(135deg, var(--color-surface, #fff), #e8f5e9);
+}
+
+@keyframes wfPromptPop {
+  from { transform: scale(.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.wf-next-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wf-next-check {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary-surface, #e8f5f0);
+  color: var(--color-primary, #01696f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wf-next-check.wf-complete-check {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.wf-next-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.wf-next-done {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--color-primary, #01696f);
+}
+
+.wf-complete-title {
+  color: #2e7d32;
+  font-size: 14px;
+}
+
+.wf-next-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #222);
+}
+
+.wf-next-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.wf-next-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary, #01696f);
+  padding: 8px 18px;
+  border-radius: var(--radius-md, 8px);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .2s, transform .15s;
+}
+
+.wf-next-btn:hover {
+  background: #015a5f;
+  transform: translateY(-1px);
+}
+
+.wf-next-back {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted, #888);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.wf-next-back:hover {
+  color: var(--color-primary, #01696f);
+}
+
+/* ---- Dark mode adjustments ---- */
+[data-theme="dark"] #wf-banner {
+  background: linear-gradient(135deg, #014d52 0%, #016b66 100%);
+}
+
+[data-theme="dark"] .wf-banner-btn {
+  color: #fff;
+  background: rgba(255,255,255,.15);
+}
+
+[data-theme="dark"] .wf-banner-btn:hover {
+  background: rgba(255,255,255,.25);
+}
+
+[data-theme="dark"] .wf-next-prompt.wf-complete {
+  background: linear-gradient(135deg, var(--color-surface, #1a1a1a), #1b3a1b);
+}
+
+/* ---- Mobile responsive ---- */
+@media (max-width: 600px) {
+  .wf-banner-inner {
+    padding: 0 12px;
+  }
+  
+  .wf-banner-progress { display: none; }
+  
+  .wf-banner-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  
+  .wf-next-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .wf-next-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .wf-next-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@keyframes wfFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

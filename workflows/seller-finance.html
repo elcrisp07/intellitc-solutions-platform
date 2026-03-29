@@ -154,7 +154,7 @@
         <div class="wd-step-action">Step 1 — Understand carrying costs</div>
         <div class="wd-step-calc">True Cost of Ownership</div>
         <p class="wd-step-detail">Calculate annual property taxes and carrying costs to understand the baseline before structuring financing terms.</p>
-        <a href="../true-cost-ownership/index.html" class="wd-step-link">Open Calculator →</a>
+        <a href="../true-cost-ownership/index.html?wf=seller-finance&wfstep=1" target="_blank" class="wd-step-link">Open Calculator →</a>
       </div>
     </div>
     <div class="wd-step">
@@ -166,7 +166,7 @@
         <div class="wd-step-action">Step 2 — Structure buyer/seller terms</div>
         <div class="wd-step-calc">Seller Financing</div>
         <p class="wd-step-detail">Define the deal terms — purchase price, down payment, interest rate, term length, and balloon payment structure.</p>
-        <a href="../seller-financing/index.html" class="wd-step-link">Open Calculator →</a>
+        <a href="../seller-financing/index.html?wf=seller-finance&wfstep=2" target="_blank" class="wd-step-link">Open Calculator →</a>
       </div>
     </div>
     <div class="wd-step">
@@ -178,7 +178,7 @@
         <div class="wd-step-action">Step 3 — Build the payment schedule</div>
         <div class="wd-step-calc">DSCR Loan Calculator</div>
         <p class="wd-step-detail">Generate a complete amortization analysis showing principal, interest, and debt service coverage for each payment period.</p>
-        <a href="../dscr-loan/index.html" class="wd-step-link">Open Calculator →</a>
+        <a href="../dscr-loan/index.html?wf=seller-finance&wfstep=3" target="_blank" class="wd-step-link">Open Calculator →</a>
       </div>
     </div>
     <div class="wd-step">
@@ -190,7 +190,7 @@
         <div class="wd-step-action">Step 4 — Validate deal economics</div>
         <div class="wd-step-calc">Cash Flow Calculator</div>
         <p class="wd-step-detail">Confirm the property generates positive cash flow under the seller-financing terms you structured.</p>
-        <a href="../cashflow/index.html" class="wd-step-link">Open Calculator →</a>
+        <a href="../cashflow/index.html?wf=seller-finance&wfstep=4" target="_blank" class="wd-step-link">Open Calculator →</a>
       </div>
     </div>
 
@@ -216,20 +216,52 @@
 // Theme toggle
 (function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);function u(){if(!t)return;t.innerHTML=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}u();if(t)t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);u();});})();
 
-// Interactive step highlighting
+// Interactive step highlighting + progress from localStorage
 document.querySelectorAll('.wd-step').forEach((step, i) => {
   step.addEventListener('click', () => {
     document.querySelectorAll('.wd-step').forEach((s, j) => {
       s.classList.toggle('completed', j < i);
       s.classList.toggle('active', j === i);
-      s.classList.remove(j > i ? 'completed' : '');
       if (j > i) { s.classList.remove('completed'); s.classList.remove('active'); }
     });
   });
 });
 
-// Activate first step by default
-document.querySelector('.wd-step')?.classList.add('active');
+// Progress from localStorage
+(function() {
+  var slug = location.pathname.split('/').pop().replace('.html','');
+  var data = {};
+  try { data = JSON.parse(localStorage.getItem('itc_wf_data_' + slug)) || {}; } catch(e) {}
+  
+  var steps = document.querySelectorAll('.wd-step');
+  var hasAnyProgress = false;
+  steps.forEach(function(step, i) {
+    var stepNum = i + 1;
+    if (data['step_' + stepNum]) {
+      hasAnyProgress = true;
+      step.classList.add('completed');
+      step.classList.remove('active');
+      var num = step.querySelector('.wd-step-num');
+      if (num) {
+        num.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        num.title = 'Completed';
+      }
+    }
+  });
+  
+  if (hasAnyProgress) {
+    // Find first incomplete step and mark as active
+    for (var j = 0; j < steps.length; j++) {
+      if (!data['step_' + (j+1)]) {
+        steps[j].classList.add('active');
+        break;
+      }
+    }
+  } else {
+    // Default: activate first step
+    if (steps[0]) steps[0].classList.add('active');
+  }
+})();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
