@@ -522,6 +522,110 @@
 
 /* ═══════ NAV HOVER ═══════ */
 .header-inner nav a:hover { color: var(--color-primary) !important; }
+
+/* ═══════ VIDEO PLAY BUTTON ═══════ */
+.hero-video-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  text-decoration: none;
+  color: inherit;
+}
+.hero-video-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  border-color: var(--color-primary);
+}
+.play-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.play-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+  margin-left: 2px;
+}
+.play-label {
+  text-align: left;
+}
+.play-label-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+}
+.play-label-sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ═══════ VIDEO LIGHTBOX ═══════ */
+.video-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+.video-lightbox.active {
+  display: flex;
+}
+.video-lightbox-inner {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.4);
+  background: #000;
+}
+.video-lightbox video {
+  width: 100%;
+  display: block;
+}
+.video-lightbox-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+  z-index: 1;
+}
+.video-lightbox-close:hover {
+  background: rgba(0,0,0,0.9);
+}
+.video-lightbox-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: #fff;
+}
 </style>
 <script type="application/ld+json">
 {
@@ -577,7 +681,26 @@
   <span class="hero-badge">54 Professional Calculators</span>
   <h1>Make Smarter Real Estate Decisions</h1>
   <p>Professional-grade analysis tools for every step of your real estate journey — whether you're buying your first home or managing a portfolio.</p>
+  <button class="hero-video-trigger" onclick="openVideoLightbox()">
+    <span class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></span>
+    <span class="play-label">
+      <span class="play-label-title">Watch the 2-Minute Tour</span>
+      <span class="play-label-sub">See how IntelliTC works</span>
+    </span>
+  </button>
 </section>
+
+<!-- Video Lightbox -->
+<div class="video-lightbox" id="videoLightbox" onclick="closeVideoLightbox(event)">
+  <div class="video-lightbox-inner">
+    <button class="video-lightbox-close" onclick="closeVideoLightbox(event)" aria-label="Close video">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <video id="heroVideo" controls preload="metadata" poster="./assets/intro-thumb.jpg">
+      <source src="./assets/intro-video.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
 
 <!-- ═══════ ROLE-BASED ENTRY POINTS ═══════ -->
 <div class="role-entry">
@@ -1137,6 +1260,28 @@ function toggleCategory(btn) {
   const accordion = btn.closest('.category-accordion');
   accordion.classList.toggle('open');
 }
+
+// Video lightbox
+function openVideoLightbox() {
+  const lb = document.getElementById('videoLightbox');
+  const vid = document.getElementById('heroVideo');
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  vid.play();
+}
+function closeVideoLightbox(e) {
+  // Only close if clicking backdrop or close button, not the video itself
+  if (e && e.target.closest('.video-lightbox-inner') && !e.target.closest('.video-lightbox-close')) return;
+  const lb = document.getElementById('videoLightbox');
+  const vid = document.getElementById('heroVideo');
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+  vid.pause();
+}
+// Close lightbox on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeVideoLightbox(e);
+});
 
 // Role filtering
 let activeRole = 'all';
