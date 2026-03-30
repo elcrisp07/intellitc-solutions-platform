@@ -652,6 +652,111 @@
   .progress-line { width: 40px; }
   .how-grid { grid-template-columns: 1fr; }
 }
+
+/* ═══════ VIDEO BUTTON & LIGHTBOX ═══════ */
+.cert-video-wrap {
+  text-align: center;
+  padding: 0 var(--space-6) var(--space-8);
+}
+.cert-video-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  text-decoration: none;
+  color: inherit;
+}
+.cert-video-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  border-color: var(--color-primary);
+}
+.cert-play-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cert-play-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+  margin-left: 2px;
+}
+.cert-play-label {
+  text-align: left;
+}
+.cert-play-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+}
+.cert-play-sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+.cert-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+.cert-lightbox.active {
+  display: flex;
+}
+.cert-lightbox-inner {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.4);
+  background: #000;
+}
+.cert-lightbox video {
+  width: 100%;
+  display: block;
+}
+.cert-lightbox-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+  z-index: 1;
+}
+.cert-lightbox-close:hover {
+  background: rgba(0,0,0,0.9);
+}
+.cert-lightbox-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: #fff;
+}
 </style>
 <!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
@@ -712,6 +817,31 @@
     <h1>IntelliTC Certified Real Estate Analyst</h1>
     <p class="subtitle">Validate your real estate analysis skills through a structured, three-tier credential program. Complete learning paths, master scenario labs, and pass comprehensive assessments to earn your ICREA designation.</p>
   </section>
+
+  <!-- ══════ VIDEO ══════ -->
+  <div class="cert-video-wrap">
+    <button class="cert-video-trigger" onclick="openCertVideo()">
+      <span class="cert-play-icon">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </span>
+      <span class="cert-play-label">
+        <span class="cert-play-title">Watch: ICREA Certification Overview</span>
+        <span class="cert-play-sub">1:38 — What it takes to earn your credential</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Video Lightbox -->
+  <div class="cert-lightbox" id="certLightbox" onclick="closeCertVideo(event)">
+    <div class="cert-lightbox-inner">
+      <button class="cert-lightbox-close" onclick="closeCertVideo(event)" aria-label="Close video">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <video id="certVideo" controls preload="metadata" poster="../assets/icrea-thumb.jpg">
+        <source src="../assets/icrea-video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
 
   <!-- ══════ TIER CARDS ══════ -->
   <section class="tiers-section" id="tiersSection">
@@ -1865,6 +1995,29 @@ function loadProgress() {
 
 // ── INIT ──
 loadProgress();
+
+// ── Video Lightbox ──
+function openCertVideo() {
+  const lb = document.getElementById('certLightbox');
+  const vid = document.getElementById('certVideo');
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  vid.play();
+}
+function closeCertVideo(e) {
+  if (e && e.target.closest('.cert-lightbox-inner') && !e.target.closest('.cert-lightbox-close')) return;
+  const lb = document.getElementById('certLightbox');
+  const vid = document.getElementById('certVideo');
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+  vid.pause();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('certLightbox');
+    if (lb && lb.classList.contains('active')) closeCertVideo(e);
+  }
+});
 </script>
 <script>
 if ('serviceWorker' in navigator) {
