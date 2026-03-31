@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Guides — IntelliTC Solutions</title>
+<link rel="stylesheet" href="../shared/design-system.css">
+<style>
+.guides-hero {
+  text-align: center;
+  padding: var(--space-16) var(--space-6) var(--space-10);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.guides-hero h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+.guides-hero p {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  max-width: 960px;
+  margin: 0 auto var(--space-16);
+  padding: 0 var(--space-6);
+}
+.guide-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.guide-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+.guide-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+.badge-beginner {
+  background: #e6f2f2;
+  color: var(--color-primary);
+}
+.badge-intermediate {
+  background: #fff3e0;
+  color: #b35900;
+}
+.badge-advanced {
+  background: #fce4ec;
+  color: #880e4f;
+}
+.guide-card h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.guide-card .subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  line-height: 1.5;
+}
+.guide-topics {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+}
+.guide-topics li {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  padding: var(--space-1) 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.guide-topics li::before {
+  content: "✓";
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.guide-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.guide-download-btn:hover {
+  background: var(--color-primary-hover, #0c4e54);
+}
+.guide-download-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.guides-info {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-16);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.guides-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.guides-info p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../zero-experience/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none">Start Here</a>
+      <a href="../get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Your Role?</a>
+      <a href="../workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="../learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
+      <a href="../guides/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Guides</a>
+        a href="./index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none">Guides</a>
+        <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none;white-space:nowrap">Start Here</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html">Your Role?</a>
+    <a href="../workflows/index.html">Workflows</a>
+    <a href="../learning-paths/index.html">Learn</a>
+    <a href="../certification/index.html">Certify</a>
+    <a href="./index.html" style="font-weight:600;color:var(--color-primary)">Guides</a>
+  </nav>
+</header>
+
+<main>
+  <div class="guides-hero">
+    <h1>User Guides</h1>
+    <p>Three downloadable PDF guides that walk you through every feature of the IntelliTC platform — from your first calculator to ICREA Certification.</p>
+  </div>
+
+  <div class="guides-grid">
+
+    <!-- Beginner Guide -->
+    <div class="guide-card">
+      <span class="guide-badge badge-beginner">Beginner</span>
+      <h2>Getting Started</h2>
+      <p class="subtitle">Your first steps with IntelliTC Solutions</p>
+      <ul class="guide-topics">
+        <li>What the platform is and who it serves</li>
+        <li>Choosing your role (Investor, Agent, Homeowner, Lender)</li>
+        <li>Understanding the calculator layout</li>
+        <li>Auto-save behavior and data storage</li>
+        <li>Learn Mode, exporting results, and Dark Mode</li>
+      </ul>
+      <a href="./IntelliTC_Getting_Started_Guide.pdf" class="guide-download-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+
+    <!-- Intermediate Guide -->
+    <div class="guide-card">
+      <span class="guide-badge badge-intermediate">Intermediate</span>
+      <h2>Going Deeper</h2>
+      <p class="subtitle">Unlock the full power of IntelliTC</p>
+      <ul class="guide-topics">
+        <li>6 Learning Paths for structured education</li>
+        <li>Scenario Lab — 12 challenges in 3 modes</li>
+        <li>8 Calculator Workflows with data carry-forward</li>
+        <li>Understanding KPI results and color coding</li>
+        <li>Comparing deals and recently used tracker</li>
+      </ul>
+      <a href="./IntelliTC_Going_Deeper_Guide.pdf" class="guide-download-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+
+    <!-- Advanced Guide -->
+    <div class="guide-card">
+      <span class="guide-badge badge-advanced">Advanced</span>
+      <h2>Mastering the Platform</h2>
+      <p class="subtitle">Advanced strategies and ICREA Certification</p>
+      <ul class="guide-topics">
+        <li>ICREA Certification (Foundation, Professional, Expert)</li>
+        <li>Multi-calculator analysis strategies</li>
+        <li>Portfolio management approach</li>
+        <li>Sensitivity analysis for stress-testing</li>
+        <li>Complete 8-Workflow reference and pro tips</li>
+      </ul>
+      <a href="./IntelliTC_Mastering_Platform_Guide.pdf" class="guide-download-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+
+  </div>
+
+  <div class="guides-info">
+    <h3>All Guides Are Free</h3>
+    <p>These guides are part of the IntelliTC beta experience. No account or signup required — just download and start learning. We recommend beginning with the Getting Started guide and working your way through all three.</p>
+  </div>
+</main>
+
+<script src="../shared/design-system.js"></script>
+<script src="../shared/recent-tracker.js"></script>
+</body>
+</html>
