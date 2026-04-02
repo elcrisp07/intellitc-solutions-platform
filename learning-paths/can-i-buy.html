@@ -367,6 +367,253 @@
   gtag('js', new Date());
   gtag('config', 'G-M5XCCZMN4F');
 </script>
+
+<style>
+/* ── Readiness Check ─────────────────────────────────────── */
+.readiness-wrap {
+  display: none;
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 2px dashed var(--color-primary);
+}
+.readiness-wrap.visible { display: block; }
+
+.readiness-card {
+  background: var(--color-surface);
+  border: 2px solid #01696f;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+[data-theme="dark"] .readiness-card {
+  background: rgba(1,105,111,0.08);
+  border-color: #01696f;
+}
+
+.readiness-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  background: linear-gradient(135deg, #01696f 0%, #015a60 100%);
+  cursor: pointer;
+  user-select: none;
+  gap: var(--space-4);
+}
+.readiness-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.readiness-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.readiness-badge svg { width: 11px; height: 11px; }
+.readiness-header h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.readiness-header p {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.8);
+  margin: 2px 0 0;
+}
+.readiness-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.readiness-toggle-btn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.6); }
+.readiness-toggle-btn svg { width: 14px; height: 14px; transition: transform 0.25s; }
+.readiness-toggle-btn.open svg { transform: rotate(180deg); }
+
+.readiness-body {
+  display: none;
+  padding: var(--space-6);
+}
+.readiness-body.open { display: block; }
+
+.rc-question {
+  margin-bottom: var(--space-6);
+}
+.rc-question:last-of-type { margin-bottom: var(--space-4); }
+.rc-question-text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+.rc-question-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: var(--color-primary-surface);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.rc-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.rc-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-offset);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.rc-option:hover { border-color: var(--color-primary); color: var(--color-text); }
+.rc-option input[type="radio"] {
+  accent-color: #01696f;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.rc-option.correct-answer {
+  border-color: #2e7d32;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 600;
+}
+.rc-option.wrong-answer {
+  border-color: #c62828;
+  background: #ffebee;
+  color: #b71c1c;
+}
+[data-theme="dark"] .rc-option.correct-answer {
+  border-color: #4caf50;
+  background: rgba(76,175,80,0.12);
+  color: #81c784;
+}
+[data-theme="dark"] .rc-option.wrong-answer {
+  border-color: #ef5350;
+  background: rgba(244,67,54,0.12);
+  color: #e57373;
+}
+
+.rc-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: #01696f;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: var(--space-2);
+}
+.rc-submit:hover { background: #015a60; transform: translateY(-1px); }
+.rc-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.rc-result {
+  display: none;
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 2px solid;
+}
+.rc-result.show { display: block; }
+.rc-result-score {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+.rc-result-msg {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+}
+.rc-result-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  transition: opacity 0.2s;
+}
+.rc-result-link:hover { opacity: 0.85; }
+.rc-result.green { border-color: #2e7d32; background: #e8f5e9; color: #1b5e20; }
+.rc-result.green .rc-result-link { background: #2e7d32; color: #fff; }
+.rc-result.yellow { border-color: #e65100; background: #fff3e0; color: #bf360c; }
+.rc-result.yellow .rc-result-link { background: #e65100; color: #fff; }
+.rc-result.red { border-color: #c62828; background: #ffebee; color: #b71c1c; }
+.rc-result.red .rc-result-link { background: #c62828; color: #fff; }
+[data-theme="dark"] .rc-result.green { border-color: #4caf50; background: rgba(76,175,80,0.12); color: #81c784; }
+[data-theme="dark"] .rc-result.green .rc-result-link { background: #4caf50; color: #111; }
+[data-theme="dark"] .rc-result.yellow { border-color: #ffa726; background: rgba(255,167,38,0.12); color: #ffb74d; }
+[data-theme="dark"] .rc-result.yellow .rc-result-link { background: #ffa726; color: #111; }
+[data-theme="dark"] .rc-result.red { border-color: #ef5350; background: rgba(244,67,54,0.12); color: #e57373; }
+[data-theme="dark"] .rc-result.red .rc-result-link { background: #ef5350; color: #fff; }
+
+.rc-retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3);
+  margin-left: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  background: none;
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+.rc-retry:hover { background: var(--color-primary-surface); }
+</style>
 </head>
 <body>
   <header class="header">
@@ -621,6 +868,200 @@
         </div>
       </div>
 
+    
+    <!-- ── Certification Readiness Check ──────────────────────────────── -->
+    <div class="readiness-wrap" id="readinessWrap_cib">
+      <div class="readiness-card">
+        <div class="readiness-header" onclick="rcToggle_cib()" role="button" tabindex="0" aria-expanded="false" aria-controls="rcBody_cib">
+          <div class="readiness-header-left">
+            <div>
+              <div class="readiness-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                Readiness Check
+              </div>
+              <h3>Certification Readiness Check</h3>
+              <p>5 questions · Ungraded · Previews ICREA Associate difficulty</p>
+            </div>
+          </div>
+          <button class="readiness-toggle-btn" id="rcToggleBtn_cib" aria-hidden="true">
+            Take the Readiness Check
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="readiness-body" id="rcBody_cib" role="region">
+          <form id="rcForm_cib" onsubmit="return false;">
+
+            <div class="rc-question" id="rcQ_cib_0">
+              <div class="rc-question-text">
+                <span class="rc-question-num">1</span>A buyer earning $75,000/year has $2,100/month in total debt obligations (including proposed housing). What is their back-end DTI ratio?
+              </div>
+              <div class="rc-options">
+
+                <label class="rc-option" id="rcOpt_cib_0_0">
+                  <input type="radio" name="rcQ_cib_0" value="0">
+                  A) 28%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_0_1">
+                  <input type="radio" name="rcQ_cib_0" value="1">
+                  B) 33.6%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_0_2">
+                  <input type="radio" name="rcQ_cib_0" value="2">
+                  C) 25.2%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_0_3">
+                  <input type="radio" name="rcQ_cib_0" value="3">
+                  D) 36%
+                </label>
+
+              </div>
+            </div>
+
+            <div class="rc-question" id="rcQ_cib_1">
+              <div class="rc-question-text">
+                <span class="rc-question-num">2</span>PMI is typically required when the down payment is below what threshold?
+              </div>
+              <div class="rc-options">
+
+                <label class="rc-option" id="rcOpt_cib_1_0">
+                  <input type="radio" name="rcQ_cib_1" value="0">
+                  A) 10%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_1_1">
+                  <input type="radio" name="rcQ_cib_1" value="1">
+                  B) 15%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_1_2">
+                  <input type="radio" name="rcQ_cib_1" value="2">
+                  C) 20%
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_1_3">
+                  <input type="radio" name="rcQ_cib_1" value="3">
+                  D) 25%
+                </label>
+
+              </div>
+            </div>
+
+            <div class="rc-question" id="rcQ_cib_2">
+              <div class="rc-question-text">
+                <span class="rc-question-num">3</span>Which IntelliTC calculator would you use first to determine how much house you can afford?
+              </div>
+              <div class="rc-options">
+
+                <label class="rc-option" id="rcOpt_cib_2_0">
+                  <input type="radio" name="rcQ_cib_2" value="0">
+                  A) Cash Flow Calculator
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_2_1">
+                  <input type="radio" name="rcQ_cib_2" value="1">
+                  B) Affordability Calculator
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_2_2">
+                  <input type="radio" name="rcQ_cib_2" value="2">
+                  C) Rent vs. Buy
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_2_3">
+                  <input type="radio" name="rcQ_cib_2" value="3">
+                  D) Cap Rate Comparison
+                </label>
+
+              </div>
+            </div>
+
+            <div class="rc-question" id="rcQ_cib_3">
+              <div class="rc-question-text">
+                <span class="rc-question-num">4</span>In the DTI &amp; Payment Stress Test, rates rise 2% from your locked rate. What does this primarily help you evaluate?
+              </div>
+              <div class="rc-options">
+
+                <label class="rc-option" id="rcOpt_cib_3_0">
+                  <input type="radio" name="rcQ_cib_3" value="0">
+                  A) Your home's appreciation potential
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_3_1">
+                  <input type="radio" name="rcQ_cib_3" value="1">
+                  B) Whether you can still afford payments if rates change
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_3_2">
+                  <input type="radio" name="rcQ_cib_3" value="2">
+                  C) Your credit score impact
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_3_3">
+                  <input type="radio" name="rcQ_cib_3" value="3">
+                  D) The seller's negotiation position
+                </label>
+
+              </div>
+            </div>
+
+            <div class="rc-question" id="rcQ_cib_4">
+              <div class="rc-question-text">
+                <span class="rc-question-num">5</span>Cash-to-Close includes which of the following?
+              </div>
+              <div class="rc-options">
+
+                <label class="rc-option" id="rcOpt_cib_4_0">
+                  <input type="radio" name="rcQ_cib_4" value="0">
+                  A) Only the down payment
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_4_1">
+                  <input type="radio" name="rcQ_cib_4" value="1">
+                  B) Down payment + closing costs + prepaids - earnest money deposit
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_4_2">
+                  <input type="radio" name="rcQ_cib_4" value="2">
+                  C) Monthly mortgage payment x 12
+                </label>
+
+                <label class="rc-option" id="rcOpt_cib_4_3">
+                  <input type="radio" name="rcQ_cib_4" value="3">
+                  D) Down payment + first year's property taxes
+                </label>
+
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-4)">
+              <button class="rc-submit" id="rcSubmit_cib" onclick="rcGrade_cib()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Check My Answers
+              </button>
+            </div>
+
+            <div class="rc-result" id="rcResult_cib">
+              <div class="rc-result-score" id="rcScore_cib"></div>
+              <div class="rc-result-msg" id="rcMsg_cib"></div>
+              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2)">
+                <a href="../certification/" class="rc-result-link" id="rcLink_cib" style="display:none">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  View Certification
+                </a>
+                <button class="rc-retry" onclick="rcReset_cib()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     </article>
   </div>
 
@@ -675,6 +1116,120 @@
     item.addEventListener('click', () => goStep(parseInt(item.dataset.step)));
   });
   </script>
+<script>
+  /* ── Readiness Check: cib ───────────────────────────────── */
+  (function() {
+    var CORRECT = [1, 2, 1, 1, 1];
+    var LAST_STEP = 4;
+    var quizId = 'cib';
+
+    /* Show/hide when step changes */
+    var _origGoStep = window.goStep;
+    window.goStep = function(idx) {
+      _origGoStep(idx);
+      var wrap = document.getElementById('readinessWrap_' + quizId);
+      if (wrap) {
+        if (idx === LAST_STEP) {
+          wrap.classList.add('visible');
+        } else {
+          wrap.classList.remove('visible');
+        }
+      }
+    };
+
+    /* Toggle expand/collapse */
+    window['rcToggle_' + quizId] = function() {
+      var body = document.getElementById('rcBody_' + quizId);
+      var btn  = document.getElementById('rcToggleBtn_' + quizId);
+      var hdr  = body.previousElementSibling;
+      var isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.textContent = '';
+      btn.innerHTML = isOpen
+        ? 'Take the Readiness Check <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M6 9l6 6 6-6"/></svg>'
+        : 'Collapse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M18 15l-6-6-6 6"/></svg>';
+      hdr.setAttribute('aria-expanded', String(!isOpen));
+    };
+
+    /* Grade */
+    window['rcGrade_' + quizId] = function() {
+      var score = 0;
+      var allAnswered = true;
+      for (var i = 0; i < 5; i++) {
+        var radios = document.getElementsByName('rcQ_' + quizId + '_' + i);
+        var chosen = -1;
+        for (var r = 0; r < radios.length; r++) {
+          if (radios[r].checked) { chosen = parseInt(radios[r].value); break; }
+        }
+        if (chosen === -1) { allAnswered = false; continue; }
+        /* Style options */
+        for (var j = 0; j < radios.length; j++) {
+          var lbl = document.getElementById('rcOpt_' + quizId + '_' + i + '_' + j);
+          lbl.querySelector('input').disabled = true;
+          if (j === CORRECT[i]) {
+            lbl.classList.add('correct-answer');
+          } else if (j === chosen && chosen !== CORRECT[i]) {
+            lbl.classList.add('wrong-answer');
+          }
+        }
+        if (chosen === CORRECT[i]) score++;
+      }
+      if (!allAnswered) {
+        /* Still allow grading but note partial */
+      }
+      var resultDiv = document.getElementById('rcResult_' + quizId);
+      var scoreDiv  = document.getElementById('rcScore_' + quizId);
+      var msgDiv    = document.getElementById('rcMsg_' + quizId);
+      var linkEl    = document.getElementById('rcLink_' + quizId);
+      var submitBtn = document.getElementById('rcSubmit_' + quizId);
+
+      submitBtn.disabled = true;
+      resultDiv.classList.remove('green','yellow','red');
+      resultDiv.classList.add('show');
+
+      scoreDiv.textContent = 'You got ' + score + ' / 5 correct';
+
+      if (score >= 4) {
+        resultDiv.classList.add('green');
+        msgDiv.textContent = "Great work! Your results suggest you\'re ready for the ICREA Associate Assessment. The certification exam covers these concepts at a similar depth — go ahead and give it a shot.";
+        linkEl.style.display = 'inline-flex';
+        linkEl.textContent = '';
+        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> View ICREA Certification';
+      } else if (score >= 2) {
+        resultDiv.classList.add('yellow');
+        msgDiv.textContent = "Almost there! Review the questions you missed above, revisit those steps in this path, then try the certification when you feel more confident.";
+        linkEl.style.display = 'inline-flex';
+        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Preview ICREA Certification';
+      } else {
+        resultDiv.classList.add('red');
+        msgDiv.textContent = "We recommend working through this Learning Path again before attempting the ICREA certification. Focus on the highlighted correct answers above and use the calculators to reinforce each concept.";
+        linkEl.style.display = 'none';
+      }
+    };
+
+    /* Reset */
+    window['rcReset_' + quizId] = function() {
+      var form = document.getElementById('rcForm_' + quizId);
+      form.reset();
+      /* Remove styling */
+      for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 4; j++) {
+          var lbl = document.getElementById('rcOpt_' + quizId + '_' + i + '_' + j);
+          if (lbl) {
+            lbl.classList.remove('correct-answer','wrong-answer');
+            var inp = lbl.querySelector('input');
+            if (inp) inp.disabled = false;
+          }
+        }
+      }
+      var resultDiv = document.getElementById('rcResult_' + quizId);
+      resultDiv.classList.remove('show','green','yellow','red');
+      var submitBtn = document.getElementById('rcSubmit_' + quizId);
+      submitBtn.disabled = false;
+    };
+  })();
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
