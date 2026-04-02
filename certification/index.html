@@ -1814,7 +1814,7 @@ function renderQuestions() {
 
     // Calculator output table
     if (q.type === 'calculator_output' && q.data_table) {
-      html += `<span class="calc-table-label">Calculator Output</span>`;
+      html += `<span class="calc-table-label">Reference Data</span>`;
       html += `<div class="calc-table-wrap"><table class="calc-table"><thead><tr>`;
       q.data_table.headers.forEach(h => { html += `<th>${escHtml(h)}</th>`; });
       html += `</tr></thead><tbody>`;
