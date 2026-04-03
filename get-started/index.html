@@ -28,6 +28,15 @@
 <link rel="stylesheet" href="../shared/tooltips.css">
 <link rel="stylesheet" href="../shared/feedback.css">
 <style>
+/* ── Video Walkthrough ── */
+.video-section { max-width:720px; margin:0 auto; padding:var(--space-8) var(--space-6) 0; }
+.video-inner { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-xl); padding:var(--space-6); }
+.video-intro { text-align:center; margin-bottom:var(--space-5); }
+.video-badge { display:inline-block; font-size:var(--text-xs); font-weight:600; padding:4px 12px; border-radius:var(--radius-full); background:var(--color-primary-surface); color:var(--color-primary); margin-bottom:var(--space-3); }
+.video-heading { font-size:clamp(1.15rem,2.5vw,1.5rem); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.video-subtext { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.6; margin:0; max-width:540px; margin-inline:auto; }
+.video-player-wrap { border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-md); }
+
 /* ── Onboarding Wizard ── */
 .wizard-container { max-width:720px; margin:0 auto; padding:var(--space-8) var(--space-6) var(--space-16); }
 
@@ -154,6 +163,23 @@
     <a href="../guides/index.html">Guides</a>
   </nav>
 </header>
+
+<!-- ── Video Walkthrough ── -->
+<section class="video-section">
+  <div class="video-inner">
+    <div class="video-intro">
+      <span class="video-badge">▶ 3-Minute Walkthrough</span>
+      <h2 class="video-heading">Not sure where to start?</h2>
+      <p class="video-subtext">Watch a quick walkthrough of how the Start Here wizard works — pick your role, set your goals, and get a personalized path in about thirty seconds.</p>
+    </div>
+    <div class="video-player-wrap">
+      <video id="startHereVideo" controls preload="metadata" playsinline poster="" style="width:100%;border-radius:var(--radius-xl);background:#000;display:block">
+        <source src="../assets/start-here-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
 
 <div class="wizard-container">
   <!-- Step Indicator -->
