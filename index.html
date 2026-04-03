@@ -654,6 +654,32 @@
   gtag('js', new Date());
   gtag('config', 'G-M5XCCZMN4F');
 </script>
+<style>
+/* Email Capture Section */
+.email-capture {
+  background: linear-gradient(135deg, #01696f 0%, #0C4E54 100%);
+  color: #fff; border-radius: 12px; padding: 40px 32px;
+  text-align: center; max-width: 680px; margin: 40px auto;
+}
+.email-capture h2 { color: #fff; font-size: 1.5rem; margin: 0 0 8px; }
+.email-capture p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin: 0 0 20px; line-height: 1.5; }
+.email-capture-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.email-capture-form input[type="email"] {
+  padding: 12px 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px;
+  background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem;
+  min-width: 260px; outline: none; transition: border-color 0.2s;
+}
+.email-capture-form input[type="email"]::placeholder { color: rgba(255,255,255,0.5); }
+.email-capture-form input[type="email"]:focus { border-color: rgba(255,255,255,0.7); }
+.email-capture-form button {
+  padding: 12px 24px; background: #D19900; color: #1a1a1a; border: none;
+  border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+.email-capture-form button:hover { background: #e8af34; }
+.email-capture .ec-note { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 12px; }
+.email-capture .ec-success { color: #D19900; font-weight: 600; display: none; margin-top: 12px; }
+</style>
 </head>
 <body>
 <header class="header">
@@ -1254,6 +1280,19 @@
   </div>
 </div>
 
+
+<!-- Email Capture -->
+<div class="email-capture" id="emailCapture">
+  <h2>Stay in the Loop</h2>
+  <p>Be the first to know when new features launch — including saved analyses, portfolio tracking, and AI-powered deal scoring. No spam, ever.</p>
+  <form class="email-capture-form" id="ecForm" onsubmit="return submitEmailCapture(event)">
+    <input type="email" id="ecEmail" placeholder="you@example.com" required autocomplete="email">
+    <button type="submit">Notify Me</button>
+  </form>
+  <p class="ec-note">Join early and shape what we build next.</p>
+  <p class="ec-success" id="ecSuccess">You're on the list. We'll be in touch.</p>
+</div>
+
 <footer class="footer">
   <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
   <p><img src="./assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="./terms/index.html">Terms of Service</a> &bull; <a href="./privacy/index.html">Privacy Policy</a></p>
@@ -1385,6 +1424,60 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   });
+}
+</script>
+<script>
+// Email capture — saves to localStorage; connect Google Form later
+function submitEmailCapture(e) {
+  e.preventDefault();
+  var email = document.getElementById('ecEmail').value.trim();
+  if (!email) return false;
+
+  // Save to localStorage
+  try {
+    var list = JSON.parse(localStorage.getItem('intellitc_emails') || '[]');
+    // Prevent duplicates
+    if (list.some(function(item) { return item.email === email; })) {
+      document.getElementById('ecForm').style.display = 'none';
+      document.getElementById('ecSuccess').textContent = "You're already on the list.";
+      document.getElementById('ecSuccess').style.display = 'block';
+      document.querySelector('.ec-note').style.display = 'none';
+      return false;
+    }
+    list.push({ email: email, page: window.location.pathname, date: new Date().toISOString() });
+    localStorage.setItem('intellitc_emails', JSON.stringify(list));
+  } catch(ex) {}
+
+  // If Google Form is connected, also submit there
+  var formId = localStorage.getItem('intellitc_gform_id');
+  if (formId) {
+    var fd = new FormData();
+    fd.append('entry.1045781291', email);
+    fd.append('entry.839337160', window.location.pathname);
+    fetch('https://docs.google.com/forms/d/e/' + formId + '/formResponse', {
+      method: 'POST', body: fd, mode: 'no-cors'
+    }).catch(function(){});
+  }
+
+  // Show success
+  document.getElementById('ecForm').style.display = 'none';
+  document.getElementById('ecSuccess').style.display = 'block';
+  document.querySelector('.ec-note').style.display = 'none';
+  return false;
+}
+// Admin: export signups — run intellitcExportEmails() in browser console
+function intellitcExportEmails() {
+  var list = JSON.parse(localStorage.getItem('intellitc_emails') || '[]');
+  if (!list.length) { console.log('No signups yet.'); return; }
+  var csv = 'Email,Page,Date\n' + list.map(function(r) {
+    return r.email + ',' + r.page + ',' + r.date;
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'intellitc_signups.csv';
+  a.click();
+  console.log('Exported ' + list.length + ' signups.');
 }
 </script>
 </body>

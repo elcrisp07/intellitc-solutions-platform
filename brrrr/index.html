@@ -64,6 +64,24 @@
   gtag('js', new Date());
   gtag('config', 'G-M5XCCZMN4F');
 </script>
+<style>
+/* Cross-link suggestions */
+.next-steps { background: var(--color-surface, #f9f8f5); border-radius: 10px; padding: 24px; margin: 28px 0 8px; border: 1px solid var(--color-border, #d4d1ca); }
+[data-theme="dark"] .next-steps { background: var(--dark-surface, #1c1b19); border-color: var(--dark-border, #393836); }
+.next-steps h3 { margin: 0 0 14px; font-size: 1.05rem; color: var(--color-text, #28251d); }
+[data-theme="dark"] .next-steps h3 { color: var(--dark-text, #cdccca); }
+.next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.next-step-card {
+  display: block; padding: 14px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--color-bg, #f7f6f2); border: 1px solid var(--color-border, #d4d1ca);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .next-step-card { background: var(--dark-bg, #171614); border-color: var(--dark-border, #393836); }
+.next-step-card:hover { border-color: #01696f; box-shadow: 0 2px 8px rgba(1,105,111,0.12); }
+.next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
+.next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
+[data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+</style>
 </head>
 <body>
   <header class="header">
@@ -210,6 +228,16 @@
       <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Phase</th><th class="text-right">Amount</th><th>Description</th></tr></thead><tbody id="phaseBody"></tbody></table></div>
     </section>
   </main>
+  
+<div class="next-steps">
+  <h3>What to explore next</h3>
+  <div class="next-steps-grid">
+    <a class="next-step-card" href="../fixflip/index.html"><strong>Fix & Flip Calculator</strong><span>Model the rehab phase with detailed cost and timeline projections</span></a>
+    <a class="next-step-card" href="../cashflow/index.html"><strong>Cash Flow Calculator</strong><span>Analyze the rental income after your BRRRR refinance</span></a>
+    <a class="next-step-card" href="../dscr-loan/index.html"><strong>DSCR Loan Calculator</strong><span>Check if the property qualifies for a DSCR refinance</span></a>
+  </div>
+</div>
+
   <footer class="footer">
   <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
   <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions</p>
