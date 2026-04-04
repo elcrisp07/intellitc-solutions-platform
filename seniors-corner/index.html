@@ -604,6 +604,156 @@ function calcHELOC() {
   document.getElementById('helocResults').classList.add('show');
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+/* ── Senior's Corner PDF Export ── */
+(function(){
+  'use strict';
+  function fmt(n){return '$'+Math.round(n).toLocaleString('en-US');}
+  function ts(){return new Date().toLocaleString('en-US',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});}
+  function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+
+  function collectResults(panelId){
+    var panel=document.getElementById(panelId);
+    if(!panel) return null;
+    var resultsEl=panel.querySelector('.calc-results');
+    if(!resultsEl||!resultsEl.classList.contains('show')) return null;
+    var title=panel.querySelector('h2').textContent.trim();
+    var cards=[];
+    resultsEl.querySelectorAll('.result-card').forEach(function(card){
+      var cardTitle=(card.querySelector('h4')||{}).textContent||'';
+      var rows=[];
+      card.querySelectorAll('.result-row').forEach(function(row){
+        var label=(row.querySelector('.result-label')||{}).textContent||'';
+        var valEl=row.querySelector('.result-value');
+        var value=valEl?valEl.textContent.trim():'';
+        var isAlert=valEl&&valEl.classList.contains('alert');
+        var isSafe=valEl&&valEl.classList.contains('safe');
+        rows.push({label:label.trim(),value:value,isAlert:isAlert,isSafe:isSafe});
+      });
+      cards.push({title:cardTitle.trim(),rows:rows});
+    });
+    // Collect explanation text
+    var expEl=resultsEl.querySelector('.result-explanation');
+    var explanation=expEl?expEl.textContent.trim():'';
+    // Collect inputs from the panel's form
+    var inputs=[];
+    panel.querySelectorAll('.form-group').forEach(function(fg){
+      var lbl=fg.querySelector('label');
+      var inp=fg.querySelector('input,select');
+      if(!lbl||!inp) return;
+      var name=lbl.textContent.trim();
+      var val=inp.value;
+      if(inp.tagName==='SELECT'){
+        var opt=inp.options[inp.selectedIndex];
+        if(opt) val=opt.textContent.trim();
+      }
+      if(val) inputs.push({name:name,value:val});
+    });
+    return {title:title,cards:cards,explanation:explanation,inputs:inputs};
+  }
+
+  function exportSCPDF(panelId){
+    var data=collectResults(panelId);
+    if(!data){alert('Please run the calculator first.');return;}
+    var jsPDF=window.jspdf.jsPDF;
+    var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    var W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+    var m=18,cw=W-m*2,y=m;
+    var TEAL=[1,105,111],DT=[0,75,80],LB=[247,246,242],WH=[255,255,255],DK=[28,25,20],MD=[90,90,85],LT=[160,160,155],GOLD=[209,153,0],RED=[161,44,123],GRN=[67,122,34];
+    function ck(n){if(y+n>H-20){doc.addPage();y=m;}}
+    function hdr(t){ck(14);doc.setFillColor.apply(doc,TEAL);doc.roundedRect(m,y-1,cw,8,1.5,1.5,'F');doc.setTextColor.apply(doc,WH);doc.setFontSize(9);doc.setFont('helvetica','bold');doc.text(t.toUpperCase(),m+4,y+4.5);y+=12;}
+
+    // Header
+    doc.setFillColor.apply(doc,TEAL);doc.rect(0,0,W,32,'F');
+    doc.setFillColor.apply(doc,DT);doc.rect(0,32,W,1.5,'F');
+    doc.setTextColor.apply(doc,WH);doc.setFontSize(10);doc.setFont('helvetica','bold');
+    doc.text('IntelliTC',m,10);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('SOLUTIONS',m+24,10);
+    doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text(data.title,m,22);
+    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text('Generated '+ts()+'  \u2022  Senior\'s Corner',m,28);
+    doc.setFontSize(7);doc.setTextColor(200,230,232);doc.text('TAX AWARENESS REPORT',W-m,10,{align:'right'});
+    y=40;
+
+    // Inputs
+    if(data.inputs.length){
+      hdr('Input Assumptions');
+      doc.setFontSize(8.5);
+      var half=cw/2;
+      data.inputs.forEach(function(inp,i){
+        ck(7);var c=i%2,xl=m+c*half+2,xv=xl+half-6;
+        if(c===0&&(Math.floor(i/2)%2===0)){doc.setFillColor.apply(doc,LB);doc.rect(m,y-3,cw,6,'F');}
+        doc.setTextColor.apply(doc,MD);doc.setFont('helvetica','normal');doc.text(inp.name,xl,y);
+        doc.setTextColor.apply(doc,DK);doc.setFont('helvetica','bold');doc.text(String(inp.value),xv,y,{align:'right'});
+        if(c===1||i===data.inputs.length-1) y+=6;
+      });
+      y+=4;
+    }
+
+    // Result Cards
+    data.cards.forEach(function(card){
+      if(card.title) hdr(card.title);
+      card.rows.forEach(function(row,ri){
+        ck(7);
+        if(ri%2===0){doc.setFillColor(250,249,246);doc.rect(m,y-3.5,cw,6,'F');}
+        doc.setTextColor.apply(doc,MD);doc.setFontSize(8);doc.setFont('helvetica','normal');
+        doc.text(row.label,m+3,y);
+        if(row.isAlert) doc.setTextColor.apply(doc,RED);
+        else if(row.isSafe) doc.setTextColor.apply(doc,GRN);
+        else doc.setTextColor.apply(doc,DK);
+        doc.setFont('helvetica','bold');doc.text(row.value,W-m-3,y,{align:'right'});
+        y+=6;
+      });
+      y+=4;
+    });
+
+    // Explanation summary
+    if(data.explanation){
+      hdr('What This Means');
+      doc.setFontSize(7.5);doc.setFont('helvetica','normal');doc.setTextColor.apply(doc,DK);
+      var lines=doc.splitTextToSize(data.explanation,cw-6);
+      lines.forEach(function(line){
+        ck(5);doc.text(line,m+3,y);y+=4;
+      });
+      y+=4;
+    }
+
+    // Footer
+    var pc=doc.internal.getNumberOfPages();
+    for(var p=1;p<=pc;p++){
+      doc.setPage(p);var fy=H-8;
+      doc.setDrawColor.apply(doc,TEAL);doc.setLineWidth(0.3);doc.line(m,fy-4,W-m,fy-4);
+      doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor.apply(doc,LT);
+      doc.text('IntelliTC Solutions  \u2022  intellitcsolutions.com  \u2022  For educational purposes only \u2014 not financial or tax advice',m,fy);
+      doc.text('Page '+p+' of '+pc,W-m,fy,{align:'right'});
+    }
+    doc.save(slug(data.title)+'-report.pdf');
+  }
+
+  // Inject export buttons into each calculator's results section
+  function injectSCExport(){
+    ['giftResults','helocResults'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el||el.querySelector('.sc-export-btn')) return;
+      var panelId=id==='giftResults'?'giftPanel':'helocPanel';
+      var btn=document.createElement('button');
+      btn.className='sc-export-btn calc-submit';
+      btn.style.cssText='margin-top:var(--space-4);background:var(--color-text);';
+      btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export PDF Report';
+      btn.addEventListener('click',function(){exportSCPDF(panelId);});
+      // Insert before disclaimer
+      var disc=el.querySelector('.disclaimer-box');
+      if(disc) el.insertBefore(btn,disc);
+      else el.appendChild(btn);
+    });
+  }
+
+  // Hook into the calculate functions
+  var origCalcGift=window.calcGift;
+  window.calcGift=function(){origCalcGift();setTimeout(injectSCExport,100);};
+  var origCalcHELOC=window.calcHELOC;
+  window.calcHELOC=function(){origCalcHELOC();setTimeout(injectSCExport,100);};
+})();
+</script>
 <script src="../shared/recent-tracker.js"></script>
 <script>
 /* Theme toggle */

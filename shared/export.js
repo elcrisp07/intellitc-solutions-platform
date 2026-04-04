@@ -4,6 +4,11 @@
    Universal export for all calculators. Auto-detects inputs,
    KPIs, and result tables from the DOM. No per-calculator
    configuration required.
+
+   Features:
+   - Agent personalization (name, brokerage, contact on PDF)
+   - Property address detection (displayed in PDF header)
+   - CSV + PDF export with professional branded layout
    ============================================================ */
 
 (function() {
@@ -25,6 +30,40 @@
   function sanitizeCSV(val) {
     const s = String(val).replace(/"/g, '""');
     return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s}"` : s;
+  }
+
+  /* ---- Agent Personalization ---- */
+  function getAgentInfo() {
+    return {
+      name: (document.getElementById('agentName') || {}).value || '',
+      brokerage: (document.getElementById('agentBrokerage') || {}).value || '',
+      contact: (document.getElementById('agentContact') || {}).value || ''
+    };
+  }
+
+  /* ---- Property Address Detection ---- */
+  function getPropertyAddress() {
+    // Check for dedicated address fields commonly found in CMA, Investment Analyzers, etc.
+    const addressFields = [
+      '#subAddress',           // CMA
+      '#propertyAddress',      // Investment analyzers
+      '#address'               // Generic
+    ];
+    for (const sel of addressFields) {
+      const el = document.querySelector(sel);
+      if (el && el.value && el.value.trim()) return el.value.trim();
+    }
+    // Fallback: check any input with address-related labels
+    const allFields = document.querySelectorAll('#inputPanel .field');
+    for (const field of allFields) {
+      const label = field.querySelector('label');
+      const input = field.querySelector('input');
+      if (label && input && input.value &&
+          /address/i.test(label.textContent)) {
+        return input.value.trim();
+      }
+    }
+    return '';
   }
 
   /* ---- Collect Inputs ---- */
@@ -105,11 +144,17 @@
     const inputs = collectInputs();
     const kpis = collectKPIs();
     const tables = collectTables();
+    const agent = getAgentInfo();
+    const address = getPropertyAddress();
     const lines = [];
 
     lines.push(sanitizeCSV(name));
     lines.push('Generated,' + sanitizeCSV(ts));
     lines.push('Source,IntelliTC Solutions');
+    if (address) lines.push('Property,' + sanitizeCSV(address));
+    if (agent.name) lines.push('Prepared By,' + sanitizeCSV(agent.name));
+    if (agent.brokerage) lines.push('Brokerage,' + sanitizeCSV(agent.brokerage));
+    if (agent.contact) lines.push('Contact,' + sanitizeCSV(agent.contact));
     lines.push('');
 
     // Inputs
@@ -149,6 +194,9 @@
     const inputs = collectInputs();
     const kpis = collectKPIs();
     const tables = collectTables();
+    const agent = getAgentInfo();
+    const address = getPropertyAddress();
+    const hasAgent = agent.name || agent.brokerage || agent.contact;
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -161,6 +209,7 @@
     /* -- Theme colors -- */
     const TEAL = [1, 105, 111];
     const DARK_TEAL = [0, 75, 80];
+    const GOLD = [209, 153, 0];
     const LIGHT_BG = [247, 246, 242];
     const WHITE = [255, 255, 255];
     const DARK = [28, 25, 20];
@@ -185,13 +234,16 @@
       y += 12;
     }
 
-    /* ---- Page Header with accent bar ---- */
+    /* ---- Page Header ---- */
+    // Calculate header height based on content
+    const headerH = hasAgent ? 42 : 32;
+
     // Teal header block
     doc.setFillColor(...TEAL);
-    doc.rect(0, 0, pageW, 32, 'F');
+    doc.rect(0, 0, pageW, headerH, 'F');
     // Darker accent strip at bottom of header
     doc.setFillColor(...DARK_TEAL);
-    doc.rect(0, 32, pageW, 1.5, 'F');
+    doc.rect(0, headerH, pageW, 1.5, 'F');
 
     // Logo text
     doc.setTextColor(...WHITE);
@@ -207,17 +259,50 @@
     doc.setFont('helvetica', 'bold');
     doc.text(name, margin, 22);
 
-    // Subtitle with date
+    // Subtitle line: date + optional property address
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text('Generated ' + ts, margin, 28);
+    let subtitleText = 'Generated ' + ts;
+    if (address) subtitleText += '  \u2022  ' + address;
+    doc.text(subtitleText, margin, 28);
 
-    // Confidential marker (right side)
-    doc.setFontSize(7);
-    doc.setTextColor(200, 230, 232);
-    doc.text('CLIENT REPORT', pageW - margin, 10, { align: 'right' });
+    // Right side: Agent info or CLIENT REPORT label
+    if (hasAgent) {
+      let rightY = 10;
+      doc.setFontSize(7);
+      doc.setTextColor(200, 230, 232);
+      doc.text('PREPARED BY', pageW - margin, rightY, { align: 'right' });
+      rightY += 5;
+      doc.setTextColor(...WHITE);
+      if (agent.name) {
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text(agent.name, pageW - margin, rightY, { align: 'right' });
+        rightY += 4.5;
+      }
+      if (agent.brokerage) {
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.text(agent.brokerage, pageW - margin, rightY, { align: 'right' });
+        rightY += 4;
+      }
+      if (agent.contact) {
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(200, 230, 232);
+        doc.text(agent.contact, pageW - margin, rightY, { align: 'right' });
+      }
+      // Gold accent bar under agent info
+      doc.setFillColor(...GOLD);
+      doc.rect(pageW - margin - 50, headerH - 2.5, 50, 1, 'F');
+    } else {
+      // Confidential marker (right side)
+      doc.setFontSize(7);
+      doc.setTextColor(200, 230, 232);
+      doc.text('CLIENT REPORT', pageW - margin, 10, { align: 'right' });
+    }
 
-    y = 40;
+    y = headerH + 8;
 
     /* ---- Inputs Section ---- */
     if (inputs.length) {
@@ -378,7 +463,11 @@
       doc.setFontSize(6.5);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(...LIGHT);
-      doc.text('IntelliTC Solutions  \u2022  intellitcsolutions.com  \u2022  For educational purposes only \u2014 not financial advice', margin, footY);
+      let footerLeft = 'IntelliTC Solutions  \u2022  intellitcsolutions.com  \u2022  For educational purposes only \u2014 not financial advice';
+      if (hasAgent) {
+        footerLeft = 'Powered by IntelliTC Solutions  \u2022  intellitcsolutions.com  \u2022  For educational purposes only \u2014 not financial advice';
+      }
+      doc.text(footerLeft, margin, footY);
       doc.text('Page ' + p + ' of ' + pageCount, pageW - margin, footY, { align: 'right' });
     }
 
@@ -398,6 +487,68 @@
     document.body.appendChild(a);
     a.click();
     setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+  }
+
+  /* ---- Inject Agent Personalization Panel ---- */
+  function injectAgentPanel() {
+    const inputPanel = document.getElementById('inputPanel');
+    if (!inputPanel || inputPanel.querySelector('.agent-panel')) return;
+
+    const panel = document.createElement('details');
+    panel.className = 'agent-panel';
+    panel.style.cssText = 'margin-top:var(--space-5);border-top:1px solid var(--color-border);padding-top:var(--space-4);';
+    panel.innerHTML = `
+      <summary style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);cursor:pointer;user-select:none;list-style:none;display:flex;align-items:center;gap:var(--space-2)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Personalize PDF for Client
+        <svg class="agent-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>
+      </summary>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)">
+        <div class="field">
+          <label for="agentName" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Your Name</label>
+          <input type="text" id="agentName" placeholder="e.g. Sarah Chen" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+        </div>
+        <div class="field">
+          <label for="agentBrokerage" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Brokerage / Company</label>
+          <input type="text" id="agentBrokerage" placeholder="e.g. Keller Williams" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+        </div>
+        <div class="field">
+          <label for="agentContact" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Email or Phone</label>
+          <input type="text" id="agentContact" placeholder="e.g. sarah@kw.com" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+        </div>
+      </div>
+      <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);line-height:1.5">Optional — your info appears on the PDF header when exporting. Leave blank for a standard IntelliTC report.</p>
+    `;
+
+    // Rotate chevron on toggle
+    panel.addEventListener('toggle', function() {
+      const chev = panel.querySelector('.agent-chevron');
+      if (chev) chev.style.transform = panel.open ? 'rotate(180deg)' : '';
+    });
+
+    // Persist agent info in localStorage
+    panel.addEventListener('input', function(e) {
+      if (e.target.id && e.target.id.startsWith('agent')) {
+        localStorage.setItem(e.target.id, e.target.value);
+      }
+    });
+
+    // Insert before the calculate button
+    const calcBtn = inputPanel.querySelector('#calcBtn') || inputPanel.querySelector('.calc-btn');
+    if (calcBtn) {
+      calcBtn.parentNode.insertBefore(panel, calcBtn);
+    } else {
+      inputPanel.appendChild(panel);
+    }
+
+    // Restore saved agent info
+    ['agentName', 'agentBrokerage', 'agentContact'].forEach(id => {
+      const saved = localStorage.getItem(id);
+      if (saved) {
+        const el = document.getElementById(id);
+        if (el) el.value = saved;
+      }
+    });
   }
 
   /* ---- Inject Export UI ---- */
@@ -439,8 +590,19 @@
     document.getElementById('exportPDF').addEventListener('click', exportPDF);
   }
 
+  /* ---- Responsive: collapse agent panel to single column on mobile ---- */
+  function addAgentResponsiveCSS() {
+    if (document.getElementById('agentPanelCSS')) return;
+    const style = document.createElement('style');
+    style.id = 'agentPanelCSS';
+    style.textContent = '@media(max-width:640px){.agent-panel div[style*="grid-template-columns"]{grid-template-columns:1fr!important}}';
+    document.head.appendChild(style);
+  }
+
   /* ---- Initialize ---- */
   function init() {
+    addAgentResponsiveCSS();
+    injectAgentPanel();
     injectExportButtons();
 
     // Also re-inject after calculate (in case results panel is rebuilt)
