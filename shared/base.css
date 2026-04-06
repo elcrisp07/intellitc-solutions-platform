@@ -62,3 +62,20 @@ a, button, [role="button"], [role="link"], input, textarea, select {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
 }
+
+/* ═══════ THEME TOGGLE BUTTON ═══════ */
+button[data-theme-toggle] {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button[data-theme-toggle]:hover { color: var(--color-primary); }
