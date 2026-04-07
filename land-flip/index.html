@@ -600,13 +600,7 @@
         <p id="exitRecText">—</p>
       </div>
 
-      <!-- Export -->
-      <div class="export-row">
-        <button class="btn-export" onclick="exportResults()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Export as Text
-        </button>
-      </div>
+      <!-- Export buttons injected by shared/export.js (CSV + PDF) -->
 
       <div class="disclaimer-box">
         <p><strong>Disclaimer:</strong> This tool is for educational purposes only and does not constitute financial, legal, or investment advice. Profit projections are estimates. Owner financing involves legal obligations — consult a real estate attorney for proper loan documentation. Closing costs, tax rates, and regulations vary by state and county.</p>
@@ -976,28 +970,7 @@ function calcExit() {
   document.getElementById('exitResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ── Export ── */
-function exportResults() {
-  const rows = document.getElementById('exitTableBody').rows;
-  let text = 'IntelliTC Solutions — Vacant Land Flip Analyzer\n';
-  text += 'Exit Strategy Comparison\n';
-  text += '═'.repeat(60) + '\n\n';
-  text += 'Metric'.padEnd(22) + 'Cash Sale'.padStart(14) + 'Owner Finance'.padStart(16) + 'Improve & Sell'.padStart(16) + '\n';
-  text += '─'.repeat(68) + '\n';
-  for (let r = 0; r < rows.length; r++) {
-    const cells = rows[r].cells;
-    text += cells[0].textContent.padEnd(22);
-    for (let c = 1; c < cells.length; c++) text += cells[c].textContent.padStart(c === 1 ? 14 : 16);
-    text += '\n';
-  }
-  text += '\n' + document.getElementById('exitRecText').textContent;
-  
-  const blob = new Blob([text], { type: 'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'IntelliTC_Land_Flip_Analysis.txt';
-  a.click();
-}
+/* Export handled by shared/export.js (CSV + PDF) */
 
 /* ── Theme toggle ── */
 (function(){
