@@ -82,6 +82,10 @@
     <section class="panel input-panel" id="inputPanel">
       <h1 class="panel-title">Land Development Calculator</h1>
       <p class="panel-subtitle">Raw land and development project feasibility analysis.</p>
+      <div style="background:var(--color-primary-surface);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);margin:var(--space-4) 0;display:flex;align-items:center;gap:var(--space-3)">
+        <span style="font-size:1.1rem">🏞️</span>
+        <span style="font-size:var(--text-sm);color:var(--color-text)">Looking at vacant land flips instead of full development? <a href="../land-flip/index.html" style="color:var(--color-primary);font-weight:600;text-decoration:none">Try the Vacant Land Flip Analyzer →</a></span>
+      </div>
       <div class="divider"></div>
       <div class="params-grid">
 <div class="param-group">
@@ -218,6 +222,11 @@
   },
   "kpiExplains": {},
   "coupled": [
+    {
+      "name": "Vacant Land Flip Analyzer",
+      "folder": "land-flip",
+      "reason": "Analyze vacant land flips without development — due diligence scoring and exit strategy comparison"
+    },
     {
       "name": "Investment Analysis",
       "folder": "investment-analysis",
