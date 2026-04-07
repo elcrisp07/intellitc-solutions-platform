@@ -14,10 +14,29 @@
 (function() {
   'use strict';
 
+  /* ---- Layout Detection ---- */
+  function isAlternateLayout() {
+    return !!document.querySelector('.calc-panel');
+  }
+
+  function getActiveCalcPanel() {
+    return document.querySelector('.calc-panel.active');
+  }
+
   /* ---- Helpers ---- */
   function getCalcName() {
+    // Standard layout
     const h1 = document.querySelector('#inputPanel .panel-title');
-    return h1 ? h1.textContent.trim() : 'IntelliTC Report';
+    if (h1) return h1.textContent.trim();
+    // Alternate layout (Senior's Corner, Land Flip)
+    const panel = getActiveCalcPanel();
+    if (panel) {
+      const h2 = panel.querySelector('.calc-container h2');
+      if (h2) return h2.textContent.trim();
+    }
+    // Page title fallback
+    const pageTitle = document.querySelector('.sc-title, .lf-title, h1');
+    return pageTitle ? pageTitle.textContent.trim() : 'IntelliTC Report';
   }
 
   function getTimestamp() {
@@ -69,10 +88,14 @@
   /* ---- Collect Inputs ---- */
   function collectInputs() {
     const inputs = [];
+
+    // Standard layout: #inputPanel .field
     document.querySelectorAll('#inputPanel .field').forEach(field => {
       const label = field.querySelector('label');
       const input = field.querySelector('input, select');
       if (!label || !input) return;
+      // Skip agent fields
+      if (input.id && input.id.startsWith('agent')) return;
       const name = label.textContent.trim();
       let val = input.value;
       const unit = field.querySelector('.unit');
@@ -89,12 +112,34 @@
       }
       inputs.push({ name, value: val });
     });
+
+    // Alternate layout: .calc-panel.active .form-group
+    if (!inputs.length) {
+      const panel = getActiveCalcPanel();
+      if (panel) {
+        panel.querySelectorAll('.form-group').forEach(group => {
+          const label = group.querySelector('label');
+          const input = group.querySelector('input, select');
+          if (!label || !input) return;
+          if (input.id && input.id.startsWith('agent')) return;
+          const name = label.textContent.trim();
+          let val = input.value;
+          if (input.tagName === 'SELECT') {
+            const opt = input.options[input.selectedIndex];
+            if (opt) val = opt.textContent.trim();
+          }
+          inputs.push({ name, value: val });
+        });
+      }
+    }
     return inputs;
   }
 
   /* ---- Collect KPIs ---- */
   function collectKPIs() {
     const kpis = [];
+
+    // Standard layout
     document.querySelectorAll('#resultsPanel .kpi-card').forEach(card => {
       const label = card.querySelector('.kpi-label');
       const value = card.querySelector('.kpi-value');
@@ -106,12 +151,30 @@
         detail: detail ? detail.textContent.trim() : ''
       });
     });
+
+    // Alternate layout: .result-highlight with .result-row entries
+    if (!kpis.length) {
+      const panel = getActiveCalcPanel();
+      if (panel) {
+        // Treat the highlight block's big-number as a KPI if present
+        panel.querySelectorAll('.result-highlight .big-number').forEach(el => {
+          const label = el.parentElement.querySelector('h4');
+          kpis.push({
+            name: label ? label.textContent.trim() : 'Result',
+            value: el.textContent.trim(),
+            detail: ''
+          });
+        });
+      }
+    }
     return kpis;
   }
 
   /* ---- Collect Tables ---- */
   function collectTables() {
     const tables = [];
+
+    // Standard layout
     document.querySelectorAll('#resultsPanel .results-table').forEach(table => {
       const headers = [];
       table.querySelectorAll('thead th').forEach(th => headers.push(th.textContent.trim()));
@@ -121,7 +184,6 @@
         tr.querySelectorAll('td').forEach(td => cells.push(td.textContent.trim()));
         if (cells.length) rows.push(cells);
       });
-      // Try to find a title above the table
       let title = '';
       const wrap = table.closest('.table-wrap');
       if (wrap) {
@@ -134,6 +196,39 @@
         tables.push({ title, headers, rows });
       }
     });
+
+    // Alternate layout: .result-card with .result-row, .compare-table
+    if (!tables.length) {
+      const panel = getActiveCalcPanel();
+      if (panel) {
+        // Collect result-card blocks as pseudo-tables (label/value rows)
+        panel.querySelectorAll('.result-card, .result-highlight').forEach(card => {
+          const title = card.querySelector('h4') ? card.querySelector('h4').textContent.trim() : '';
+          const rows = [];
+          card.querySelectorAll('.result-row').forEach(row => {
+            const label = row.querySelector('.result-label');
+            const value = row.querySelector('.result-value');
+            if (label && value) rows.push([label.textContent.trim(), value.textContent.trim()]);
+          });
+          if (rows.length) tables.push({ title, headers: ['Metric', 'Value'], rows });
+        });
+
+        // Collect compare-table (Exit Strategy comparison)
+        panel.querySelectorAll('.compare-table').forEach(table => {
+          const headers = [];
+          table.querySelectorAll('thead th').forEach(th => headers.push(th.textContent.trim()));
+          const rows = [];
+          table.querySelectorAll('tbody tr').forEach(tr => {
+            const cells = [];
+            tr.querySelectorAll('td').forEach(td => cells.push(td.textContent.trim()));
+            if (cells.length) rows.push(cells);
+          });
+          if (headers.length || rows.length) {
+            tables.push({ title: 'Exit Strategy Comparison', headers, rows });
+          }
+        });
+      }
+    }
     return tables;
   }
 
@@ -489,6 +584,26 @@
     setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
   }
 
+  /* ---- Collect Due Diligence Results (Land Flip specific) ---- */
+  function collectDueDiligence() {
+    const items = [];
+    document.querySelectorAll('.dd-item').forEach(item => {
+      const name = item.querySelector('.dd-text strong');
+      const passBtn = item.querySelector('.dd-btn.pass');
+      const failBtn = item.querySelector('.dd-btn.fail');
+      if (!name) return;
+      let status = 'Not assessed';
+      if (passBtn && passBtn.style.background && passBtn.style.background.includes('success')) status = 'Pass';
+      else if (failBtn && failBtn.style.background && failBtn.style.background.includes('error')) status = 'Flag';
+      items.push({ name: name.textContent.trim(), status });
+    });
+    const scoreEl = document.getElementById('ddScoreNum');
+    if (scoreEl && scoreEl.textContent !== '—') {
+      items.push({ name: 'Due Diligence Score', status: scoreEl.textContent.trim() });
+    }
+    return items;
+  }
+
   /* ---- Inject Agent Personalization Panel ---- */
   function injectAgentPanel() {
     const inputPanel = document.getElementById('inputPanel');
@@ -540,6 +655,67 @@
     } else {
       inputPanel.appendChild(panel);
     }
+  }
+
+  /* ---- Inject Agent Panel for Alternate Layout ---- */
+  function injectAgentPanelAlternate() {
+    // For Senior's Corner and Land Flip — inject into each calc-container
+    document.querySelectorAll('.calc-container').forEach(container => {
+      if (container.querySelector('.agent-panel')) return;
+
+      const panel = document.createElement('details');
+      panel.className = 'agent-panel';
+      panel.style.cssText = 'margin-top:var(--space-5);border-top:1px solid var(--color-border);padding-top:var(--space-4);';
+      panel.innerHTML = `
+        <summary style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);cursor:pointer;user-select:none;list-style:none;display:flex;align-items:center;gap:var(--space-2)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Personalize PDF for Client
+          <svg class="agent-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)">
+          <div class="form-group">
+            <label for="agentName" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Your Name</label>
+            <input type="text" id="agentName" placeholder="e.g. Sarah Chen" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+          <div class="form-group">
+            <label for="agentBrokerage" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Brokerage / Company</label>
+            <input type="text" id="agentBrokerage" placeholder="e.g. Keller Williams" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+          <div class="form-group">
+            <label for="agentContact" style="font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);margin-bottom:4px;display:block">Email or Phone</label>
+            <input type="text" id="agentContact" placeholder="e.g. sarah@kw.com" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+        </div>
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);line-height:1.5">Optional — your info appears on the PDF header when exporting. Leave blank for a standard IntelliTC report.</p>
+      `;
+
+      panel.addEventListener('toggle', function() {
+        const chev = panel.querySelector('.agent-chevron');
+        if (chev) chev.style.transform = panel.open ? 'rotate(180deg)' : '';
+      });
+      panel.addEventListener('input', function(e) {
+        if (e.target.id && e.target.id.startsWith('agent')) {
+          localStorage.setItem(e.target.id, e.target.value);
+        }
+      });
+
+      // Insert before the first calc-submit button
+      const submitBtn = container.querySelector('.calc-submit');
+      if (submitBtn) {
+        submitBtn.parentNode.insertBefore(panel, submitBtn);
+      } else {
+        container.appendChild(panel);
+      }
+
+      // Restore saved agent info
+      ['agentName', 'agentBrokerage', 'agentContact'].forEach(id => {
+        const saved = localStorage.getItem(id);
+        if (saved) {
+          const el = panel.querySelector('#' + id);
+          if (el) el.value = saved;
+        }
+      });
+    });
 
     // Restore saved agent info
     ['agentName', 'agentBrokerage', 'agentContact'].forEach(id => {
@@ -547,6 +723,43 @@
       if (saved) {
         const el = document.getElementById(id);
         if (el) el.value = saved;
+      }
+    });
+  }
+
+  /* ---- Inject Export Buttons for Alternate Layout ---- */
+  function injectExportButtonsAlternate() {
+    document.querySelectorAll('.calc-results').forEach(resultsDiv => {
+      if (resultsDiv.querySelector('.export-group-alt')) return;
+
+      const group = document.createElement('div');
+      group.className = 'export-group-alt';
+      group.style.cssText = 'display:flex;gap:var(--space-3);margin-top:var(--space-5);flex-wrap:wrap;';
+      group.innerHTML = `
+        <button class="btn-export-alt" data-action="csv" style="display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-xs);font-weight:600;cursor:pointer;border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font-family:var(--font-body);transition:all 0.15s">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+        <button class="btn-export-alt" data-action="pdf" style="display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-xs);font-weight:600;cursor:pointer;border:1px solid var(--color-primary);background:var(--color-primary);color:#fff;font-family:var(--font-body);transition:all 0.15s">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Export PDF
+        </button>
+      `;
+
+      group.querySelector('[data-action="csv"]').addEventListener('click', exportCSV);
+      group.querySelector('[data-action="pdf"]').addEventListener('click', exportPDF);
+
+      // Insert before disclaimer if present, otherwise at end
+      const disclaimer = resultsDiv.querySelector('.disclaimer-box');
+      const existingExport = resultsDiv.querySelector('.export-row');
+      if (existingExport) {
+        // Replace the existing text-only export with CSV + PDF
+        existingExport.parentNode.insertBefore(group, existingExport);
+        existingExport.style.display = 'none';
+      } else if (disclaimer) {
+        resultsDiv.insertBefore(group, disclaimer);
+      } else {
+        resultsDiv.appendChild(group);
       }
     });
   }
@@ -602,15 +815,36 @@
   /* ---- Initialize ---- */
   function init() {
     addAgentResponsiveCSS();
-    injectAgentPanel();
-    injectExportButtons();
 
-    // Also re-inject after calculate (in case results panel is rebuilt)
-    const calcBtn = document.getElementById('calcBtn');
-    if (calcBtn) {
-      calcBtn.addEventListener('click', () => {
-        setTimeout(injectExportButtons, 200);
+    if (isAlternateLayout()) {
+      // Senior's Corner, Land Flip, or similar alternate layout
+      injectAgentPanelAlternate();
+
+      // Watch for calc-results becoming visible and inject export buttons
+      const observer = new MutationObserver(() => {
+        document.querySelectorAll('.calc-results.show').forEach(r => {
+          if (!r.querySelector('.export-group-alt')) injectExportButtonsAlternate();
+        });
       });
+      observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+      // Also inject on calculate button clicks
+      document.querySelectorAll('.calc-submit').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setTimeout(injectExportButtonsAlternate, 300);
+        });
+      });
+    } else {
+      // Standard calculator layout
+      injectAgentPanel();
+      injectExportButtons();
+
+      const calcBtn = document.getElementById('calcBtn');
+      if (calcBtn) {
+        calcBtn.addEventListener('click', () => {
+          setTimeout(injectExportButtons, 200);
+        });
+      }
     }
   }
 
