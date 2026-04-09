@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="../shared/style.css">
 <link rel="stylesheet" href="../shared/feedback.css">
 <link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/market-presets.css">
 <style>
 /* ── Hub Page ── */
 .uw-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
@@ -463,6 +464,7 @@
     <div style="margin-bottom:var(--space-6)">
       <h2 style="font-size:var(--text-xl);font-weight:800;color:var(--color-text);margin-bottom:var(--space-2)">Deal Underwriting Worksheet</h2>
       <p style="font-size:var(--text-sm);color:var(--color-text-muted);max-width:600px;line-height:1.6">Complete each section below. The worksheet calculates NOI, DSCR, Cap Rate, Cash-on-Cash Return, and risk flags — then tells you the maximum you should pay.</p>
+      <div id="mpContainer" style="margin-top:var(--space-4)"></div>
     </div>
 
     <!-- This wraps everything for export.js to find .calc-submit and inject agent panel -->
@@ -1176,6 +1178,18 @@ function underwriteDeal() {
   /* — Charts — */
   renderCharts(egi, totalOpEx, annualDS, annualCF, taxes, insurance, mgmtExp, maintTotal + capexTotal, utilities + otherExp);
 
+  /* Save deal data for cross-calculator passing */
+  if (purchasePrice > 0) {
+    DealData.save({
+      purchasePrice: purchasePrice,
+      noi:           noi,
+      unitCount:     units,
+      vacancy:       vacancyPct,
+      dscr:          dscr,
+      capRate:       capRate
+    });
+  }
+
   /* Show results */
   const results = document.getElementById('uwResults');
   results.classList.add('show');
@@ -1430,5 +1444,24 @@ window.LEARN_DATA = {
 };
 </script>
 <script src="../shared/learn-mode.js"></script>
+<script src="../shared/deal-data.js"></script>
+<script src="../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  MarketPresets.init("mpContainer", {
+    vacancy:         "uwVacancy",
+    propTaxDollars:  "uwTaxes",
+    insRateDollars:  "uwInsurance"
+  }, function() {
+    var pp = parseFloat(document.getElementById("uwPrice").value) || 0;
+    return pp;
+  });
+  DealData.prefill({
+    purchasePrice: "uwPrice",
+    noi:           null,
+    unitCount:     "uwUnits"
+  });
+});
+</script>
 </body>
 </html>

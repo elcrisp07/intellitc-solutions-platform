@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="../shared/style.css">
 <link rel="stylesheet" href="../shared/feedback.css">
 <link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/market-presets.css">
 <style>
 /* ── Hub Page ── */
 .cg-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
@@ -363,6 +364,7 @@
     <div style="margin-bottom:var(--space-6)">
       <h2 style="font-size:var(--text-xl);font-weight:800;color:var(--color-text);margin-bottom:var(--space-2)">Capital Gains Tax Impact Analyzer</h2>
       <p style="font-size:var(--text-sm);color:var(--color-text-muted);max-width:620px;line-height:1.6">Enter your income details and the asset sale you're considering. The analyzer calculates your total tax burden, flags the 7 common mistakes, and shows optimization scenarios.</p>
+      <div id="mpContainer" style="margin-top:var(--space-4)"></div>
     </div>
 
     <!-- Section 1: Your Profile -->
@@ -1002,6 +1004,11 @@ function renderResults(d){
       ${s.tax>minTax?'<div class="cg-comp-detail" style="color:#c0392b;font-weight:600;margin-top:var(--space-1)">'+fmtUSD(s.tax-minTax)+' more than lowest</div>':''}
     </div>`).join('');
 
+  // Save sale price and cost basis for cross-calculator use
+  var sp = document.getElementById('salePrice') ? +document.getElementById('salePrice').value || 0 : 0;
+  var cb = document.getElementById('costBasis')  ? +document.getElementById('costBasis').value  || 0 : 0;
+  if (sp > 0) DealData.save({ salePrice: sp, costBasis: cb });
+
   document.getElementById('cgResults').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -1243,5 +1250,19 @@ window.LEARN_DATA = {
 };
 </script>
 <script src="../shared/learn-mode.js"></script>
+<script src="../shared/deal-data.js"></script>
+<script src="../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Capital-gains has no market-specific pre-fills; chip shows market context only
+  MarketPresets.init("mpContainer", {});
+  // Prefill salePrice and costBasis from prior deal if available
+  DealData.prefill({
+    salePrice:  "salePrice",
+    costBasis:  "costBasis",
+    purchasePrice: "costBasis"
+  });
+});
+</script>
 </body>
 </html>

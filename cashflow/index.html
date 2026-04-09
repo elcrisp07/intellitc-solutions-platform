@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="../shared/progress-save.css">
 <link rel="stylesheet" href="../shared/tooltips.css">
 <link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/market-presets.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
 {
@@ -101,6 +102,7 @@
     <section class="panel input-panel" id="inputPanel">
       <h1 class="panel-title">Cash Flow Calculator</h1>
       <p class="panel-subtitle">Detailed monthly and annual rental property cash flow analysis with full P&L breakdown.</p>
+      <div id="mpContainer"></div>
       <div class="divider"></div>
       <div class="params-grid">
 <div class="param-group">
@@ -346,5 +348,27 @@ if ('serviceWorker' in navigator) {
 <script src="../shared/tooltips.js"></script>
 <script src="../shared/feedback.js"></script>
 <script src="../shared/workflow-context.js"></script>
+<script src="../shared/deal-data.js"></script>
+<script src="../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Market Presets
+  MarketPresets.init("mpContainer", {
+    vacancy:         "vacancyRate",
+    avgRent2br:      "monthlyRent",
+    propTaxDollars:  "propTaxYr",
+    insRateDollars:  "insuranceYr"
+  }, function() {
+    var pp = parseFloat(String(document.getElementById('purchasePrice').value).replace(/[^0-9.]/g,'')) || 0;
+    return pp;
+  });
+  // DealData prefill
+  DealData.prefill({
+    purchasePrice: "purchasePrice",
+    monthlyRent:   "monthlyRent"
+  });
+});
+
+</script>
 </body>
 </html>

@@ -84,4 +84,11 @@ function calculate(){
     tbody.innerHTML+=`<tr style="${bold}"><td>${label}</td><td class="text-right${hi}">${typeof mo==='number'?formatCurrency(mo):''}</td><td class="text-right${hi}">${typeof yr==='number'?formatCurrency(yr):''}</td></tr>`;
   });
   showResults();
+  // Save key outputs for cross-calculator data passing
+  DealData.save({
+    purchasePrice: pp,
+    noi:           noi,
+    cashFlow:      annualCF,
+    capRate:       capRate
+  });
 }

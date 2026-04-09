@@ -25,6 +25,349 @@
 <link rel="stylesheet" href="./shared/base.css">
 <link rel="stylesheet" href="./shared/style.css">
 <style>
+/* ═══════ HEADER SEARCH BUTTON ═══════ */
+.hdr-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-divider);
+  background: none;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.hdr-search-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-surface);
+}
+.hdr-search-btn kbd {
+  background: var(--color-divider);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-family: inherit;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+@media(max-width: 900px) { .hdr-search-btn kbd { display:none; } }
+
+/* ═══════ WIZARD TRIGGER BUTTON ═══════ */
+.hero-wizard-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-4);
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px dashed var(--color-primary);
+  background: var(--color-primary-surface);
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+}
+.hero-wizard-trigger:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-style: solid;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(1,105,111,.25);
+}
+
+/* ═══════ SPOTLIGHT SEARCH ═══════ */
+#spotlightOverlay {
+  position: fixed; inset:0; z-index:9900;
+  background: rgba(0,0,0,.55);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  opacity: 0;
+  transition: opacity .18s;
+  pointer-events: none;
+}
+#spotlightOverlay.sp-open {
+  opacity: 1;
+  pointer-events: all;
+}
+.sp-panel {
+  background: var(--color-bg);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 20px;
+  box-shadow: 0 32px 100px rgba(0,0,0,.28);
+  overflow: hidden;
+  transform: translateY(-12px);
+  transition: transform .2s cubic-bezier(.32,1.4,.5,1);
+}
+#spotlightOverlay.sp-open .sp-panel { transform: translateY(0); }
+.sp-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--color-divider);
+}
+.sp-input-row svg { color: var(--color-text-muted); flex-shrink:0; }
+#spInput {
+  flex:1;
+  border:none;
+  background:none;
+  font-family:inherit;
+  font-size: 18px;
+  color: var(--color-text);
+  outline: none;
+}
+#spInput::placeholder { color: var(--color-text-muted); }
+.sp-esc {
+  border: 1.5px solid var(--color-divider);
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.sp-results {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.sp-category-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 10px 20px 4px;
+}
+.sp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background .1s;
+  gap: 12px;
+}
+.sp-item:hover, .sp-item.sp-active {
+  background: var(--color-primary-surface);
+  color: var(--color-primary);
+}
+.sp-item-left { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
+.sp-item-name { font-size: 14px; font-weight: 600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sp-item-desc { font-size: 12px; color: var(--color-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sp-item-arrow { font-size:14px; opacity:.5; flex-shrink:0; }
+.sp-empty {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* ═══════ WIZARD MODAL ═══════ */
+#wizardOverlay {
+  position: fixed; inset:0; z-index:9800;
+  background: rgba(0,0,0,.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+#wizardOverlay.wz-open {
+  opacity: 1;
+  pointer-events: all;
+}
+.wz-panel {
+  background: var(--color-bg);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin: 20px;
+  box-shadow: 0 32px 100px rgba(0,0,0,.28);
+  overflow: hidden;
+  transform: translateY(20px) scale(.98);
+  transition: transform .25s cubic-bezier(.32,1.4,.5,1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+#wizardOverlay.wz-open .wz-panel { transform: translateY(0) scale(1); }
+.wz-header {
+  padding: 28px 32px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.wz-step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.wz-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-divider);
+  transition: background .2s, transform .2s;
+}
+.wz-dot.wz-dot-active { background: var(--color-primary); transform: scale(1.3); }
+.wz-dot.wz-dot-done { background: var(--color-primary); opacity:.5; }
+.wz-close {
+  background: none; border: none;
+  font-size: 20px; cursor: pointer;
+  color: var(--color-text-muted);
+  padding: 4px; line-height:1;
+  transition: color .15s;
+  flex-shrink:0;
+  margin-top: 2px;
+}
+.wz-close:hover { color: var(--color-text); }
+.wz-title {
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+.wz-subtitle {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.wz-body { padding: 20px 32px 28px; }
+
+/* Option grid */
+.wz-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+@media(max-width:600px) { .wz-options-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:380px) { .wz-options-grid { grid-template-columns: 1fr; } }
+
+.wz-option {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-divider);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  color: inherit;
+}
+.wz-option:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-surface);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(1,105,111,.12);
+}
+.wz-option.wz-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+.wz-option-icon { font-size: 26px; line-height:1; }
+.wz-option-label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.wz-option-sub {
+  font-size: 11px;
+  opacity: .7;
+  line-height: 1.3;
+}
+
+/* Results step */
+.wz-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+@media(max-width:500px) { .wz-results-grid { grid-template-columns: 1fr; } }
+
+.wz-result-card {
+  display: block;
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-divider);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all .15s;
+  color: inherit;
+}
+.wz-result-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(1,105,111,.12);
+}
+.wz-result-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+.wz-result-badge.primary { background: var(--color-primary); color:#fff; }
+.wz-result-badge.secondary { background: var(--color-primary-surface); color: var(--color-primary); }
+.wz-result-name { font-size: 14px; font-weight: 700; color: var(--color-text); margin:0 0 4px; }
+.wz-result-desc { font-size: 12px; color: var(--color-text-muted); margin:0; line-height:1.4; }
+.wz-result-arrow {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.wz-footer {
+  padding: 0 32px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.wz-btn-back {
+  background: none;
+  border: 1.5px solid var(--color-divider);
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all .15s;
+}
+.wz-btn-back:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+.wz-skip { font-size: 12px; color: var(--color-text-muted); cursor: pointer; text-decoration: underline; }
+.wz-skip:hover { color: var(--color-text); }
+
 /* ═══════ HERO ═══════ */
 .hero {
   text-align: center;
@@ -774,6 +1117,10 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <a href="./certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certify</a>
       <a href="./guides/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Guides</a>
         <a href="./index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button class="hdr-search-btn" id="hdrSearchBtn" onclick="openSpotlight()" aria-label="Search calculators (Ctrl+K)" title="Search (Ctrl+K)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <kbd>⌘K</kbd>
+      </button>
     <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
@@ -804,9 +1151,13 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero">
-  <span class="hero-badge">54 Professional Calculators</span>
+  <span class="hero-badge">58 Professional Calculators</span>
   <h1>Make Smarter Real Estate Decisions</h1>
   <p>Professional-grade analysis tools for every step of your real estate journey — whether you're buying your first home or managing a portfolio.</p>
+  <button class="hero-wizard-trigger" id="heroWizardBtn" onclick="openWizard()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Not sure where to start? Find your tools →
+  </button>
   <button class="hero-video-trigger" onclick="openVideoLightbox()">
     <span class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></span>
     <span class="play-label">
@@ -1527,6 +1878,421 @@ function clearRecentCalcs() {
   if (section) section.classList.remove('has-items');
 }
 </script>
+<!-- ═══ SPOTLIGHT SEARCH ═══ -->
+<div id="spotlightOverlay" role="dialog" aria-modal="true" aria-label="Calculator search">
+  <div class="sp-panel">
+    <div class="sp-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="spInput" placeholder="Search 58 calculators…" autocomplete="off" role="searchbox">
+      <button class="sp-esc" onclick="closeSpotlight()">ESC</button>
+    </div>
+    <div class="sp-results" id="spResults"></div>
+  </div>
+</div>
+
+<!-- ═══ WIZARD MODAL ═══ -->
+<div id="wizardOverlay" role="dialog" aria-modal="true" aria-label="Find your tools wizard">
+  <div class="wz-panel" id="wzPanel"></div>
+</div>
+
+<script>
+/* ═════ SPOTLIGHT SEARCH ENGINE ═════ */
+(function(){
+  var TOOLS = [
+    /* First-Time Buyer */
+    { name:'Rent vs. Buy', url:'./rent-vs-buy/index.html', cat:'First-Time Buyer', desc:'Break-even year, opportunity cost, wealth comparison', kw:'rent buy renting buying break even decision' },
+    { name:'Affordability Calculator', url:'./affordability/index.html', cat:'First-Time Buyer', desc:'How much home can you afford?', kw:'afford income price range budget' },
+    { name:'Loan Qualification', url:'./qualification-analysis/index.html', cat:'First-Time Buyer', desc:'DTI ratios, eligible loan programs', kw:'qualify dti debt income ratio fha va' },
+    { name:'DTI & Payment Stress Test', url:'./dti-stress-test/index.html', cat:'First-Time Buyer', desc:'Rate shock, payment impact at +1%/+2%', kw:'dti stress test rate shock payment increase' },
+    { name:'Cash-to-Close', url:'./cash-to-close/index.html', cat:'First-Time Buyer', desc:'Every dollar needed on closing day', kw:'cash close down payment closing costs funds' },
+    { name:'True Cost of Ownership', url:'./true-cost-ownership/index.html', cat:'First-Time Buyer', desc:'Real monthly cost beyond the mortgage', kw:'true cost maintenance utilities hidden monthly' },
+    { name:'Government Loans (FHA/VA/USDA)', url:'./government-loans/index.html', cat:'First-Time Buyer', desc:'FHA, VA, USDA, conventional comparison', kw:'fha va usda conventional government loan compare' },
+    { name:'Rate Buydown', url:'./rate-buydown/index.html', cat:'First-Time Buyer', desc:'Points, permanent and 2-1 buydowns', kw:'rate buydown points 2-1 3-2-1 temporary' },
+    /* Homeowner */
+    { name:'Home Equity Calculator', url:'./home-equity/index.html', cat:'Homeowner Tools', desc:'Equity position, HELOC vs HEL', kw:'equity heloc hel borrow ltv position' },
+    { name:'Refinance Analyzer', url:'./refinance/index.html', cat:'Homeowner Tools', desc:'Break-even, savings, cash-out analysis', kw:'refinance break even rate lower savings cashout' },
+    { name:'HELOC Optimizer', url:'./heloc-optimizer/index.html', cat:'Homeowner Tools', desc:'Velocity banking, debt payoff acceleration', kw:'heloc optimize velocity banking payoff debt' },
+    { name:'Buy Before You Sell', url:'./buy-before-you-sell/index.html', cat:'Homeowner Tools', desc:'Bridge financing, contingency analysis', kw:'buy sell contingency bridge financing move' },
+    { name:'Scenario Lab', url:'./scenario-lab/index.html', cat:'Homeowner Tools', desc:'Side-by-side decision scenarios', kw:'scenario compare lab decision analysis what if' },
+    { name:'Budget Variance', url:'./budget-variance/index.html', cat:'Homeowner Tools', desc:'Actual vs. budget property tracking', kw:'budget variance actual vs plan track expenses' },
+    { name:'Seller Net Sheet', url:'./seller-net-sheet/index.html', cat:'Homeowner Tools', desc:'Net proceeds after all closing costs', kw:'seller net proceeds commission closing sale' },
+    /* Investment Analysis */
+    { name:'Cap Rate Calculator', url:'./caprate/index.html', cat:'Investment Analysis', desc:'Compare cap rates across properties', kw:'cap rate noi income return compare' },
+    { name:'Cash Flow Calculator', url:'./cashflow/index.html', cat:'Investment Analysis', desc:'Monthly and annual cash flow projections', kw:'cashflow monthly annual income expenses profit' },
+    { name:'Cash-on-Cash Return', url:'./cash-on-cash-breakdown/index.html', cat:'Investment Analysis', desc:'CoC breakdown and return components', kw:'cash on cash coc return equity appreciation' },
+    { name:'Deal Grading', url:'./deal-grading/index.html', cat:'Investment Analysis', desc:'Score a deal across 8 investor dimensions', kw:'deal grade score quality rating investor' },
+    { name:'Investment Analysis', url:'./investment-analysis/index.html', cat:'Investment Analysis', desc:'Full 5-dimension wealth analysis', kw:'investment analysis roi irr equity 5 dimension' },
+    { name:'Sensitivity Grid', url:'./sensitivity-grid/index.html', cat:'Investment Analysis', desc:'Returns across 25 rent/occupancy scenarios', kw:'sensitivity grid stress test rent occupancy scenarios' },
+    { name:'Portfolio Manager', url:'./portfolio-manager/index.html', cat:'Investment Analysis', desc:'Track and compare multiple properties', kw:'portfolio manager track multiple properties compare' },
+    { name:'RE Investment Analyzer', url:'./re-investment-analyzer/index.html', cat:'Investment Analysis', desc:'Comprehensive real estate ROI analysis', kw:'roi return investment comprehensive rental' },
+    /* Financing, Tax & Market */
+    { name:'Deal Underwriting Worksheet', url:'./underwriting/index.html', cat:'Financing, Tax & Market', desc:'NOI, DSCR, max offer price, risk flags', kw:'underwriting noi dscr max offer risk flag' },
+    { name:'Capital Gains Tax Analyzer', url:'./capital-gains/index.html', cat:'Financing, Tax & Market', desc:'Full tax impact with NIIT, IRMAA, state tax', kw:'capital gains tax niit irmaa state federal sale' },
+    { name:'1031 Exchange', url:'./1031-exchange/index.html', cat:'Financing, Tax & Market', desc:'Exchange eligibility, timeline, rebalancing', kw:'1031 exchange defer tax like kind swap' },
+    { name:'DSCR Loan Calculator', url:'./dscr-loan/index.html', cat:'Financing, Tax & Market', desc:'Debt service coverage ratio loan analysis', kw:'dscr loan coverage ratio debt service qualify' },
+    { name:'Private Money Calculator', url:'./private-money/index.html', cat:'Financing, Tax & Market', desc:'Hard money, points, ROI for private lenders', kw:'private money hard money lender points roi' },
+    { name:'Seller Financing', url:'./seller-financing/index.html', cat:'Financing, Tax & Market', desc:'Carry-back mortgage terms and analysis', kw:'seller financing carry back owner note mortgage' },
+    { name:'Sources & Uses', url:'./sources-uses/index.html', cat:'Financing, Tax & Market', desc:'Project capital stack and funding breakdown', kw:'sources uses capital stack funding equity debt' },
+    { name:'Strategic Market Valuation', url:'./strategic-market-valuation/index.html', cat:'Financing, Tax & Market', desc:'CMA and market value assessment', kw:'market valuation cma comparable value estimate' },
+    { name:'Buffett Indicator', url:'./buffett-indicator/index.html', cat:'Financing, Tax & Market', desc:'Real estate market cycle position', kw:'buffett indicator market cycle position overvalued' },
+    { name:'Agility Index', url:'./agility-index/index.html', cat:'Financing, Tax & Market', desc:'Market flexibility and timing score', kw:'agility index market flexibility timing score' },
+    /* Property Strategy */
+    { name:'BRRRR Strategy', url:'./brrrr/index.html', cat:'Property Strategy', desc:'Buy, Rehab, Rent, Refinance, Repeat', kw:'brrrr rehab refinance repeat arv refi' },
+    { name:'Fix & Flip', url:'./fixflip/index.html', cat:'Property Strategy', desc:'Flip profit, MAO, rehab budget analysis', kw:'fix flip profit mao rehab 70 rule' },
+    { name:'Multifamily Underwriting', url:'./multifamily/index.html', cat:'Property Strategy', desc:'5+ unit apartment complex analysis', kw:'multifamily apartment 5 unit complex underwrite' },
+    { name:'Short-Term Rental', url:'./short-term-rental/index.html', cat:'Property Strategy', desc:'Airbnb/VRBO occupancy, ADR, net income', kw:'short term rental airbnb vrbo str adr occupancy' },
+    { name:'Subject-To Financing', url:'./subject-to/index.html', cat:'Property Strategy', desc:'Take over existing mortgage analysis', kw:'subject to existing mortgage take over creative' },
+    { name:'Wrap Calculator', url:'./wrap-calculator/index.html', cat:'Property Strategy', desc:'Wraparound mortgage analysis and terms', kw:'wrap wraparound mortgage seller carry creative' },
+    { name:'Lease Option', url:'./lease-option/index.html', cat:'Property Strategy', desc:'Rent-to-own terms and option analysis', kw:'lease option rent to own sandwich creative' },
+    { name:'Seller Net Sheet', url:'./seller-net-sheet/index.html', cat:'Property Strategy', desc:'Net proceeds after all selling costs', kw:'seller net sheet proceeds close sale commission' },
+    { name:'CMA Tool', url:'./cma/index.html', cat:'Property Strategy', desc:'Comparable market analysis for agents', kw:'cma comparable market analysis agent pricing' },
+    { name:'Commission Calculator', url:'./commission/index.html', cat:'Property Strategy', desc:'Agent split, net commission breakdown', kw:'commission agent split brokerage percent' },
+    { name:'Distressed Asset', url:'./distressed-asset/index.html', cat:'Property Strategy', desc:'Distressed property underwriting and discount', kw:'distressed foreclosure reo discount motivated' },
+    { name:'Self-Storage Investment', url:'./self-storage/index.html', cat:'Property Strategy', desc:'Storage unit facility analysis', kw:'self storage unit facility income occupancy' },
+    { name:'RV Park Investment', url:'./rv-park-investment/index.html', cat:'Property Strategy', desc:'RV park and campground feasibility', kw:'rv park campground site income feasibility' },
+    { name:'Homyshare Co-Living', url:'./homyshare-coliving/index.html', cat:'Property Strategy', desc:'PadSplit/co-living per-room revenue model', kw:'padsplit coliving per room shared housing revenue' },
+    { name:'Land Development', url:'./land-development/index.html', cat:'Property Strategy', desc:'Land acquisition and development ROI', kw:'land development acquisition entitlement roi' },
+    { name:'Burial/Cemetery Tax', url:'./burial-cemetery-tax/index.html', cat:'Property Strategy', desc:'Cemetery property tax exemption analysis', kw:'burial cemetery tax exemption exempt property' },
+    { name:'IUL Portfolio Calculator', url:'./iul-portfolio/index.html', cat:'Property Strategy', desc:'Indexed Universal Life portfolio strategy', kw:'iul indexed universal life portfolio strategy' },
+    { name:'Solar ROI', url:'./solar-roi/index.html', cat:'Property Strategy', desc:'Solar panel investment return analysis', kw:'solar roi panel savings payback investment' },
+    { name:'Rental Analysis', url:'./rental-analysis/index.html', cat:'Property Strategy', desc:'Comprehensive rental property analysis', kw:'rental analysis property income expense return' },
+    { name:'Housing Code Compliance', url:'./housing-code-compliance/index.html', cat:'Property Strategy', desc:'Code compliance risk and cost estimator', kw:'housing code compliance violation cost repair' },
+    { name:'Net Effective Rent', url:'./net-effective-rent/index.html', cat:'Property Strategy', desc:'Concession and effective rent calculation', kw:'net effective rent concession gross compare' },
+    { name:'Lease Expiration', url:'./lease-expiration/index.html', cat:'Property Strategy', desc:'Lease renewal management and tracking', kw:'lease expiration renewal management track' },
+    { name:'Tenant Turnover', url:'./tenant-turnover/index.html', cat:'Property Strategy', desc:'Turnover cost and lost rent analysis', kw:'tenant turnover cost vacancy lost rent' },
+    { name:'Payment Reverse Engineering', url:'./payment-reverse-engineering/index.html', cat:'Property Strategy', desc:'Back-calculate max price from target payment', kw:'payment reverse engineer max price target monthly' },
+    /* Senior’s Corner */
+    { name:"Senior's Corner", url:'./seniors-corner/index.html', cat:"Senior's Corner", desc:'Retirement income, downsizing, estate tools', kw:'senior retirement downsizing estate income' },
+    /* Land Flip */
+    { name:'Land Flip Analyzer', url:'./land-flip/index.html', cat:'Land Flip', desc:'Vacant land flip profit and exit analysis', kw:'land flip vacant lot profit exit rehab' },
+  ];
+
+  var sp = document.getElementById('spotlightOverlay');
+  var spInput = document.getElementById('spInput');
+  var spResults = document.getElementById('spResults');
+  var spActiveIdx = -1;
+
+  function renderSpotlight(q) {
+    var q_ = (q || '').toLowerCase().trim();
+    var filtered;
+    if (!q_) {
+      // Show all, grouped by category
+      filtered = TOOLS;
+    } else {
+      filtered = TOOLS.filter(function(t) {
+        return (t.name + ' ' + t.cat + ' ' + t.kw + ' ' + t.desc).toLowerCase().indexOf(q_) > -1;
+      });
+    }
+    if (!filtered.length) {
+      spResults.innerHTML = '<div class="sp-empty">No calculators found for &ldquo;' + q + '&rdquo;</div>';
+      return;
+    }
+    // Group by category
+    var grouped = {};
+    filtered.forEach(function(t) {
+      if (!grouped[t.cat]) grouped[t.cat] = [];
+      grouped[t.cat].push(t);
+    });
+    var html = '';
+    Object.keys(grouped).forEach(function(cat) {
+      if (!q_ || grouped[cat].length > 0) {
+        html += '<div class="sp-category-label">' + cat + '</div>';
+        grouped[cat].forEach(function(t) {
+          html += '<a class="sp-item" href="' + t.url + '" onclick="closeSpotlight()">' +
+            '<div class="sp-item-left">' +
+              '<div class="sp-item-name">' + t.name + '</div>' +
+              '<div class="sp-item-desc">' + t.desc + '</div>' +
+            '</div>' +
+            '<span class="sp-item-arrow">→</span>' +
+          '</a>';
+        });
+      }
+    });
+    spResults.innerHTML = html;
+    spActiveIdx = -1;
+  }
+
+  window.openSpotlight = function() {
+    sp.classList.add('sp-open');
+    spInput.value = '';
+    renderSpotlight('');
+    setTimeout(function() { spInput.focus(); }, 60);
+  };
+  window.closeSpotlight = function() {
+    sp.classList.remove('sp-open');
+    spInput.blur();
+  };
+
+  sp.addEventListener('click', function(e) { if (e.target === sp) closeSpotlight(); });
+  spInput.addEventListener('input', function() { renderSpotlight(this.value); spActiveIdx = -1; });
+  spInput.addEventListener('keydown', function(e) {
+    var items = spResults.querySelectorAll('.sp-item');
+    if (e.key === 'Escape') { closeSpotlight(); return; }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      spActiveIdx = Math.min(spActiveIdx + 1, items.length - 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      spActiveIdx = Math.max(spActiveIdx - 1, -1);
+    } else if (e.key === 'Enter' && spActiveIdx >= 0 && items[spActiveIdx]) {
+      window.location = items[spActiveIdx].href;
+      closeSpotlight();
+      return;
+    }
+    items.forEach(function(it, i) { it.classList.toggle('sp-active', i === spActiveIdx); });
+    if (spActiveIdx >= 0 && items[spActiveIdx]) items[spActiveIdx].scrollIntoView({ block: 'nearest' });
+  });
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openSpotlight(); }
+    if (e.key === 'Escape' && sp.classList.contains('sp-open')) closeSpotlight();
+  });
+})();
+
+/* ═════ GUIDED WORKFLOW WIZARD ═════ */
+(function(){
+  var STEP1 = [
+    { id:'buy_home',        icon:'🏠', label:'Buying a Home',          sub:'First-time buyer tools' },
+    { id:'analyze_deal',    icon:'📊', label:'Analyzing a Deal',       sub:'Investment underwriting' },
+    { id:'own_optimize',    icon:'🏘️', label:'I Own Property',         sub:'Optimize & track' },
+    { id:'plan_exit',       icon:'🏷️', label:'Planning an Exit',       sub:'Sell or 1031 exchange' },
+    { id:'creative_finance',icon:'💡', label:'Creative Financing',    sub:'BRRRR, subject-to, wraps' },
+    { id:'tax_strategy',    icon:'📄', label:'Tax Strategy',           sub:'Capital gains, 1031, IUL' },
+  ];
+  var STEP2 = [
+    { id:'sfr',    icon:'🏡', label:'Single Family',     sub:'1 unit' },
+    { id:'sm_mf',  icon:'🏘️', label:'Small Multifamily', sub:'2–4 units' },
+    { id:'lg_mf',  icon:'🏗️', label:'Large Multifamily', sub:'5+ units' },
+    { id:'str',    icon:'☀️',  label:'Short-Term Rental', sub:'Airbnb / VRBO' },
+    { id:'land',   icon:'🌿', label:'Land or Lots',      sub:'Vacant land' },
+    { id:'other',  icon:'🏢', label:'Commercial / Other',sub:'Mixed use, NNN' },
+  ];
+  var RESULTS = {
+    'buy_home': [
+      { name:'Rent vs. Buy',       url:'./rent-vs-buy/index.html',          desc:'Should you rent or buy? Full break-even and wealth analysis.',        badge:'Start Here' },
+      { name:'Affordability',      url:'./affordability/index.html',         desc:'How much home can you realistically afford on your income?',          badge:'Step 2' },
+      { name:'Loan Qualification', url:'./qualification-analysis/index.html',desc:'Check DTI, eligible loan programs, and payment estimates.',           badge:'Step 3' },
+      { name:'Cash-to-Close',      url:'./cash-to-close/index.html',         desc:'Every dollar you need on closing day — no surprises.',              badge:'Step 4' },
+    ],
+    'analyze_deal_sfr': [
+      { name:'Deal Underwriting',  url:'./underwriting/index.html',          desc:'Full worksheet — NOI, DSCR, max offer price, and risk flags.',      badge:'Start Here' },
+      { name:'Cash Flow Calc',     url:'./cashflow/index.html',              desc:'Monthly and annual cash flow with expense breakdown.',                badge:'Next' },
+      { name:'Cap Rate Calc',      url:'./caprate/index.html',               desc:'Compare cap rates across up to 3 properties side-by-side.',           badge:'Next' },
+      { name:'Deal Grading',       url:'./deal-grading/index.html',          desc:'Score the deal across 8 investor dimensions with a letter grade.',   badge:'Validate' },
+    ],
+    'analyze_deal_sm_mf': [
+      { name:'Deal Underwriting',  url:'./underwriting/index.html',          desc:'Full worksheet for 2–4 unit properties — DSCR, NOI, max offer.',    badge:'Start Here' },
+      { name:'Cash Flow Calc',     url:'./cashflow/index.html',              desc:'Unit-level income, expenses, and cash flow projections.',             badge:'Next' },
+      { name:'Sensitivity Grid',   url:'./sensitivity-grid/index.html',      desc:'Returns across 25 combinations of rent and occupancy.',              badge:'Stress Test' },
+      { name:'Deal Grading',       url:'./deal-grading/index.html',          desc:'Score the overall deal quality on 8 investor dimensions.',            badge:'Validate' },
+    ],
+    'analyze_deal_lg_mf': [
+      { name:'Multifamily Underwriting', url:'./multifamily/index.html',     desc:'Full apartment complex underwriting — NOI, vacancy, expense ratio.', badge:'Start Here' },
+      { name:'Deal Underwriting',  url:'./underwriting/index.html',          desc:'Deep-dive worksheet with DSCR, max offer price, risk flags.',        badge:'Next' },
+      { name:'Sensitivity Grid',   url:'./sensitivity-grid/index.html',      desc:'25-scenario returns matrix across rent and occupancy bands.',        badge:'Stress Test' },
+      { name:'Portfolio Manager',  url:'./portfolio-manager/index.html',     desc:'Add this property to your portfolio and track metrics over time.',   badge:'Track' },
+    ],
+    'analyze_deal_str': [
+      { name:'Short-Term Rental',  url:'./short-term-rental/index.html',     desc:'ADR, occupancy, platform fees, net income for Airbnb/VRBO.',         badge:'Start Here' },
+      { name:'Cash Flow Calc',     url:'./cashflow/index.html',              desc:'Monthly cash flow vs. long-term rental comparison.',                 badge:'Compare' },
+      { name:'Investment Analysis',url:'./investment-analysis/index.html',   desc:'5-dimension wealth analysis: cash flow, equity, tax, leverage.',     badge:'Full Picture' },
+      { name:'Deal Grading',       url:'./deal-grading/index.html',          desc:'Score the deal across 8 dimensions including market risk.',          badge:'Validate' },
+    ],
+    'analyze_deal_land': [
+      { name:'Land Flip Analyzer', url:'./land-flip/index.html',             desc:'Vacant land flip profit, seller finance, and exit strategy.',        badge:'Start Here' },
+      { name:'Land Development',   url:'./land-development/index.html',      desc:'Land acquisition, entitlement, and development ROI.',               badge:'Next' },
+      { name:'Deal Grading',       url:'./deal-grading/index.html',          desc:'Score the land deal quality before you make an offer.',             badge:'Validate' },
+      { name:'Sources & Uses',     url:'./sources-uses/index.html',          desc:'Capital stack breakdown for your development project.',             badge:'Financing' },
+    ],
+    'analyze_deal_other': [
+      { name:'Deal Underwriting',  url:'./underwriting/index.html',          desc:'Adapt this worksheet for commercial — NOI, DSCR, max offer.',       badge:'Start Here' },
+      { name:'DSCR Loan Calc',     url:'./dscr-loan/index.html',             desc:'Lender DSCR requirements and loan qualification.',                  badge:'Financing' },
+      { name:'Cap Rate Calc',      url:'./caprate/index.html',               desc:'Commercial cap rate benchmarks and comparisons.',                   badge:'Valuation' },
+      { name:'Sources & Uses',     url:'./sources-uses/index.html',          desc:'Project capital stack and equity / debt breakdown.',                badge:'Stack' },
+    ],
+    'own_optimize_sfr': [
+      { name:'Cash Flow Calc',     url:'./cashflow/index.html',              desc:'Are you maximizing cash flow? Review every income and expense line.', badge:'Start Here' },
+      { name:'Refinance Analyzer', url:'./refinance/index.html',             desc:'Should you refi? Break-even, savings, and cash-out analysis.',       badge:'Optimize' },
+      { name:'HELOC Optimizer',    url:'./heloc-optimizer/index.html',       desc:'Use a HELOC for velocity banking and faster debt payoff.',           badge:'Advanced' },
+      { name:'True Cost of Ownership', url:'./true-cost-ownership/index.html',desc:'Full monthly cost including maintenance and CapEx reserves.',      badge:'Reality Check' },
+    ],
+    'own_optimize_sm_mf': [
+      { name:'Cash Flow Calc',     url:'./cashflow/index.html',              desc:'Per-unit and portfolio cash flow with full expense breakdown.',      badge:'Start Here' },
+      { name:'Budget Variance',    url:'./budget-variance/index.html',       desc:'Compare actual income and expenses against your budget.',            badge:'Track' },
+      { name:'Tenant Turnover',    url:'./tenant-turnover/index.html',       desc:'How much is turnover costing you? Model the real cost.',            badge:'Operations' },
+      { name:'Portfolio Manager',  url:'./portfolio-manager/index.html',     desc:'Add this property to your portfolio and track KPIs.',               badge:'Portfolio' },
+    ],
+    'own_optimize_lg_mf': [
+      { name:'Multifamily Underwriting', url:'./multifamily/index.html',     desc:'Annual NOI, expense ratio, and value-add scenario analysis.',       badge:'Baseline' },
+      { name:'Portfolio Manager',  url:'./portfolio-manager/index.html',     desc:'Track all properties with KPI dashboards.',                         badge:'Track' },
+      { name:'Budget Variance',    url:'./budget-variance/index.html',       desc:'Actual vs. budget analysis across all units.',                     badge:'Operations' },
+      { name:'Sensitivity Grid',   url:'./sensitivity-grid/index.html',      desc:'See your NOI sensitivity to rent and occupancy shifts.',            badge:'Risk' },
+    ],
+    'own_optimize_str': [
+      { name:'Short-Term Rental',  url:'./short-term-rental/index.html',     desc:'Recalculate with current ADR, occupancy, and platform fees.',       badge:'Start Here' },
+      { name:'Budget Variance',    url:'./budget-variance/index.html',       desc:'Track actual vs. expected income and expenses.',                   badge:'Track' },
+      { name:'Scenario Lab',       url:'./scenario-lab/index.html',          desc:'Model scenarios: convert to LTR, switch platforms, reprice.',       badge:'Strategy' },
+      { name:'Investment Analysis',url:'./investment-analysis/index.html',   desc:'Full 5-dimension return analysis on your hold strategy.',           badge:'Returns' },
+    ],
+    'plan_exit': [
+      { name:'Seller Net Sheet',   url:'./seller-net-sheet/index.html',      desc:'Your actual net proceeds after commissions, closing, and taxes.',   badge:'Start Here' },
+      { name:'Capital Gains Tax',  url:'./capital-gains/index.html',         desc:'Full tax impact: federal, NIIT, IRMAA, state, installment options.', badge:'Tax First' },
+      { name:'1031 Exchange',      url:'./1031-exchange/index.html',         desc:'Exchange eligibility, timeline, and replacement property sizing.',  badge:'Defer Tax' },
+      { name:'Investment Analysis',url:'./investment-analysis/index.html',   desc:'Compare your net after-tax return vs. holding vs. reinvesting.',    badge:'Compare' },
+    ],
+    'creative_finance': [
+      { name:'BRRRR Strategy',     url:'./brrrr/index.html',                 desc:'Buy, Rehab, Rent, Refinance, Repeat — full cash recovery model.',  badge:'Start Here' },
+      { name:'Subject-To Financing',url:'./subject-to/index.html',           desc:'Take over an existing mortgage — terms, equity, risk analysis.',   badge:'Strategy' },
+      { name:'Seller Financing',   url:'./seller-financing/index.html',      desc:'Carry-back note terms, balloon payments, investor returns.',        badge:'Strategy' },
+      { name:'Wrap Calculator',    url:'./wrap-calculator/index.html',       desc:'Wraparound mortgage spread, payments, and net return.',             badge:'Advanced' },
+    ],
+    'tax_strategy': [
+      { name:'Capital Gains Tax',  url:'./capital-gains/index.html',         desc:'7-category impact: federal, NIIT, IRMAA, state, SS taxation.',      badge:'Start Here' },
+      { name:'1031 Exchange',      url:'./1031-exchange/index.html',         desc:'Exchange eligibility, boot, and replacement property sizing.',      badge:'Defer' },
+      { name:'IUL Portfolio',      url:'./iul-portfolio/index.html',         desc:'Indexed Universal Life as a tax-advantaged real estate strategy.',  badge:'Advanced' },
+      { name:'Solar ROI',          url:'./solar-roi/index.html',             desc:'Tax credits, depreciation, and net return on solar investment.',    badge:'Tax Credits' },
+    ],
+  };
+
+  var overlay = document.getElementById('wizardOverlay');
+  var panel = document.getElementById('wzPanel');
+  var wz = { step: 1, goal: null, propType: null };
+
+  function needsPropType(goal) {
+    return goal === 'analyze_deal' || goal === 'own_optimize';
+  }
+
+  function resultsKey() {
+    if (!needsPropType(wz.goal)) return wz.goal;
+    return wz.goal + '_' + (wz.propType || 'sfr');
+  }
+
+  function totalSteps() { return needsPropType(wz.goal) ? 3 : 2; }
+
+  function dots(step, total) {
+    var html = '<div class="wz-step-indicator">';
+    for (var i = 1; i <= total; i++) {
+      var cls = i < step ? 'wz-dot wz-dot-done' : (i === step ? 'wz-dot wz-dot-active' : 'wz-dot');
+      html += '<div class="' + cls + '"></div>';
+    }
+    return html + '</div>';
+  }
+
+  function renderStep1() {
+    var opts = STEP1.map(function(o) {
+      return '<button class="wz-option' + (wz.goal === o.id ? ' wz-selected' : '') +
+        '" onclick="wz_selectGoal(\'' + o.id + '\')">' +
+        '<div class="wz-option-icon">' + o.icon + '</div>' +
+        '<div class="wz-option-label">' + o.label + '</div>' +
+        '<div class="wz-option-sub">' + o.sub + '</div>' +
+        '</button>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="wz-header">' +
+        '<div>' + dots(1, 2) +
+          '<h2 class="wz-title">What brings you here today?</h2>' +
+          '<p class="wz-subtitle">We’ll recommend the right tools for your situation.</p>' +
+        '</div>' +
+        '<button class="wz-close" onclick="closeWizard()" aria-label="Close">×</button>' +
+      '</div>' +
+      '<div class="wz-body">' +
+        '<div class="wz-options-grid">' + opts + '</div>' +
+      '</div>' +
+      '<div class="wz-footer">' +
+        '<span></span>' +
+        '<button class="wz-skip" onclick="closeWizard()">Skip — see all tools</button>' +
+      '</div>';
+  }
+
+  function renderStep2() {
+    var opts = STEP2.map(function(o) {
+      return '<button class="wz-option' + (wz.propType === o.id ? ' wz-selected' : '') +
+        '" onclick="wz_selectPropType(\'' + o.id + '\')">' +
+        '<div class="wz-option-icon">' + o.icon + '</div>' +
+        '<div class="wz-option-label">' + o.label + '</div>' +
+        '<div class="wz-option-sub">' + o.sub + '</div>' +
+        '</button>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="wz-header">' +
+        '<div>' + dots(2, 3) +
+          '<h2 class="wz-title">What type of property?</h2>' +
+          '<p class="wz-subtitle">This helps us pick the most relevant tools.</p>' +
+        '</div>' +
+        '<button class="wz-close" onclick="closeWizard()" aria-label="Close">×</button>' +
+      '</div>' +
+      '<div class="wz-body">' +
+        '<div class="wz-options-grid">' + opts + '</div>' +
+      '</div>' +
+      '<div class="wz-footer">' +
+        '<button class="wz-btn-back" onclick="wz_back()">Back</button>' +
+        '<button class="wz-skip" onclick="closeWizard()">Skip — see all tools</button>' +
+      '</div>';
+  }
+
+  function renderResults() {
+    var key = resultsKey();
+    var tools = RESULTS[key] || RESULTS['analyze_deal_sfr'];
+    var cards = tools.map(function(t, i) {
+      return '<a class="wz-result-card" href="' + t.url + '" onclick="closeWizard()">' +
+        '<span class="wz-result-badge ' + (i === 0 ? 'primary' : 'secondary') + '">' + t.badge + '</span>' +
+        '<p class="wz-result-name">' + t.name + '</p>' +
+        '<p class="wz-result-desc">' + t.desc + '</p>' +
+        '<div class="wz-result-arrow">Open →</div>' +
+      '</a>';
+    }).join('');
+    var total = totalSteps();
+    panel.innerHTML =
+      '<div class="wz-header">' +
+        '<div>' + dots(total, total) +
+          '<h2 class="wz-title">Your Recommended Tools</h2>' +
+          '<p class="wz-subtitle">Start with the first card and work through in order.</p>' +
+        '</div>' +
+        '<button class="wz-close" onclick="closeWizard()" aria-label="Close">×</button>' +
+      '</div>' +
+      '<div class="wz-body">' +
+        '<div class="wz-results-grid">' + cards + '</div>' +
+      '</div>' +
+      '<div class="wz-footer">' +
+        '<button class="wz-btn-back" onclick="wz_back()">Back</button>' +
+        '<button class="wz-skip" onclick="closeWizard()">See all 58 tools</button>' +
+      '</div>';
+  }
+
+  window.openWizard = function() {
+    wz.step = 1; wz.goal = null; wz.propType = null;
+    renderStep1();
+    overlay.classList.add('wz-open');
+  };
+  window.closeWizard = function() {
+    overlay.classList.remove('wz-open');
+  };
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeWizard(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('wz-open')) closeWizard();
+  });
+
+  window.wz_selectGoal = function(id) {
+    wz.goal = id;
+    if (needsPropType(id)) {
+      wz.step = 2;
+      renderStep2();
+    } else {
+      wz.step = 2;
+      renderResults();
+    }
+  };
+  window.wz_selectPropType = function(id) {
+    wz.propType = id;
+    wz.step = 3;
+    renderResults();
+  };
+  window.wz_back = function() {
+    if (wz.step === 3) { wz.step = 2; renderStep2(); }
+    else if (wz.step === 2) { wz.step = 1; wz.goal = null; renderStep1(); }
+  };
+})();
+</script>
+
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

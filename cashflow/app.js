@@ -104,4 +104,12 @@ function calculate(){
     tbody.innerHTML+=`<tr style="${style}"><td>${label}</td><td class="text-right${hi}">${formatCurrency(mo)}</td><td class="text-right${hi}">${formatCurrency(yr)}</td></tr>`;
   });
   showResults();
+  // Save key outputs for cross-calculator data passing
+  DealData.save({
+    purchasePrice: pp,
+    monthlyRent:   rent,
+    cashFlow:      cfYr,
+    noi:           noi,
+    vacancy:       vacPct * 100
+  });
 }

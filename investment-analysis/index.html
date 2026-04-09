@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="../shared/progress-save.css">
 <link rel="stylesheet" href="../shared/tooltips.css">
 <link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/market-presets.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
 {
@@ -101,6 +102,7 @@
     <section class="panel input-panel" id="inputPanel">
       <h1 class="panel-title">Investment Analysis Calculator</h1>
       <p class="panel-subtitle">Quick snapshot of ROI, cap rate, and cash flow for any investment property.</p>
+      <div id="mpContainer"></div>
       <div class="divider"></div>
       <div class="params-grid">
 <div class="param-group">
@@ -280,5 +282,20 @@ if ('serviceWorker' in navigator) {
 <script src="../shared/tooltips.js"></script>
 <script src="../shared/feedback.js"></script>
 <script src="../shared/workflow-context.js"></script>
+<script src="../shared/deal-data.js"></script>
+<script src="../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  MarketPresets.init("mpContainer", {
+    vacancy: "vacancyRate"
+  });
+  DealData.prefill({
+    purchasePrice: "purchasePrice",
+    noi:           "monthlyIncome",
+    cashFlow:      null
+  });
+});
+
+</script>
 </body>
 </html>

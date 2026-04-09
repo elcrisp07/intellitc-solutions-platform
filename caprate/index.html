@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="../shared/progress-save.css">
 <link rel="stylesheet" href="../shared/tooltips.css">
 <link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/market-presets.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
 {
@@ -101,6 +102,7 @@
     <section class="panel input-panel" id="inputPanel">
       <h1 class="panel-title">Cap Rate Calculator</h1>
       <p class="panel-subtitle">Compare cap rates across multiple investment properties side by side. Add up to 5 properties for quick comparison.</p>
+      <div id="mpContainer"></div>
       <div class="divider"></div>
       <div class="params-grid">
 <div class="param-group">
@@ -347,5 +349,20 @@ if ('serviceWorker' in navigator) {
 <script src="../shared/tooltips.js"></script>
 <script src="../shared/feedback.js"></script>
 <script src="../shared/workflow-context.js"></script>
+<script src="../shared/deal-data.js"></script>
+<script src="../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Market Presets: vacancy fills all 3 vacancy fields
+  MarketPresets.init("mpContainer", {
+    vacancy: ["vacancy1", "vacancy2", "vacancy3"]
+  });
+  // DealData: prefill price + income for property 1 from prior deal
+  DealData.prefill({
+    purchasePrice: "price1",
+    noi: "income1"
+  });
+});
+</script>
 </body>
 </html>

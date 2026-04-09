@@ -70,4 +70,12 @@ function calculate(){
     tbody.innerHTML+=`<tr><td${best?' class="highlight"':''}>${p.name}${i===bestIdx?' ★':''}</td><td class="text-right">${formatCurrency(p.price)}</td><td class="text-right">${formatCurrency(p.noi)}</td><td class="text-right${best}">${formatPct(p.capRate)}</td><td class="text-right">${p.grm.toFixed(1)}</td></tr>`;
   });
   showResults();
+  // Save best cap rate + price for cross-calculator use
+  if (props.length > 0) {
+    DealData.save({
+      capRate:       caps[bestIdx],
+      purchasePrice: props[bestIdx].price,
+      noi:           props[bestIdx].noi
+    });
+  }
 }
