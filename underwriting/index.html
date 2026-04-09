@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/underwriting">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Underwriting Worksheet — IntelliTC Solutions</title>
+<meta name="description" content="A complete pre-offer investment analysis: NOI, DSCR, Cap Rate, Cash-on-Cash, risk flags, and max offer price — all in one structured worksheet.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Deal Underwriting Worksheet — IntelliTC Solutions">
+<meta property="og:description" content="Master pre-offer analysis: NOI, DSCR, Cap Rate, Cash-on-Cash, risk flags, and max offer price in a single workflow.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/underwriting">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>
+/* ── Hub Page ── */
+.uw-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
+.uw-hub-badge {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  background:var(--color-primary-surface); color:var(--color-primary);
+  font-size:var(--text-xs); font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  padding:var(--space-1) var(--space-3); border-radius:var(--radius-full);
+  border:1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+  margin-bottom:var(--space-4);
+}
+.uw-hub-title { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; color:var(--color-text); line-height:1.15; margin-bottom:var(--space-4); }
+.uw-hub-title span { color:var(--color-primary); }
+.uw-hub-desc { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.7; max-width:640px; margin-bottom:var(--space-8); }
+.uw-features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--space-3); margin-bottom:var(--space-10); }
+.uw-feature {
+  display:flex; align-items:flex-start; gap:var(--space-3);
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4);
+}
+.uw-feature-icon { width:36px; height:36px; border-radius:var(--radius-md); background:var(--color-primary-surface); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.uw-feature-icon svg { color:var(--color-primary); }
+.uw-feature-text strong { display:block; font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin-bottom:2px; }
+.uw-feature-text span { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.5; }
+.uw-cta-card {
+  background:var(--color-surface); border:2px solid var(--color-primary);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:var(--space-6); box-shadow:0 4px 24px rgba(1,105,111,.10);
+}
+.uw-cta-card-left h3 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); }
+.uw-cta-card-left p { font-size:var(--text-sm); color:var(--color-text-muted); }
+.btn-uw-open {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-sm); font-weight:600;
+  padding:var(--space-3) var(--space-6); border-radius:var(--radius-md);
+  border:none; cursor:pointer; white-space:nowrap; flex-shrink:0;
+  transition:background var(--transition-interactive);
+}
+.btn-uw-open:hover { background:var(--color-primary-hover); }
+.uw-note { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-4); text-align:center; }
+
+/* ── Worksheet Panel ── */
+.uw-panel { display:none; }
+.uw-panel.active { display:block; }
+.uw-back { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); color:var(--color-text-muted); cursor:pointer; background:none; border:none; padding:var(--space-4) var(--space-6) var(--space-2); text-decoration:none; }
+.uw-back:hover { color:var(--color-primary); }
+.uw-worksheet { max-width:1100px; margin:0 auto; padding:0 var(--space-6) var(--space-20); }
+
+/* ── Section Headers ── */
+.uw-section { margin-bottom:var(--space-8); }
+.uw-section-head {
+  display:flex; align-items:center; gap:var(--space-3);
+  margin-bottom:var(--space-5); padding-bottom:var(--space-3);
+  border-bottom:2px solid var(--color-primary);
+}
+.uw-section-num {
+  width:28px; height:28px; border-radius:50%;
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-xs); font-weight:700;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.uw-section-head h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0; }
+.uw-section-head p { font-size:var(--text-xs); color:var(--color-text-muted); margin:0; }
+
+/* ── Form Grid ── */
+.uw-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
+@media(max-width:768px){ .uw-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .uw-grid { grid-template-columns:1fr; } }
+.uw-grid .form-group.span2 { grid-column:span 2; }
+.uw-grid .form-group.span3 { grid-column:span 3; }
+@media(max-width:768px){ .uw-grid .form-group.span3 { grid-column:span 2; } }
+@media(max-width:480px){ .uw-grid .form-group.span2, .uw-grid .form-group.span3 { grid-column:span 1; } }
+
+.form-group label {
+  display:block; font-size:var(--text-xs); font-weight:600;
+  color:var(--color-text-muted); letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:var(--space-2);
+}
+.input-wrap { position:relative; display:flex; align-items:center; }
+.input-prefix, .input-suffix {
+  position:absolute; font-size:var(--text-sm); font-weight:500;
+  color:var(--color-text-muted); pointer-events:none;
+}
+.input-prefix { left:var(--space-3); }
+.input-suffix { right:var(--space-3); }
+.form-group input, .form-group select {
+  width:100%; padding:var(--space-2) var(--space-3);
+  border:1px solid var(--color-border); border-radius:var(--radius-md);
+  font-size:var(--text-sm); background:var(--color-bg); color:var(--color-text);
+  font-family:var(--font-body); transition:border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+}
+.form-group input:focus, .form-group select:focus {
+  outline:none; border-color:var(--color-primary);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+.has-prefix input { padding-left:var(--space-7); }
+.has-suffix input { padding-right:var(--space-8); }
+.form-hint { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); line-height:1.4; }
+
+/* ── Benchmark badges ── */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm); padding:2px var(--space-2); cursor:pointer; transition:all var(--transition-interactive); }
+.bm-tag:hover { background:var(--color-primary-surface); border-color:var(--color-primary); color:var(--color-primary); }
+
+/* ── Calculate Button ── */
+.uw-calc-btn {
+  display:flex; align-items:center; justify-content:center; gap:var(--space-2);
+  width:100%; padding:var(--space-4);
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-base); font-weight:700;
+  border:none; border-radius:var(--radius-lg); cursor:pointer; margin-top:var(--space-2);
+  transition:background var(--transition-interactive), transform var(--transition-interactive);
+}
+.uw-calc-btn:hover { background:var(--color-primary-hover); transform:translateY(-1px); }
+
+/* ── Results ── */
+.uw-results { display:none; margin-top:var(--space-10); }
+.uw-results.show { display:block; }
+
+/* Deal Grade Hero */
+.uw-grade-hero {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+  display:flex; align-items:center; gap:var(--space-6); margin-bottom:var(--space-6);
+  box-shadow:var(--shadow-md);
+}
+.uw-grade-circle {
+  width:88px; height:88px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; font-weight:800; color:#fff;
+  font-family:var(--font-mono);
+}
+.uw-grade-info h2 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); }
+.uw-grade-info p { font-size:var(--text-sm); color:var(--color-text-muted); margin:0; }
+.uw-grade-summary { font-size:var(--text-sm); font-weight:600; margin-top:var(--space-2); }
+
+/* Metrics Grid */
+.uw-metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-bottom:var(--space-6); }
+@media(max-width:768px){ .uw-metrics-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .uw-metrics-grid { grid-template-columns:1fr 1fr; } }
+.uw-metric-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4);
+}
+.uw-metric-label { font-size:var(--text-xs); font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:var(--space-1); }
+.uw-metric-value { font-size:1.5rem; font-weight:700; color:var(--color-text); font-family:var(--font-mono); line-height:1.1; }
+.uw-metric-note { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); }
+
+/* Result Cards */
+.uw-result-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--space-4); margin-bottom:var(--space-6); }
+@media(max-width:640px){ .uw-result-grid { grid-template-columns:1fr; } }
+.result-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); overflow:hidden;
+}
+.result-card h4 {
+  font-size:var(--text-xs); font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  color:#fff; background:var(--color-primary); padding:var(--space-3) var(--space-4); margin:0;
+}
+.result-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:var(--space-2) var(--space-4); border-bottom:1px solid var(--color-divider);
+  font-size:var(--text-sm);
+}
+.result-row:last-child { border-bottom:none; }
+.result-row:nth-child(even) { background:var(--color-surface-2); }
+.result-label { color:var(--color-text-muted); }
+.result-value { font-weight:600; color:var(--color-text); font-family:var(--font-mono); font-size:var(--text-sm); }
+.result-value.positive { color:var(--color-success); }
+.result-value.negative { color:var(--color-error); }
+.result-value.warning { color:var(--color-warning); }
+
+/* Risk Flags */
+.uw-flags { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:var(--space-6); }
+.uw-flags-title { font-size:var(--text-xs); font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#fff; background:var(--color-primary); padding:var(--space-3) var(--space-4); }
+.flag-row { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); border-bottom:1px solid var(--color-divider); }
+.flag-row:last-child { border-bottom:none; }
+.flag-row:nth-child(even) { background:var(--color-surface-2); }
+.flag-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.flag-dot.green { background:#437a22; }
+.flag-dot.yellow { background:#964219; }
+.flag-dot.red { background:#a13544; }
+.flag-metric { font-size:var(--text-sm); font-weight:600; color:var(--color-text); width:180px; flex-shrink:0; }
+.flag-value { font-size:var(--text-sm); font-weight:700; font-family:var(--font-mono); width:80px; flex-shrink:0; }
+.flag-value.green { color:#437a22; }
+.flag-value.yellow { color:#964219; }
+.flag-value.red { color:#a13544; }
+.flag-note { font-size:var(--text-xs); color:var(--color-text-muted); flex:1; }
+
+/* Max Offer */
+.uw-max-offer { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6); }
+@media(max-width:480px){ .uw-max-offer { grid-template-columns:1fr; } }
+.max-offer-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5);
+  border-left:4px solid var(--color-primary);
+}
+.max-offer-card h4 { font-size:var(--text-xs); font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--color-text-muted); margin-bottom:var(--space-2); }
+.max-offer-price { font-size:1.8rem; font-weight:800; color:var(--color-primary); font-family:var(--font-mono); }
+.max-offer-note { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); }
+.max-offer-vs { font-size:var(--text-sm); font-weight:600; margin-top:var(--space-2); }
+.max-offer-vs.over { color:var(--color-error); }
+.max-offer-vs.under { color:var(--color-success); }
+
+/* Chart */
+.uw-chart-wrap { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); margin-bottom:var(--space-6); }
+.uw-chart-wrap h4 { font-size:var(--text-sm); font-weight:700; color:var(--color-text); margin-bottom:var(--space-4); }
+.uw-chart-row { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); }
+@media(max-width:640px){ .uw-chart-row { grid-template-columns:1fr; } }
+
+/* Disclaimer */
+.uw-disclaimer { background:var(--color-surface-offset); border:1px solid var(--color-border); border-radius:var(--radius-md); padding:var(--space-4); font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.6; margin-top:var(--space-4); }
+
+/* Modify / Export bar */
+.uw-action-bar { display:flex; justify-content:flex-start; gap:var(--space-3); margin-bottom:var(--space-6); flex-wrap:wrap; }
+.btn-modify { display:inline-flex; align-items:center; gap:var(--space-2); padding:var(--space-2) var(--space-4); border:1px solid var(--color-border); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; color:var(--color-text-muted); background:var(--color-surface); cursor:pointer; transition:all var(--transition-interactive); }
+.btn-modify:hover { border-color:var(--color-primary); color:var(--color-primary); }
+
+/* Calc results wrapper needed for export.js */
+.calc-results { }
+.calc-results.show { display:block; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+      </a>
+    </nav>
+    <button data-theme-toggle aria-label="Toggle theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════
+     HUB PAGE
+═══════════════════════════════════════════════════ -->
+<div id="uwHub" class="uw-hub">
+  <div class="uw-hub-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Investment Analysis • Deal Underwriting
+  </div>
+  <h1 class="uw-hub-title">Underwriting Your Way<br><span>to Ownership</span></h1>
+  <p class="uw-hub-desc">The master pre-offer analysis that consolidates what your investment calculators do in isolation — into a single, structured workflow. Enter a property once. Walk out with NOI, DSCR, Cap Rate, Cash-on-Cash, risk flags, and a max offer price.</p>
+
+  <div class="uw-features-grid">
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="uw-feature-text"><strong>Property Identification</strong><span>Address, type, units, year built, purchase price</span></div>
+    </div>
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="uw-feature-text"><strong>Income Analysis</strong><span>GSR, vacancy allowance, effective gross income</span></div>
+    </div>
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div class="uw-feature-text"><strong>Operating Expenses</strong><span>Taxes, insurance, management, reserves — with benchmarks</span></div>
+    </div>
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="uw-feature-text"><strong>Risk Flags</strong><span>Green / yellow / red on DSCR, Cap Rate, Break-Even, and more</span></div>
+    </div>
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+      <div class="uw-feature-text"><strong>7 Auto-Metrics</strong><span>NOI, Cap Rate, DSCR, CoC, GRM, Break-Even, Price/Unit</span></div>
+    </div>
+    <div class="uw-feature">
+      <div class="uw-feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="uw-feature-text"><strong>Deal Summary Card</strong><span>One-page branded PDF export with agent personalization</span></div>
+    </div>
+  </div>
+
+  <div class="uw-cta-card">
+    <div class="uw-cta-card-left">
+      <h3>Deal Underwriting Worksheet</h3>
+      <p>Complete analysis — no account required</p>
+    </div>
+    <button class="btn-uw-open" onclick="openWorksheet()">
+      Open Worksheet
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+  <p class="uw-note">No AI required. All calculations run locally in your browser. Export branded PDFs with your name, brokerage, and contact info.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     WORKSHEET PANEL  (.calc-panel needed for export.js)
+═══════════════════════════════════════════════════ -->
+<div id="uwPanel" class="uw-panel calc-panel">
+  <button class="uw-back" onclick="backToHub()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Underwriting Hub
+  </button>
+
+  <div class="uw-worksheet">
+    <div style="margin-bottom:var(--space-6)">
+      <h2 style="font-size:var(--text-xl);font-weight:800;color:var(--color-text);margin-bottom:var(--space-2)">Deal Underwriting Worksheet</h2>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);max-width:600px;line-height:1.6">Complete each section below. The worksheet calculates NOI, DSCR, Cap Rate, Cash-on-Cash Return, and risk flags — then tells you the maximum you should pay.</p>
+    </div>
+
+    <!-- This wraps everything for export.js to find .calc-submit and inject agent panel -->
+    <div class="calc-container" style="background:none;padding:0;max-width:none;box-shadow:none;border:none;">
+
+      <!-- ── SECTION 1: Property Identification ── -->
+      <div class="uw-section">
+        <div class="uw-section-head">
+          <div class="uw-section-num">1</div>
+          <div>
+            <h3>Property Identification</h3>
+            <p>Basic property facts — used in the PDF header and metrics</p>
+          </div>
+        </div>
+        <div class="uw-grid">
+          <div class="form-group span3">
+            <label>Property Address</label>
+            <input type="text" id="propertyAddress" placeholder="123 Main St, City, ST 12345" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>Property Type</label>
+            <select id="uwType">
+              <option value="sfr">Single Family (SFR)</option>
+              <option value="duplex">Duplex (2 units)</option>
+              <option value="triplex">Triplex (3 units)</option>
+              <option value="fourplex">Fourplex (4 units)</option>
+              <option value="multifamily" selected>5+ Unit Multifamily</option>
+              <option value="mixed">Mixed-Use</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of Units</label>
+            <input type="number" id="uwUnits" value="8" min="1" step="1">
+          </div>
+          <div class="form-group">
+            <label>Year Built</label>
+            <input type="number" id="uwYearBuilt" value="1985" min="1800" max="2025" step="1">
+          </div>
+          <div class="form-group">
+            <label>Purchase Price</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwPrice" value="650000" min="0" step="1000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Down Payment</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwDown" value="25" min="0" max="100" step="0.5">
+            </div>
+            <p class="form-hint">Conventional investment: 20–30%</p>
+          </div>
+          <div class="form-group">
+            <label>Estimated Closing Costs</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwClosing" value="3" min="0" max="10" step="0.25">
+            </div>
+            <p class="form-hint">Typical: 2–4% of purchase price</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: Income Analysis ── -->
+      <div class="uw-section">
+        <div class="uw-section-head">
+          <div class="uw-section-num">2</div>
+          <div>
+            <h3>Income Analysis</h3>
+            <p>Gross scheduled rent, vacancy allowance, and other income</p>
+          </div>
+        </div>
+        <div class="uw-grid">
+          <div class="form-group">
+            <label>Monthly Rent — Per Unit</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwMonthlyRent" value="900" min="0" step="50" oninput="updateGSR()">
+            </div>
+            <p class="form-hint" id="gsrPreview">Annual GSR: calculating...</p>
+          </div>
+          <div class="form-group">
+            <label>Other Annual Income</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwOtherIncome" value="0" min="0" step="100">
+            </div>
+            <p class="form-hint">Laundry, parking, storage, pet fees</p>
+          </div>
+          <div class="form-group">
+            <label>Vacancy & Credit Loss</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwVacancy" value="7" min="0" max="100" step="0.5">
+            </div>
+            <p class="form-hint">Multifamily typical: 5–10%</p>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwVacancy','5')">SFR 5%</span>
+              <span class="bm-tag" onclick="setBenchmark('uwVacancy','7')">MF 7%</span>
+              <span class="bm-tag" onclick="setBenchmark('uwVacancy','10')">Class C 10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: Operating Expenses ── -->
+      <div class="uw-section">
+        <div class="uw-section-head">
+          <div class="uw-section-num">3</div>
+          <div>
+            <h3>Operating Expenses</h3>
+            <p>Enter annual figures. Use benchmarks for items you don't have exact numbers for.</p>
+          </div>
+        </div>
+        <div class="uw-grid">
+          <div class="form-group">
+            <label>Property Taxes (Annual)</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwTaxes" value="7800" min="0" step="100">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Insurance (Annual)</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwInsurance" value="3200" min="0" step="100">
+            </div>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwInsurance','1200')">SFR $1,200</span>
+              <span class="bm-tag" onclick="setBenchmark('uwInsurance','3200')">MF $3,200</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Property Management</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwMgmt" value="8" min="0" max="100" step="0.5">
+            </div>
+            <p class="form-hint">% of effective gross income</p>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwMgmt','8')">SFR 8%</span>
+              <span class="bm-tag" onclick="setBenchmark('uwMgmt','6')">MF 6%</span>
+              <span class="bm-tag" onclick="setBenchmark('uwMgmt','10')">Self: 10%</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Maintenance / Repairs</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwMaintenance" value="1200" min="0" step="100">
+            </div>
+            <p class="form-hint">Per unit, per year</p>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwMaintenance','800')">New $800</span>
+              <span class="bm-tag" onclick="setBenchmark('uwMaintenance','1200')">Avg $1,200</span>
+              <span class="bm-tag" onclick="setBenchmark('uwMaintenance','1800')">Older $1,800</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>CapEx Reserves</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwCapex" value="1000" min="0" step="100">
+            </div>
+            <p class="form-hint">Per unit, per year. Roof, HVAC, etc.</p>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwCapex','600')">New $600</span>
+              <span class="bm-tag" onclick="setBenchmark('uwCapex','1000')">Avg $1,000</span>
+              <span class="bm-tag" onclick="setBenchmark('uwCapex','1500')">Older $1,500</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Utilities (Annual)</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwUtilities" value="2400" min="0" step="100">
+            </div>
+            <p class="form-hint">Water, sewer, trash if owner-paid</p>
+          </div>
+          <div class="form-group">
+            <label>Other Expenses (Annual)</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="uwOtherExp" value="0" min="0" step="100">
+            </div>
+            <p class="form-hint">HOA, landscaping, legal, accounting</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 4: Financing ── -->
+      <div class="uw-section">
+        <div class="uw-section-head">
+          <div class="uw-section-num">4</div>
+          <div>
+            <h3>Financing Details</h3>
+            <p>Loan structure for DSCR and cash flow calculations</p>
+          </div>
+        </div>
+        <div class="uw-grid">
+          <div class="form-group">
+            <label>Interest Rate</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwRate" value="7.25" min="0" max="30" step="0.125">
+            </div>
+            <p class="form-hint">Current investment property rates: 7–8%</p>
+          </div>
+          <div class="form-group">
+            <label>Amortization Period</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">yrs</span>
+              <input type="number" id="uwAmort" value="30" min="5" max="40" step="5">
+            </div>
+            <div class="benchmarks">
+              <span class="bm-tag" onclick="setBenchmark('uwAmort','15')">15-yr</span>
+              <span class="bm-tag" onclick="setBenchmark('uwAmort','20')">20-yr</span>
+              <span class="bm-tag" onclick="setBenchmark('uwAmort','25')">25-yr</span>
+              <span class="bm-tag" onclick="setBenchmark('uwAmort','30')">30-yr</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Loan Type</label>
+            <select id="uwLoanType">
+              <option value="conventional">Conventional</option>
+              <option value="dscr">DSCR Loan</option>
+              <option value="commercial">Commercial / Portfolio</option>
+              <option value="hardmoney">Hard Money</option>
+              <option value="seller">Seller Finance</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 5: Targets ── -->
+      <div class="uw-section">
+        <div class="uw-section-head">
+          <div class="uw-section-num">5</div>
+          <div>
+            <h3>Your Investment Targets</h3>
+            <p>Used to back-calculate the maximum price you should pay</p>
+          </div>
+        </div>
+        <div class="uw-grid">
+          <div class="form-group">
+            <label>Target Cap Rate</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwTargetCap" value="8" min="1" max="30" step="0.25">
+            </div>
+            <p class="form-hint">Max offer = NOI ÷ Target Cap Rate</p>
+          </div>
+          <div class="form-group">
+            <label>Target Cash-on-Cash</label>
+            <div class="input-wrap has-suffix">
+              <span class="input-suffix">%</span>
+              <input type="number" id="uwTargetCOC" value="8" min="1" max="50" step="0.25">
+            </div>
+            <p class="form-hint">Max offer = solved from CoC equation</p>
+          </div>
+          <div class="form-group">
+            <label>Target DSCR</label>
+            <div class="input-wrap">
+              <input type="number" id="uwTargetDSCR" value="1.25" min="1.0" max="3.0" step="0.05">
+            </div>
+            <p class="form-hint">Lenders typically require ≥ 1.20</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent panel auto-injected here by shared/export.js -->
+
+      <!-- Calculate Button  (.calc-submit triggers export.js agent panel injection) -->
+      <button class="uw-calc-btn calc-submit" onclick="underwriteDeal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Underwrite This Deal
+      </button>
+
+      <!-- ════════════════════════════════
+           RESULTS  (.calc-results gets .show)
+      ════════════════════════════════ -->
+      <div class="uw-results calc-results" id="uwResults">
+
+        <!-- Action bar -->
+        <div class="uw-action-bar" style="margin-top:var(--space-8)">
+          <button class="btn-modify" onclick="scrollToTop()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Modify Inputs
+          </button>
+        </div>
+        <!-- Export buttons auto-injected by export.js (CSV + PDF) -->
+
+        <!-- Deal Grade Hero -->
+        <div class="uw-grade-hero">
+          <div class="uw-grade-circle" id="uwGradeCircle">A</div>
+          <div class="uw-grade-info">
+            <h2>Deal Grade: <span id="uwGradeLabel">A</span></h2>
+            <p id="uwGradeSummary">Exceptional — all metrics exceed thresholds</p>
+            <p class="uw-grade-summary" id="uwGradeFlags">0 red flags &bull; 0 yellow flags</p>
+          </div>
+        </div>
+
+        <!-- Key Metrics Grid -->
+        <div class="uw-metrics-grid">
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">Net Operating Income</div>
+            <div class="uw-metric-value" id="mNOI">—</div>
+            <div class="uw-metric-note">Annual income after all operating expenses</div>
+          </div>
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">Cap Rate</div>
+            <div class="uw-metric-value" id="mCapRate">—</div>
+            <div class="uw-metric-note">NOI ÷ Purchase Price</div>
+          </div>
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">DSCR</div>
+            <div class="uw-metric-value" id="mDSCR">—</div>
+            <div class="uw-metric-note">NOI ÷ Annual Debt Service</div>
+          </div>
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">Cash-on-Cash Return</div>
+            <div class="uw-metric-value" id="mCOC">—</div>
+            <div class="uw-metric-note">Annual cash flow ÷ Cash invested</div>
+          </div>
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">Gross Rent Multiplier</div>
+            <div class="uw-metric-value" id="mGRM">—</div>
+            <div class="uw-metric-note">Price ÷ Annual gross rent</div>
+          </div>
+          <div class="uw-metric-card">
+            <div class="uw-metric-label">Break-Even Occupancy</div>
+            <div class="uw-metric-value" id="mBEO">—</div>
+            <div class="uw-metric-note">Occupancy needed to cover all costs</div>
+          </div>
+        </div>
+
+        <!-- Income + Expense Cards -->
+        <div class="uw-result-grid">
+          <div class="result-card">
+            <h4>Income Summary</h4>
+            <div class="result-row"><span class="result-label">Gross Scheduled Rent</span><span class="result-value" id="rGSR">—</span></div>
+            <div class="result-row"><span class="result-label">Other Annual Income</span><span class="result-value" id="rOtherInc">—</span></div>
+            <div class="result-row"><span class="result-label">Vacancy Loss</span><span class="result-value negative" id="rVacancy">—</span></div>
+            <div class="result-row" style="border-top:2px solid var(--color-border)"><span class="result-label" style="font-weight:700">Effective Gross Income</span><span class="result-value positive" id="rEGI" style="font-size:1rem">—</span></div>
+          </div>
+          <div class="result-card">
+            <h4>Expense Summary</h4>
+            <div class="result-row"><span class="result-label">Property Taxes</span><span class="result-value" id="rTaxes">—</span></div>
+            <div class="result-row"><span class="result-label">Insurance</span><span class="result-value" id="rInsurance">—</span></div>
+            <div class="result-row"><span class="result-label">Management</span><span class="result-value" id="rMgmt">—</span></div>
+            <div class="result-row"><span class="result-label">Maintenance + CapEx</span><span class="result-value" id="rMaintCapex">—</span></div>
+            <div class="result-row"><span class="result-label">Utilities + Other</span><span class="result-value" id="rOtherExp">—</span></div>
+            <div class="result-row" style="border-top:2px solid var(--color-border)"><span class="result-label" style="font-weight:700">Total OpEx (Ratio)</span><span class="result-value negative" id="rTotalOpEx" style="font-size:1rem">—</span></div>
+          </div>
+          <div class="result-card">
+            <h4>Debt Service</h4>
+            <div class="result-row"><span class="result-label">Loan Amount</span><span class="result-value" id="rLoan">—</span></div>
+            <div class="result-row"><span class="result-label">Monthly P&amp;I Payment</span><span class="result-value" id="rMonthlyPI">—</span></div>
+            <div class="result-row"><span class="result-label">Annual Debt Service</span><span class="result-value" id="rADS">—</span></div>
+            <div class="result-row"><span class="result-label">Total Cash Invested</span><span class="result-value" id="rCashIn">—</span></div>
+            <div class="result-row" style="border-top:2px solid var(--color-border)"><span class="result-label" style="font-weight:700">Annual Cash Flow</span><span class="result-value" id="rCashFlow" style="font-size:1rem">—</span></div>
+          </div>
+          <div class="result-card">
+            <h4>Per-Unit Performance</h4>
+            <div class="result-row"><span class="result-label">Price Per Unit</span><span class="result-value" id="rPPU">—</span></div>
+            <div class="result-row"><span class="result-label">Monthly Rent Per Unit</span><span class="result-value" id="rRentUnit">—</span></div>
+            <div class="result-row"><span class="result-label">NOI Per Unit (Annual)</span><span class="result-value" id="rNOIUnit">—</span></div>
+            <div class="result-row"><span class="result-label">Cash Flow Per Unit (Mo)</span><span class="result-value" id="rCFUnit">—</span></div>
+            <div class="result-row"><span class="result-label">Expense Ratio</span><span class="result-value" id="rExpRatio">—</span></div>
+          </div>
+        </div>
+
+        <!-- Risk Flags -->
+        <div class="uw-flags">
+          <div class="uw-flags-title">Risk Flag Assessment</div>
+          <div id="uwFlagsBody"></div>
+        </div>
+
+        <!-- Max Offer Price -->
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);margin-bottom:var(--space-6)">
+          <h4 style="font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;background:var(--color-primary);padding:var(--space-3) var(--space-4);margin:calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-5);border-radius:var(--radius-md) var(--radius-md) 0 0">Maximum Offer Price Analysis</h4>
+          <div class="uw-max-offer">
+            <div class="max-offer-card">
+              <h4>By Target Cap Rate</h4>
+              <div class="max-offer-price" id="rMaxCap">—</div>
+              <div class="max-offer-note">NOI ÷ <span id="rTargetCapPct">8</span>% cap rate</div>
+              <div class="max-offer-vs" id="rCapVsAsk">—</div>
+            </div>
+            <div class="max-offer-card">
+              <h4>By Target Cash-on-Cash</h4>
+              <div class="max-offer-price" id="rMaxCOC">—</div>
+              <div class="max-offer-note">Solved for <span id="rTargetCOCPct">8</span>% CoC with current loan terms</div>
+              <div class="max-offer-vs" id="rCOCVsAsk">—</div>
+            </div>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin:var(--space-2) 0 0;line-height:1.6">If the asking price exceeds both max offer figures, this deal does not meet your investment targets at the current price. Use these numbers as negotiating anchors.</p>
+        </div>
+
+        <!-- Charts -->
+        <div class="uw-chart-wrap">
+          <h4>Visual Breakdown</h4>
+          <div class="uw-chart-row">
+            <div>
+              <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-2);font-weight:600">Income vs. Expenses vs. Cash Flow</p>
+              <canvas id="uwBarChart" height="200"></canvas>
+            </div>
+            <div>
+              <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-2);font-weight:600">Operating Expense Breakdown</p>
+              <canvas id="uwDonutChart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="uw-disclaimer">
+          <strong>Disclaimer:</strong> This worksheet is for educational and analytical purposes only. It does not constitute financial, legal, investment, or tax advice. All projections are estimates based on inputs provided. Actual results will vary based on market conditions, property-specific factors, financing availability, and other variables. Consult a licensed real estate professional, attorney, and CPA before making any investment decision.
+        </div>
+
+      </div><!-- /uwResults -->
+
+    </div><!-- /calc-container -->
+  </div><!-- /uw-worksheet -->
+</div><!-- /uwPanel -->
+
+</main>
+
+<footer style="text-align:center;padding:var(--space-6);font-size:var(--text-xs);color:var(--color-text-faint)">
+  This tool is for educational purposes only and does not constitute financial or investment advice.<br>
+  <a href="../index.html" style="color:var(--color-text-muted)">© IntelliTC Solutions</a> &bull;
+  <a href="../terms.html" style="color:var(--color-text-muted)">Terms of Service</a> &bull;
+  <a href="../feedback.html" style="color:var(--color-text-muted)">Share Your Experience</a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../shared/export.js"></script>
+<script src="../shared/feedback.js"></script>
+<script src="../shared/recent-tracker.js"></script>
+
+<script>
+/* ── Hub / Panel Navigation ── */
+function openWorksheet() {
+  document.getElementById('uwHub').style.display = 'none';
+  const panel = document.getElementById('uwPanel');
+  panel.classList.add('active');
+  panel.style.display = 'block';
+  updateGSR();
+}
+function backToHub() {
+  document.getElementById('uwHub').style.display = 'block';
+  document.getElementById('uwPanel').style.display = 'none';
+  document.getElementById('uwPanel').classList.remove('active');
+}
+function scrollToTop() {
+  document.getElementById('uwPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Live GSR Preview ── */
+function updateGSR() {
+  const rent = parseFloat(document.getElementById('uwMonthlyRent').value) || 0;
+  const units = parseInt(document.getElementById('uwUnits').value) || 1;
+  const gsr = rent * units * 12;
+  document.getElementById('gsrPreview').textContent = 'Annual GSR: ' + fmt(gsr);
+}
+document.getElementById('uwUnits').addEventListener('input', updateGSR);
+document.getElementById('uwMonthlyRent').addEventListener('input', updateGSR);
+
+/* ── Benchmark helper ── */
+function setBenchmark(id, val) {
+  document.getElementById(id).value = val;
+}
+
+/* ── Formatters ── */
+function fmt(n, decimals=0) {
+  if (isNaN(n) || !isFinite(n)) return '—';
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+function pct(n, decimals=1) {
+  if (isNaN(n) || !isFinite(n)) return '—';
+  return n.toFixed(decimals) + '%';
+}
+function num(n, decimals=2) {
+  if (isNaN(n) || !isFinite(n)) return '—';
+  return n.toFixed(decimals);
+}
+
+/* ── Chart instances ── */
+let barChart = null, donutChart = null;
+
+/* ══════════════════════════════════════════════════
+   MAIN CALCULATION
+═══════════════════════════════════════════════════ */
+function underwriteDeal() {
+  /* — Inputs — */
+  const purchasePrice  = parseFloat(document.getElementById('uwPrice').value)      || 0;
+  const downPct        = parseFloat(document.getElementById('uwDown').value)        || 25;
+  const closingPct     = parseFloat(document.getElementById('uwClosing').value)     || 3;
+  const units          = parseInt(document.getElementById('uwUnits').value)         || 1;
+  const monthlyRent    = parseFloat(document.getElementById('uwMonthlyRent').value) || 0;
+  const otherIncome    = parseFloat(document.getElementById('uwOtherIncome').value) || 0;
+  const vacancyPct     = parseFloat(document.getElementById('uwVacancy').value)     || 7;
+  const taxes          = parseFloat(document.getElementById('uwTaxes').value)       || 0;
+  const insurance      = parseFloat(document.getElementById('uwInsurance').value)   || 0;
+  const mgmtPct        = parseFloat(document.getElementById('uwMgmt').value)        || 8;
+  const maintPerUnit   = parseFloat(document.getElementById('uwMaintenance').value) || 0;
+  const capexPerUnit   = parseFloat(document.getElementById('uwCapex').value)       || 0;
+  const utilities      = parseFloat(document.getElementById('uwUtilities').value)   || 0;
+  const otherExp       = parseFloat(document.getElementById('uwOtherExp').value)    || 0;
+  const intRate        = parseFloat(document.getElementById('uwRate').value)        || 7.25;
+  const amortYears     = parseInt(document.getElementById('uwAmort').value)         || 30;
+  const targetCapRate  = parseFloat(document.getElementById('uwTargetCap').value)   || 8;
+  const targetCOC      = parseFloat(document.getElementById('uwTargetCOC').value)   || 8;
+
+  /* — Income — */
+  const gsr           = monthlyRent * units * 12;
+  const vacancyLoss   = gsr * (vacancyPct / 100);
+  const egi           = gsr + otherIncome - vacancyLoss;
+
+  /* — Expenses — */
+  const mgmtExp       = egi * (mgmtPct / 100);
+  const maintTotal    = maintPerUnit * units;
+  const capexTotal    = capexPerUnit * units;
+  const totalOpEx     = taxes + insurance + mgmtExp + maintTotal + capexTotal + utilities + otherExp;
+  const noi           = egi - totalOpEx;
+  const expenseRatio  = egi > 0 ? (totalOpEx / egi) * 100 : 0;
+
+  /* — Key Metrics — */
+  const capRate       = purchasePrice > 0 ? (noi / purchasePrice) * 100 : 0;
+  const grm           = gsr > 0 ? purchasePrice / gsr : 0;
+
+  /* — Financing — */
+  const downPayment   = purchasePrice * (downPct / 100);
+  const closingCosts  = purchasePrice * (closingPct / 100);
+  const loanAmt       = purchasePrice - downPayment;
+  const cashInvested  = downPayment + closingCosts;
+  const mr            = (intRate / 100) / 12;
+  const nPmt          = amortYears * 12;
+  const monthlyPI     = loanAmt > 0 && mr > 0
+    ? (loanAmt * mr * Math.pow(1 + mr, nPmt)) / (Math.pow(1 + mr, nPmt) - 1)
+    : 0;
+  const annualDS      = monthlyPI * 12;
+  const dscr          = annualDS > 0 ? noi / annualDS : 0;
+  const annualCF      = noi - annualDS;
+  const coc           = cashInvested > 0 ? (annualCF / cashInvested) * 100 : 0;
+
+  /* — Break-Even Occupancy — */
+  const grossPotential = gsr + otherIncome;
+  const beo = grossPotential > 0 ? ((totalOpEx + annualDS) / grossPotential) * 100 : 0;
+
+  /* — Per-Unit — */
+  const ppu           = units > 0 ? purchasePrice / units : 0;
+  const noiPerUnit    = units > 0 ? noi / units : 0;
+  const cfPerUnitMo   = units > 0 ? annualCF / units / 12 : 0;
+
+  /* — Max Offer Prices — */
+  const maxByCap = targetCapRate > 0 ? noi / (targetCapRate / 100) : 0;
+
+  // Max by CoC: P = NOI / [r*(d+c) + debtConst*(1-d)]
+  const d = downPct / 100;
+  const c = closingPct / 100;
+  const r = targetCOC / 100;
+  const debtConst = mr > 0
+    ? ((mr * Math.pow(1 + mr, nPmt)) / (Math.pow(1 + mr, nPmt) - 1)) * 12
+    : 0;
+  const maxByCOC = (r * (d + c) + debtConst * (1 - d)) > 0
+    ? noi / (r * (d + c) + debtConst * (1 - d))
+    : 0;
+
+  /* — Risk Flags — */
+  const flags = [
+    {
+      metric: 'DSCR',
+      value: num(dscr),
+      status: dscr >= 1.35 ? 'green' : dscr >= 1.20 ? 'yellow' : 'red',
+      note: dscr >= 1.35 ? 'Strong — exceeds 1.35 threshold'
+          : dscr >= 1.20 ? 'Acceptable — between 1.20 and 1.35; tight for lenders'
+          : 'Below threshold — most lenders require 1.20 minimum'
+    },
+    {
+      metric: 'Cap Rate',
+      value: pct(capRate),
+      status: capRate >= 8 ? 'green' : capRate >= 5 ? 'yellow' : 'red',
+      note: capRate >= 8 ? 'Strong yield'
+          : capRate >= 5 ? 'Market-dependent — verify against local comps'
+          : 'Below 5% — weak yield; confirm market justifies this price'
+    },
+    {
+      metric: 'Cash-on-Cash Return',
+      value: pct(coc),
+      status: coc >= 8 ? 'green' : coc >= 5 ? 'yellow' : 'red',
+      note: coc >= 8 ? 'Exceeds 8% target — strong cash return on equity'
+          : coc >= 5 ? 'Acceptable but below the 8% investor benchmark'
+          : 'Below 5% — poor cash yield on invested capital'
+    },
+    {
+      metric: 'Expense Ratio',
+      value: pct(expenseRatio),
+      status: expenseRatio < 40 ? 'green' : expenseRatio <= 50 ? 'yellow' : 'red',
+      note: expenseRatio < 40 ? 'Well-controlled — expenses below 40% of EGI'
+          : expenseRatio <= 50 ? 'Normal range (40–50%); monitor for creep'
+          : 'High expenses — review each line item carefully'
+    },
+    {
+      metric: 'Break-Even Occupancy',
+      value: pct(beo),
+      status: beo < 75 ? 'green' : beo <= 85 ? 'yellow' : 'red',
+      note: beo < 75 ? 'Low risk — property breaks even below 75% occupancy'
+          : beo <= 85 ? 'Moderate risk — monitor vacancy closely'
+          : 'High risk — needs 85%+ occupancy just to break even'
+    }
+  ];
+
+  /* — Deal Grade — */
+  const reds    = flags.filter(f => f.status === 'red').length;
+  const yellows = flags.filter(f => f.status === 'yellow').length;
+  let grade, gradeHex, gradeSummary;
+  if (reds === 0 && yellows === 0) { grade = 'A';  gradeHex = '#437a22'; gradeSummary = 'Exceptional — all metrics exceed investor thresholds'; }
+  else if (reds === 0 && yellows === 1) { grade = 'B+'; gradeHex = '#5a8a2a'; gradeSummary = 'Strong deal with one metric to monitor'; }
+  else if (reds === 0 && yellows <= 2) { grade = 'B';  gradeHex = '#6a9a30'; gradeSummary = 'Solid deal — review yellow flags before offering'; }
+  else if (reds === 0 && yellows >= 3) { grade = 'C+'; gradeHex = '#964219'; gradeSummary = 'Marginal — multiple metrics below optimal targets'; }
+  else if (reds === 1 && yellows === 0) { grade = 'C';  gradeHex = '#964219'; gradeSummary = 'One critical metric below threshold — renegotiate price'; }
+  else if (reds === 1) { grade = 'D';  gradeHex = '#a13544'; gradeSummary = 'Weak deal — significant concerns; negotiate or pass'; }
+  else { grade = 'F';  gradeHex = '#8b1a2a'; gradeSummary = 'Do not proceed — multiple critical failures'; }
+
+  /* ══════════ UPDATE DOM ══════════ */
+  /* Grade */
+  const gradeCircle = document.getElementById('uwGradeCircle');
+  gradeCircle.textContent = grade;
+  gradeCircle.style.background = gradeHex;
+  document.getElementById('uwGradeLabel').textContent = grade;
+  document.getElementById('uwGradeSummary').textContent = gradeSummary;
+  document.getElementById('uwGradeFlags').innerHTML =
+    `<span style="color:${reds>0?'#a13544':'#437a22'}">${reds} red flag${reds!==1?'s':''}</span> &bull; <span style="color:${yellows>0?'#964219':'#437a22'}">${yellows} yellow flag${yellows!==1?'s':''}</span>`;
+
+  /* Metrics */
+  document.getElementById('mNOI').textContent = fmt(noi);
+  document.getElementById('mNOI').style.color = noi >= 0 ? 'var(--color-success)' : 'var(--color-error)';
+  document.getElementById('mCapRate').textContent = pct(capRate);
+  document.getElementById('mDSCR').textContent = num(dscr);
+  document.getElementById('mDSCR').style.color = dscr >= 1.20 ? 'var(--color-success)' : 'var(--color-error)';
+  document.getElementById('mCOC').textContent = pct(coc);
+  document.getElementById('mCOC').style.color = coc >= 5 ? 'var(--color-success)' : 'var(--color-error)';
+  document.getElementById('mGRM').textContent = num(grm, 1) + 'x';
+  document.getElementById('mBEO').textContent = pct(beo);
+  document.getElementById('mBEO').style.color = beo <= 85 ? 'var(--color-success)' : 'var(--color-error)';
+
+  /* Income */
+  document.getElementById('rGSR').textContent = fmt(gsr);
+  document.getElementById('rOtherInc').textContent = fmt(otherIncome);
+  document.getElementById('rVacancy').textContent = '−' + fmt(vacancyLoss);
+  document.getElementById('rEGI').textContent = fmt(egi);
+
+  /* Expenses */
+  document.getElementById('rTaxes').textContent = fmt(taxes);
+  document.getElementById('rInsurance').textContent = fmt(insurance);
+  document.getElementById('rMgmt').textContent = fmt(mgmtExp);
+  document.getElementById('rMaintCapex').textContent = fmt(maintTotal + capexTotal);
+  document.getElementById('rOtherExp').textContent = fmt(utilities + otherExp);
+  document.getElementById('rTotalOpEx').textContent = fmt(totalOpEx) + ' (' + pct(expenseRatio) + ')';
+
+  /* Debt */
+  document.getElementById('rLoan').textContent = fmt(loanAmt);
+  document.getElementById('rMonthlyPI').textContent = fmt(monthlyPI);
+  document.getElementById('rADS').textContent = fmt(annualDS);
+  document.getElementById('rCashIn').textContent = fmt(cashInvested);
+  const cfEl = document.getElementById('rCashFlow');
+  cfEl.textContent = fmt(annualCF);
+  cfEl.className = 'result-value ' + (annualCF >= 0 ? 'positive' : 'negative');
+
+  /* Per-unit */
+  document.getElementById('rPPU').textContent = fmt(ppu);
+  document.getElementById('rRentUnit').textContent = fmt(monthlyRent) + '/mo';
+  document.getElementById('rNOIUnit').textContent = fmt(noiPerUnit);
+  const cfUnitEl = document.getElementById('rCFUnit');
+  cfUnitEl.textContent = fmt(cfPerUnitMo) + '/mo';
+  cfUnitEl.className = 'result-value ' + (cfPerUnitMo >= 0 ? 'positive' : 'negative');
+  document.getElementById('rExpRatio').textContent = pct(expenseRatio);
+
+  /* Flags */
+  const flagsBody = document.getElementById('uwFlagsBody');
+  flagsBody.innerHTML = flags.map(f => `
+    <div class="flag-row">
+      <span class="flag-dot ${f.status}"></span>
+      <span class="flag-metric">${f.metric}</span>
+      <span class="flag-value ${f.status}">${f.value}</span>
+      <span class="flag-note">${f.note}</span>
+    </div>
+  `).join('');
+
+  /* Max Offer */
+  document.getElementById('rTargetCapPct').textContent = targetCapRate;
+  document.getElementById('rTargetCOCPct').textContent = targetCOC;
+  document.getElementById('rMaxCap').textContent = fmt(maxByCap);
+  document.getElementById('rMaxCOC').textContent = fmt(maxByCOC);
+
+  const diffCap = maxByCap - purchasePrice;
+  const capVsEl = document.getElementById('rCapVsAsk');
+  capVsEl.textContent = diffCap >= 0
+    ? `Asking price is ${fmt(Math.abs(diffCap))} under this limit ✓`
+    : `Asking price is ${fmt(Math.abs(diffCap))} over this limit — negotiate down`;
+  capVsEl.className = 'max-offer-vs ' + (diffCap >= 0 ? 'under' : 'over');
+
+  const diffCOC = maxByCOC - purchasePrice;
+  const cocVsEl = document.getElementById('rCOCVsAsk');
+  cocVsEl.textContent = diffCOC >= 0
+    ? `Asking price is ${fmt(Math.abs(diffCOC))} under this limit ✓`
+    : `Asking price is ${fmt(Math.abs(diffCOC))} over this limit — negotiate down`;
+  cocVsEl.className = 'max-offer-vs ' + (diffCOC >= 0 ? 'under' : 'over');
+
+  /* — Charts — */
+  renderCharts(egi, totalOpEx, annualDS, annualCF, taxes, insurance, mgmtExp, maintTotal + capexTotal, utilities + otherExp);
+
+  /* Show results */
+  const results = document.getElementById('uwResults');
+  results.classList.add('show');
+  setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+/* ── Charts ── */
+function renderCharts(egi, opex, ads, cf, taxes, insurance, mgmt, maintcapex, utilities) {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+  const fontColor = isDark ? '#8a8985' : '#7a7974';
+  const font = "'DM Sans', sans-serif";
+
+  /* Bar Chart */
+  if (barChart) barChart.destroy();
+  const barCtx = document.getElementById('uwBarChart').getContext('2d');
+  barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Gross Income', 'Total Expenses', 'Debt Service', 'Cash Flow'],
+      datasets: [{
+        data: [egi, opex, ads, Math.max(cf, 0)],
+        backgroundColor: ['#20808D','#A84B2F','#1B474D', cf >= 0 ? '#437a22' : '#a13544'],
+        borderRadius: 4, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: fontColor, font: { family: font, size: 11 } } },
+        y: { grid: { color: gridColor }, ticks: { color: fontColor, font: { family: font, size: 11 }, callback: v => '$' + (v/1000).toFixed(0) + 'k' } }
+      }
+    }
+  });
+
+  /* Donut Chart — Expense Breakdown */
+  if (donutChart) donutChart.destroy();
+  const donutCtx = document.getElementById('uwDonutChart').getContext('2d');
+  donutChart = new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Taxes', 'Insurance', 'Management', 'Maint + CapEx', 'Utilities + Other'],
+      datasets: [{
+        data: [taxes, insurance, mgmt, maintcapex, utilities].map(v => Math.max(v, 0)),
+        backgroundColor: ['#20808D','#A84B2F','#1B474D','#BCE2E7','#944454'],
+        borderWidth: 2,
+        borderColor: isDark ? '#1c1b19' : '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: fontColor, font: { family: font, size: 11 }, padding: 12, boxWidth: 12 } }
+      },
+      cutout: '62%'
+    }
+  });
+}
+
+/* ── Theme Toggle ── */
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  });
+})();
+
+/* ── Init GSR preview ── */
+updateGSR();
+</script>
+</body>
+</html>

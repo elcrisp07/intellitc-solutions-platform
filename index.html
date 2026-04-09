@@ -314,6 +314,64 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-3);
 }
+.underwriting-portal-banner {
+  margin-top: var(--space-5);
+  background: linear-gradient(135deg, #01696f 0%, #014d52 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 10px rgba(1,105,111,0.25);
+}
+.underwriting-portal-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(1,105,111,0.35);
+}
+.underwriting-portal-banner .banner-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.underwriting-portal-banner .banner-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.underwriting-portal-banner .banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.underwriting-portal-banner .banner-title {
+  font-family: var(--font-display, 'DM Sans', sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+.underwriting-portal-banner .banner-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.78);
+  font-weight: 400;
+}
+.underwriting-portal-banner .banner-cta {
+  background: #D19900;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.underwriting-portal-banner:hover .banner-cta {
+  background: #b88400;
+}
 .calc-card {
   background: var(--color-surface-offset);
   border: 1px solid var(--color-divider);
@@ -518,6 +576,8 @@
   .category-toggle { padding: var(--space-4) var(--space-4); }
   .category-body { padding: 0 var(--space-4) var(--space-4); }
   .cat-info p { display: none; }
+  .underwriting-portal-banner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .underwriting-portal-banner .banner-cta { align-self: stretch; text-align: center; }
 }
 
 /* ═══════ THEME TOGGLE ═══════ */
@@ -1054,6 +1114,17 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
           <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
         </a>
       </div>
+      <!-- Underwriting Portal Banner -->
+      <a href="./underwriting/index.html" class="underwriting-portal-banner">
+        <div class="banner-left">
+          <div class="banner-icon">🏦</div>
+          <div class="banner-text">
+            <span class="banner-title">Underwriting Your Way to Ownership!</span>
+            <span class="banner-subtitle">Full deal underwriting worksheet — NOI, DSCR, Cap Rate, risk flags, deal grade &amp; max offer</span>
+          </div>
+        </div>
+        <span class="banner-cta">Click Here →</span>
+      </a>
     </div>
   </div>
 
