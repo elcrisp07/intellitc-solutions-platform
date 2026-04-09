@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="../shared/base.css">
 <link rel="stylesheet" href="../shared/style.css">
 <link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
 <style>
 /* ── Hub Page ── */
 .cg-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
@@ -278,14 +279,10 @@
       <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
       <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
     </a>
-    <nav style="display:flex;align-items:center;gap:var(--space-4)">
-      <a href="../index.html" class="btn-home" aria-label="Go to homepage">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
-      </a>
-      <button data-theme-toggle aria-label="Toggle theme">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-    </nav>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Toggle theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </header>
 
@@ -1104,5 +1101,147 @@ function printResults(){ window.print(); }
   });
 })();
 </script>
+
+<!-- ═══ LEARN MODE ═══ -->
+<script>
+/* Adapter: bridge CG page structure to learn-mode.js expectations */
+(function(){
+  /* 1. Add .field class to .form-group so tooltip injection works */
+  document.querySelectorAll('#cgPanel .form-group').forEach(function(el){ el.classList.add('field'); });
+
+  /* 2. Insert a .divider after the worksheet heading so examples slot in */
+  var heading = document.querySelector('.cg-worksheet > div:first-child');
+  if (heading && !document.querySelector('.cg-worksheet > .divider')) {
+    var d = document.createElement('div');
+    d.className = 'divider';
+    heading.parentNode.insertBefore(d, heading.nextSibling);
+  }
+
+  /* 3. Create #resultsPanel wrapper inside #cgResults for Why/Coupled panels */
+  var cgR = document.getElementById('cgResults');
+  if (cgR && !document.getElementById('resultsPanel')) {
+    var rp = document.createElement('div');
+    rp.id = 'resultsPanel';
+    cgR.appendChild(rp);
+  }
+
+  /* 4. Give the analyze button id="calcBtn" for re-injection after calculate */
+  var analyzeBtn = document.querySelector('.cg-calc-btn');
+  if (analyzeBtn) analyzeBtn.id = 'calcBtn';
+})();
+</script>
+<script>
+window.LEARN_DATA = {
+  tooltips: {
+    filingStatus: "<strong>Filing Status</strong> — Determines your tax bracket thresholds and NIIT threshold. Married Filing Jointly has the widest 0% capital gains bracket ($0–$98,900 in 2026). Married Filing Separately has the lowest NIIT threshold ($125K vs $250K for MFJ).",
+    age: "<strong>Your Age</strong> — Critical for Medicare IRMAA analysis (applies at 65+) and estate step-up planning. If you're over 65, a large capital gain can push your Modified AGI above IRMAA thresholds, increasing Medicare premiums for 2 years.",
+    stateRes: "<strong>State of Residence</strong> — Nine states have no income tax (AK, FL, NV, NH, SD, TN, TX, WA, WY). California tops the list at 13.3%. Your state tax can add 3–13% on top of federal capital gains tax.",
+    onMedicare: "<strong>Medicare Status</strong> — If you're on Medicare, the sale can trigger Income-Related Monthly Adjustment Amount (IRMAA) surcharges on Part B and Part D premiums. These surcharges are based on your MAGI from 2 years prior.",
+    ordinaryIncome: "<strong>Ordinary Income</strong> — Wages, pension, RMDs, rental income, business income. This is your baseline taxable income before the capital gain. Higher ordinary income pushes your capital gain into higher brackets.",
+    ssIncome: "<strong>Social Security Benefits</strong> — A capital gain increases your provisional income, which can push up to 85% of your Social Security benefits into taxable territory. This is one of the 7 most commonly missed impacts.",
+    otherInvestIncome: "<strong>Other Investment Income</strong> — Dividends, interest, and non-sale investment income. Combined with the capital gain, this determines whether you trigger the 3.8% Net Investment Income Tax (NIIT).",
+    assetType: "<strong>Asset Type</strong> — Determines available exclusions. Primary residence sales may qualify for $250K/$500K exclusion (Section 121). Investment property may use 1031 exchange. Stocks have no special exclusions.",
+    salePrice: "<strong>Sale Price</strong> — The gross proceeds from the sale. This minus your cost basis equals your capital gain. Make sure to account for selling costs (commissions, fees) which reduce the effective sale price.",
+    costBasis: "<strong>Cost Basis</strong> — Your original purchase price plus capital improvements (new roof, additions, renovations). Higher basis = lower taxable gain. Keep records of all improvements.",
+    yearsHeld: "<strong>Years Held</strong> — If held ≤ 1 year, gains are taxed as ordinary income (up to 37%). If held > 1 year, you qualify for preferential long-term capital gains rates (0%, 15%, or 20%).",
+    availableLosses: "<strong>Capital Losses</strong> — Realized losses from other investments plus carryforward losses from prior years. These offset capital gains dollar-for-dollar, and excess losses offset up to $3,000 of ordinary income per year.",
+    spreadYears: "<strong>Installment Sale</strong> — Spreading the sale over 2–3 years using an installment note can keep each year's gain in lower brackets, potentially avoiding NIIT and IRMAA thresholds. Compare scenarios in the results.",
+    estateTransfer: "<strong>Step-Up in Basis</strong> — If you hold the asset until death, your heirs receive a 'stepped-up' basis equal to fair market value at date of death. This eliminates the capital gains tax entirely. The analyzer calculates the breakeven."
+  },
+  examples: [
+    {
+      name: "Retiree Selling Rental Property",
+      desc: "67-year-old couple on Medicare selling a long-held rental in California — classic tax trap scenario",
+      values: {
+        filingStatus: "mfj",
+        age: 67,
+        stateRes: "CA",
+        onMedicare: "yes",
+        ordinaryIncome: 45000,
+        ssIncome: 28000,
+        otherInvestIncome: 12000,
+        assetType: "investment_property",
+        salePrice: 1200000,
+        costBasis: 400000,
+        yearsHeld: 15,
+        availableLosses: 0,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    },
+    {
+      name: "Stock Portfolio Rebalance",
+      desc: "Single professional selling concentrated stock position — NIIT and bracket management",
+      values: {
+        filingStatus: "single",
+        age: 52,
+        stateRes: "NY",
+        onMedicare: "no",
+        ordinaryIncome: 180000,
+        ssIncome: 0,
+        otherInvestIncome: 25000,
+        assetType: "stocks",
+        salePrice: 500000,
+        costBasis: 200000,
+        yearsHeld: 8,
+        availableLosses: 15000,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    },
+    {
+      name: "Primary Home, Tax-Free Zone?",
+      desc: "Married couple selling primary residence — does the Section 121 exclusion cover everything?",
+      values: {
+        filingStatus: "mfj",
+        age: 58,
+        stateRes: "none",
+        onMedicare: "no",
+        ordinaryIncome: 95000,
+        ssIncome: 0,
+        otherInvestIncome: 8000,
+        assetType: "primary_residence",
+        salePrice: 850000,
+        costBasis: 280000,
+        yearsHeld: 22,
+        availableLosses: 0,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    }
+  ],
+  whyThisMatters: {
+    title: "Why Analyze Capital Gains Tax Impact?",
+    purpose: "A capital gains event doesn't just trigger one tax — it can cascade into 5–7 separate tax consequences. Federal capital gains tax, NIIT, state tax, Social Security taxation, and Medicare IRMAA surcharges all interact. Missing any one of these can cost tens of thousands of dollars.",
+    whenToUse: [
+      "Before selling investment property — especially if you're on Medicare or receive Social Security",
+      "When rebalancing a stock portfolio with large unrealized gains",
+      "To compare selling now vs. installment sale vs. holding for step-up in basis",
+      "During year-end tax planning to understand how a sale changes your total tax picture"
+    ],
+    keyInsight: "The biggest mistake isn't the capital gains tax itself — it's the hidden cascading effects. A $800K gain can trigger $12K+ in IRMAA surcharges over 2 years, push 85% of Social Security into taxable income, and add 3.8% NIIT on top. This tool catches all 7 mistake categories.",
+    proTip: "If you're within 2 years of estate transfer, always compare the step-up savings. The tax eliminated through step-up in basis often exceeds the return you'd get from selling and reinvesting after tax."
+  },
+  kpiExplains: {},
+  coupled: [
+    {
+      name: "Investment Analysis",
+      folder: "investment-analysis",
+      reason: "Model your after-tax proceeds against reinvestment scenarios and ROI targets"
+    },
+    {
+      name: "Cash Flow Calculator",
+      folder: "cashflow",
+      reason: "See if holding the property produces better after-tax cash flow than selling"
+    },
+    {
+      name: "Deal Grading",
+      folder: "deal-grading",
+      reason: "Score a 1031 exchange replacement property before committing"
+    }
+  ]
+};
+</script>
+<script src="../shared/learn-mode.js"></script>
 </body>
 </html>

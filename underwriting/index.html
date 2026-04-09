@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="../shared/base.css">
 <link rel="stylesheet" href="../shared/style.css">
 <link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
 <style>
 /* ── Hub Page ── */
 .uw-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
@@ -352,11 +353,7 @@
       <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
       <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
     </a>
-    <nav style="display:flex;align-items:center;gap:var(--space-4)">
-      <a href="../index.html" class="btn-home" aria-label="Go to homepage">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
-      </a>
-    </nav>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
     <button data-theme-toggle aria-label="Toggle theme">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
@@ -1256,5 +1253,182 @@ function renderCharts(egi, opex, ads, cf, taxes, insurance, mgmt, maintcapex, ut
 /* ── Init GSR preview ── */
 updateGSR();
 </script>
+
+<!-- ═══ LEARN MODE ═══ -->
+<script>
+/* Adapter: bridge UW page structure to learn-mode.js expectations */
+(function(){
+  /* 1. Add .field class to .form-group so tooltip injection works */
+  document.querySelectorAll('#uwPanel .form-group').forEach(function(el){ el.classList.add('field'); });
+
+  /* 2. Insert a .divider after the worksheet heading so examples slot in */
+  var heading = document.querySelector('.uw-worksheet > div:first-child');
+  if (heading && !document.querySelector('.uw-worksheet > .divider')) {
+    var d = document.createElement('div');
+    d.className = 'divider';
+    heading.parentNode.insertBefore(d, heading.nextSibling);
+  }
+
+  /* 3. Create #resultsPanel wrapper inside #uwResults for Why/Coupled panels */
+  var uwR = document.getElementById('uwResults');
+  if (uwR && !document.getElementById('resultsPanel')) {
+    var rp = document.createElement('div');
+    rp.id = 'resultsPanel';
+    uwR.appendChild(rp);
+  }
+
+  /* 4. Give the underwrite button id="calcBtn" for re-injection after calculate */
+  var uwBtn = document.querySelector('.uw-calc-btn');
+  if (uwBtn) uwBtn.id = 'calcBtn';
+})();
+</script>
+<script>
+window.LEARN_DATA = {
+  tooltips: {
+    propertyAddress: "<strong>Property Address</strong> — Used in PDF headers and for record keeping. Include the full street address, city, state, and ZIP for professional reports you can share with lenders or partners.",
+    uwType: "<strong>Property Type</strong> — Drives benchmark comparisons. SFR vs. multifamily have different vacancy norms, expense ratios, and cap rate expectations. Lenders also adjust terms based on property type.",
+    uwUnits: "<strong>Number of Units</strong> — Used to calculate per-unit metrics (price/unit, NOI/unit, cash flow/unit). Per-unit metrics let you compare deals of different sizes on a level playing field.",
+    uwYearBuilt: "<strong>Year Built</strong> — Older buildings (pre-1980) typically require higher maintenance and CapEx reserves. This field drives the risk flag assessment for deferred maintenance risk.",
+    uwPrice: "<strong>Purchase Price</strong> — The asking or offer price. The worksheet reverse-engineers the maximum you should pay based on your target returns, so you can see if the asking price is justified.",
+    uwDown: "<strong>Down Payment %</strong> — Conventional investment loans require 20–30%. Higher down payments lower your monthly payment and improve DSCR, but reduce leverage and cash-on-cash return. DSCR loans may accept 20%.",
+    uwClosing: "<strong>Closing Costs %</strong> — Typically 2–4% of purchase price. Includes lender fees, title insurance, appraisal, inspections, and attorney fees. This is added to your total cash invested for CoC calculations.",
+    uwMonthlyRent: "<strong>Monthly Rent Per Unit</strong> — Use the market rent, not the current rent if units are under-rented. Check Zillow, Rentometer, or local comps. The worksheet multiplies this by units × 12 for Gross Scheduled Rent.",
+    uwOtherIncome: "<strong>Other Annual Income</strong> — Laundry, parking, storage, pet fees, application fees, late fees. Often 3–8% of rent for multifamily. Don't overlook these — they drop straight to the bottom line.",
+    uwVacancy: "<strong>Vacancy & Credit Loss</strong> — The percentage of gross rent lost to vacancies and non-paying tenants. SFR: 5% (you're either 0% or 100% vacant, so use market average). Multifamily: 5–10%. Class C: 8–12%.",
+    uwTaxes: "<strong>Property Taxes</strong> — Annual property tax bill. Verify with the county assessor — listing sites are often wrong. Watch for reassessment risk: the property may be reassessed at your purchase price after closing.",
+    uwInsurance: "<strong>Insurance</strong> — Annual landlord/commercial insurance premium. Get actual quotes for accuracy. Flood zones, coastal areas, and older buildings carry significantly higher premiums.",
+    uwMgmt: "<strong>Property Management %</strong> — Percentage of Effective Gross Income. SFR: 8–10%. Multifamily: 5–8%. Even if you self-manage, include this cost — your time has value, and you may not always self-manage.",
+    uwMaintenance: "<strong>Maintenance Per Unit/Year</strong> — Annual repairs per unit. New construction: $600–$800. Average: $1,000–$1,200. Older (pre-1980): $1,500–$2,000. Covers HVAC service, plumbing, appliance repair, turnover costs.",
+    uwCapex: "<strong>CapEx Reserves Per Unit/Year</strong> — Annual reserves for major capital expenditures: roof ($8K–$15K every 20–25 years), HVAC ($4K–$8K every 15 years), water heater, flooring, parking lot. Budget $600–$1,500/unit/year.",
+    uwUtilities: "<strong>Utilities</strong> — Owner-paid utilities (water, sewer, trash, common area electric). If tenants pay all utilities, this could be $0. Multifamily common areas and shared meters add cost.",
+    uwOtherExp: "<strong>Other Expenses</strong> — HOA fees, landscaping, pest control, legal, accounting, advertising, snow removal. Any recurring annual cost not captured above.",
+    uwRate: "<strong>Interest Rate</strong> — Current investment property mortgage rate. As of 2026, expect 6.5–8% for investment property conventional loans. DSCR loans may be 0.5–1.5% higher. Rate directly impacts DSCR and cash-on-cash.",
+    uwAmort: "<strong>Amortization Period</strong> — 30-year is standard for conventional. Commercial loans may offer 20–25 year amortization with a 5–10 year balloon. Shorter amortization = higher payment but faster equity build.",
+    uwLoanType: "<strong>Loan Type</strong> — Conventional: best rates, strict qualification. DSCR: qualifies on property income, not personal income. Commercial: for 5+ units, flexible but shorter terms. Hard Money: short-term bridge/rehab.",
+    uwTargetCap: "<strong>Target Cap Rate</strong> — Your minimum acceptable cap rate. Used to calculate maximum offer price (NOI ÷ Target Cap). Typical targets: Class A: 5–6%, Class B: 6–8%, Class C: 8–10%.",
+    uwTargetCOC: "<strong>Target Cash-on-Cash</strong> — Your minimum acceptable cash-on-cash return. The worksheet back-solves the maximum price that delivers this return with your loan terms. Most investors target 8–12%.",
+    uwTargetDSCR: "<strong>Target DSCR</strong> — Debt Service Coverage Ratio = NOI ÷ Annual Debt Service. Lenders typically require 1.20–1.25 minimum. Below 1.0 means the property doesn't cover its mortgage from operations."
+  },
+  examples: [
+    {
+      name: "8-Unit Value-Add Multifamily",
+      desc: "Classic multifamily deal with below-market rents and renovation upside",
+      values: {
+        uwType: "multifamily",
+        uwUnits: 8,
+        uwYearBuilt: 1985,
+        uwPrice: 650000,
+        uwDown: 25,
+        uwClosing: 3,
+        uwMonthlyRent: 900,
+        uwOtherIncome: 0,
+        uwVacancy: 7,
+        uwTaxes: 7800,
+        uwInsurance: 3200,
+        uwMgmt: 8,
+        uwMaintenance: 1200,
+        uwCapex: 1000,
+        uwUtilities: 2400,
+        uwOtherExp: 0,
+        uwRate: 7.25,
+        uwAmort: 30,
+        uwTargetCap: 8,
+        uwTargetCOC: 8,
+        uwTargetDSCR: 1.25
+      }
+    },
+    {
+      name: "SFR Turnkey Rental",
+      desc: "Single family home in a B-class neighborhood — already tenant-occupied",
+      values: {
+        uwType: "sfr",
+        uwUnits: 1,
+        uwYearBuilt: 2005,
+        uwPrice: 225000,
+        uwDown: 20,
+        uwClosing: 3,
+        uwMonthlyRent: 1650,
+        uwOtherIncome: 0,
+        uwVacancy: 5,
+        uwTaxes: 2700,
+        uwInsurance: 1400,
+        uwMgmt: 10,
+        uwMaintenance: 800,
+        uwCapex: 600,
+        uwUtilities: 0,
+        uwOtherExp: 0,
+        uwRate: 7.0,
+        uwAmort: 30,
+        uwTargetCap: 7,
+        uwTargetCOC: 10,
+        uwTargetDSCR: 1.2
+      }
+    },
+    {
+      name: "Fourplex House Hack",
+      desc: "Fourplex with owner occupying one unit — FHA-eligible, lower down payment",
+      values: {
+        uwType: "fourplex",
+        uwUnits: 4,
+        uwYearBuilt: 1995,
+        uwPrice: 420000,
+        uwDown: 5,
+        uwClosing: 4,
+        uwMonthlyRent: 1100,
+        uwOtherIncome: 600,
+        uwVacancy: 5,
+        uwTaxes: 5000,
+        uwInsurance: 2200,
+        uwMgmt: 8,
+        uwMaintenance: 1000,
+        uwCapex: 800,
+        uwUtilities: 1800,
+        uwOtherExp: 0,
+        uwRate: 6.75,
+        uwAmort: 30,
+        uwTargetCap: 7,
+        uwTargetCOC: 8,
+        uwTargetDSCR: 1.2
+      }
+    }
+  ],
+  whyThisMatters: {
+    title: "Why Underwrite Every Deal?",
+    purpose: "Underwriting is your financial X-ray before making an offer. It reveals whether a deal actually pencils out — not based on the seller's pro forma, but on your numbers, your financing, and your return thresholds. Skip this step and you're gambling, not investing.",
+    whenToUse: [
+      "Before writing any offer — run the numbers first to establish your maximum price",
+      "When evaluating a broker's pro forma — their vacancy and expense assumptions are often optimistic",
+      "To compare multiple deals side-by-side using consistent assumptions",
+      "During due diligence to stress-test the deal with worst-case expense scenarios"
+    ],
+    keyInsight: "Most bad deals look good on a pro forma. The three numbers that kill deals are: DSCR below 1.20 (lender won't fund), expense ratio above 55% (you're bleeding cash), and cash-on-cash below your opportunity cost. This worksheet flags all three automatically.",
+    proTip: "Always underwrite to market rent, not current rent. If current tenants are paying below market, that's upside — but the deal should still work at current rents as your downside scenario."
+  },
+  kpiExplains: {},
+  coupled: [
+    {
+      name: "Cap Rate Calculator",
+      folder: "caprate",
+      reason: "Compare this deal's cap rate against other properties in your pipeline"
+    },
+    {
+      name: "Cash Flow Calculator",
+      folder: "cashflow",
+      reason: "Dive deeper into monthly cash flow projections with year-by-year analysis"
+    },
+    {
+      name: "Deal Grading",
+      folder: "deal-grading",
+      reason: "Score the overall deal quality across multiple dimensions beyond just the numbers"
+    },
+    {
+      name: "Capital Gains Tax",
+      folder: "capital-gains",
+      reason: "Model the exit tax impact before you buy — know your after-tax returns"
+    }
+  ]
+};
+</script>
+<script src="../shared/learn-mode.js"></script>
 </body>
 </html>
