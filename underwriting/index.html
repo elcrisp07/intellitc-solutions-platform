@@ -126,6 +126,40 @@
 .btn-uw-open:hover { background:var(--color-primary-hover); }
 .uw-note { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-4); text-align:center; }
 
+/* ── Hub Footer Callouts ── */
+.uw-callouts { display:flex; flex-direction:column; gap:var(--space-3); margin-top:var(--space-6); }
+.uw-callout {
+  display:flex; align-items:flex-start; gap:var(--space-4);
+  padding:var(--space-5); border-radius:var(--radius-lg);
+  line-height:1.7; font-size:var(--text-sm); border-left:3.5px solid;
+}
+.uw-callout-icon {
+  flex-shrink:0; width:38px; height:38px; border-radius:var(--radius-md);
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.uw-callout--teal {
+  background:var(--color-primary-surface);
+  border-left-color:var(--color-primary); color:var(--color-text);
+}
+.uw-callout--teal .uw-callout-icon {
+  background:color-mix(in srgb, var(--color-primary) 18%, transparent);
+  color:var(--color-primary);
+}
+.uw-callout--gold {
+  background:color-mix(in srgb, #C98E00 7%, var(--color-surface));
+  border-left-color:#C98E00; color:var(--color-text);
+}
+.uw-callout--gold .uw-callout-icon {
+  background:color-mix(in srgb, #C98E00 14%, transparent);
+  color:#C98E00;
+}
+.uw-callout p { margin:0; }
+.uw-callout--teal strong { color:var(--color-primary); font-weight:600; }
+.uw-callout--gold strong { color:#B38200; font-weight:700; }
+[data-theme="dark"] .uw-callout--gold strong { color:#E0A800; }
+@media(prefers-color-scheme:dark){ :not([data-theme="light"]) .uw-callout--gold strong { color:#E0A800; } }
+@media(max-width:480px){ .uw-callout { flex-direction:column; gap:var(--space-3); } }
+
 /* ── Worksheet Panel ── */
 .uw-panel { display:none; }
 .uw-panel.active { display:block; }
@@ -171,16 +205,17 @@
 .input-prefix { left:var(--space-3); }
 .input-suffix { right:var(--space-3); }
 .form-group input, .form-group select {
-  width:100%; padding:var(--space-2) var(--space-3);
+  width:100%; padding:0.625rem 0.75rem;
   border:1px solid var(--color-border); border-radius:var(--radius-md);
   font-size:var(--text-sm); background:var(--color-bg); color:var(--color-text);
-  font-family:var(--font-body); transition:border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+  font-family:var(--font-body); font-variant-numeric:tabular-nums;
+  transition:border-color var(--transition-interactive), box-shadow var(--transition-interactive);
 }
 .form-group input:focus, .form-group select:focus {
   outline:none; border-color:var(--color-primary);
   box-shadow:0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
 }
-.has-prefix input { padding-left:var(--space-7); }
+.has-prefix input { padding-left:1.75rem; }
 .has-suffix input { padding-right:var(--space-8); }
 .form-hint { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); line-height:1.4; }
 
@@ -402,8 +437,20 @@
     </a>
   </div>
 
-  <p class="uw-note">No AI required. The online worksheet runs locally in your browser. The Excel model works fully offline — take it on a flight, edit at a showing, or share with your lender. Export branded PDFs with your name, brokerage, and contact info.</p>
-  <p class="uw-note" style="margin-top:var(--space-3);font-style:italic">If you are wondering why both are offered — the online tool answers <strong>“should I make an offer?”</strong> and the Excel model answers <strong>“should I close this deal and what are my 10-year returns?”</strong></p>
+  <div class="uw-callouts">
+    <div class="uw-callout uw-callout--teal">
+      <div class="uw-callout-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <p><strong>No AI required.</strong> The online worksheet runs locally in your browser. The Excel model works fully offline — take it on a flight, edit at a showing, or share with your lender. Export branded PDFs with your name, brokerage, and contact info.</p>
+    </div>
+    <div class="uw-callout uw-callout--gold">
+      <div class="uw-callout-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg>
+      </div>
+      <p>If you are wondering why both are offered — the online tool answers <strong>“should I make an offer?”</strong> and the Excel model answers <strong>“should I close this deal and what are my 10-year returns?”</strong></p>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════
