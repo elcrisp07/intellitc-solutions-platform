@@ -185,22 +185,7 @@
           </div>
         </div>
 </div>
-
-      function calculate(){const land=parseNum(document.getElementById('landCost').value);const lots=parseNum(document.getElementById('lots').value);const dev=parseNum(document.getElementById('devCosts').value);const constPU=parseNum(document.getElementById('constPerUnit').value);const softPct=parseNum(document.getElementById('softPct').value)/100;const salePU=parseNum(document.getElementById('salePerUnit').value);const timeline=parseNum(document.getElementById('timeline').value);const pace=parseNum(document.getElementById('salesPace').value);const ltc=parseNum(document.getElementById('loanPct').value)/100;const loanRate=parseNum(document.getElementById('loanRate').value)/100;
-  const hardCosts=dev+constPU*lots;const softCosts=hardCosts*softPct;const totalCost=land+hardCosts+softCosts;const loanAmt=totalCost*ltc;const equity=totalCost-loanAmt;const intCost=loanAmt*loanRate*(timeline/12);const totalWithFin=totalCost+intCost;
-  const revenue=lots*salePU;const profit=revenue-totalWithFin;const margin=revenue>0?profit/revenue*100:0;const roi=equity>0?profit/equity*100:0;const beUnits=salePU>0?Math.ceil(totalWithFin/salePU):lots;
-  document.getElementById('kpiProfit').textContent=formatCurrency(profit);document.getElementById('kpiProfit').className='kpi-value '+(profit>=0?'kpi-positive':'kpi-negative');
-  document.getElementById('kpiMargin').textContent=formatPct(margin);document.getElementById('kpiROI').textContent=formatPct(roi);
-  document.getElementById('kpiBEUnits').textContent=beUnits+' of '+lots;document.getElementById('kpiBEUnitsDetail').textContent=beUnits<=lots?'Achievable':'Exceeds planned units';
-  destroyCharts();const cs=getCS();
-  window.__charts.budget=new Chart(document.getElementById('chartBudget'),{type:'bar',data:{labels:['Land','Development','Construction','Soft Costs','Interest','Total Cost','Revenue','Profit'],datasets:[{data:[land,dev,constPU*lots,softCosts,intCost,totalWithFin,revenue,profit],backgroundColor:[cs.c3,cs.c2,cs.c2,cs.c2,cs.c5,cs.c3,cs.c1,profit>=0?cs.c1:cs.c2]}]},options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{x:{ticks:{color:cs.text,maxRotation:45},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}});
-  const sens=[-15,-10,-5,0,5,10,15].map(d=>{const sp=salePU*(1+d/100);return{label:(d>=0?'+':'')+d+'%',profit:lots*sp-totalWithFin};});
-  window.__charts.sens=new Chart(document.getElementById('chartSensitivity'),{type:'bar',data:{labels:sens.map(s=>s.label),datasets:[{data:sens.map(s=>s.profit),backgroundColor:sens.map(s=>s.profit>=0?cs.c1:cs.c2)}]},options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{x:{ticks:{color:cs.text},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}});
-  const tbody=document.getElementById('budgetBody');tbody.innerHTML='';
-  [['Land',land],['Site Development',dev],['Construction',constPU*lots],['Soft Costs',softCosts],['Interest Reserve',intCost],['Total Development Cost',totalWithFin]].forEach(([l,v])=>{tbody.innerHTML+=`<tr><td>${l}</td><td class="text-right">${formatCurrency(v)}</td><td class="text-right">${formatPct(v/totalWithFin*100)}</td></tr>`;});
-  tbody.innerHTML+='<tr style="font-weight:700;border-top:2px solid var(--color-divider)"><td>Gross Revenue</td><td class="text-right">'+formatCurrency(revenue)+'</td><td></td></tr>';
-  tbody.innerHTML+='<tr style="font-weight:700"><td>Net Profit</td><td class="text-right highlight">'+formatCurrency(profit)+'</td><td class="text-right">'+formatPct(margin)+'</td></tr>';
-  showResults();}
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Category</th><th class="text-right">Amount</th><th class="text-right">% of Total</th></tr></thead><tbody id="budgetBody"></tbody></table></div>
     </section>
   </main>
   <footer class="footer">
