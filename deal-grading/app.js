@@ -33,7 +33,9 @@ function calculate(){
     if(!n) continue;
     deals.push({name:n,price:parseNum(document.getElementById('d'+i+'price').value),rent:parseNum(document.getElementById('d'+i+'rent').value),capRate:parseNum(document.getElementById('d'+i+'caprate').value),coc:parseNum(document.getElementById('d'+i+'coc').value),equity:parseNum(document.getElementById('d'+i+'equity').value)});
   }
-  if(!deals.length) return alert('Enter at least one deal.');
+  const vMsg=document.getElementById('validationMsg');
+  if(!deals.length){vMsg.textContent='Enter at least one deal.';vMsg.style.display='block';return;}
+  vMsg.style.display='none';
 
   deals.forEach(d=>{
     d.cfScore=Math.min(d.rent*12/(d.price||1)*100*10,100);

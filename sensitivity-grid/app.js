@@ -37,7 +37,9 @@ function calculate(){
   const baseVac=parseNum(document.getElementById('vac').value)/100;
   const metric=document.getElementById('metric').value;
 
-  if(var1===var2){alert('Please select two different variables.');return;}
+  const vMsg=document.getElementById('validationMsg');
+  if(var1===var2){vMsg.textContent='Please select two different variables.';vMsg.style.display='block';return;}
+  vMsg.style.display='none';
 
   /* Define ranges for each variable */
   function getRange(v){

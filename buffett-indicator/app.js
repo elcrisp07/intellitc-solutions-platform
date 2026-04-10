@@ -26,7 +26,9 @@ function showInputs(){resultsPanel.classList.add('hidden');inputPanel.classList.
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',showInputs));
 
 function calculate(){const hv=parseNum(document.getElementById('totalHousingValue').value);const gdp=parseNum(document.getElementById('gdp').value);const histAvg=parseNum(document.getElementById('historicalAvg').value);const localPrice=parseNum(document.getElementById('localMedianPrice').value);const localIncome=parseNum(document.getElementById('localMedianIncome').value);const localHistPI=parseNum(document.getElementById('localPriceToIncome').value);
-  if(gdp<=0)return alert('GDP must be greater than 0.');
+  const vMsg=document.getElementById('validationMsg');
+  if(gdp<=0){vMsg.textContent='GDP must be greater than 0.';vMsg.style.display='block';return;}
+  vMsg.style.display='none';
   const ratio=hv/gdp;const deviation=histAvg>0?((ratio-histAvg)/histAvg*100):0;
   let zone='Fairly Valued',zoneCls='';
   if(ratio>histAvg*1.25){zone='Significantly Overvalued';zoneCls='kpi-negative';}

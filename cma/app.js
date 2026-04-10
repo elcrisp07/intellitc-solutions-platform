@@ -431,10 +431,13 @@ function calculate() {
   const comps = getComps();
 
   if (comps.length < 3) {
-    alert('Please enter at least 3 comparable sales with sale prices to generate a CMA.');
+    const vMsg=document.getElementById('validationMsg');
+    if(vMsg){vMsg.textContent='Please enter at least 3 comparable sales with sale prices to generate a CMA.';vMsg.style.display='block';}
     goStep(2);
     return;
   }
+  const vMsgHide=document.getElementById('validationMsg');
+  if(vMsgHide) vMsgHide.style.display='none';
 
   const psfOverride = parseNum(document.getElementById('priceSqft').value);
   const avgPsf = psfOverride > 0 ? psfOverride : calcPricePerSf(comps);

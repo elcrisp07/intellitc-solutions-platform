@@ -38,7 +38,9 @@ function calculate(){
     const egi=income*(1-vac);const noi=egi-exp;const capRate=price>0?noi/price*100:0;const grm=income>0?price/income:0;
     props.push({name,price,income,noi,capRate,grm});
   }
-  if(props.length===0)return alert('Enter at least one property.');
+  const vMsg=document.getElementById('validationMsg');
+  if(props.length===0){vMsg.textContent='Enter at least one property.';vMsg.style.display='block';return;}
+  vMsg.style.display='none';
 
   const caps=props.map(p=>p.capRate);
   const bestIdx=caps.indexOf(Math.max(...caps));

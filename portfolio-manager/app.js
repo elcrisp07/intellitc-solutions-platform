@@ -30,7 +30,9 @@ function calculate(){const props=[];
     const p={name:n,price:parseNum(document.getElementById('p'+i+'price').value),value:parseNum(document.getElementById('p'+i+'value').value),rent:parseNum(document.getElementById('p'+i+'rent').value),exp:parseNum(document.getElementById('p'+i+'exp').value),mortBal:parseNum(document.getElementById('p'+i+'mortBal').value),mortPmt:parseNum(document.getElementById('p'+i+'mortPmt').value)};
     p.equity=p.value-p.mortBal;p.cf=p.rent-p.exp-p.mortPmt;p.cashIn=p.price*0.25;p.coc=p.cashIn>0?p.cf*12/p.cashIn*100:0;p.noi=(p.rent-p.exp)*12;p.capRate=p.price>0?p.noi/p.price*100:0;p.appreciation=p.price>0?(p.value-p.price)/p.price*100:0;
     props.push(p);}
-  if(!props.length)return alert('Enter at least one property.');
+  const vMsg=document.getElementById('validationMsg');
+  if(!props.length){vMsg.textContent='Enter at least one property.';vMsg.style.display='block';return;}
+  vMsg.style.display='none';
   const tv=props.reduce((s,p)=>s+p.value,0);const te=props.reduce((s,p)=>s+p.equity,0);const tcf=props.reduce((s,p)=>s+p.cf,0);const avgCoc=props.reduce((s,p)=>s+p.coc,0)/props.length;
   document.getElementById('kpiTotalValue').textContent=formatCurrency(tv);document.getElementById('kpiTotalEquity').textContent=formatCurrency(te);
   document.getElementById('kpiTotalCF').textContent=formatCurrency(tcf);document.getElementById('kpiTotalCF').className='kpi-value '+(tcf>=0?'kpi-positive':'kpi-negative');
