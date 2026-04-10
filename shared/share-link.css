@@ -50,15 +50,27 @@
   font-size: 0.82rem;
   font-weight: 500;
   opacity: 0;
+  max-height: 0;
+  overflow: hidden;
   transform: translateY(-6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.35s ease, padding 0.35s ease, margin 0.35s ease;
   background: #e6f5f5;
   color: #0d5c5f;
   border: 1px solid #b3dfe0;
 }
 .share-link-banner.visible {
   opacity: 1;
+  max-height: 120px;
   transform: translateY(0);
+}
+.share-link-banner.dismissing {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-width: 0;
+  transform: translateY(-6px);
 }
 .share-link-banner svg {
   flex-shrink: 0;

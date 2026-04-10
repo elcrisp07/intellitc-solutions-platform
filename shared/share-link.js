@@ -201,17 +201,18 @@
       }
     }
 
-    banner.querySelector('.share-link-banner-dismiss').addEventListener('click', function() {
+    function dismissBanner() {
       banner.classList.remove('visible');
-      setTimeout(function() { banner.remove(); }, 300);
-    });
+      banner.classList.add('dismissing');
+      // Remove from DOM after height transition completes (350ms)
+      setTimeout(function() { if (banner.parentNode) banner.remove(); }, 400);
+    }
+
+    banner.querySelector('.share-link-banner-dismiss').addEventListener('click', dismissBanner);
 
     // Auto-dismiss after 8 seconds
     setTimeout(function() {
-      if (banner.parentNode) {
-        banner.classList.remove('visible');
-        setTimeout(function() { if (banner.parentNode) banner.remove(); }, 300);
-      }
+      if (banner.parentNode) dismissBanner();
     }, 8000);
   }
 
