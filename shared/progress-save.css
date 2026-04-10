@@ -47,3 +47,21 @@
   opacity: 1;
   background: rgba(1, 105, 111, 0.1);
 }
+
+/* ---- Proactive save caption ---- */
+.progress-save-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 450;
+  color: var(--color-text-muted, #7A7974);
+  margin: 4px 0 12px 0;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.progress-save-caption svg {
+  flex-shrink: 0;
+  opacity: 0.55;
+  stroke: var(--color-text-muted, #7A7974);
+}
