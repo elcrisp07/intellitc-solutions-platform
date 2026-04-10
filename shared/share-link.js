@@ -94,16 +94,24 @@
     return { compress: compressToBase64URL, decompress: decompressFromBase64URL };
   })();
 
+  /* ---- Universal input selector ---- */
+  var INPUT_SELECTOR = [
+    '#inputPanel input[type="text"]', '#inputPanel input[type="number"]', '#inputPanel select',
+    '.calc-panel input[type="text"]', '.calc-panel input[type="number"]', '.calc-panel select',
+    '#cgPanel input[type="text"]', '#cgPanel input[type="number"]', '#cgPanel select',
+    '#uwPanel input[type="text"]', '#uwPanel input[type="number"]', '#uwPanel select'
+  ].join(', ');
+
   /* ---- Collect current input values ---- */
   function collectInputs() {
-    var fields = document.querySelectorAll(
-      '#inputPanel input[type="text"], #inputPanel input[type="number"], #inputPanel select'
-    );
+    var fields = document.querySelectorAll(INPUT_SELECTOR);
     var data = {};
     var count = 0;
+    var seen = {};
     fields.forEach(function(f) {
       var id = f.id || f.name;
-      if (!id) return;
+      if (!id || seen[id]) return;
+      seen[id] = true;
       var val = f.value;
       // Skip empty/default values to keep URL short
       if (val === '' || val === '0') return;
@@ -115,16 +123,17 @@
 
   /* ---- Apply shared data to inputs ---- */
   function applySharedData(data) {
-    var fields = document.querySelectorAll(
-      '#inputPanel input[type="text"], #inputPanel input[type="number"], #inputPanel select'
-    );
+    var fields = document.querySelectorAll(INPUT_SELECTOR);
     var applied = 0;
+    var seen = {};
     fields.forEach(function(f) {
       var id = f.id || f.name;
-      if (!id || data[id] === undefined) return;
+      if (!id || seen[id] || data[id] === undefined) return;
+      seen[id] = true;
       f.value = data[id];
       applied++;
       try { f.dispatchEvent(new Event('input', { bubbles: true })); } catch(e) {}
+      try { f.dispatchEvent(new Event('change', { bubbles: true })); } catch(e) {}
     });
     return applied;
   }
@@ -175,11 +184,21 @@
       '<span>Shared deal loaded — ' + fieldCount + ' field' + (fieldCount !== 1 ? 's' : '') + ' populated</span>' +
       '<button class="share-link-banner-dismiss" aria-label="Dismiss">&times;</button>';
 
-    var panel = document.getElementById('inputPanel');
+    // Find the best container for the banner
+    var panel = document.getElementById('inputPanel')
+      || document.querySelector('.calc-panel')
+      || document.getElementById('cgPanel')
+      || document.getElementById('uwPanel');
     if (panel) {
       panel.insertBefore(banner, panel.firstChild);
     } else {
-      document.body.appendChild(banner);
+      // Last resort: insert at top of main content
+      var main = document.querySelector('main, .container, .content');
+      if (main) {
+        main.insertBefore(banner, main.firstChild);
+      } else {
+        document.body.appendChild(banner);
+      }
     }
 
     banner.querySelector('.share-link-banner-dismiss').addEventListener('click', function() {
@@ -268,44 +287,58 @@
   function injectShareButton() {
     var exportGroup = document.querySelector('.export-group');
     if (!exportGroup || exportGroup.querySelector('.btn-share')) return;
+    exportGroup.appendChild(createShareBtn('btn btn-export btn-share'));
+  }
 
+  /* ---- Shared SVG icon for share button ---- */
+  var SHARE_ICON =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<circle cx="18" cy="5" r="3"/>' +
+      '<circle cx="6" cy="12" r="3"/>' +
+      '<circle cx="18" cy="19" r="3"/>' +
+      '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>' +
+      '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' +
+    '</svg>';
+
+  /* ---- Create a share button element ---- */
+  function createShareBtn(className) {
     var btn = document.createElement('button');
-    btn.className = 'btn btn-export btn-share';
+    btn.className = className;
     btn.setAttribute('aria-label', 'Share deal link');
-    btn.innerHTML =
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-        '<circle cx="18" cy="5" r="3"/>' +
-        '<circle cx="6" cy="12" r="3"/>' +
-        '<circle cx="18" cy="19" r="3"/>' +
-        '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>' +
-        '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' +
-      '</svg>' +
-      ' Share';
+    btn.innerHTML = SHARE_ICON + ' Share';
     btn.addEventListener('click', handleShareClick);
-
-    exportGroup.appendChild(btn);
+    return btn;
   }
 
   /* ---- Also handle alternate layout (Senior's Corner, Land Flip, etc.) ---- */
   function injectShareButtonAlternate() {
-    var groups = document.querySelectorAll('.export-group');
-    groups.forEach(function(group) {
+    // Standard export groups
+    document.querySelectorAll('.export-group').forEach(function(group) {
       if (group.querySelector('.btn-share')) return;
-      var btn = document.createElement('button');
-      btn.className = 'btn btn-export btn-share';
-      btn.setAttribute('aria-label', 'Share deal link');
-      btn.innerHTML =
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-          '<circle cx="18" cy="5" r="3"/>' +
-          '<circle cx="6" cy="12" r="3"/>' +
-          '<circle cx="18" cy="19" r="3"/>' +
-          '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>' +
-          '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' +
-        '</svg>' +
-        ' Share';
-      btn.addEventListener('click', handleShareClick);
+      group.appendChild(createShareBtn('btn btn-export btn-share'));
+    });
+
+    // Alternate export groups (.export-group-alt from export.js)
+    document.querySelectorAll('.export-group-alt').forEach(function(group) {
+      if (group.querySelector('.btn-share')) return;
+      var btn = createShareBtn('btn-export-alt btn-share');
+      btn.style.cssText = 'display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-xs);font-weight:600;cursor:pointer;border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font-family:var(--font-body);transition:all 0.15s';
       group.appendChild(btn);
     });
+
+    // Capital Gains export area (custom .btn-cg-export buttons)
+    var cgExportArea = document.querySelector('.cg-export-row, .cg-actions');
+    if (!cgExportArea) {
+      // Look for the area containing .btn-cg-export buttons
+      var cgBtns = document.querySelectorAll('.btn-cg-export');
+      if (cgBtns.length > 0) {
+        cgExportArea = cgBtns[0].parentElement;
+      }
+    }
+    if (cgExportArea && !cgExportArea.querySelector('.btn-share')) {
+      var btn = createShareBtn('btn-cg-export btn-share');
+      cgExportArea.appendChild(btn);
+    }
   }
 
   /* ---- Initialize ---- */
