@@ -25,4 +25,72 @@ function showResults(){inputPanel.classList.add('hidden');resultsPanel.classList
 function showInputs(){resultsPanel.classList.add('hidden');inputPanel.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',showInputs));
 
-<div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Amount</th></tr></thead><tbody id="costBody"></tbody></table></div>
+/* ---- Calculate ---- */
+function calculate(){
+  const mv=parseNum(document.getElementById('marketValue').value);
+  const pp=parseNum(document.getElementById('purchasePrice').value);
+  const repair=parseNum(document.getElementById('repairCosts').value);
+  const backTax=parseNum(document.getElementById('backTaxes').value);
+  const liens=parseNum(document.getElementById('liens').value);
+  const closePct=parseNum(document.getElementById('closingPct').value)/100;
+  const exit=document.getElementById('exitStrategy').value;
+  const arv=parseNum(document.getElementById('arv').value);
+  const sellPct=parseNum(document.getElementById('sellCostPct').value)/100;
+  const rent=parseNum(document.getElementById('monthlyRent').value);
+  const vacPct=parseNum(document.getElementById('vacancy').value)/100;
+  const expPct=parseNum(document.getElementById('expenses').value)/100;
+  const dpPct=parseNum(document.getElementById('dp').value)/100;
+  const rate=parseNum(document.getElementById('rate').value)/100;
+  const trm=parseNum(document.getElementById('term').value);
+
+  const closing=pp*closePct;
+  const totalCost=pp+repair+backTax+liens+closing;
+  const discount=mv>0?((mv-pp)/mv*100):0;
+  const cashIn=pp*dpPct+repair+backTax+liens+closing;
+
+  let profit,roi;
+  if(exit==='flip'){
+    const sellCost=arv*sellPct;
+    profit=arv-totalCost-sellCost;
+    roi=cashIn>0?profit/cashIn*100:0;
+  }else{
+    const loan=pp*(1-dpPct);const mr=rate/12;const n=trm*12;
+    const mortPmt=mr>0?loan*(mr*Math.pow(1+mr,n))/(Math.pow(1+mr,n)-1):loan/n;
+    const egi=rent*(1-vacPct);const exp=egi*expPct;
+    const cfMo=egi-exp-mortPmt;profit=cfMo*12;
+    roi=cashIn>0?profit/cashIn*100:0;
+  }
+
+  const riskExposure=totalCost/(exit==='flip'?arv:mv);
+  const riskScore=riskExposure<0.65?'Low':riskExposure<0.8?'Medium':'High';
+
+  document.getElementById('kpiDiscount').textContent=formatPct(discount);
+  document.getElementById('kpiDiscountDetail').textContent=formatCurrency(mv-pp)+' below market';
+  document.getElementById('kpiProfit').textContent=formatCurrency(profit);
+  document.getElementById('kpiProfitDetail').textContent=exit==='flip'?'On flip':'Annual cash flow';
+  document.getElementById('kpiProfit').className='kpi-value '+(profit>=0?'kpi-positive':'kpi-negative');
+  document.getElementById('kpiROI').textContent=formatPct(roi);
+  document.getElementById('kpiRisk').textContent=riskScore;
+  document.getElementById('kpiRisk').className='kpi-value '+(riskScore==='Low'?'kpi-positive':riskScore==='High'?'kpi-negative':'');
+  document.getElementById('kpiRiskDetail').textContent='Exposure: '+formatPct(riskExposure*100)+' of '+(exit==='flip'?'ARV':'value');
+
+  destroyCharts();const cs=getCS();
+  const exitVal=exit==='flip'?arv:mv;
+  window.__charts.cv=new Chart(document.getElementById('chartCostValue'),{
+    type:'bar',data:{labels:['Total Cost','Exit Value','Profit'],datasets:[{data:[totalCost,exitVal,profit],backgroundColor:[cs.c2,cs.c1,profit>=0?cs.c1:cs.c2]}]},
+    options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{x:{ticks:{color:cs.text},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}
+  });
+  window.__charts.risk=new Chart(document.getElementById('chartRisk'),{
+    type:'doughnut',data:{labels:['Exposure','Safety Margin'],datasets:[{data:[riskExposure*100,(1-riskExposure)*100],backgroundColor:[cs.c2,cs.c1]}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,labels:{color:cs.text}}}}
+  });
+
+  const tbody=document.getElementById('costBody');
+  tbody.innerHTML='';
+  [['Purchase Price',pp],['Repair Costs',repair],['Back Taxes',backTax],['Liens',liens],['Closing Costs',closing],['Total Investment',totalCost],['---'],['Market Value',mv],['Acquisition Discount %',discount.toFixed(1)+'%'],['Cash Required',cashIn]].forEach(([l,v])=>{
+    if(l==='---'){tbody.innerHTML+='<tr><td colspan="2" style="border-bottom:2px solid var(--color-divider)"></td></tr>';return;}
+    tbody.innerHTML+=`<tr><td>${l}</td><td class="text-right">${typeof v==='number'?formatCurrency(v):v}</td></tr>`;
+  });
+
+  showResults();
+}

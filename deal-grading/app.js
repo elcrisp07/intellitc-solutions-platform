@@ -25,4 +25,49 @@ function showResults(){inputPanel.classList.add('hidden');resultsPanel.classList
 function showInputs(){resultsPanel.classList.add('hidden');inputPanel.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',showInputs));
 
-<div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Deal</th><th class="text-right">Cap Rate</th><th class="text-right">CoC</th><th class="text-right">Equity</th><th class="text-right">Score</th><th class="text-center">Grade</th></tr></thead><tbody id="rankBody"></tbody></table></div>
+/* ---- Calculate ---- */
+function calculate(){
+  const deals=[];
+  for(let i=1;i<=2;i++){
+    const n=document.getElementById('d'+i+'name').value.trim();
+    if(!n) continue;
+    deals.push({name:n,price:parseNum(document.getElementById('d'+i+'price').value),rent:parseNum(document.getElementById('d'+i+'rent').value),capRate:parseNum(document.getElementById('d'+i+'caprate').value),coc:parseNum(document.getElementById('d'+i+'coc').value),equity:parseNum(document.getElementById('d'+i+'equity').value)});
+  }
+  if(!deals.length) return alert('Enter at least one deal.');
+
+  deals.forEach(d=>{
+    d.cfScore=Math.min(d.rent*12/(d.price||1)*100*10,100);
+    d.capScore=Math.min(d.capRate*12,100);
+    d.cocScore=Math.min(d.coc*8,100);
+    d.eqScore=Math.min(d.equity*4,100);
+    d.total=d.cfScore*0.25+d.capScore*0.2+d.cocScore*0.25+d.eqScore*0.3;
+    d.grade=d.total>=80?'A':d.total>=65?'B':d.total>=50?'C':d.total>=35?'D':'F';
+  });
+  deals.sort((a,b)=>b.total-a.total);
+
+  document.getElementById('kpiTopDeal').textContent=deals[0].name;
+  document.getElementById('kpiTopDealDetail').textContent='Score: '+deals[0].total.toFixed(0)+'/100';
+  document.getElementById('kpiAvgScore').textContent=(deals.reduce((s,d)=>s+d.total,0)/deals.length).toFixed(0);
+  const bestCF=deals.reduce((a,b)=>a.rent>b.rent?a:b);
+  document.getElementById('kpiBestCF').textContent=formatCurrency(bestCF.rent)+'/mo';
+  document.getElementById('kpiBestCFDetail').textContent=bestCF.name;
+  const bestV=deals.reduce((a,b)=>a.equity>b.equity?a:b);
+  document.getElementById('kpiBestValue').textContent=formatPct(bestV.equity);
+  document.getElementById('kpiBestValueDetail').textContent=bestV.name;
+
+  destroyCharts();
+  const cs=getCS();
+
+  window.__charts.radar=new Chart(document.getElementById('chartRadar'),{type:'radar',data:{labels:['Cash Flow','Cap Rate','CoC Return','Equity Spread'],datasets:deals.map((d,i)=>({label:d.name,data:[d.cfScore,d.capScore,d.cocScore,d.eqScore],borderColor:[cs.c1,cs.c2,cs.c3][i],backgroundColor:[cs.c1+'20',cs.c2+'20',cs.c3+'20'][i]}))},options:{responsive:true,maintainAspectRatio:false,scales:{r:{ticks:{color:cs.text},grid:{color:cs.grid},pointLabels:{color:cs.text}}},plugins:{legend:{labels:{color:cs.text}}}}});
+
+  window.__charts.rank=new Chart(document.getElementById('chartRank'),{type:'bar',data:{labels:deals.map(d=>d.name),datasets:[{data:deals.map(d=>d.total),backgroundColor:[cs.c1,cs.c2,cs.c3]}]},options:{...chartOpts('','bar'),indexAxis:'y',plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{y:{ticks:{color:cs.text},grid:{display:false}},x:{max:100,ticks:{color:cs.text},grid:{color:cs.grid}}}}});
+
+  const tbody=document.getElementById('rankBody');
+  tbody.innerHTML='';
+  deals.forEach(d=>{
+    const gc=d.grade==='A'?'grade-a':d.grade==='B'?'grade-b':d.grade==='C'?'grade-c':d.grade==='D'?'grade-d':'grade-f';
+    tbody.innerHTML+=`<tr><td>${d.name}</td><td class="text-right">${formatPct(d.capRate)}</td><td class="text-right">${formatPct(d.coc)}</td><td class="text-right">${formatPct(d.equity)}</td><td class="text-right">${d.total.toFixed(0)}</td><td class="text-center"><span class="grade-badge ${gc}">${d.grade}</span></td></tr>`;
+  });
+
+  showResults();
+}
