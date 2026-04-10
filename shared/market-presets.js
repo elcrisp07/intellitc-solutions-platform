@@ -3,6 +3,9 @@
  * Stores market-level defaults (tax rate, rent, vacancy, cap rate, insurance)
  * to pre-fill calculator fields and reduce manual entry.
  *
+ * Now supports ZIP code entry — maps any US zip to the nearest of 35 tracked metros.
+ * Requires: zip3-metro-map.js loaded before this file.
+ *
  * Usage (called by calculator pages):
  *   MarketPresets.init('containerId', fieldMap)
  *   MarketPresets.getMarket()  → preset object or null
@@ -11,6 +14,7 @@
   'use strict';
 
   var STORAGE_KEY = 'intellitc_market';
+  var ZIP_KEY     = 'intellitc_market_zip';
 
   // Data sources: ATTOM, RealPage, CoStar, US Census ACS 2024 estimates
   var PRESETS = {
@@ -73,6 +77,16 @@
       try { s.setItem(STORAGE_KEY, key); } catch(e) {}
     },
 
+    /** Get/set the stored zip code. */
+    getZip: function() {
+      var s = getStore(); if (!s) return '';
+      try { return s.getItem(ZIP_KEY) || ''; } catch(e) { return ''; }
+    },
+    setZip: function(zip) {
+      var s = getStore(); if (!s) return;
+      try { if (zip) s.setItem(ZIP_KEY, zip); else s.removeItem(ZIP_KEY); } catch(e) {}
+    },
+
     /** Get all preset entries as sorted array for dropdown. */
     getAll: function() {
       return Object.keys(PRESETS).filter(function(k) { return k !== ''; }).sort(function(a, b) {
@@ -84,9 +98,7 @@
      * Initialize the market preset chip on a calculator page.
      * @param {string} containerId  — ID of element to insert the chip into
      * @param {Object} fieldMap     — { 'presetProp': ['fieldId', ...], ... }
-     *   presetProp can be: propTaxDollars (annual, needs price), avgRent2br, vacancy,
-     *                       capRate, insRate, insRateDollars (annual, needs price)
-     * @param {Function} [getPriceVal] — function that returns current price (for dollar calculations)
+     * @param {Function} [getPriceVal] — function that returns current price
      */
     init: function(containerId, fieldMap, getPriceVal) {
       var self = this;
@@ -94,8 +106,14 @@
       if (!container) return;
 
       var market = this.getMarket();
+      var storedZip = this.getZip();
       var label = market ? market.name : 'No market set';
       var chipClass = market ? 'mp-chip mp-chip-set' : 'mp-chip mp-chip-unset';
+
+      // If we have a stored zip, show it in the label
+      if (market && storedZip) {
+        label = storedZip + ' → ' + market.name;
+      }
 
       var chip = document.createElement('div');
       chip.id = 'mpChip';
@@ -119,6 +137,7 @@
       if (document.getElementById('mpPanel')) return;
       var self = this;
       var current = this.getMarket();
+      var storedZip = this.getZip();
       var all = this.getAll();
 
       var panel = document.createElement('div');
@@ -133,7 +152,21 @@
             '</div>' +
             '<button class="mp-panel-close" onclick="MarketPresets._closePanel()" aria-label="Close">&#x2715;</button>' +
           '</div>' +
-          '<p class="mp-panel-desc">Select your target market to auto-fill typical property tax rates, vacancy rates, and insurance benchmarks. You can always override individual fields.</p>' +
+          '<p class="mp-panel-desc">Enter your property\'s zip code to auto-match the nearest tracked market — or choose one manually below.</p>' +
+
+          // Zip code input
+          '<div class="mp-zip-wrap">' +
+            '<label class="mp-zip-label" for="mpZipInput">ZIP Code</label>' +
+            '<div class="mp-zip-row">' +
+              '<input type="text" id="mpZipInput" class="mp-zip-input" placeholder="e.g. 37064" maxlength="5" inputmode="numeric" pattern="[0-9]*" value="' + (storedZip || '') + '">' +
+              '<button class="mp-zip-go" id="mpZipGoBtn" onclick="MarketPresets._lookupZip()">Find Market</button>' +
+            '</div>' +
+            '<div class="mp-zip-result" id="mpZipResult"></div>' +
+          '</div>' +
+
+          '<div class="mp-divider-row"><span class="mp-divider-text">or select manually</span></div>' +
+
+          // Dropdown fallback
           '<div class="mp-select-wrap">' +
             '<select id="mpSelect" class="mp-select">' +
               '<option value="">Select a market…</option>' +
@@ -156,9 +189,115 @@
         var preset = key && PRESETS[key] ? Object.assign({ key: key }, PRESETS[key]) : null;
         document.getElementById('mpPreview').innerHTML = preset ? self._buildPreviewHTML(preset) : '';
         document.getElementById('mpApplyBtn').disabled = !preset;
+        // Clear zip result when manually selecting
+        document.getElementById('mpZipResult').innerHTML = '';
+        document.getElementById('mpZipInput').value = '';
+      });
+
+      // Allow Enter key on zip input
+      document.getElementById('mpZipInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); self._lookupZip(); }
+      });
+
+      // Auto-digits only
+      document.getElementById('mpZipInput').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').substring(0, 5);
       });
 
       setTimeout(function() { panel.classList.add('mp-panel-visible'); }, 10);
+    },
+
+    /** Look up the entered zip code using ZipMetroMap. */
+    _lookupZip: function() {
+      var zip = (document.getElementById('mpZipInput').value || '').trim();
+      var resultEl = document.getElementById('mpZipResult');
+
+      if (!zip || zip.length < 5) {
+        resultEl.innerHTML = '<span class="mp-zip-error">Please enter a 5-digit zip code.</span>';
+        return;
+      }
+
+      // Check if ZipMetroMap is loaded
+      if (!window.ZipMetroMap || !window.ZipMetroMap.lookup) {
+        resultEl.innerHTML = '<span class="mp-zip-error">Zip lookup unavailable.</span>';
+        return;
+      }
+
+      var result = window.ZipMetroMap.lookup(zip);
+      if (!result || !PRESETS[result.metroKey]) {
+        resultEl.innerHTML = '<span class="mp-zip-error">Could not match this zip code. Try selecting a market manually.</span>';
+        return;
+      }
+
+      var preset = PRESETS[result.metroKey];
+      var metroName = preset.name;
+
+      // Show match
+      resultEl.innerHTML =
+        '<div class="mp-zip-match">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' +
+          '<span>Matched to <strong>' + metroName + '</strong></span>' +
+        '</div>';
+
+      // Update the dropdown to match
+      var sel = document.getElementById('mpSelect');
+      sel.value = result.metroKey;
+
+      // Show preview
+      var p = Object.assign({ key: result.metroKey }, preset);
+      document.getElementById('mpPreview').innerHTML = this._buildPreviewHTML(p);
+      document.getElementById('mpApplyBtn').disabled = false;
+
+      // Store zip and approximate flag for apply step
+      this._pendingZip = zip;
+      this._pendingApproximate = result.approximate;
+
+      // If approximate, show the notice immediately
+      if (result.approximate) {
+        this._showProximityNotice(zip, metroName);
+      }
+    },
+
+    /** Show the proximity limitation popup for rural / distant zip codes. */
+    _showProximityNotice: function(zip, metroName) {
+      // Don't stack multiples
+      if (document.getElementById('mpProximityNotice')) return;
+
+      var notice = document.createElement('div');
+      notice.id = 'mpProximityNotice';
+      notice.innerHTML =
+        '<div class="mp-notice-overlay" onclick="MarketPresets._closeProximityNotice()"></div>' +
+        '<div class="mp-notice-card">' +
+          '<div class="mp-notice-icon">' +
+            '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+              '<circle cx="12" cy="12" r="10"/>' +
+              '<line x1="12" y1="8" x2="12" y2="12"/>' +
+              '<line x1="12" y1="16" x2="12.01" y2="16"/>' +
+            '</svg>' +
+          '</div>' +
+          '<h3 class="mp-notice-title">Approximate Market Match</h3>' +
+          '<p class="mp-notice-body">' +
+            'Your zip code <strong>' + zip + '</strong> is outside the immediate metro area of any of our 35 tracked markets. ' +
+            'We\'ve matched you to <strong>' + metroName + '</strong> as the closest available market in our database.' +
+          '</p>' +
+          '<p class="mp-notice-body mp-notice-disclaimer">' +
+            'The benchmarks shown — including property tax rates, vacancy rates, rents, and cap rates — are based on ' +
+            metroName + ' metro data and <strong>may not accurately reflect conditions in your specific area</strong>. ' +
+            'Use these figures as a starting point and adjust based on your local knowledge.' +
+          '</p>' +
+          '<div class="mp-notice-footer">' +
+            '<button class="mp-notice-btn" onclick="MarketPresets._closeProximityNotice()">I Understand</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(notice);
+      setTimeout(function() { notice.classList.add('mp-notice-visible'); }, 10);
+    },
+
+    _closeProximityNotice: function() {
+      var el = document.getElementById('mpProximityNotice');
+      if (!el) return;
+      el.classList.remove('mp-notice-visible');
+      setTimeout(function() { if (el.parentElement) el.remove(); }, 220);
     },
 
     _buildPreviewHTML: function(p) {
@@ -176,24 +315,39 @@
       var key = document.getElementById('mpSelect').value;
       if (!key || !PRESETS[key]) return;
       this.setMarket(key);
+
+      // Store zip if one was used
+      var zipInput = document.getElementById('mpZipInput');
+      var zip = zipInput ? zipInput.value.trim() : '';
+      this.setZip(zip);
+
       var preset = Object.assign({ key: key }, PRESETS[key]);
       this._applyPreset(preset);
-      // Update chip
+
+      // Update chip — show zip → metro if zip was used
       var chip = document.getElementById('mpChipBtn');
       if (chip) {
         chip.className = 'mp-chip mp-chip-set';
         var label = document.getElementById('mpChipLabel');
-        if (label) label.textContent = preset.name;
+        if (label) {
+          label.textContent = (zip ? zip + ' → ' : '') + preset.name;
+        }
         var hint = chip.querySelector('.mp-chip-hint');
         if (hint) { hint.className = 'mp-chip-badge'; hint.textContent = 'Benchmarks active'; }
+        var badge = chip.querySelector('.mp-chip-badge');
+        if (badge) { badge.textContent = 'Benchmarks active'; }
       }
       this._closePanel();
       this._showAppliedToast(preset.name);
+
+      // Clean up
+      this._pendingZip = null;
+      this._pendingApproximate = false;
     },
 
     _clearMarket: function() {
       var s = getStore(); if (!s) return;
-      try { s.removeItem(STORAGE_KEY); } catch(e) {}
+      try { s.removeItem(STORAGE_KEY); s.removeItem(ZIP_KEY); } catch(e) {}
       var chip = document.getElementById('mpChipBtn');
       if (chip) {
         chip.className = 'mp-chip mp-chip-unset';

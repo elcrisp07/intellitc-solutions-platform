@@ -234,3 +234,199 @@
 @media (max-width: 520px) {
   .mp-preview-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── Zip Code Input ── */
+.mp-zip-wrap {
+  padding: 16px 24px 0;
+}
+.mp-zip-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.mp-zip-row {
+  display: flex;
+  gap: 8px;
+}
+.mp-zip-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-divider, #e8e4dc);
+  border-radius: 8px;
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #1a1a18);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.mp-zip-input:focus {
+  outline: none;
+  border-color: var(--color-primary, #01696f);
+  box-shadow: 0 0 0 3px rgba(1,105,111,.12);
+}
+.mp-zip-input::placeholder {
+  color: var(--color-text-muted, #bbb);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.mp-zip-go {
+  padding: 10px 16px;
+  background: var(--color-primary, #01696f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s;
+}
+.mp-zip-go:hover {
+  background: #015155;
+}
+
+/* Zip result area */
+.mp-zip-result {
+  min-height: 20px;
+  margin-top: 8px;
+}
+.mp-zip-match {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary, #01696f);
+  font-size: 13px;
+  font-weight: 500;
+}
+.mp-zip-match svg { color: var(--color-primary, #01696f); }
+.mp-zip-error {
+  color: #c0392b;
+  font-size: 12px;
+}
+
+/* ── Divider ── */
+.mp-divider-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 24px 0;
+  gap: 12px;
+}
+.mp-divider-row::before,
+.mp-divider-row::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-divider, #e8e4dc);
+}
+.mp-divider-text {
+  font-size: 11px;
+  color: var(--color-text-muted, #aaa);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* ── Proximity Notice Popup ── */
+#mpProximityNotice {
+  position: fixed;
+  inset: 0;
+  z-index: 9200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .2s;
+}
+#mpProximityNotice.mp-notice-visible { opacity: 1; }
+
+.mp-notice-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+.mp-notice-card {
+  position: relative;
+  background: var(--color-bg, #f7f6f2);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  margin: 20px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.28);
+  text-align: center;
+  transform: translateY(16px) scale(0.97);
+  transition: transform .22s cubic-bezier(.32,1.4,.5,1);
+}
+#mpProximityNotice.mp-notice-visible .mp-notice-card {
+  transform: translateY(0) scale(1);
+}
+.mp-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  color: #D19900;
+  margin-bottom: 14px;
+}
+.mp-notice-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text, #1a1a18);
+  margin: 0 0 12px;
+}
+.mp-notice-body {
+  font-size: 13px;
+  color: var(--color-text-muted, #666);
+  line-height: 1.6;
+  margin: 0 0 10px;
+  text-align: left;
+}
+.mp-notice-disclaimer {
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-divider, #e8e4dc);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+.mp-notice-footer {
+  margin-top: 20px;
+}
+.mp-notice-btn {
+  background: var(--color-primary, #01696f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 28px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.mp-notice-btn:hover {
+  background: #015155;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .mp-notice-card {
+  background: var(--color-bg, #1a1a18);
+}
+[data-theme="dark"] .mp-notice-icon {
+  background: rgba(209,153,0,0.18);
+}
+[data-theme="dark"] .mp-notice-disclaimer {
+  background: var(--color-surface, #252520);
+}
+[data-theme="dark"] .mp-zip-input {
+  background: var(--color-surface, #252520);
+  color: var(--color-text, #e8e4dc);
+}
