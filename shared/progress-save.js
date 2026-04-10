@@ -48,9 +48,9 @@
     try { data = JSON.parse(raw); } catch(e) { return false; }
     if (!data || !data.__ts) return false;
 
-    // Only restore if saved within the last 30 days
+    // Only restore if saved within the last 45 days
     var age = Date.now() - data.__ts;
-    if (age > 30 * 24 * 60 * 60 * 1000) {
+    if (age > 45 * 24 * 60 * 60 * 1000) {
       try { store.removeItem(STORAGE_KEY); } catch(e) {}
       return false;
     }
@@ -77,7 +77,7 @@
     var caption = document.createElement('div');
     caption.id = 'progressSaveCaption';
     caption.className = 'progress-save-caption';
-    caption.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Progress is saved locally on this device for 30 days';
+    caption.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Progress is saved locally on this device for 45 days';
     var title = panel.querySelector('.panel-title');
     if (title) {
       title.parentNode.insertBefore(caption, title.nextSibling);
