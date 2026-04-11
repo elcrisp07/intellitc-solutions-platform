@@ -476,6 +476,37 @@
   .hero { padding: var(--space-10) var(--space-6) var(--space-6); }
 }
 
+/* ═══════ PLATFORM CAPABILITIES STRIP ═══════ */
+.platform-caps {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  max-width: 880px;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-4) var(--space-6);
+}
+.cap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.cap-item svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+@media(max-width: 600px) {
+  .platform-caps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    text-align: left;
+  }
+}
+
 /* ═══════ CALCULATOR SECTION ═══════ */
 .calc-section {
   max-width: 1200px;
@@ -1214,6 +1245,26 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <p>DSCR analysis, qualification tools, loan comparison, and market valuation signals.</p>
       <span class="card-cta">Evaluate loans →</span>
     </a>
+  </div>
+</div>
+
+<!-- ═══════ PLATFORM CAPABILITIES ═══════ -->
+<div class="platform-caps">
+  <div class="cap-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <span>PDF & CSV Exports</span>
+  </div>
+  <div class="cap-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    <span>Shareable Report Links</span>
+  </div>
+  <div class="cap-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <span>Built-In Learn Mode</span>
+  </div>
+  <div class="cap-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span>No Sign-Up Required</span>
   </div>
 </div>
 
