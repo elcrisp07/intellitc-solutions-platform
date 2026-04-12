@@ -62,26 +62,56 @@
 .hero-wizard-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
   margin-bottom: var(--space-4);
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1.5px dashed var(--color-primary);
+  padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-primary);
   background: var(--color-primary-surface);
   color: var(--color-primary);
   font-family: inherit;
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: inherit;
+  font-weight: 500;
   cursor: pointer;
-  transition: all .2s;
+  transition: transform .15s, box-shadow .15s, background .15s;
   text-decoration: none;
 }
 .hero-wizard-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(1,105,111,.15);
+  background: rgba(1,105,111,.08);
+}
+.wizard-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   background: var(--color-primary);
-  color: #fff;
-  border-style: solid;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(1,105,111,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.wizard-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #fff;
+  fill: none;
+}
+.wizard-label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 2px;
+}
+.wizard-label-title {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+.wizard-label-sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 400;
 }
 
 /* ═══════ SPOTLIGHT SEARCH ═══════ */
@@ -1186,8 +1216,11 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
   <h1>Make Smarter Real Estate Decisions</h1>
   <p>Professional-grade analysis tools for every step of your real estate journey — whether you're buying your first home or managing a portfolio.</p>
   <button class="hero-wizard-trigger" id="heroWizardBtn" onclick="openWizard()">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    Not sure where to start? Find your tools →
+    <span class="wizard-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+    <span class="wizard-label">
+      <span class="wizard-label-title">Not Sure Where to Start?</span>
+      <span class="wizard-label-sub">Find the right tools for you</span>
+    </span>
   </button>
   <button class="hero-video-trigger" onclick="openVideoLightbox()">
     <span class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></span>
