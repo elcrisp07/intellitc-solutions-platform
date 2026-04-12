@@ -105,6 +105,7 @@
 <div class="field">
             <label for="rate" title="Mortgage rate">Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='6.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span></div>
           </div>
 <div class="field">
             <label for="term">Loan Term</label>
@@ -120,6 +121,7 @@
 <div class="field">
             <label for="occupancy" title="Annual average occupancy">Occupancy Rate</label>
             <div class="input-with-unit"><input type="text" id="occupancy" value="68" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('occupancy').value='50';document.getElementById('occupancy').dispatchEvent(new Event('input',{bubbles:true}))">50%</span> <span class="bm-tag" onclick="document.getElementById('occupancy').value='65';document.getElementById('occupancy').dispatchEvent(new Event('input',{bubbles:true}))">65% Avg</span> <span class="bm-tag" onclick="document.getElementById('occupancy').value='80';document.getElementById('occupancy').dispatchEvent(new Event('input',{bubbles:true}))">80%</span></div>
           </div>
 <div class="field">
             <label for="cleanFee" title="Charged to guests">Cleaning Fee per Stay</label>

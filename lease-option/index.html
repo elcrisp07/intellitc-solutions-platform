@@ -124,6 +124,7 @@
 <div class="field">
             <label for="appreciation" title="Expected annual property value growth">Annual Appreciation</label>
             <div class="input-with-unit"><input type="text" id="appreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('appreciation').value='2';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('appreciation').value='3.5';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">3.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('appreciation').value='5';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
           </div>
 <div class="field">
             <label for="futureDPPct" title="Buyer's estimated down payment at exercise">Future Down Payment</label>
@@ -132,6 +133,7 @@
 <div class="field">
             <label for="futureRate" title="Expected mortgage rate at time of exercise">Future Mortgage Rate</label>
             <div class="input-with-unit"><input type="text" id="futureRate" value="6.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('futureRate').value='6';document.getElementById('futureRate').dispatchEvent(new Event('input',{bubbles:true}))">6%</span> <span class="bm-tag" onclick="document.getElementById('futureRate').value='6.5';document.getElementById('futureRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('futureRate').value='7';document.getElementById('futureRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span></div>
           </div>
 </div>
 </div>

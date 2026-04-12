@@ -34,6 +34,11 @@
 .heatmap-legend{display:flex;align-items:center;gap:var(--space-2);justify-content:center;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted)}
 .heatmap-legend-bar{width:200px;height:12px;border-radius:var(--radius-full);background:linear-gradient(to right,rgba(239,68,68,0.35),rgba(245,158,11,0.35),rgba(16,185,129,0.35));border:1px solid var(--color-divider)}
 .heatmap-legend-label{font-weight:600;text-transform:uppercase;letter-spacing:0.05em;font-size:11px}
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
+.bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
@@ -104,6 +109,7 @@
 <div class="field">
             <label for="rate">Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='6.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='8';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">8%</span></div>
           </div>
 <div class="field">
             <label for="term">Loan Term</label>
@@ -130,14 +136,17 @@
 <div class="field">
             <label for="opex" title="As % of effective gross income">Operating Expenses</label>
             <div class="input-with-unit"><input type="text" id="opex" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('opex').value='35';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">35%</span> <span class="bm-tag" onclick="document.getElementById('opex').value='40';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">40%</span> <span class="bm-tag" onclick="document.getElementById('opex').value='50';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">50%</span></div>
           </div>
 <div class="field">
             <label for="vac">Vacancy Rate</label>
             <div class="input-with-unit"><input type="text" id="vac" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('vac').value='5';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">5%</span> <span class="bm-tag" onclick="document.getElementById('vac').value='8';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">8% Avg</span> <span class="bm-tag" onclick="document.getElementById('vac').value='10';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">10%</span></div>
           </div>
 <div class="field">
             <label for="appRate" title="Annual property value growth">Appreciation Rate</label>
             <div class="input-with-unit"><input type="text" id="appRate" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('appRate').value='2';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('appRate').value='3.5';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">3.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('appRate').value='5';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
           </div>
 </div>
 <div class="param-group">

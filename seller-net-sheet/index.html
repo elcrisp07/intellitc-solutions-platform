@@ -113,10 +113,12 @@
 <div class="field">
             <label for="listComm" title="Your listing agent's commission rate">Listing Agent Commission</label>
             <div class="input-with-unit"><input type="text" id="listComm" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('listComm').value='2';document.getElementById('listComm').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('listComm').value='2.5';document.getElementById('listComm').dispatchEvent(new Event('input',{bubbles:true}))">2.5%</span> <span class="bm-tag" onclick="document.getElementById('listComm').value='3';document.getElementById('listComm').dispatchEvent(new Event('input',{bubbles:true}))">3%</span></div>
           </div>
 <div class="field">
             <label for="buyerComm" title="Buyer's agent commission rate">Buyer Agent Commission</label>
             <div class="input-with-unit"><input type="text" id="buyerComm" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('buyerComm').value='2';document.getElementById('buyerComm').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('buyerComm').value='2.5';document.getElementById('buyerComm').dispatchEvent(new Event('input',{bubbles:true}))">2.5%</span> <span class="bm-tag" onclick="document.getElementById('buyerComm').value='3';document.getElementById('buyerComm').dispatchEvent(new Event('input',{bubbles:true}))">3%</span></div>
           </div>
 <div class="field">
             <label for="titleIns" title="Title insurance policy for the buyer">Title Insurance</label>
@@ -132,6 +134,7 @@
 <div class="field">
             <label for="transferTax" title="Varies by state and county">Transfer Tax</label>
             <div class="input-with-unit"><input type="text" id="transferTax" value="0.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('transferTax').value='0';document.getElementById('transferTax').dispatchEvent(new Event('input',{bubbles:true}))">None</span> <span class="bm-tag" onclick="document.getElementById('transferTax').value='0.1';document.getElementById('transferTax').dispatchEvent(new Event('input',{bubbles:true}))">0.1%</span> <span class="bm-tag" onclick="document.getElementById('transferTax').value='0.5';document.getElementById('transferTax').dispatchEvent(new Event('input',{bubbles:true}))">0.5%</span> <span class="bm-tag" onclick="document.getElementById('transferTax').value='1';document.getElementById('transferTax').dispatchEvent(new Event('input',{bubbles:true}))">1%</span> <span class="bm-tag" onclick="document.getElementById('transferTax').value='1.4';document.getElementById('transferTax').dispatchEvent(new Event('input',{bubbles:true}))">1.4% NYC</span></div>
           </div>
 <div class="field">
             <label for="recordingFees" title="County recording charges">Recording Fees</label>

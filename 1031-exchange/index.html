@@ -125,14 +125,17 @@
 <div class="field">
             <label for="fedRate" title="Federal long-term capital gains tax rate">Federal Capital Gains Rate</label>
             <div class="input-with-unit"><input type="text" id="fedRate" value="15" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('fedRate').value='15';document.getElementById('fedRate').dispatchEvent(new Event('input',{bubbles:true}))">15%</span> <span class="bm-tag" onclick="document.getElementById('fedRate').value='20';document.getElementById('fedRate').dispatchEvent(new Event('input',{bubbles:true}))">20%</span></div>
           </div>
 <div class="field">
             <label for="stateRate" title="State income/capital gains tax rate">State Capital Gains Rate</label>
             <div class="input-with-unit"><input type="text" id="stateRate" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('stateRate').value='0';document.getElementById('stateRate').dispatchEvent(new Event('input',{bubbles:true}))">0% (TX/FL)</span> <span class="bm-tag" onclick="document.getElementById('stateRate').value='5';document.getElementById('stateRate').dispatchEvent(new Event('input',{bubbles:true}))">5% VA</span> <span class="bm-tag" onclick="document.getElementById('stateRate').value='9.3';document.getElementById('stateRate').dispatchEvent(new Event('input',{bubbles:true}))">9.3% CA</span> <span class="bm-tag" onclick="document.getElementById('stateRate').value='10.9';document.getElementById('stateRate').dispatchEvent(new Event('input',{bubbles:true}))">10.9% NY</span></div>
           </div>
 <div class="field">
             <label for="recapRate" title="Federal depreciation recapture rate (usually 25%)">Depreciation Recapture Rate</label>
             <div class="input-with-unit"><input type="text" id="recapRate" value="25" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('recapRate').value='25';document.getElementById('recapRate').dispatchEvent(new Event('input',{bubbles:true}))">25%</span></div>
           </div>
 <div class="field">
             <label for="deprecTaken" title="Total depreciation claimed on relinquished property">Depreciation Taken</label>

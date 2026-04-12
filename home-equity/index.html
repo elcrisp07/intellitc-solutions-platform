@@ -117,10 +117,12 @@
 <div class="field">
             <label for="helocRate" title="Current HELOC interest rate">HELOC Rate (variable)</label>
             <div class="input-with-unit"><input type="text" id="helocRate" value="8.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('helocRate').value='8.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">8.5%</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='9.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">9.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='11';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">11%</span></div>
           </div>
 <div class="field">
             <label for="helRate" title="Fixed rate for home equity loan">Home Equity Loan Rate</label>
             <div class="input-with-unit"><input type="text" id="helRate" value="7.9" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('helRate').value='7.5';document.getElementById('helRate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span> <span class="bm-tag" onclick="document.getElementById('helRate').value='8.5';document.getElementById('helRate').dispatchEvent(new Event('input',{bubbles:true}))">8.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('helRate').value='9.5';document.getElementById('helRate').dispatchEvent(new Event('input',{bubbles:true}))">9.5%</span></div>
           </div>
 <div class="field">
             <label for="helTerm" title="Home equity loan repayment term">HEL Term</label>

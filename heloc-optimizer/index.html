@@ -113,6 +113,7 @@
 <div class="field">
             <label for="helocRate" title="Annual interest rate on HELOC">HELOC Rate</label>
             <div class="input-with-unit"><input type="text" id="helocRate" value="8.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('helocRate').value='8.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">8.5%</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='9.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">9.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='11';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">11%</span></div>
           </div>
 <div class="field">
             <label for="helocChunk" title="Amount to transfer from HELOC to mortgage each cycle">Chunk Amount</label>

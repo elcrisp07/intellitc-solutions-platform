@@ -145,6 +145,7 @@
 <div class="field">
   <label for="mortRate" title="Fixed mortgage interest rate">Mortgage Rate</label>
   <div class="input-with-unit"><input type="text" id="mortRate" value="6.75" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('mortRate').value='6.5';document.getElementById('mortRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('mortRate').value='7';document.getElementById('mortRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('mortRate').value='7.5';document.getElementById('mortRate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span></div>
 </div>
 <div class="field">
   <label for="loanTerm" title="Mortgage term in years">Loan Term</label>
@@ -161,6 +162,7 @@
 <div class="field">
   <label for="propTaxRate" title="Annual property tax as % of home value">Property Tax Rate</label>
   <div class="input-with-unit"><input type="text" id="propTaxRate" value="1.2" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('propTaxRate').value='0.5';document.getElementById('propTaxRate').dispatchEvent(new Event('input',{bubbles:true}))">0.5%</span> <span class="bm-tag" onclick="document.getElementById('propTaxRate').value='1';document.getElementById('propTaxRate').dispatchEvent(new Event('input',{bubbles:true}))">1%</span> <span class="bm-tag" onclick="document.getElementById('propTaxRate').value='1.8';document.getElementById('propTaxRate').dispatchEvent(new Event('input',{bubbles:true}))">1.8%</span> <span class="bm-tag" onclick="document.getElementById('propTaxRate').value='2.2';document.getElementById('propTaxRate').dispatchEvent(new Event('input',{bubbles:true}))">2.2%</span></div>
 </div>
 <div class="field">
   <label for="homeInsYr" title="Annual homeowner's insurance premium">Home Insurance / Year</label>
@@ -181,6 +183,7 @@
 <div class="field">
   <label for="homeAppreciation" title="Expected annual home value appreciation (historical avg ~3-4%)">Home Appreciation</label>
   <div class="input-with-unit"><input type="text" id="homeAppreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('homeAppreciation').value='2';document.getElementById('homeAppreciation').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('homeAppreciation').value='3.5';document.getElementById('homeAppreciation').dispatchEvent(new Event('input',{bubbles:true}))">3.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('homeAppreciation').value='5';document.getElementById('homeAppreciation').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
 </div>
 <div class="field">
   <label for="investReturn" title="Expected return if you invest your down payment instead (S&P avg ~7-10%)">Investment Return</label>
@@ -193,6 +196,7 @@
 <div class="field">
   <label for="taxBracket" title="Your marginal income tax rate (for mortgage interest deduction)">Tax Bracket</label>
   <div class="input-with-unit"><input type="text" id="taxBracket" value="22" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('taxBracket').value='12';document.getElementById('taxBracket').dispatchEvent(new Event('input',{bubbles:true}))">12%</span> <span class="bm-tag" onclick="document.getElementById('taxBracket').value='22';document.getElementById('taxBracket').dispatchEvent(new Event('input',{bubbles:true}))">22%</span> <span class="bm-tag" onclick="document.getElementById('taxBracket').value='24';document.getElementById('taxBracket').dispatchEvent(new Event('input',{bubbles:true}))">24%</span> <span class="bm-tag" onclick="document.getElementById('taxBracket').value='32';document.getElementById('taxBracket').dispatchEvent(new Event('input',{bubbles:true}))">32%</span></div>
 </div>
 <div class="field">
   <label for="timeHorizon" title="How many years you plan to live in the area">Time Horizon</label>

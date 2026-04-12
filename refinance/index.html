@@ -117,6 +117,7 @@
 <div class="field">
             <label for="newRate" title="New annual interest rate">New Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="newRate" value="5.75" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('newRate').value='6';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">6%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='6.5';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='7';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span></div>
           </div>
 <div class="field">
             <label for="newTerm" title="New amortization period">New Loan Term</label>

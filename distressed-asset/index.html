@@ -133,10 +133,12 @@
 <div class="field">
             <label for="vacancy">Vacancy Rate</label>
             <div class="input-with-unit"><input type="text" id="vacancy" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('vacancy').value='5';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">5%</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='8';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">8%</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='15';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">15% Distressed</span></div>
           </div>
 <div class="field">
             <label for="expenses" title="As % of effective rent">Operating Expenses</label>
             <div class="input-with-unit"><input type="text" id="expenses" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('expenses').value='35';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">35%</span> <span class="bm-tag" onclick="document.getElementById('expenses').value='45';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">45%</span> <span class="bm-tag" onclick="document.getElementById('expenses').value='55';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">55%</span></div>
           </div>
 </div>
 <div class="param-group">
@@ -148,6 +150,7 @@
 <div class="field">
             <label for="rate" title="Hard money or conventional">Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="rate" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='10';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">10%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='12';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">12% HML</span> <span class="bm-tag" onclick="document.getElementById('rate').value='14';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">14%</span></div>
           </div>
 <div class="field">
             <label for="term">Loan Term</label>

@@ -109,6 +109,7 @@
 <div class="field">
             <label for="federalITC" title="Federal Investment Tax Credit percentage">Federal Tax Credit (ITC)</label>
             <div class="input-with-unit"><input type="text" id="federalITC" value="30" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('federalITC').value='30';document.getElementById('federalITC').dispatchEvent(new Event('input',{bubbles:true}))">30%</span></div>
           </div>
 <div class="field">
             <label for="stateRebate" title="One-time state or utility rebate">State/Local Rebate</label>
@@ -128,10 +129,12 @@
 <div class="field">
             <label for="electricityRate" title="Current cost per kilowatt-hour">Electricity Rate</label>
             <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="electricityRate" value="0.15" inputmode="numeric" data-currency><span class='unit'>/kWh</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.12';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.12</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.16';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.16 Avg</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.25';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.25 CA</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.33';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.33 HI</span></div>
           </div>
 <div class="field">
             <label for="rateEscalation" title="Expected annual electricity price increase">Annual Rate Escalation</label>
             <div class="input-with-unit"><input type="text" id="rateEscalation" value="3" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rateEscalation').value='2';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('rateEscalation').value='3';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">3% Avg</span> <span class="bm-tag" onclick="document.getElementById('rateEscalation').value='5';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
           </div>
 <div class="field">
             <label for="solarProduction" title="kWh produced per kW of capacity per year">Annual Production</label>

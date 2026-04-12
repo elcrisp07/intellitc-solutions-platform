@@ -121,6 +121,7 @@
 <div class="field">
             <label for="newRate" title="Interest rate on new mortgage">Mortgage Rate</label>
             <div class="input-with-unit"><input type="text" id="newRate" value="6.75" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('newRate').value='6.5';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='7';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='7.5';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span></div>
           </div>
 <div class="field">
             <label for="newTerm">Mortgage Term</label>
@@ -136,6 +137,7 @@
 <div class="field">
             <label for="bridgeRate" title="Annual interest rate on bridge loan">Bridge Loan Rate</label>
             <div class="input-with-unit"><input type="text" id="bridgeRate" value="9.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('bridgeRate').value='8';document.getElementById('bridgeRate').dispatchEvent(new Event('input',{bubbles:true}))">8%</span> <span class="bm-tag" onclick="document.getElementById('bridgeRate').value='9.5';document.getElementById('bridgeRate').dispatchEvent(new Event('input',{bubbles:true}))">9.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('bridgeRate').value='12';document.getElementById('bridgeRate').dispatchEvent(new Event('input',{bubbles:true}))">12%</span></div>
           </div>
 <div class="field">
             <label for="bridgeFee" title="Upfront fee as % of bridge loan amount">Bridge Loan Fee</label>

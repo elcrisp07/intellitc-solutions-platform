@@ -83,6 +83,11 @@
 .next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
 .next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
 [data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
+.bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
 </style>
 </head>
 <body>
@@ -120,6 +125,7 @@
 <div class="field">
             <label for="rate" title="Current mortgage rate">Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='6.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span></div>
           </div>
 <div class="field">
             <label for="term" title="Mortgage term in years">Loan Term</label>
@@ -135,6 +141,7 @@
 <div class="field">
             <label for="taxRate" title="Annual property tax as % of home price">Property Tax Rate</label>
             <div class="input-with-unit"><input type="text" id="taxRate" value="1.2" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('taxRate').value='0.5';document.getElementById('taxRate').dispatchEvent(new Event('input',{bubbles:true}))">0.5% HI</span> <span class="bm-tag" onclick="document.getElementById('taxRate').value='1';document.getElementById('taxRate').dispatchEvent(new Event('input',{bubbles:true}))">1% Avg</span> <span class="bm-tag" onclick="document.getElementById('taxRate').value='1.8';document.getElementById('taxRate').dispatchEvent(new Event('input',{bubbles:true}))">1.8% TX</span> <span class="bm-tag" onclick="document.getElementById('taxRate').value='2.2';document.getElementById('taxRate').dispatchEvent(new Event('input',{bubbles:true}))">2.2% NJ</span></div>
           </div>
 <div class="field">
             <label for="insYr" title="Annual homeowner's insurance premium">Insurance / Year</label>

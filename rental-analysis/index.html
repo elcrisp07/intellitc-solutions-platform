@@ -106,6 +106,7 @@
 <div class="field">
             <label for="rate" title="Mortgage rate">Interest Rate</label>
             <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='6.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='8';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">8%</span></div>
           </div>
 <div class="field">
             <label for="term" title="Mortgage term">Loan Term</label>
@@ -121,10 +122,12 @@
 <div class="field">
             <label for="vacancy" title="Expected vacancy">Vacancy Rate</label>
             <div class="input-with-unit"><input type="text" id="vacancy" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('vacancy').value='5';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">5%</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='8';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">8% Avg</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='10';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">10%</span></div>
           </div>
 <div class="field">
             <label for="expPct" title="Expenses as % of effective rent">Operating Expenses</label>
             <div class="input-with-unit"><input type="text" id="expPct" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('expPct').value='35';document.getElementById('expPct').dispatchEvent(new Event('input',{bubbles:true}))">35%</span> <span class="bm-tag" onclick="document.getElementById('expPct').value='40';document.getElementById('expPct').dispatchEvent(new Event('input',{bubbles:true}))">40%</span> <span class="bm-tag" onclick="document.getElementById('expPct').value='50';document.getElementById('expPct').dispatchEvent(new Event('input',{bubbles:true}))">50%</span></div>
           </div>
 </div>
 <div class="param-group">
@@ -132,10 +135,12 @@
 <div class="field">
             <label for="rentGrowth" title="Yearly rent increase">Annual Rent Growth</label>
             <div class="input-with-unit"><input type="text" id="rentGrowth" value="3" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rentGrowth').value='2';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('rentGrowth').value='3';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">3% Avg</span> <span class="bm-tag" onclick="document.getElementById('rentGrowth').value='5';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
           </div>
 <div class="field">
             <label for="appreciation" title="Property value growth">Annual Appreciation</label>
             <div class="input-with-unit"><input type="text" id="appreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('appreciation').value='2';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('appreciation').value='3.5';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">3.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('appreciation').value='5';document.getElementById('appreciation').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
           </div>
 <div class="field">
             <label for="expGrowth" title="Annual expense increase">Expense Growth</label>
