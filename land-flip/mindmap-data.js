@@ -68,5 +68,3 @@ window.MINDMAP_DATA = {
       ]
     }
   };
-
-})();
