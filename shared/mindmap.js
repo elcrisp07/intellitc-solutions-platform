@@ -267,17 +267,34 @@
     let maxDepth = 0;
     visible.forEach(d => { if (d.depth > maxDepth) maxDepth = d.depth; });
 
-    /* Compact horizontal spacing — ~140px per depth level on desktop,
-       ~100px on mobile.  Keeps branches short and readable. */
     const isMobile = width < 600;
-    const depthSpacing = isMobile ? 100 : 140;
-    const treeWidth = maxDepth * depthSpacing;
-    const nodeSpacing = isMobile ? 28 : 34;
+
+    /* ----- Horizontal spacing per depth level -----
+       Generous spacing keeps branch lines short and clear of text. */
+    const depthSpacing = isMobile ? 130 : 200;
+    const treeWidth = Math.max(depthSpacing, maxDepth * depthSpacing);
+
+    /* ----- Vertical spacing — scaled per visible node -----
+       Each node gets enough vertical room so labels never overlap
+       branch lines of neighbouring nodes. */
+    const nodeSpacing = isMobile ? 38 : 48;
     const treeHeight = Math.max(height * 0.6, visible.length * nodeSpacing);
 
     const treeLayout = d3.tree()
       .size([treeHeight, treeWidth])
-      .separation((a, b) => a.parent === b.parent ? 1 : 1.2);
+      .separation((a, b) => {
+        /* Give expanded branches more breathing room.
+           Collapsed depth-1 nodes stay tight; expanded ones get extra space
+           so their children don't crowd neighbouring branch labels. */
+        if (a.parent === b.parent) {
+          /* siblings — if either has visible children, widen gap */
+          const aLeaves = a.children ? a.children.length : 0;
+          const bLeaves = b.children ? b.children.length : 0;
+          if (aLeaves > 0 || bLeaves > 0) return 1.8;
+          return 1;
+        }
+        return 2;
+      });
     treeLayout(root);
 
     // SVG
@@ -290,16 +307,32 @@
     // Zoom behavior
     const g = svg.append('g');
     const zoom = d3.zoom()
-      .scaleExtent([0.3, 5])
+      .scaleExtent([0.2, 5])
       .on('zoom', (event) => g.attr('transform', event.transform));
     svg.call(zoom);
 
-    /* Center the tree — position root at left with comfortable margin,
-       vertically centered in the viewport */
-    const rootY = visible.find(d => d.depth === 0);
-    const offsetX = isMobile ? 60 : 80;
-    const offsetY = height / 2 - (rootY ? rootY.x : treeHeight / 2);
-    const initScale = isMobile ? 0.85 : 1.0;
+    /* ----- Centre & fit the tree into the viewport -----
+       Compute the bounding box of all visible nodes and scale/translate
+       so the entire tree is visible without clipping. */
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    visible.forEach(d => {
+      if (d.x < minX) minX = d.x;
+      if (d.x > maxX) maxX = d.x;
+      if (d.y < minY) minY = d.y;
+      if (d.y > maxY) maxY = d.y;
+    });
+    const treeBoundsW = (maxY - minY) + 350;   /* extra for text labels */
+    const treeBoundsH = (maxX - minX) + 80;
+    const scaleToFit = Math.min(
+      (width - 40) / treeBoundsW,
+      (height - 40) / treeBoundsH,
+      1.0   /* never zoom in past 100% */
+    );
+    const initScale = Math.max(0.35, scaleToFit);
+    const cx = (minY + maxY) / 2;
+    const cy = (minX + maxX) / 2;
+    const offsetX = width / 2 - cx * initScale;
+    const offsetY = height / 2 - cy * initScale;
     svg.call(zoom.transform, d3.zoomIdentity.translate(offsetX, offsetY).scale(initScale));
 
     // Links (only between visible nodes)
@@ -348,17 +381,16 @@
       .attr('pointer-events', 'none')
       .text('+');
 
-    // Node labels — bigger at depth 1 for readability
+    /* ---- Node labels ----
+       All labels are placed to the RIGHT of their node circle
+       so text never sits on top of branch lines leading to siblings. */
     node.append('text')
-      .attr('dy', d => d.depth === 0 ? -16 : 4.5)
+      .attr('dy', d => d.depth === 0 ? -18 : 4.5)
       .attr('x', d => {
         if (d.depth === 0) return 0;
-        return d.children ? -12 : 12;
+        return 14;  /* always right of the node */
       })
-      .attr('text-anchor', d => {
-        if (d.depth === 0) return 'middle';
-        return d.children ? 'end' : 'start';
-      })
+      .attr('text-anchor', d => d.depth === 0 ? 'middle' : 'start')
       .attr('fill', d => {
         if (d.depth === 0) return '#01696f';
         if (d.depth === 1) {
@@ -368,7 +400,7 @@
         }
         return textColor;
       })
-      .attr('font-size', d => d.depth === 0 ? '18px' : (d.depth === 1 ? '15px' : '12px'))
+      .attr('font-size', d => d.depth === 0 ? '18px' : (d.depth === 1 ? '15px' : '13px'))
       .attr('font-weight', d => d.depth <= 1 ? '600' : '400')
       .attr('font-family', "'DM Sans', 'Inter', system-ui, sans-serif")
       .text(d => d.data.name);
