@@ -401,7 +401,12 @@
         return textColor;
       })
       .attr('font-size', d => d.depth === 0 ? '18px' : (d.depth === 1 ? '15px' : '13px'))
-      .attr('font-weight', d => d.depth <= 1 ? '600' : '400')
+      .attr('font-weight', d => {
+        if (d.depth === 0) return '700';
+        /* Only the expanded (selected) branch is bold; collapsed siblings stay regular */
+        if (d.depth === 1 && d.children) return '700';
+        return '400';
+      })
       .attr('font-family', "'DM Sans', 'Inter', system-ui, sans-serif")
       .text(d => d.data.name);
 
