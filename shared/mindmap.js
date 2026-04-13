@@ -41,6 +41,7 @@
     const header = document.querySelector('.header-inner');
     if (!header) return;
 
+    /* Desktop toggle in header bar */
     const wrap = document.createElement('div');
     wrap.className = 'mindmap-toggle-wrap';
     wrap.innerHTML = `
@@ -77,14 +78,42 @@
     toggle.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMindmap(); }
     });
+
+    /* Mobile floating action button — visible only below 600px
+       where .header-inner is hidden by the site's responsive CSS */
+    const fab = document.createElement('button');
+    fab.className = 'mindmap-fab';
+    fab.setAttribute('aria-label', 'Open Mind Map');
+    fab.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="2.5"/>
+        <line x1="12" y1="2" x2="12" y2="6"/>
+        <line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="6" y2="12"/>
+        <line x1="18" y1="12" x2="22" y2="12"/>
+        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+      </svg>
+      <span>Map</span>
+    `;
+    fab.addEventListener('click', () => toggleMindmap());
+    document.body.appendChild(fab);
   }
 
   /* ---- Toggle State ---- */
   function toggleMindmap() {
     isOpen = !isOpen;
     const toggle = document.getElementById('mindmapToggle');
-    toggle.classList.toggle('active', isOpen);
-    toggle.setAttribute('aria-checked', isOpen);
+    if (toggle) {
+      toggle.classList.toggle('active', isOpen);
+      toggle.setAttribute('aria-checked', isOpen);
+    }
+
+    /* Hide FAB when overlay is open */
+    const fab = document.querySelector('.mindmap-fab');
+    if (fab) fab.style.display = isOpen ? 'none' : '';
 
     if (isOpen) {
       showOverlay();
@@ -238,10 +267,17 @@
     let maxDepth = 0;
     visible.forEach(d => { if (d.depth > maxDepth) maxDepth = d.depth; });
 
-    const treeWidth = Math.max(width - 200, maxDepth * 250);
-    const treeHeight = Math.max(height - 100, visible.length * 32);
+    /* Compact horizontal spacing — ~140px per depth level on desktop,
+       ~100px on mobile.  Keeps branches short and readable. */
+    const isMobile = width < 600;
+    const depthSpacing = isMobile ? 100 : 140;
+    const treeWidth = maxDepth * depthSpacing;
+    const nodeSpacing = isMobile ? 28 : 34;
+    const treeHeight = Math.max(height * 0.6, visible.length * nodeSpacing);
 
-    const treeLayout = d3.tree().size([treeHeight, treeWidth]);
+    const treeLayout = d3.tree()
+      .size([treeHeight, treeWidth])
+      .separation((a, b) => a.parent === b.parent ? 1 : 1.2);
     treeLayout(root);
 
     // SVG
@@ -254,14 +290,17 @@
     // Zoom behavior
     const g = svg.append('g');
     const zoom = d3.zoom()
-      .scaleExtent([0.2, 4])
+      .scaleExtent([0.3, 5])
       .on('zoom', (event) => g.attr('transform', event.transform));
     svg.call(zoom);
 
-    // Center the tree initially
-    const initialX = 120;
-    const initialY = height / 2 - treeHeight / 2;
-    svg.call(zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(0.9));
+    /* Center the tree — position root at left with comfortable margin,
+       vertically centered in the viewport */
+    const rootY = visible.find(d => d.depth === 0);
+    const offsetX = isMobile ? 60 : 80;
+    const offsetY = height / 2 - (rootY ? rootY.x : treeHeight / 2);
+    const initScale = isMobile ? 0.85 : 1.0;
+    svg.call(zoom.transform, d3.zoomIdentity.translate(offsetX, offsetY).scale(initScale));
 
     // Links (only between visible nodes)
     g.selectAll('.mm-link')
