@@ -410,6 +410,47 @@
       .attr('font-family', "'DM Sans', 'Inter', system-ui, sans-serif")
       .text(d => d.data.name);
 
+    /* ---- Tooltip on hover (leaf concepts with desc field) ---- */
+    const tooltip = d3.select(container.parentElement)
+      .selectAll('.mm-tooltip')
+      .data([0])
+      .join('div')
+      .attr('class', 'mm-tooltip')
+      .style('position', 'absolute')
+      .style('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('background', isDark ? '#1C1B19' : '#fff')
+      .style('color', isDark ? '#cdccca' : '#28251d')
+      .style('border', `1px solid ${isDark ? '#393836' : '#D4D1CA'}`)
+      .style('border-radius', '8px')
+      .style('padding', '10px 14px')
+      .style('font-family', "'DM Sans', 'Inter', system-ui, sans-serif")
+      .style('font-size', '12px')
+      .style('line-height', '1.5')
+      .style('max-width', '280px')
+      .style('box-shadow', isDark ? '0 4px 16px rgba(0,0,0,0.5)' : '0 4px 16px rgba(0,0,0,0.1)')
+      .style('z-index', '10')
+      .style('transition', 'opacity 0.15s ease');
+
+    node.on('mouseenter', function(event, d) {
+      if (!d.data.desc) return;
+      const overlayRect = container.parentElement.getBoundingClientRect();
+      tooltip
+        .html(`<strong style="font-size:13px;display:block;margin-bottom:4px;color:${isDark ? '#4F98A3' : '#01696f'}">${escapeHtml(d.data.name)}</strong>${escapeHtml(d.data.desc)}`)
+        .style('opacity', 1)
+        .style('left', (event.clientX - overlayRect.left + 16) + 'px')
+        .style('top', (event.clientY - overlayRect.top - 10) + 'px');
+    })
+    .on('mousemove', function(event) {
+      const overlayRect = container.parentElement.getBoundingClientRect();
+      tooltip
+        .style('left', (event.clientX - overlayRect.left + 16) + 'px')
+        .style('top', (event.clientY - overlayRect.top - 10) + 'px');
+    })
+    .on('mouseleave', function() {
+      tooltip.style('opacity', 0);
+    });
+
     // Click behavior — accordion for primary branches
     node.on('click', (event, d) => {
       event.stopPropagation();
