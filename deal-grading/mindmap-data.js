@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: deal-grading */
 window.MINDMAP_DATA = {
-    title: 'Deal Grading Scorecard',
+    title: 'Deal Grading Calculator',
     tree: {
       name: 'Deal Grading Scorecard',
       children: [

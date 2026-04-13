@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: re-investment-analyzer */
 window.MINDMAP_DATA = {
-  title: "Re-Investment Analyzer",
+  title: 'RE Investment Analyzer',
   tree: {
     name: "Reinvestment Analysis",
     children: [

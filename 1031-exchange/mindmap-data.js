@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: 1031-exchange */
 window.MINDMAP_DATA = {
-    title: '1031 Tax-Deferred Exchange',
+    title: '1031 Exchange Calculator',
     tree: {
       name: 'Like-Kind Exchange (IRC §1031)',
       children: [

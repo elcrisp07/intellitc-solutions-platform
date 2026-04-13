@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: seller-net-sheet */
 window.MINDMAP_DATA = {
-  title: "Seller Net Sheet",
+  title: 'Seller Net Sheet Calculator',
   tree: {
     name: "Seller Net Sheet",
     children: [

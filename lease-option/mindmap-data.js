@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: lease-option */
 window.MINDMAP_DATA = {
-  title: "Lease Option Calculator",
+  title: 'Lease-Option Calculator',
   tree: {
     name: "Lease Option",
     children: [

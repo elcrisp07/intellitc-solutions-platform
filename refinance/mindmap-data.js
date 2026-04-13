@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: refinance */
 window.MINDMAP_DATA = {
-  title: "Refinance Calculator",
+  title: 'Refinance Analyzer',
   tree: {
     name: "Refinance Analysis",
     children: [

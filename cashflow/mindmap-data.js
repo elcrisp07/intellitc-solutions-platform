@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: cashflow */
 window.MINDMAP_DATA = {
-    title: 'Cash Flow Analysis',
+    title: 'Cash Flow Calculator',
     tree: {
       name: 'Rental Property Cash Flow',
       children: [

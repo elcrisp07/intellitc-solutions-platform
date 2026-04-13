@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: private-money */
 window.MINDMAP_DATA = {
-  title: "Private Money Calculator",
+  title: 'Private Money Lending Calculator',
   tree: {
     name: "Private Money Lending",
     children: [

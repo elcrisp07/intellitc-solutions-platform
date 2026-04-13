@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: cma */
 window.MINDMAP_DATA = {
-    title: 'Comparative Market Analysis',
+    title: 'Comp Analysis / CMA Calculator',
     tree: {
       name: 'Comparative Market Analysis (CMA)',
       children: [

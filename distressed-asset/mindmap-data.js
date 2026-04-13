@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: distressed-asset */
 window.MINDMAP_DATA = {
-    title: 'Distressed Asset Analyzer',
+    title: 'Distressed Asset Calculator',
     tree: {
       name: 'Distressed Asset Analysis',
       children: [

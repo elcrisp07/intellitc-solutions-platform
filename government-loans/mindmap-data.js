@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: government-loans */
 window.MINDMAP_DATA = {
-    title: 'Government Loan Eligibility',
+    title: 'Government Loan Comparison',
     tree: {
       name: 'Government Loan Eligibility',
       children: [

@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: affordability */
 window.MINDMAP_DATA = {
-    title: 'Home Affordability Calculator',
+    title: 'Affordability Calculator',
     tree: {
       name: 'Home Affordability',
       children: [

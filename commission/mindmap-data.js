@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: commission */
 window.MINDMAP_DATA = {
-    title: 'Real Estate Commission Calculator',
+    title: 'Commission Calculator',
     tree: {
       name: 'Real Estate Commission',
       children: [

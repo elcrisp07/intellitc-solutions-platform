@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: cash-to-close */
 window.MINDMAP_DATA = {
-    title: 'Cash to Close Estimator',
+    title: 'Cash-to-Close Calculator',
     tree: {
       name: 'Cash to Close',
       children: [

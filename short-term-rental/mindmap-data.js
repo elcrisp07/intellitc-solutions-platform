@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: short-term-rental */
 window.MINDMAP_DATA = {
-  title: "Short-Term Rental",
+  title: 'Short-Term Rental Calculator',
   tree: {
     name: "STR / Airbnb Analysis",
     children: [

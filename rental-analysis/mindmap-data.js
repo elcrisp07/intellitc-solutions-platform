@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: rental-analysis */
 window.MINDMAP_DATA = {
-  title: "Rental Property Analysis",
+  title: 'Rental Analysis Calculator',
   tree: {
     name: "Rental Analysis",
     children: [

@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: budget-variance */
 window.MINDMAP_DATA = {
-    title: 'Budget Variance Analysis',
+    title: 'Budget vs. Actual Variance Calculator',
     tree: {
       name: 'Budget Variance Analysis',
       children: [

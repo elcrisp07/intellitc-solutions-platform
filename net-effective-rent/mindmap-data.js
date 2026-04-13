@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: net-effective-rent */
 window.MINDMAP_DATA = {
-  title: "Net Effective Rent",
+  title: 'Net Effective Rent Calculator',
   tree: {
     name: "Net Effective Rent",
     children: [

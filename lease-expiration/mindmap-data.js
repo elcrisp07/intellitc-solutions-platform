@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: lease-expiration */
 window.MINDMAP_DATA = {
-  title: "Lease Expiration Tracker",
+  title: 'Lease Expiration Schedule',
   tree: {
     name: "Lease Management",
     children: [

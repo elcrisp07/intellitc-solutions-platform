@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: sensitivity-grid */
 window.MINDMAP_DATA = {
-  title: "Sensitivity Grid",
+  title: 'Investment Sensitivity Grid',
   tree: {
     name: "Sensitivity Analysis",
     children: [

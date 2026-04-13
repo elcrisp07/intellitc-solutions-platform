@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: self-storage */
 window.MINDMAP_DATA = {
-  title: "Self-Storage Investment",
+  title: 'Self-Storage Investment Analyzer',
   tree: {
     name: "Self-Storage Investment",
     children: [

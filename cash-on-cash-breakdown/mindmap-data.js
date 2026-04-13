@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: cash-on-cash-breakdown */
 window.MINDMAP_DATA = {
-    title: 'Cash-on-Cash Return Breakdown',
+    title: 'RE Cash-on-Cash Breakdown',
     tree: {
       name: 'Cash-on-Cash Return',
       children: [

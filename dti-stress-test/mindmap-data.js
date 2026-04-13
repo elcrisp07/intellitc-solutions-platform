@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: dti-stress-test */
 window.MINDMAP_DATA = {
-    title: 'DTI Stress Test',
+    title: 'DTI & Payment Shock Stress Test',
     tree: {
       name: 'Debt-to-Income (DTI) Stress Test',
       children: [

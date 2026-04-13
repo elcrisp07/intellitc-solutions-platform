@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: buy-before-you-sell */
 window.MINDMAP_DATA = {
-    title: 'Buy Before You Sell',
+    title: 'Buy Before You Sell Calculator',
     tree: {
       name: 'Buy Before You Sell Bridge Strategy',
       children: [

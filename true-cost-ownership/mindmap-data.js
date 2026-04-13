@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: true-cost-ownership */
 window.MINDMAP_DATA = {
-  title: "True Cost of Ownership",
+  title: 'True Cost of Homeownership',
   tree: {
     name: "True Cost of Ownership",
     children: [

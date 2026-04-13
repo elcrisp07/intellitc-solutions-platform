@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: agility-index */
 window.MINDMAP_DATA = {
-    title: 'Investment Agility Index',
+    title: 'Market Agility Index',
     tree: {
       name: 'Investment Agility Index',
       children: [

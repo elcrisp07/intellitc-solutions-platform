@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: multifamily */
 window.MINDMAP_DATA = {
-  title: "Multifamily Analysis",
+  title: 'Multi-Family Investment Calculator',
   tree: {
     name: "Multifamily Property",
     children: [

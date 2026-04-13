@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: tenant-turnover */
 window.MINDMAP_DATA = {
-  title: "Tenant Turnover Cost",
+  title: 'Tenant Turnover Cost Calculator',
   tree: {
     name: "Tenant Turnover Costs",
     children: [

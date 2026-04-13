@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: rv-park-investment */
 window.MINDMAP_DATA = {
-  title: "RV Park Investment",
+  title: 'RV Park Investment Analyzer',
   tree: {
     name: "RV Park Investment",
     children: [

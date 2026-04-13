@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: investment-analysis */
 window.MINDMAP_DATA = {
-    title: 'Investment Analysis',
+    title: 'Investment Analysis Calculator',
     tree: {
       name: 'Real Estate Investment Analysis',
       children: [

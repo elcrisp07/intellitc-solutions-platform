@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: housing-code-compliance */
 window.MINDMAP_DATA = {
-    title: 'Housing Code Compliance Cost',
+    title: 'Housing Code Compliance Estimator',
     tree: {
       name: 'Housing Code Compliance',
       children: [

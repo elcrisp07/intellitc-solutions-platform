@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: sources-uses */
 window.MINDMAP_DATA = {
-  title: "Sources & Uses of Funds",
+  title: 'Sources & Uses Calculator',
   tree: {
     name: "Sources & Uses",
     children: [

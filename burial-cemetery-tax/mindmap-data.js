@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: burial-cemetery-tax */
 window.MINDMAP_DATA = {
-    title: 'Burial / Cemetery Tax Calculator',
+    title: 'Burial & Cemetery Tax Exemption',
     tree: {
       name: 'Burial & Cemetery Tax Analysis',
       children: [

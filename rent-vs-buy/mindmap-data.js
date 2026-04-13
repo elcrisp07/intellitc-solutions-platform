@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: rent-vs-buy */
 window.MINDMAP_DATA = {
-  title: "Rent vs Buy Analysis",
+  title: 'Rent vs. Buy Calculator',
   tree: {
     name: "Rent vs Buy Decision",
     children: [

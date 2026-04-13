@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: iul-portfolio */
 window.MINDMAP_DATA = {
-    title: 'IUL Portfolio Analysis',
+    title: 'IUL + Real Estate Portfolio Analyzer',
     tree: {
       name: 'Indexed Universal Life (IUL) Portfolio',
       children: [

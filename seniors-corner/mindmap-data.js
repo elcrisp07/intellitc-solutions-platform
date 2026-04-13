@@ -1,6 +1,6 @@
 /* IntelliTC Solutions — Mind Map Data: seniors-corner */
 window.MINDMAP_DATA = {
-  title: "Senior's Corner",
+  title: 'Senior\'s Corner's Corner",
   tree: {
     name: "Senior Financial Planning",
     children: [
