@@ -57,7 +57,7 @@
           <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
           <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
         </svg>
-        Map
+        Mind Map
       </label>
       <div class="mindmap-toggle" id="mindmapToggle" role="switch" aria-checked="false" aria-label="Toggle Mind Map" tabindex="0"></div>
     `;
@@ -96,7 +96,7 @@
         <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
         <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
       </svg>
-      <span>Map</span>
+      <span>Mind Map</span>
     `;
     fab.addEventListener('click', () => toggleMindmap());
     document.body.appendChild(fab);
