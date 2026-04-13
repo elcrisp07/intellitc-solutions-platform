@@ -119,7 +119,7 @@
         </button>
       </div>
       <div class="mindmap-container" id="mindmapContainer"></div>
-      <div class="mindmap-hint">Scroll to zoom · Drag to pan · Click nodes to expand/collapse</div>
+      <div class="mindmap-hint">Click a topic to expand · Click again to collapse · Scroll to zoom · Drag to pan</div>
     `;
 
     document.body.appendChild(overlayEl);
@@ -128,6 +128,9 @@
 
     // ESC key closes
     document.addEventListener('keydown', handleEsc);
+
+    // Reset hierarchy so it starts collapsed each time
+    hierRoot = null;
 
     // Render the mind map with D3
     setTimeout(() => renderD3MindMap(), 50);
@@ -172,6 +175,43 @@
     }
   }
 
+  /* ---- Persistent hierarchy root (survives re-draws) ---- */
+  let hierRoot = null;
+
+  /**
+   * Collapse a node: stash children into _children.
+   * Recursive — collapses the entire subtree.
+   */
+  function collapseNode(d) {
+    if (d.children) {
+      d._children = d.children;
+      d._children.forEach(collapseNode);
+      d.children = null;
+    }
+  }
+
+  /**
+   * Expand a node one level (restore _children → children).
+   * Does NOT recurse — only reveals immediate children.
+   */
+  function expandNode(d) {
+    if (d._children) {
+      d.children = d._children;
+      d._children = null;
+    }
+  }
+
+  /**
+   * Expand a node and ALL its descendants (full subtree reveal).
+   */
+  function expandAll(d) {
+    if (d._children) {
+      d.children = d._children;
+      d._children = null;
+    }
+    if (d.children) d.children.forEach(expandAll);
+  }
+
   function drawTree(container, width, height) {
     container.innerHTML = '';
 
@@ -180,15 +220,26 @@
     const linkColor = isDark ? 'rgba(205,204,202,0.2)' : 'rgba(40,37,29,0.15)';
     const bgColor = isDark ? '#171614' : '#f7f6f2';
 
-    // Create hierarchical data
-    const root = d3.hierarchy(DATA.tree);
+    /* Build hierarchy once, then reuse across redraws */
+    if (!hierRoot) {
+      hierRoot = d3.hierarchy(DATA.tree);
 
-    // Count total depth to size the layout
+      /* Collapse all primary branches by default
+         so only the root + top-level topic names are visible */
+      if (hierRoot.children) {
+        hierRoot.children.forEach(collapseNode);
+      }
+    }
+
+    const root = hierRoot;
+
+    /* Count visible nodes to size the layout */
+    const visible = root.descendants();
     let maxDepth = 0;
-    root.each(d => { if (d.depth > maxDepth) maxDepth = d.depth; });
+    visible.forEach(d => { if (d.depth > maxDepth) maxDepth = d.depth; });
 
-    const treeWidth = Math.max(width - 200, maxDepth * 220);
-    const treeHeight = Math.max(height - 100, root.descendants().length * 22);
+    const treeWidth = Math.max(width - 200, maxDepth * 250);
+    const treeHeight = Math.max(height - 100, visible.length * 32);
 
     const treeLayout = d3.tree().size([treeHeight, treeWidth]);
     treeLayout(root);
@@ -208,18 +259,18 @@
     svg.call(zoom);
 
     // Center the tree initially
-    const initialX = 100;
+    const initialX = 120;
     const initialY = height / 2 - treeHeight / 2;
     svg.call(zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(0.9));
 
-    // Links
+    // Links (only between visible nodes)
     g.selectAll('.mm-link')
       .data(root.links())
       .join('path')
       .attr('class', 'mm-link')
       .attr('fill', 'none')
       .attr('stroke', linkColor)
-      .attr('stroke-width', d => Math.max(1, 4 - d.source.depth))
+      .attr('stroke-width', d => Math.max(1.5, 4 - d.source.depth))
       .attr('d', d3.linkHorizontal()
         .x(d => d.y)
         .y(d => d.x)
@@ -227,31 +278,43 @@
 
     // Nodes
     const node = g.selectAll('.mm-node')
-      .data(root.descendants())
+      .data(visible)
       .join('g')
       .attr('class', 'mm-node')
       .attr('transform', d => `translate(${d.y},${d.x})`)
       .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
-    // Node circles
+    // Node circles — collapsed nodes show a "+" ring
     node.append('circle')
-      .attr('r', d => d.depth === 0 ? 8 : (d.children ? 5 : 3.5))
+      .attr('r', d => d.depth === 0 ? 10 : (d.depth === 1 ? 7 : (d.children || d._children ? 5 : 3.5)))
       .attr('fill', d => {
         if (d.depth === 0) return '#01696f';
-        // Color by top-level branch
         const branch = d.ancestors().reverse()[1];
         const idx = branch ? branch.parent.children.indexOf(branch) : 0;
         return BRANCH_COLORS[idx % BRANCH_COLORS.length];
       })
-      .attr('stroke', bgColor)
-      .attr('stroke-width', 2);
+      .attr('stroke', d => d._children ? (isDark ? '#cdccca' : '#28251d') : bgColor)
+      .attr('stroke-width', d => d._children ? 2.5 : 2)
+      .attr('stroke-dasharray', d => d._children ? '3,2' : 'none');
 
-    // Node labels
+    // "+" indicator on collapsed nodes that have hidden children
+    node.filter(d => d._children)
+      .append('text')
+      .attr('dy', 4.5)
+      .attr('text-anchor', 'middle')
+      .attr('fill', bgColor)
+      .attr('font-size', d => d.depth === 1 ? '11px' : '9px')
+      .attr('font-weight', '700')
+      .attr('font-family', "'DM Sans', system-ui, sans-serif")
+      .attr('pointer-events', 'none')
+      .text('+');
+
+    // Node labels — bigger at depth 1 for readability
     node.append('text')
-      .attr('dy', d => d.depth === 0 ? -14 : 4)
+      .attr('dy', d => d.depth === 0 ? -16 : 4.5)
       .attr('x', d => {
         if (d.depth === 0) return 0;
-        return d.children ? -10 : 10;
+        return d.children ? -12 : 12;
       })
       .attr('text-anchor', d => {
         if (d.depth === 0) return 'middle';
@@ -259,25 +322,51 @@
       })
       .attr('fill', d => {
         if (d.depth === 0) return '#01696f';
+        if (d.depth === 1) {
+          const branch = d.ancestors().reverse()[1];
+          const idx = branch ? branch.parent.children.indexOf(branch) : 0;
+          return BRANCH_COLORS[idx % BRANCH_COLORS.length];
+        }
         return textColor;
       })
-      .attr('font-size', d => d.depth === 0 ? '16px' : (d.depth === 1 ? '13px' : '11.5px'))
+      .attr('font-size', d => d.depth === 0 ? '18px' : (d.depth === 1 ? '15px' : '12px'))
       .attr('font-weight', d => d.depth <= 1 ? '600' : '400')
       .attr('font-family', "'DM Sans', 'Inter', system-ui, sans-serif")
       .text(d => d.data.name);
 
-    // Click to collapse/expand
+    // Click behavior — accordion for primary branches
     node.on('click', (event, d) => {
-      if (d.children) {
-        d._children = d.children;
-        d.children = null;
-      } else if (d._children) {
-        d.children = d._children;
-        d._children = null;
+      event.stopPropagation();
+
+      /* Accordion at depth 1: expanding one collapses siblings */
+      if (d.depth === 1) {
+        const isExpanding = !!d._children;
+        if (isExpanding) {
+          /* Collapse all sibling branches first */
+          if (d.parent && d.parent.children) {
+            d.parent.children.forEach(sibling => {
+              if (sibling !== d) collapseNode(sibling);
+            });
+          }
+          /* Expand this branch fully */
+          expandAll(d);
+        } else if (d.children) {
+          /* Collapse this branch */
+          collapseNode(d);
+        }
       } else {
-        return;
+        /* Deeper nodes: simple toggle */
+        if (d.children) {
+          d._children = d.children;
+          d.children = null;
+        } else if (d._children) {
+          d.children = d._children;
+          d._children = null;
+        } else {
+          return;
+        }
       }
-      // Re-render
+
       drawTree(container, width, height);
     });
 
