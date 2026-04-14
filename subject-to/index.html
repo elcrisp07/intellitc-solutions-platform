@@ -200,37 +200,279 @@
 </footer>
   <script src="./app.js"></script>
 <script>window.LEARN_DATA = {
-  "tooltips": {},
-  "examples": [],
+  "tooltips": {
+    "propertyAddress": "<strong>Property Address</strong> — The street address of the subject property. This identifies the specific property for your analysis and helps you track multiple subject-to deals. The address also determines which state's land trust and due-on-sale laws apply.",
+    "mortBal": "<strong>Mortgage Balance</strong> — The current remaining principal balance on the seller's mortgage that you will be taking over. This is the amount you inherit — not the original loan amount. Verify this with a recent mortgage statement. The difference between property value and this balance is your instant equity.",
+    "mortPmt": "<strong>Monthly Payment (P&I)</strong> — The seller's current principal and interest payment. This becomes your monthly obligation in a subject-to deal. In a high-rate environment, this inherited payment is often $500-1,000 less than what a new loan would cost — that spread is the entire financial advantage of subject-to.",
+    "mortRate": "<strong>Interest Rate</strong> — The rate on the existing mortgage. This is the rate you inherit. If the seller has a 3.5% rate locked in from 2021 and today's market rate is 7%, you're capturing a massive rate advantage. The larger this spread, the more valuable the subject-to deal — but also the more incentive the lender has to enforce the due-on-sale clause.",
+    "mortRemaining": "<strong>Remaining Term</strong> — Years left on the existing mortgage. This affects your total savings calculation — a loan with 25 years remaining gives you 25 years of payment savings vs. new financing. Shorter remaining terms mean less total benefit but also less time exposed to due-on-sale risk.",
+    "purchasePrice": "<strong>Cash to Seller</strong> — This is NOT the property's market value. This is the cash you pay the seller at closing to take over their mortgage. In many subject-to deals, this ranges from $5,000 to $20,000 — enough to help the seller move on. The seller's remaining equity (if any) becomes your instant equity.",
+    "propValue": "<strong>Property Value</strong> — The current fair market value of the property. Combined with the mortgage balance and your cash to seller, this determines your instant equity position. Higher property value relative to the mortgage balance means more built-in equity from day one.",
+    "closingCosts": "<strong>Closing Costs</strong> — Title search, recording fees, attorney costs, and any other transaction expenses. Subject-to deals typically have lower closing costs than conventional purchases because there's no new loan origination, no appraisal requirement, and no lender fees.",
+    "rent": "<strong>Monthly Rent</strong> — Expected rental income if you plan to hold the property as a rental. This is critical for calculating your cash flow — the spread between rent collected and the inherited mortgage payment is your monthly profit before expenses.",
+    "vacancy": "<strong>Vacancy Rate</strong> — The percentage of time the property sits empty between tenants. Industry standard for residential rentals is 5-8%. Use 5% for strong rental markets and 8-10% for weaker markets or properties that may be harder to lease.",
+    "expenses": "<strong>Operating Expenses</strong> — All costs to maintain the property as a percentage of effective gross income. The 35-45% rule of thumb includes property taxes, insurance, maintenance, repairs, property management (8-10%), and reserves for capital expenditures. Does not include the mortgage payment."
+  },
+  "examples": [
+    {
+      "name": "Motivated Seller — Low Equity",
+      "desc": "Distressed seller behind on payments, low equity, below-market rate. Classic subject-to opportunity where you solve the seller's problem.",
+      "values": {
+        "mortBal": 195000,
+        "mortPmt": 1280,
+        "mortRate": 3.75,
+        "mortRemaining": 27,
+        "purchasePrice": 8000,
+        "propValue": 225000,
+        "closingCosts": 2500,
+        "rent": 1800,
+        "vacancy": 5,
+        "expenses": 35
+      }
+    },
+    {
+      "name": "Rate Arbitrage — High Equity",
+      "desc": "Seller has a 3.5% rate from 2021, market is 7%+, strong equity position. Maximum savings from rate differential.",
+      "values": {
+        "mortBal": 180000,
+        "mortPmt": 1150,
+        "mortRate": 3.5,
+        "mortRemaining": 25,
+        "purchasePrice": 20000,
+        "propValue": 340000,
+        "closingCosts": 3500,
+        "rent": 2400,
+        "vacancy": 5,
+        "expenses": 38
+      }
+    },
+    {
+      "name": "Creative Exit — Quick Flip",
+      "desc": "Take subject-to, light rehab, sell within 12 months. Short hold minimizes due-on-sale risk while capturing instant equity.",
+      "values": {
+        "mortBal": 210000,
+        "mortPmt": 1380,
+        "mortRate": 4.25,
+        "mortRemaining": 28,
+        "purchasePrice": 12000,
+        "propValue": 285000,
+        "closingCosts": 3000,
+        "rent": 2100,
+        "vacancy": 8,
+        "expenses": 40
+      }
+    }
+  ],
   "whyThisMatters": {
     "title": "Why Analyze Subject-To Deals?",
-    "purpose": "Subject-to is a creative financing strategy where you take ownership of a property while the seller's mortgage stays in place. This calculator shows the financial advantage of assuming a lower-rate existing mortgage vs. getting a new loan at today's rates.",
+    "purpose": "Subject-to is a creative financing strategy where you take ownership of a property while the seller's existing mortgage remains in place. Instead of qualifying for a new loan, you inherit the seller's rate, terms, and payment schedule. In a high-rate environment, this can mean inheriting a 3-4% mortgage when new loans cost 7%+ — saving hundreds of dollars per month on the exact same property.",
     "whenToUse": [
-      "When a seller has a below-market interest rate loan you could potentially assume",
-      "To calculate the payment difference between subject-to vs. new financing",
-      "When structuring creative offers on distressed or motivated seller properties"
+      "When a seller has a below-market interest rate mortgage (locked in during 2020-2022 low-rate period)",
+      "When the seller is motivated and willing to transfer the property while their loan stays in place",
+      "To calculate the exact monthly savings of subject-to vs. getting a brand-new conventional loan",
+      "When structuring creative offers on distressed, pre-foreclosure, or motivated seller properties",
+      "When comparing subject-to against seller financing, wrap mortgages, or lease options as alternative creative strategies"
     ],
-    "keyInsight": "In a high-rate environment (7%+), taking over a seller's 3% mortgage can save you $500-1,000/month on the same property. That's the power of subject-to — you inherit their rate. The risk: lenders have a 'due on sale' clause they could technically enforce."
+    "keyInsight": "In a high-rate environment (7%+), taking over a seller's 3% mortgage can save you $500-1,000 per month on the same property. Over 25 remaining years, that's $150,000-$300,000 in total interest savings. The risk: lenders have a 'due-on-sale clause' they could technically enforce — but in practice, this almost never happens on performing loans transferred into land trusts. Use the Risk Dashboard tool to quantify your specific exposure.",
+    "proTip": "The two most common triggers for due-on-sale enforcement are (1) changing the homeowner's insurance policy and (2) missing mortgage payments. If you do nothing else, keep the seller's insurance policy active and set up automated payments from a dedicated account. These two steps alone eliminate the majority of enforcement risk."
   },
-  "kpiExplains": {},
+  "kpiExplains": {
+    "kpiInstantEquity": "<strong>Instant Equity</strong> — The difference between the property's market value and the total cost to acquire (mortgage balance + cash to seller). This is equity you capture on day one without waiting for appreciation. In subject-to deals, instant equity is often $50,000-$100,000 because you're buying at below-market terms.",
+    "kpiCashFlow": "<strong>Monthly Cash Flow</strong> — Your net monthly income after collecting rent and subtracting the inherited mortgage payment, vacancy loss, and operating expenses. Positive cash flow means the property pays you every month. The subject-to advantage: your lower inherited payment creates a wider spread between rent and costs.",
+    "kpiCoC": "<strong>Cash-on-Cash Return</strong> — Your annual cash flow divided by the total cash invested (cash to seller + closing costs). This measures the return on your actual out-of-pocket investment. Subject-to deals often produce exceptional cash-on-cash returns because your cash investment is minimal — often just $10,000-$25,000 for a property worth $250,000+.",
+    "kpiSavings": "<strong>Savings vs New Loan</strong> — The annual dollar savings of keeping the seller's mortgage vs. getting a new conventional loan at today's rates. This quantifies the rate arbitrage — the core financial advantage of the subject-to strategy."
+  },
   "coupled": [
+    {
+      "name": "Subject-To Risk Dashboard",
+      "folder": "subject-to-risk-dashboard",
+      "reason": "Quantify your due-on-sale enforcement risk with the 7-factor trigger score and land trust checklist"
+    },
     {
       "name": "Seller Financing",
       "folder": "seller-financing",
-      "reason": "Another creative financing approach — compare which structure works better"
+      "reason": "Compare subject-to against seller carry-back financing — which creative structure fits better?"
     },
     {
       "name": "Wrap Calculator",
       "folder": "wrap-calculator",
-      "reason": "Combine subject-to with a wrap note for additional arbitrage profit"
+      "reason": "Layer a wrap mortgage on top of the subject-to for additional monthly arbitrage profit"
     },
     {
       "name": "Cash Flow",
       "folder": "cashflow",
-      "reason": "Model the cash flow using the assumed payment vs. a new loan"
+      "reason": "Full rental cash flow analysis using the inherited subject-to payment"
     }
   ]
 };</script>
+
+<!-- ===== DEDICATED LEARN MODE PANELS ===== -->
+<section class="panel learn-dedicated-panels" id="dedicatedLearnPanels" style="display:none;margin-top:var(--space-4)">
+  <h2 class="panel-title" style="margin-bottom:var(--space-4)">Subject-To Deep Dive</h2>
+  <p class="panel-subtitle" style="margin-bottom:var(--space-6)">Toggle Learn Mode on to explore these educational panels in depth.</p>
+
+  <!-- Panel 1: Due-on-Sale Clause -->
+  <details class="learn-accordion" open>
+    <summary class="learn-accordion-trigger">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Due-on-Sale Clause Explained
+    </summary>
+    <div class="learn-accordion-body">
+      <h4>What Is the Due-on-Sale Clause?</h4>
+      <p>The due-on-sale clause (also called an "alienation clause") is a provision in nearly every mortgage contract originated after 1982. It gives the lender the right to demand immediate full repayment of the remaining loan balance if the property is transferred without the lender's consent.</p>
+      <h4>How Does It Work?</h4>
+      <p>When triggered, the lender sends a "demand letter" stating the full balance is due — typically within 30 to 90 days. If the borrower cannot pay, the lender can initiate foreclosure proceedings. However, this is a <strong>civil contract matter, not a criminal one</strong>. There is no "due-on-sale jail." The worst-case outcome is the lender demands payment and you refinance, sell, or deed the property back.</p>
+      <h4>Why Does It Exist?</h4>
+      <p>Lenders include this clause to protect their interest rate position. If a borrower has a 3% mortgage and market rates rise to 7%, the lender is earning below-market returns on that capital. The due-on-sale clause gives them the theoretical right to recall that capital and redeploy it at higher rates.</p>
+      <h4>The Reality: Rarely Enforced</h4>
+      <p>In practice, lenders almost never enforce the due-on-sale clause on performing loans. Why? Because enforcement costs money (legal fees, administrative overhead) and creates a non-performing loan where one didn't exist before. A bank receiving consistent payments has no financial incentive to create a problem. Historical enforcement since the 1980s has been extraordinarily rare on current, performing loans transferred into land trusts.</p>
+      <h4>Common Triggers That Alert Lenders</h4>
+      <table style="width:100%;border-collapse:collapse;margin-top:var(--space-3);font-size:var(--text-sm)">
+        <thead><tr style="border-bottom:2px solid var(--color-divider)"><th style="text-align:left;padding:var(--space-2)">Trigger</th><th style="text-align:left;padding:var(--space-2)">Risk Level</th><th style="text-align:left;padding:var(--space-2)">How to Avoid</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--color-divider)"><td style="padding:var(--space-2)">Missed mortgage payments</td><td style="padding:var(--space-2);color:#ef4444;font-weight:600">Highest</td><td style="padding:var(--space-2)">Set up auto-pay from dedicated account</td></tr>
+          <tr style="border-bottom:1px solid var(--color-divider)"><td style="padding:var(--space-2)">Insurance policy change</td><td style="padding:var(--space-2);color:#ef4444;font-weight:600">High</td><td style="padding:var(--space-2)">Keep seller's policy; add trust as additional insured</td></tr>
+          <tr style="border-bottom:1px solid var(--color-divider)"><td style="padding:var(--space-2)">Direct deed transfer (public records)</td><td style="padding:var(--space-2);color:#eab308;font-weight:600">Moderate</td><td style="padding:var(--space-2)">Use land trust instead of direct deed or LLC</td></tr>
+          <tr style="border-bottom:1px solid var(--color-divider)"><td style="padding:var(--space-2)">Contacting the lender about transfer</td><td style="padding:var(--space-2);color:#eab308;font-weight:600">Moderate</td><td style="padding:var(--space-2)">Do not notify lender; no legal obligation to do so</td></tr>
+          <tr><td style="padding:var(--space-2)">Large rate differential (lender incentive)</td><td style="padding:var(--space-2);color:#eab308;font-weight:600">Moderate</td><td style="padding:var(--space-2)">Shorten hold period; accelerate refinance plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- Panel 2: Land Trust Walkthrough -->
+  <details class="learn-accordion">
+    <summary class="learn-accordion-trigger">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Land Trust Protection Walkthrough
+    </summary>
+    <div class="learn-accordion-body">
+      <p style="margin-bottom:var(--space-4)">A land trust is the most common legal structure used to protect subject-to acquisitions from due-on-sale enforcement. Here is the step-by-step process:</p>
+      <ol style="padding-left:var(--space-5);line-height:1.8">
+        <li style="margin-bottom:var(--space-3)"><strong>Create a Revocable Land Trust with a Generic Name</strong> — Use a neutral name like "Evergreen Trust" or "NW Holdings Trust" — never use the property address. The trust should be revocable and inter vivos (created during the grantor's lifetime) to qualify for Garn-St. Germain protections.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Seller Transfers Deed into the Trust</strong> — The seller (as grantor/settlor) executes a deed transferring the property into the trust. This is the only recorded, public-facing document. It appears as routine estate planning, not a sale.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Seller Remains as Initial Beneficiary</strong> — This is the statutory requirement under Garn-St. Germain. The seller must be listed as the initial beneficiary of the trust. This satisfies the federal exception that prevents lenders from enforcing the due-on-sale clause on trust transfers.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Assign Beneficial Interest to Investor/LLC (Private)</strong> — The seller then assigns their beneficial interest in the trust to the investor or the investor's LLC. This assignment is a <strong>private document</strong> — it is NOT recorded at the county recorder's office and is not part of the public record.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Keep the Seller's Insurance Policy Active</strong> — Do not cancel or change the homeowner's insurance. Many lenders receive automatic notifications when the named insured changes. Either keep the seller's policy exactly as is, or add the trust as an additional insured on the existing policy.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Set Up Auto-Pay from a Dedicated Bank Account</strong> — Open a bank account specifically for mortgage payments on this property. Fund it adequately and set up automatic drafts to the lender. A performing loan is a silent loan — the lender has no reason to investigate.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Keep Seller's Name on All Lender Correspondence</strong> — Do not change the mailing address or contact information on file with the lender. Route all statements and notices through the seller's address or a shared P.O. Box. Address changes can trigger lender review.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Document Everything Between Buyer and Seller</strong> — Create written agreements covering the purchase terms, beneficial interest assignment, payment responsibilities, insurance arrangements, maintenance obligations, and the agreed exit strategy. Have both parties sign and notarize critical documents.</li>
+      </ol>
+    </div>
+  </details>
+
+  <!-- Panel 3: Garn-St. Germain Exceptions -->
+  <details class="learn-accordion">
+    <summary class="learn-accordion-trigger">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Garn-St. Germain Act — Federal Exceptions
+    </summary>
+    <div class="learn-accordion-body">
+      <p style="margin-bottom:var(--space-4)">The <strong>Garn-St. Germain Depository Institutions Act of 1982</strong> is federal law that preempts state laws on due-on-sale enforcement. It establishes 8 specific transfer scenarios where lenders <strong>cannot</strong> enforce the due-on-sale clause, regardless of what the mortgage contract says:</p>
+      <ol style="padding-left:var(--space-5);line-height:1.8">
+        <li style="margin-bottom:var(--space-3)"><strong>Subordinate Lien Creation</strong> — Creating a junior lien (second mortgage, HELOC) does not trigger due-on-sale, provided it doesn't relate to a transfer of occupancy rights.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Purchase Money Security for Household Appliances</strong> — Financing appliances attached to the property (HVAC, water heater) with a security interest does not trigger the clause.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Transfer by Death of Joint Tenant</strong> — When a joint tenant dies and ownership passes to the surviving joint tenant, the lender cannot enforce the due-on-sale clause.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Leasehold of 3 Years or Less (No Purchase Option)</strong> — Leasing the property for 3 years or less without a purchase option does not trigger enforcement. This is why lease options under 3 years are also protected.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Transfer to Relative on Borrower's Death</strong> — When the borrower dies and the property passes to a relative, the lender cannot call the loan due. This protects estate transfers and inheritance.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Transfer to Spouse or Children</strong> — Transferring the property to a spouse or the borrower's children is federally protected. The lender cannot enforce due-on-sale for family transfers.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Transfer from Divorce or Separation Decree</strong> — When property transfers as part of a divorce or legal separation, the due-on-sale clause cannot be enforced. This protects both parties in marital dissolution.</li>
+        <li style="margin-bottom:var(--space-3)"><strong>Transfer into Inter Vivos Trust (Borrower Remains Beneficiary)</strong> — <em>This is the exception that protects subject-to land trust transfers.</em> Transferring the property into a revocable inter vivos trust where the borrower remains a beneficiary is explicitly protected. This is why the land trust strategy works — it falls squarely within this federal exception.</li>
+      </ol>
+      <div style="margin-top:var(--space-4);padding:var(--space-3);border-radius:var(--radius-md);border-left:4px solid var(--color-primary);background:rgba(1,105,111,0.06);font-size:var(--text-sm);line-height:1.6">
+        <strong>Important Note:</strong> Garn-St. Germain protections apply to <strong>residential real property containing fewer than five dwelling units</strong>, including individual condominium units. Properties with five or more units (commercial) may not receive the same federal protections.
+      </div>
+    </div>
+  </details>
+
+  <!-- Panel 4: 5-Step Resolution Protocol -->
+  <details class="learn-accordion">
+    <summary class="learn-accordion-trigger">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      5-Step Resolution Protocol (If the Lender Calls the Loan)
+    </summary>
+    <div class="learn-accordion-body">
+      <p style="margin-bottom:var(--space-4)">In the unlikely event that a lender discovers the transfer and invokes the due-on-sale clause, follow this resolution protocol. Remember: this is a civil contract matter with a defined timeline — not an emergency.</p>
+      <div style="margin-bottom:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-alt,rgba(0,0,0,0.03))">
+        <h4 style="color:var(--color-primary);margin-bottom:var(--space-2)">Step 1: Verify the Notice</h4>
+        <p>Confirm the demand letter is legitimate (not a scam). Verify it came from the actual servicer. Check the timeline — most demand letters provide <strong>30 to 90 days</strong> to respond. Do not panic. You have time.</p>
+      </div>
+      <div style="margin-bottom:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-alt,rgba(0,0,0,0.03))">
+        <h4 style="color:var(--color-primary);margin-bottom:var(--space-2)">Step 2: Contact Lender and Negotiate</h4>
+        <p>Call the lender's loss mitigation department. Emphasize that the loan is current and has never been late. Offer to continue making payments. Ask about formal loan assumption options. Many lenders will back down when they realize the loan is performing — enforcing creates a non-performing loan where one didn't exist.</p>
+      </div>
+      <div style="margin-bottom:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-alt,rgba(0,0,0,0.03))">
+        <h4 style="color:var(--color-primary);margin-bottom:var(--space-2)">Step 3: Refinance</h4>
+        <p>If the lender insists, initiate a refinance. Options include: conventional refinance (if you qualify), DSCR loan (qualifies on property income, not personal income), or a hard money bridge loan (6-18 months at higher rates while you arrange permanent financing). The 30-90 day cure period gives you time to close.</p>
+      </div>
+      <div style="margin-bottom:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-alt,rgba(0,0,0,0.03))">
+        <h4 style="color:var(--color-primary);margin-bottom:var(--space-2)">Step 4: Sell the Property</h4>
+        <p>If refinancing is not feasible, sell the property. Options: list below market for a quick sale, sell to a cash investor at a discount, or wholesale the deal to another investor. The equity you've built provides a buffer — even a discounted sale may yield a profit.</p>
+      </div>
+      <div style="margin-bottom:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-alt,rgba(0,0,0,0.03))">
+        <h4 style="color:var(--color-primary);margin-bottom:var(--space-2)">Step 5: Deed Back to Seller (Last Resort)</h4>
+        <p>If no other option is available, deed the property back to the original seller. This restores the original ownership structure and the loan returns to its original state. The lender has no further cause for enforcement. This is the emergency exit — it means you don't profit, but you also don't face foreclosure.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- Panel 5: Risk vs Reward -->
+  <details class="learn-accordion">
+    <summary class="learn-accordion-trigger">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Risk vs Reward Analysis
+    </summary>
+    <div class="learn-accordion-body">
+      <h4>When Subject-To Makes Sense</h4>
+      <ul style="padding-left:var(--space-5);line-height:1.8;margin-bottom:var(--space-4)">
+        <li><strong>Large rate differential</strong> — The seller's rate is 2%+ below current market rates (e.g., seller has 3.5%, market is 7%)</li>
+        <li><strong>Motivated seller</strong> — Seller needs to move quickly (relocation, divorce, pre-foreclosure, financial distress)</li>
+        <li><strong>Strong rental market</strong> — Property rents cover the inherited payment with comfortable cash flow margin</li>
+        <li><strong>Equity capture</strong> — Property value exceeds mortgage balance by enough to build instant equity</li>
+        <li><strong>Clear exit strategy</strong> — You have a defined plan to refinance, sell, or wrap within 2-5 years</li>
+      </ul>
+      <h4>When to Avoid Subject-To</h4>
+      <ul style="padding-left:var(--space-5);line-height:1.8;margin-bottom:var(--space-4)">
+        <li><strong>Small rate spread</strong> — If the seller's rate is close to current market rates, the advantage is minimal and not worth the due-on-sale risk</li>
+        <li><strong>Nervous seller</strong> — If the seller is uncomfortable with their mortgage staying in place, a seller financing or lease option may be better</li>
+        <li><strong>Weak rental market</strong> — If rents don't cover the payment, negative cash flow compounds the risk</li>
+        <li><strong>High LTV</strong> — If the mortgage balance is close to the property value, you have little equity cushion and limited refinance options</li>
+        <li><strong>Portfolio lender</strong> — Small lenders who hold loans in-house monitor more closely than national banks who sell to the secondary market</li>
+      </ul>
+      <h4>The Break-Even Math</h4>
+      <p>Calculate your monthly savings (inherited payment vs. new loan payment). Then estimate the probability-weighted cost of due-on-sale enforcement. If monthly savings are $600 and you hold for 3 years, that's $21,600 in savings. The probability of enforcement on a performing land trust loan is estimated at less than 1%. Even if enforcement occurs, your resolution cost (refinance closing costs) is typically $5,000-$10,000. The math strongly favors subject-to when the rate spread is significant and the deal is properly structured.</p>
+    </div>
+  </details>
+</section>
+
+<style>
+.learn-accordion{border:1px solid var(--color-divider);border-radius:var(--radius-md);margin-bottom:var(--space-3);overflow:hidden}
+.learn-accordion-trigger{display:flex;align-items:center;gap:var(--space-2);width:100%;padding:var(--space-4);background:var(--color-surface);border:none;font:inherit;font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;text-align:left}
+.learn-accordion-trigger:hover{background:var(--color-surface-alt,rgba(0,0,0,0.02))}
+.learn-accordion-trigger svg{color:var(--color-primary);flex-shrink:0}
+.learn-accordion-body{padding:var(--space-4) var(--space-5);font-size:var(--text-sm);line-height:1.7;color:var(--color-text)}
+.learn-accordion-body h4{font-size:var(--text-base);font-weight:600;margin:var(--space-4) 0 var(--space-2);color:var(--color-text)}
+.learn-accordion-body h4:first-child{margin-top:0}
+.learn-accordion-body p{margin-bottom:var(--space-3)}
+.learn-accordion-body ul,.learn-accordion-body ol{margin-bottom:var(--space-3)}
+</style>
+
+<script>
+/* Show/hide dedicated learn panels based on learn mode toggle */
+(function(){
+  var panels = document.getElementById('dedicatedLearnPanels');
+  if(!panels) return;
+  function sync(){
+    var active = document.body.classList.contains('learn-active');
+    panels.style.display = active ? 'block' : 'none';
+  }
+  // Watch for learn mode toggle
+  var observer = new MutationObserver(sync);
+  observer.observe(document.body, {attributes:true, attributeFilter:['class']});
+  // Initial sync
+  setTimeout(sync, 200);
+})();
+</script>
 <script src="mindmap-data.js"></script>
 <script src="../shared/mindmap.js"></script>
 <script src="../shared/learn-mode.js"></script>

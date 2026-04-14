@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/subject-to-risk-dashboard">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subject-To Risk Dashboard — IntelliTC Solutions</title>
+<meta name="description" content="Due-on-sale trigger analysis, land trust structure, and refinance exit planning for subject-to real estate deals.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Subject-To Risk Dashboard — IntelliTC Solutions">
+<meta property="og:description" content="Due-on-sale trigger analysis, land trust structure, and refinance exit planning for subject-to real estate deals.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/subject-to-risk-dashboard">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Subject-To Risk Dashboard — IntelliTC Solutions">
+<meta name="twitter:description" content="Due-on-sale trigger analysis, land trust structure, and refinance exit planning for subject-to real estate deals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Subject-To Risk Dashboard",
+  "description": "Due-on-sale trigger analysis, land trust structure, and refinance exit planning for subject-to real estate deals.",
+  "url": "https://intellitcsolutions.com/subject-to-risk-dashboard/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+<link rel="stylesheet" href="../shared/workflow-context.css">
+<style>
+/* Risk Dashboard — local overrides */
+.risk-gauge{position:relative;width:200px;height:110px;margin:0 auto 1rem}
+.risk-gauge svg{width:100%;height:100%}
+.risk-gauge .gauge-label{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:var(--text-2xl);font-weight:700;font-family:var(--font-mono)}
+.risk-low{color:#22c55e}.risk-mod{color:#eab308}.risk-high{color:#ef4444}
+.risk-breakdown{width:100%;border-collapse:collapse;margin-top:var(--space-4);font-size:var(--text-sm)}
+.risk-breakdown th,.risk-breakdown td{padding:var(--space-2) var(--space-3);text-align:left;border-bottom:1px solid var(--color-divider)}
+.risk-breakdown th{font-weight:600;color:var(--color-text-muted)}
+.risk-breakdown td:last-child{text-align:right;font-family:var(--font-mono);font-weight:600}
+.risk-bar{height:6px;border-radius:3px;background:var(--color-divider);overflow:hidden;min-width:60px}
+.risk-bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.recommendation-box{margin-top:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);border-left:4px solid;font-size:var(--text-sm);line-height:1.6}
+.recommendation-box.low{border-color:#22c55e;background:rgba(34,197,94,0.08)}
+.recommendation-box.mod{border-color:#eab308;background:rgba(234,179,8,0.08)}
+.recommendation-box.high{border-color:#ef4444;background:rgba(239,68,68,0.08)}
+.recommendation-box strong{display:block;margin-bottom:var(--space-1);font-size:var(--text-base)}
+
+.checklist-section{margin-top:var(--space-6)}
+.checklist-progress{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}
+.checklist-progress-bar{flex:1;height:8px;border-radius:4px;background:var(--color-divider);overflow:hidden}
+.checklist-progress-fill{height:100%;border-radius:4px;background:var(--color-primary);transition:width .4s ease}
+.checklist-progress-text{font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);white-space:nowrap}
+.checklist-items{list-style:none;padding:0;margin:0}
+.checklist-item{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px solid var(--color-divider)}
+.checklist-item:last-child{border-bottom:none}
+.checklist-item label{flex:1;cursor:pointer;font-size:var(--text-sm);line-height:1.5;display:flex;align-items:flex-start;gap:var(--space-2)}
+.checklist-item input[type="checkbox"]{margin-top:3px;accent-color:var(--color-primary);width:18px;height:18px;flex-shrink:0;cursor:pointer}
+.checklist-item .cl-info{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--color-surface-alt,var(--color-divider));display:inline-flex;align-items:center;justify-content:center;cursor:help;font-size:11px;font-weight:700;color:var(--color-text-muted);border:1px solid var(--color-divider)}
+.checklist-item .cl-info:hover{background:var(--color-primary);color:#fff}
+.cl-tooltip{display:none;position:absolute;z-index:100;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:var(--space-3);max-width:300px;font-size:var(--text-xs);line-height:1.5;box-shadow:var(--shadow-lg,0 8px 16px rgba(0,0,0,.12))}
+.cl-tooltip.show{display:block}
+
+.section-divider{margin:var(--space-8) 0 var(--space-6);border:none;border-top:2px solid var(--color-divider)}
+
+.refi-timeline-section{margin-top:var(--space-6)}
+.decision-matrix{width:100%;border-collapse:collapse;margin-top:var(--space-4);font-size:var(--text-sm)}
+.decision-matrix th,.decision-matrix td{padding:var(--space-2) var(--space-3);text-align:left;border-bottom:1px solid var(--color-divider)}
+.decision-matrix th{font-weight:600;color:var(--color-text-muted)}
+.decision-matrix td:nth-child(n+2){text-align:right;font-family:var(--font-mono)}
+.decision-best{background:rgba(1,105,111,0.08);font-weight:600}
+</style>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <!-- ===== INPUT PANEL ===== -->
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Subject-To Risk Dashboard</h1>
+      <p class="panel-subtitle">Due-on-sale trigger analysis, land trust structure, and refinance exit planning.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+
+<!-- Section 1: Risk Score Inputs -->
+<div class="param-group">
+<h3 class="param-group-title">Due-on-Sale Risk Factors</h3>
+<div class="field">
+  <label for="loanStatus" title="Current payment status of the existing mortgage">Loan Status</label>
+  <select id="loanStatus">
+    <option value="current" selected>Current</option>
+    <option value="1-30">1–30 Days Late</option>
+    <option value="30-60">30–60 Days Late</option>
+    <option value="60+">60+ Days Late</option>
+  </select>
+</div>
+<div class="field">
+  <label for="insuranceChange" title="How you plan to handle homeowner's insurance after acquiring the property">Insurance Change Planned</label>
+  <select id="insuranceChange">
+    <option value="keep" selected>Keeping seller's policy</option>
+    <option value="investor">Changing to investor name</option>
+    <option value="new">New policy entirely</option>
+  </select>
+</div>
+<div class="field">
+  <label for="titleMethod" title="The legal method used to transfer property title from seller to buyer">Title Transfer Method</label>
+  <select id="titleMethod">
+    <option value="trust" selected>Land trust</option>
+    <option value="direct">Direct deed</option>
+    <option value="llc">LLC transfer</option>
+  </select>
+</div>
+<div class="field">
+  <label for="rateDiff" title="Difference between existing mortgage rate and current market rate. Larger gap = more lender incentive to enforce">Rate Differential</label>
+  <div class="input-with-unit"><input type="text" id="rateDiff" value="3.0" inputmode="decimal"><span class="unit">%</span></div>
+</div>
+<div class="field">
+  <label for="loanType" title="Type of existing mortgage loan. Government-backed loans (FHA/VA) have different enforcement patterns">Loan Type</label>
+  <select id="loanType">
+    <option value="conventional" selected>Conventional</option>
+    <option value="fha">FHA</option>
+    <option value="va">VA</option>
+    <option value="usda">USDA</option>
+    <option value="portfolio">Portfolio</option>
+  </select>
+</div>
+<div class="field">
+  <label for="lenderSize" title="Size of the lending institution. Larger banks monitor loan portfolios less closely per individual loan">Lender Size</label>
+  <select id="lenderSize">
+    <option value="national" selected>National bank</option>
+    <option value="regional">Regional bank</option>
+    <option value="credit-union">Credit union</option>
+    <option value="private">Private lender</option>
+  </select>
+</div>
+<div class="field">
+  <label for="timeSinceOrig" title="Years since the mortgage was originally funded. Older loans are further along in amortization and draw less attention">Time Since Origination</label>
+  <div class="input-with-unit"><input type="text" id="timeSinceOrig" value="5" inputmode="decimal"><span class="unit">yrs</span></div>
+</div>
+</div>
+
+<!-- Section 3: Refinance Exit Inputs -->
+<div class="param-group">
+<h3 class="param-group-title">Refinance Exit Planning</h3>
+<div class="field">
+  <label for="mortBalance" title="Current remaining balance on the existing mortgage">Current Mortgage Balance</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="mortBalance" value="220,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="propValue" title="Current fair market value of the property">Property Value</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="propValue" value="300,000" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="currentRate" title="Interest rate on the existing mortgage being taken subject-to">Current Interest Rate</label>
+  <div class="input-with-unit"><input type="text" id="currentRate" value="4.5" inputmode="decimal"><span class="unit">%</span></div>
+</div>
+<div class="field">
+  <label for="holdPeriod" title="How many years you plan to hold before refinancing into your own loan">Target Hold Period</label>
+  <div class="input-with-unit"><input type="range" id="holdPeriod" min="1" max="10" value="5" style="flex:1"><span class="unit" id="holdPeriodVal">5 yrs</span></div>
+</div>
+<div class="field">
+  <label for="appreciation" title="Expected annual property value increase. US average is approximately 3-4% historically">Expected Annual Appreciation</label>
+  <div class="input-with-unit"><input type="text" id="appreciation" value="3" inputmode="decimal"><span class="unit">%</span></div>
+</div>
+<div class="field">
+  <label for="creditScore" title="Your estimated credit score at the time of refinancing. Higher scores qualify for better rates">Estimated Credit Score at Refi</label>
+  <select id="creditScore">
+    <option value="excellent" selected>Excellent (740+)</option>
+    <option value="good">Good (700–739)</option>
+    <option value="fair">Fair (660–699)</option>
+    <option value="below">Below 660</option>
+  </select>
+</div>
+</div>
+
+      </div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Analyze Risk</button>
+    </section>
+
+    <!-- ===== RESULTS PANEL ===== -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Risk Dashboard</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+
+      <!-- KPI Row -->
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-card">
+          <span class="kpi-label">Risk Score</span>
+          <span class="kpi-value" id="kpiRisk">—</span>
+          <span class="kpi-delta" id="kpiRiskDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Checklist Completion</span>
+          <span class="kpi-value" id="kpiChecklist">—</span>
+          <span class="kpi-delta" id="kpiChecklistDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Projected Equity at Refi</span>
+          <span class="kpi-value" id="kpiEquity">—</span>
+          <span class="kpi-delta" id="kpiEquityDetail"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Monthly Payment Change</span>
+          <span class="kpi-value" id="kpiPayment">—</span>
+          <span class="kpi-delta" id="kpiPaymentDetail"></span>
+        </div>
+      </div>
+
+      <!-- Risk Score Section -->
+      <div class="chart-card" style="margin-top:var(--space-4)">
+        <h3 class="chart-title">Due-on-Sale Trigger Risk Score</h3>
+        <p class="chart-subtitle">Analysis of 7 key risk factors that influence lender enforcement probability</p>
+        <div class="risk-gauge" id="riskGauge"></div>
+        <div id="riskRecommendation"></div>
+        <table class="risk-breakdown" id="riskBreakdown">
+          <thead><tr><th>Factor</th><th>Level</th><th style="text-align:right">Points</th></tr></thead>
+          <tbody id="riskBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Chart Grid: Radar + Line -->
+      <div class="chart-grid" style="margin-top:var(--space-4)">
+        <div class="chart-card">
+          <h3 class="chart-title">Risk Factor Radar</h3>
+          <p class="chart-subtitle">Visual breakdown of each trigger factor</p>
+          <div class="chart-container">
+            <canvas id="chartRadar"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Equity Build Timeline</h3>
+          <p class="chart-subtitle">Projected equity growth over hold period</p>
+          <div class="chart-container">
+            <canvas id="chartEquity"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Land Trust Checklist Section -->
+      <hr class="section-divider">
+      <div class="checklist-section">
+        <h3 class="chart-title">Land Trust Structure Checklist</h3>
+        <p class="chart-subtitle" style="margin-bottom:var(--space-4)">Complete each step to minimize due-on-sale enforcement risk</p>
+        <div class="checklist-progress">
+          <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="clProgressFill" style="width:0%"></div></div>
+          <span class="checklist-progress-text" id="clProgressText">0 of 12 complete</span>
+        </div>
+        <ul class="checklist-items" id="checklistItems"></ul>
+      </div>
+
+      <!-- Refinance Exit Section -->
+      <hr class="section-divider">
+      <div class="refi-timeline-section">
+        <h3 class="chart-title">Refinance Exit Timeline</h3>
+        <p class="chart-subtitle" style="margin-bottom:var(--space-4)">When does refinancing into your own loan make financial sense?</p>
+        <div class="chart-card" style="box-shadow:none;padding:0">
+          <div class="chart-container">
+            <canvas id="chartDecision"></canvas>
+          </div>
+        </div>
+        <div id="refiSummary" style="margin-top:var(--space-4)"></div>
+        <table class="decision-matrix" id="decisionMatrix" style="margin-top:var(--space-4)">
+          <thead><tr><th>Exit Strategy</th><th>Est. Cost</th><th>Monthly Pmt</th><th>Net Position</th></tr></thead>
+          <tbody id="decisionBody"></tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "loanStatus": "<strong>Loan Status</strong> — The single most important risk factor. A performing (current) loan gives the lender zero incentive to investigate your file. Late payments trigger automated review systems that can surface ownership changes. A loan 60+ days late is already under lender scrutiny.",
+    "insuranceChange": "<strong>Insurance Change</strong> — Changing the homeowner's insurance policy is one of the top 3 ways lenders discover ownership changes. Many lenders receive automatic notifications when the named insured changes. Keeping the seller's existing policy (or adding the trust as additional insured) avoids this trigger entirely.",
+    "titleMethod": "<strong>Title Transfer Method</strong> — How you take title determines your legal exposure. Direct deed transfers to individuals or LLCs are visible in public records and easily flagged by lender portfolio audits. Land trust transfers appear as routine estate planning and are protected under the Garn-St. Germain Act of 1982.",
+    "rateDiff": "<strong>Rate Differential</strong> — This is the lender's financial incentive to enforce. If the existing rate is 3% and market rates are 7%, the lender could redeploy that capital at a 4% higher return. The larger the spread, the more money the lender leaves on the table by not calling the loan. Spreads over 3% significantly increase enforcement motivation.",
+    "loanType": "<strong>Loan Type</strong> — Government-backed loans (FHA, VA, USDA) have specific due-on-sale provisions and servicing requirements. FHA loans technically have assumability provisions. VA loans have their own enforcement guidelines. Conventional loans have the most straightforward due-on-sale enforcement. Portfolio loans (held by the originating bank) have the most discretion.",
+    "lenderSize": "<strong>Lender Size</strong> — National banks service millions of loans through automated systems that rarely flag performing loans. Regional banks have moderate oversight. Credit unions may have personal relationships with borrowers and notice changes faster. Private lenders have the most direct involvement and highest chance of discovering transfers.",
+    "timeSinceOrig": "<strong>Time Since Origination</strong> — Loans originated 7+ years ago are further along in amortization (more principal has been repaid) and are less likely to be audited. Recent originations (0-2 years) are more likely to be reviewed during servicing transfers or portfolio audits.",
+    "mortBalance": "<strong>Current Mortgage Balance</strong> — The remaining principal on the loan you're taking subject-to. This determines your starting equity position and the amount you'd need to refinance later.",
+    "propValue": "<strong>Property Value</strong> — Current fair market value. Combined with the mortgage balance, this determines your loan-to-value ratio and equity position. Higher equity = easier refinance exit.",
+    "currentRate": "<strong>Current Interest Rate</strong> — The rate on the existing mortgage. This is the rate you inherit in a subject-to deal. If this is significantly below market rates, that's the entire financial advantage of the strategy — but also increases lender incentive to enforce.",
+    "holdPeriod": "<strong>Target Hold Period</strong> — How many years before you plan to refinance. Longer holds build more equity through appreciation and amortization, but extend the period of due-on-sale risk. Most investors target 2-5 years.",
+    "appreciation": "<strong>Annual Appreciation</strong> — Expected yearly property value increase. The national average is approximately 3-4%. Appreciation directly builds equity, improving your LTV ratio and refinance terms over time.",
+    "creditScore": "<strong>Credit Score at Refi</strong> — Your estimated credit score when you apply for the refinance. This determines the interest rate you'll qualify for. Excellent (740+) gets the best rates. Below 660 may require alternative products like DSCR loans."
+  },
+  "examples": [
+    {
+      "name": "Low-Risk: Seasoned Conventional",
+      "desc": "Current loan with national bank, land trust transfer, keeping insurance — best-case scenario",
+      "values": {
+        "loanStatus": "current",
+        "insuranceChange": "keep",
+        "titleMethod": "trust",
+        "rateDiff": 2.5,
+        "loanType": "conventional",
+        "lenderSize": "national",
+        "timeSinceOrig": 8,
+        "mortBalance": 180000,
+        "propValue": 310000,
+        "currentRate": 4.5,
+        "holdPeriod": 3,
+        "appreciation": 3,
+        "creditScore": "excellent"
+      }
+    },
+    {
+      "name": "Moderate Risk: FHA with Rate Spread",
+      "desc": "FHA loan at a regional bank with a large rate differential — common scenario that requires careful structuring",
+      "values": {
+        "loanStatus": "current",
+        "insuranceChange": "investor",
+        "titleMethod": "trust",
+        "rateDiff": 4.0,
+        "loanType": "fha",
+        "lenderSize": "regional",
+        "timeSinceOrig": 3,
+        "mortBalance": 250000,
+        "propValue": 320000,
+        "currentRate": 3.25,
+        "holdPeriod": 5,
+        "appreciation": 3,
+        "creditScore": "good"
+      }
+    },
+    {
+      "name": "High Risk: Late Payments + Direct Deed",
+      "desc": "Distressed situation with late payments and direct deed transfer — maximum risk profile requiring immediate mitigation",
+      "values": {
+        "loanStatus": "30-60",
+        "insuranceChange": "new",
+        "titleMethod": "direct",
+        "rateDiff": 3.5,
+        "loanType": "conventional",
+        "lenderSize": "credit-union",
+        "timeSinceOrig": 1,
+        "mortBalance": 275000,
+        "propValue": 290000,
+        "currentRate": 5.0,
+        "holdPeriod": 2,
+        "appreciation": 2,
+        "creditScore": "fair"
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Analyze Due-on-Sale Risk?",
+    "purpose": "Every subject-to deal carries the theoretical risk that the lender discovers the ownership change and invokes the due-on-sale clause, demanding full repayment. This dashboard quantifies that risk across 7 measurable factors, gives you a structured land trust checklist to minimize exposure, and models your refinance exit timeline so you know exactly when you can eliminate the risk entirely.",
+    "whenToUse": [
+      "Before structuring any subject-to acquisition — run the risk score to understand your exposure level",
+      "When deciding between direct deed, land trust, or LLC transfer methods for title",
+      "To plan your exit timeline: when will you have enough equity and credit to refinance?",
+      "When presenting to a seller — show them you've quantified and mitigated the risks of leaving their mortgage in place"
+    ],
+    "keyInsight": "In practice, lenders almost never enforce due-on-sale clauses on performing loans transferred into land trusts. The cost of enforcement exceeds the benefit when payments are current. But 'almost never' isn't 'never' — and the consequences are severe. This tool helps you stay in the 'almost never' category by identifying and mitigating every trigger factor.",
+    "proTip": "The two biggest triggers are insurance changes and late payments. If you do nothing else, keep the seller's insurance policy in place and set up auto-pay from a dedicated account. These two steps alone eliminate 60% of enforcement risk."
+  },
+  "kpiExplains": {
+    "kpiRisk": "<strong>Risk Score (1-100)</strong> — Composite score measuring the probability of due-on-sale enforcement based on 7 weighted factors. Green (1-30) means low risk with standard precautions. Yellow (31-60) means moderate risk requiring careful structuring. Red (61-100) means high risk — consider alternative acquisition methods.",
+    "kpiChecklist": "<strong>Checklist Completion</strong> — Progress through the 12-step land trust structure checklist. Each completed item reduces your enforcement risk. Target 100% completion before closing the deal. Items left incomplete represent potential vulnerabilities in your structure.",
+    "kpiEquity": "<strong>Projected Equity at Refi</strong> — Your estimated equity position when you refinance, combining mortgage paydown through amortization plus property appreciation over the hold period. Higher equity means better refinance terms and lower LTV requirements.",
+    "kpiPayment": "<strong>Monthly Payment Change</strong> — The difference between your current subject-to payment and the estimated payment after refinancing at market rates. A positive number means your payment increases (expected in a high-rate environment). Plan your cash flow accordingly."
+  },
+  "coupled": [
+    {
+      "name": "Subject-To Calculator",
+      "folder": "subject-to",
+      "reason": "Run the full subject-to deal analysis with cash flow, equity capture, and comparison vs. new financing"
+    },
+    {
+      "name": "Seller Financing",
+      "folder": "seller-financing",
+      "reason": "Compare subject-to risk against seller financing as an alternative creative structure"
+    },
+    {
+      "name": "Wrap Calculator",
+      "folder": "wrap-calculator",
+      "reason": "Model a wrap mortgage on top of the subject-to for additional monthly arbitrage profit"
+    }
+  ]
+};</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+<script src="../shared/workflow-context.js"></script>
+</body>
+</html>
