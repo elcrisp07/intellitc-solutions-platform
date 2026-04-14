@@ -540,7 +540,7 @@
       </div>
 
     
-    <!-- ── Certification Readiness Check ──────────────────────────────── -->
+    <!-- ── Certificate Readiness Check ──────────────────────────────── -->
     <div class="readiness-wrap" id="readinessWrap_fr">
       <div class="readiness-card">
         <div class="readiness-header" onclick="rcToggle_fr()" role="button" tabindex="0" aria-expanded="false" aria-controls="rcBody_fr">
@@ -550,7 +550,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 Readiness Check
               </div>
-              <h3>Certification Readiness Check</h3>
+              <h3>Certificate Readiness Check</h3>
               <p>5 questions · Ungraded · Previews ICREA Associate difficulty</p>
             </div>
           </div>
@@ -721,7 +721,7 @@
               <div style="display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2)">
                 <a href="../certification/" class="rc-result-link" id="rcLink_fr" style="display:none">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  View Certification
+                  View Certificate Program
                 </a>
                 <button class="rc-retry" onclick="rcReset_fr()">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
@@ -823,18 +823,18 @@
 
       if (score >= 4) {
         resultDiv.classList.add('green');
-        msgDiv.textContent = "Great work! Your results suggest you\'re ready for the ICREA Associate Assessment. The certification exam covers these concepts at a similar depth — go ahead and give it a shot.";
+        msgDiv.textContent = "Great work! Your results suggest you\'re ready for the ICREA Associate Assessment. The certificate exam covers these concepts at a similar depth — go ahead and give it a shot.";
         linkEl.style.display = 'inline-flex';
         linkEl.textContent = '';
-        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> View ICREA Certification';
+        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> View ICREA Certificate Program';
       } else if (score >= 2) {
         resultDiv.classList.add('yellow');
-        msgDiv.textContent = "Almost there! Review the questions you missed above, revisit those steps in this path, then try the certification when you feel more confident.";
+        msgDiv.textContent = "Almost there! Review the questions you missed above, revisit those steps in this path, then try the certificate assessment when you feel more confident.";
         linkEl.style.display = 'inline-flex';
-        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Preview ICREA Certification';
+        linkEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Preview ICREA Certificate Program';
       } else {
         resultDiv.classList.add('red');
-        msgDiv.textContent = "We recommend working through this Learning Path again before attempting the ICREA certification. Focus on the highlighted correct answers above and use the calculators to reinforce each concept.";
+        msgDiv.textContent = "We recommend working through this Learning Path again before attempting the ICREA certificate assessment. Focus on the highlighted correct answers above and use the calculators to reinforce each concept.";
         linkEl.style.display = 'none';
       }
     };
