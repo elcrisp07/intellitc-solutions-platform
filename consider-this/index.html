@@ -124,9 +124,101 @@ body{background:var(--color-bg,#f7f6f2);color:var(--color-text,#28251d);}
 }
 .home-link:hover{color:#01696f;}
 .home-link svg{width:20px;height:20px;}
+
+/* ---- Intro Overlay ---- */
+.intro-overlay{
+  position:fixed;inset:0;z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  animation:introFadeIn 0.4s ease;
+}
+@keyframes introFadeIn{from{opacity:0}to{opacity:1}}
+.intro-card{
+  background:var(--color-bg,#f7f6f2);
+  border:1px solid var(--color-border,#d4d1ca);
+  border-radius:16px;
+  max-width:520px;
+  width:90%;
+  padding:2.5rem 2rem 2rem;
+  box-shadow:0 12px 48px rgba(0,0,0,0.2);
+  text-align:center;
+  animation:introSlideUp 0.4s ease;
+}
+@keyframes introSlideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.intro-icon{
+  font-size:2.5rem;
+  margin-bottom:1rem;
+  line-height:1;
+}
+.intro-card h2{
+  font-family:'DM Sans',sans-serif;
+  font-size:1.35rem;
+  font-weight:700;
+  color:var(--color-text,#28251d);
+  margin-bottom:0.75rem;
+  letter-spacing:-0.01em;
+}
+.intro-card p{
+  font-size:0.92rem;
+  line-height:1.6;
+  color:var(--color-muted,#7a7974);
+  margin-bottom:1.5rem;
+}
+.intro-card p strong{
+  color:var(--color-text,#28251d);
+  font-weight:600;
+}
+.intro-proceed{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:linear-gradient(135deg,#01696f,#014d52);
+  color:#fff;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;
+  font-weight:700;
+  padding:0.75rem 1.75rem;
+  border:none;
+  border-radius:9999px;
+  cursor:pointer;
+  transition:transform 0.15s,box-shadow 0.15s;
+  box-shadow:0 2px 12px rgba(1,105,111,0.3);
+  letter-spacing:0.01em;
+}
+.intro-proceed:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(1,105,111,0.4);
+}
+.intro-proceed svg{width:18px;height:18px;}
+
+/* Fade out */
+.intro-overlay.closing{
+  animation:introFadeOut 0.35s ease forwards;
+}
+.intro-overlay.closing .intro-card{
+  animation:introSlideDown 0.35s ease forwards;
+}
+@keyframes introFadeOut{from{opacity:1}to{opacity:0}}
+@keyframes introSlideDown{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(16px)}}
 </style>
 </head>
 <body>
+
+<!-- Intro Overlay — appears before user sees the mind map -->
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-card">
+    <div class="intro-icon">🧭</div>
+    <h2>Before You Explore</h2>
+    <p>What you're about to see is a <strong>concept map</strong> — a visual breakdown of how real estate leverage, risk, and wealth-building actually connect behind the scenes.</p>
+    <p>You don't need to understand every branch right away. <strong>Tap any topic to expand it.</strong> Each node reveals a concept that the platform's calculators and guides already help you apply.</p>
+    <p>Think of this as your blueprint — the system that makes every number on IntelliTC make sense.</p>
+    <button class="intro-proceed" id="introClose">
+      Proceed to Conquer Risk
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+</div>
+
 <!-- Mind Map renders as the entire page -->
 <div class="mindmap-overlay visible" id="mindmapPage">
   <div class="mindmap-header">
@@ -391,6 +483,18 @@ body{background:var(--color-bg,#f7f6f2);color:var(--color-text,#28251d);}
 
   /* Store reference for resize */
   window._considerThisRender = renderD3MindMap;
+})();
+</script>
+<script>
+/* Intro overlay dismiss */
+(function(){
+  var overlay = document.getElementById('introOverlay');
+  var btn = document.getElementById('introClose');
+  if(!overlay||!btn) return;
+  btn.addEventListener('click',function(){
+    overlay.classList.add('closing');
+    setTimeout(function(){ overlay.remove(); },350);
+  });
 })();
 </script>
 <script>
