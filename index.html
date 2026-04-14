@@ -776,6 +776,70 @@
 .underwriting-portal-banner:hover .banner-cta {
   background: #b88400;
 }
+/* Consider This Banner */
+.consider-this-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.75rem;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 12px rgba(15,52,96,0.3);
+}
+.consider-this-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(15,52,96,0.45);
+}
+.consider-this-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.consider-this-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.consider-this-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.consider-this-title {
+  font-family: var(--font-display, 'DM Sans', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+.consider-this-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 400;
+}
+.consider-this-cta {
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.15s, border-color 0.15s;
+}
+.consider-this-banner:hover .consider-this-cta {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.35);
+}
+@media(max-width:600px){
+  .consider-this-banner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .consider-this-cta { align-self: stretch; text-align: center; }
+}
 .calc-card {
   background: var(--color-surface-offset);
   border: 1px solid var(--color-divider);
@@ -1241,6 +1305,20 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <source src="./assets/intro-video.mp4" type="video/mp4">
     </video>
   </div>
+</div>
+
+<!-- ═══════ CONSIDER THIS ═══════ -->
+<div style="max-width:900px;margin:0 auto;padding:0 var(--space-5) var(--space-4)">
+  <a href="./consider-this/index.html" class="consider-this-banner">
+    <div class="consider-this-left">
+      <div class="consider-this-icon">🔑</div>
+      <div class="consider-this-text">
+        <span class="consider-this-title">Consider This</span>
+        <span class="consider-this-subtitle">Before you run the numbers — understand the system</span>
+      </div>
+    </div>
+    <span class="consider-this-cta">Explore →</span>
+  </a>
 </div>
 
 <!-- ═══════ ROLE-BASED ENTRY POINTS ═══════ -->
@@ -2040,6 +2118,7 @@ function clearRecentCalcs() {
     { name:'Seller Financing', url:'./seller-financing/index.html', cat:'Financing, Tax & Market', desc:'Carry-back mortgage terms and analysis', kw:'seller financing carry back owner note mortgage' },
     { name:'Foundation of Creative Finance', url:'./creative-finance-casestudy/index.html', cat:'Creative Financing', desc:'Interactive case study — Five Pillars of Returns and solving seller problems', kw:'creative finance case study five pillars seller problem contract for deed appreciation leverage wealth' },
     { name:'Subject-To Risk Dashboard', url:'./subject-to-risk-dashboard/index.html', cat:'Creative Financing', desc:'Due-on-sale trigger score, land trust checklist, refinance exit timeline', kw:'subject to risk dashboard due on sale trigger land trust checklist refinance exit garn st germain' },
+    { name:'Consider This', url:'./consider-this/index.html', cat:'Featured', desc:'Understand the system — strategic leverage, the math of spread, risk management, and financial sovereignty', kw:'consider this leverage spread risk margin inflation credit architecture sovereignty debt strategy wealth' },
     { name:'Sources & Uses', url:'./sources-uses/index.html', cat:'Financing, Tax & Market', desc:'Project capital stack and funding breakdown', kw:'sources uses capital stack funding equity debt' },
     { name:'Strategic Market Valuation', url:'./strategic-market-valuation/index.html', cat:'Financing, Tax & Market', desc:'CMA and market value assessment', kw:'market valuation cma comparable value estimate' },
     { name:'Buffett Indicator', url:'./buffett-indicator/index.html', cat:'Financing, Tax & Market', desc:'Real estate market cycle position', kw:'buffett indicator market cycle position overvalued' },

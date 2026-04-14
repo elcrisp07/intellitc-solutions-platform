@@ -81,6 +81,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://intellitcsolutions.com/consider-this/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://intellitcsolutions.com/deal-grading/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

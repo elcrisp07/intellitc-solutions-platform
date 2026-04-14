@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/consider-this">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consider This — IntelliTC Solutions</title>
+<meta name="description" content="Understand the system: strategic leverage, the math of spread, risk management, and the path to financial sovereignty — an interactive concept map.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Consider This — IntelliTC Solutions">
+<meta property="og:description" content="Understand the system: strategic leverage, the math of spread, risk management, and the path to financial sovereignty.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/consider-this">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Consider This — IntelliTC Solutions">
+<meta name="twitter:description" content="Understand the system: strategic leverage, the math of spread, risk management, and the path to financial sovereignty.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Consider This — Understand the System",
+  "description": "An interactive concept map exploring strategic leverage, the mathematics of spread, risk management, credit architecture, and the path to financial sovereignty.",
+  "url": "https://intellitcsolutions.com/consider-this/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<style>
+/* ---- Consider This — Full-Page Mind Map Experience ---- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;}
+body{background:var(--color-bg,#f7f6f2);color:var(--color-text,#28251d);}
+
+/* Dark mode */
+@media(prefers-color-scheme:dark){
+  :root{--color-bg:#171614;--color-text:#cdccca;--color-surface:#1c1b19;--color-border:#393836;--color-muted:#797876;}
+}
+[data-theme="dark"]{--color-bg:#171614;--color-text:#cdccca;--color-surface:#1c1b19;--color-border:#393836;--color-muted:#797876;}
+[data-theme="light"]{--color-bg:#f7f6f2;--color-text:#28251d;--color-surface:#f9f8f5;--color-border:#d4d1ca;--color-muted:#7a7974;}
+
+/* The overlay IS the page — make it fill viewport immediately */
+.mindmap-overlay{
+  position:fixed;inset:0;z-index:999;
+  background:var(--color-bg,#f7f6f2);
+  display:flex;flex-direction:column;
+}
+.mindmap-overlay.visible{display:flex;}
+
+/* Override close button to navigate home */
+.mindmap-close-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:none;border:1px solid var(--color-border,#d4d1ca);
+  border-radius:8px;padding:0.45rem 1rem;
+  font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;
+  color:var(--color-text,#28251d);cursor:pointer;
+  transition:background 0.15s,border-color 0.15s;
+}
+.mindmap-close-btn:hover{background:var(--color-surface,#f9f8f5);border-color:var(--color-muted,#7a7974);}
+.mindmap-close-btn svg{width:18px;height:18px;}
+
+/* Header bar */
+.mindmap-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 1.5rem;border-bottom:1px solid var(--color-border,#d4d1ca);
+  background:var(--color-bg,#f7f6f2);flex-shrink:0;
+}
+.mindmap-header-left{display:flex;align-items:center;gap:0.75rem;}
+.mindmap-header-title{font-size:1.15rem;font-weight:700;letter-spacing:-0.01em;}
+.mindmap-header-subtitle{font-size:0.8rem;color:var(--color-muted,#7a7974);margin-top:0.1rem;}
+
+/* Mind map area */
+.mindmap-container{flex:1;overflow:hidden;position:relative;}
+
+/* Hint footer */
+.mindmap-hint{
+  text-align:center;padding:0.6rem;font-size:0.75rem;
+  color:var(--color-muted,#7a7974);border-top:1px solid var(--color-border,#d4d1ca);
+  flex-shrink:0;
+}
+
+/* Dark mode icon */
+.theme-toggle{
+  position:fixed;bottom:1rem;right:1rem;z-index:1001;
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--color-border,#d4d1ca);
+  background:var(--color-surface,#f9f8f5);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;font-size:1.1rem;
+}
+.theme-toggle:hover{background:var(--color-bg,#f7f6f2);}
+
+/* Home link in header */
+.home-link{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  text-decoration:none;color:var(--color-text,#28251d);
+  font-weight:600;font-size:0.95rem;
+  transition:color 0.15s;
+}
+.home-link:hover{color:#01696f;}
+.home-link svg{width:20px;height:20px;}
+</style>
+</head>
+<body>
+<!-- Mind Map renders as the entire page -->
+<div class="mindmap-overlay visible" id="mindmapPage">
+  <div class="mindmap-header">
+    <div class="mindmap-header-left">
+      <a href="../index.html" class="home-link" aria-label="Back to homepage">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        IntelliTC
+      </a>
+      <div>
+        <div class="mindmap-header-title">Understand the System</div>
+        <div class="mindmap-header-subtitle">Concept Map — click nodes to expand / collapse</div>
+      </div>
+    </div>
+    <a href="../index.html" class="mindmap-close-btn" aria-label="Back to homepage">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Back
+    </a>
+  </div>
+  <div class="mindmap-container" id="mindmapContainer"></div>
+  <div class="mindmap-hint">Click a topic to expand · Click again to collapse · Scroll to zoom · Drag to pan</div>
+</div>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+
+<script src="mindmap-data.js"></script>
+<script>
+/* ============================================================
+   Consider This — Auto-render Mind Map (no toggle needed)
+   ============================================================
+   This page IS the mind map. We load the shared D3 renderer
+   directly rather than using the toggle-based mindmap.js.
+   ============================================================ */
+(function(){
+  'use strict';
+
+  const DATA = window.MINDMAP_DATA;
+  if(!DATA||!DATA.tree) return;
+
+  const BRANCH_COLORS = [
+    '#01696f','#D19900','#a13544','#006494',
+    '#7a39bb','#437a22','#964219','#da7101'
+  ];
+
+  let hierRoot = null;
+
+  function renderD3MindMap(){
+    const container = document.getElementById('mindmapContainer');
+    if(!container) return;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    if(typeof d3==='undefined'){
+      const script = document.createElement('script');
+      script.src='https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
+      script.onload=()=>renderD3MindMap();
+      document.head.appendChild(script);
+      return;
+    }
+
+    container.innerHTML='';
+
+    const svg = d3.select(container).append('svg')
+      .attr('width',width).attr('height',height)
+      .style('font-family',"'DM Sans',sans-serif");
+
+    const g = svg.append('g');
+
+    const zoom = d3.zoom()
+      .scaleExtent([0.15,4])
+      .on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom);
+
+    if(!hierRoot){
+      hierRoot = d3.hierarchy(DATA.tree);
+      hierRoot.descendants().forEach(d=>{
+        if(d.children && d.depth>=1){
+          d._children=d.children;
+          d.children=null;
+        }
+      });
+    }
+
+    function update(){
+      const tree = d3.tree().nodeSize([38,320]);
+      tree(hierRoot);
+
+      const nodes = hierRoot.descendants();
+      const links = hierRoot.links();
+
+      g.selectAll('*').remove();
+
+      const isDark = document.documentElement.getAttribute('data-theme')==='dark' ||
+        (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme:dark)').matches);
+
+      g.selectAll('.link')
+        .data(links)
+        .join('path')
+        .attr('class','link')
+        .attr('d',d=>{
+          return `M${d.source.y},${d.source.x}
+                  C${(d.source.y+d.target.y)/2},${d.source.x}
+                   ${(d.source.y+d.target.y)/2},${d.target.x}
+                   ${d.target.y},${d.target.x}`;
+        })
+        .attr('fill','none')
+        .attr('stroke',d=>{
+          let n=d.source;
+          while(n.depth>1)n=n.parent;
+          const idx=n.parent?n.parent.children.indexOf(n):0;
+          return BRANCH_COLORS[idx%BRANCH_COLORS.length];
+        })
+        .attr('stroke-width',d=>Math.max(1.5,3-d.source.depth*0.5))
+        .attr('stroke-opacity',0.5);
+
+      const tooltip = d3.select(container).selectAll('.mindmap-tooltip').data([0])
+        .join('div').attr('class','mindmap-tooltip')
+        .style('position','absolute').style('pointer-events','none')
+        .style('background',isDark?'#2a2a2a':'#fff')
+        .style('color',isDark?'#e0e0e0':'#333')
+        .style('border','1px solid '+(isDark?'#555':'#ddd'))
+        .style('border-radius','8px').style('padding','10px 14px')
+        .style('font-size','0.82rem').style('max-width','340px')
+        .style('line-height','1.45').style('box-shadow','0 4px 16px rgba(0,0,0,0.12)')
+        .style('opacity',0).style('z-index','10000')
+        .style('transition','opacity 0.15s');
+
+      const node = g.selectAll('.node')
+        .data(nodes)
+        .join('g')
+        .attr('class','node')
+        .attr('transform',d=>`translate(${d.y},${d.x})`)
+        .style('cursor','pointer')
+        .on('click',(event,d)=>{
+          if(d._children){d.children=d._children;d._children=null;}
+          else if(d.children){d._children=d.children;d.children=null;}
+          update();
+        })
+        .on('mouseenter',(event,d)=>{
+          if(d.data.desc){
+            const cRect=container.getBoundingClientRect();
+            tooltip.html(d.data.desc)
+              .style('left',(event.clientX-cRect.left+16)+'px')
+              .style('top',(event.clientY-cRect.top-10)+'px')
+              .style('opacity',1);
+          }
+        })
+        .on('mousemove',(event,d)=>{
+          if(d.data.desc){
+            const cRect=container.getBoundingClientRect();
+            tooltip.style('left',(event.clientX-cRect.left+16)+'px')
+              .style('top',(event.clientY-cRect.top-10)+'px');
+          }
+        })
+        .on('mouseleave',()=>tooltip.style('opacity',0));
+
+      node.append('circle')
+        .attr('r',d=>d.depth===0?10:d._children?7:5)
+        .attr('fill',d=>{
+          if(d.depth===0)return '#01696f';
+          let n=d;while(n.depth>1)n=n.parent;
+          const idx=n.parent?n.parent.children.indexOf(n):0;
+          const col=BRANCH_COLORS[idx%BRANCH_COLORS.length];
+          return d._children?col:(isDark?'#444':'#ccc');
+        })
+        .attr('stroke',d=>{
+          if(d.depth===0)return '#014d52';
+          let n=d;while(n.depth>1)n=n.parent;
+          const idx=n.parent?n.parent.children.indexOf(n):0;
+          return BRANCH_COLORS[idx%BRANCH_COLORS.length];
+        })
+        .attr('stroke-width',d=>d.depth===0?3:2);
+
+      // Expand/collapse indicator
+      node.filter(d=>d._children||d.children&&d.depth>0)
+        .append('text')
+        .attr('x',0).attr('y',1)
+        .attr('text-anchor','middle')
+        .attr('dominant-baseline','middle')
+        .attr('fill','#fff')
+        .attr('font-size',d=>d.depth===0?'11px':'9px')
+        .attr('font-weight','700')
+        .attr('pointer-events','none')
+        .text(d=>d._children?'+':'−');
+
+      node.append('text')
+        .attr('dy','0.35em')
+        .attr('x',d=>d.depth===0?16:d._children||d.children?12:10)
+        .attr('text-anchor','start')
+        .attr('fill',isDark?'#e0e0e0':'#333')
+        .attr('font-size',d=>d.depth===0?'15px':d.depth===1?'13px':'12px')
+        .attr('font-weight',d=>d.depth<=1?'700':'500')
+        .text(d=>d.data.name)
+        .each(function(d){
+          const bbox=this.getBBox();
+          d._textWidth=bbox.width;
+        });
+
+      // Count badge for branches
+      node.filter(d=>(d._children||d.children)&&d.depth>=1)
+        .append('text')
+        .attr('dy','0.35em')
+        .attr('x',d=>(d.depth===0?16:12)+d._textWidth+8)
+        .attr('text-anchor','start')
+        .attr('fill',isDark?'#888':'#999')
+        .attr('font-size','10px')
+        .attr('font-weight','500')
+        .text(d=>{
+          const c=d._children||d.children;
+          return c?`(${c.length})`:'';
+        });
+
+      // Center on root
+      const rootNode=nodes[0];
+      const tx=width/3-rootNode.y;
+      const ty=height/2-rootNode.x;
+      svg.call(zoom.transform,d3.zoomIdentity.translate(tx,ty));
+    }
+
+    update();
+
+    // Rerender on resize
+    let resizeTimer;
+    const ro = new ResizeObserver(()=>{
+      clearTimeout(resizeTimer);
+      resizeTimer=setTimeout(()=>{
+        svg.attr('width',container.clientWidth).attr('height',container.clientHeight);
+        update();
+      },200);
+    });
+    ro.observe(container);
+  }
+
+  /* Render on load */
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(renderD3MindMap,100));
+  } else {
+    setTimeout(renderD3MindMap,100);
+  }
+
+  /* Dark mode toggle */
+  const themeBtn = document.getElementById('themeToggle');
+  function getTheme(){
+    return localStorage.getItem('intellitc-theme')||
+      (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  }
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    themeBtn.textContent=t==='dark'?'☀️':'🌙';
+    localStorage.setItem('intellitc-theme',t);
+    // Re-render mind map for color update
+    hierRoot=null;
+    setTimeout(renderD3MindMap,50);
+  }
+  applyTheme(getTheme());
+  themeBtn.addEventListener('click',()=>{
+    applyTheme(getTheme()==='dark'?'light':'dark');
+  });
+
+  /* Store reference for resize */
+  window._considerThisRender = renderD3MindMap;
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('../sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
