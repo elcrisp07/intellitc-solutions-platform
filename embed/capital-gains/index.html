@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/capital-gains">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Gains Tax Impact Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Identify the 7 costly capital gains tax mistakes before you sell. Calculate federal tax, NIIT, Medicare IRMAA surcharges, Social Security impact, and state taxes — then see optimization scenarios.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Capital Gains Tax Impact Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Don't leave money on the table. Analyze capital gains tax impact across 7 critical dimensions before you sell.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/capital-gains">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/market-presets.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<style>
+/* ── Hub Page ── */
+.cg-hub { max-width:860px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-20); }
+.cg-hub-badge {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  background:var(--color-primary-surface); color:var(--color-primary);
+  font-size:var(--text-xs); font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  padding:var(--space-1) var(--space-3); border-radius:var(--radius-full);
+  border:1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+  margin-bottom:var(--space-4);
+}
+.cg-hub-title { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; color:var(--color-text); line-height:1.15; margin-bottom:var(--space-4); }
+.cg-hub-title span { color:var(--color-primary); }
+.cg-hub-desc { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.7; max-width:640px; margin-bottom:var(--space-8); }
+
+/* Mistakes Grid */
+.cg-mistakes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:var(--space-3); margin-bottom:var(--space-10); }
+.cg-mistake {
+  display:flex; align-items:flex-start; gap:var(--space-3);
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4);
+}
+.cg-mistake-num {
+  width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:var(--text-xs); font-weight:700; color:#fff;
+  background:#c0392b;
+}
+.cg-mistake-text strong { display:block; font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin-bottom:2px; }
+.cg-mistake-text span { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.5; }
+
+/* CTA Card */
+.cg-cta-card {
+  background:var(--color-surface); border:2px solid var(--color-primary);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:var(--space-6); box-shadow:0 4px 24px rgba(1,105,111,.10);
+}
+.cg-cta-card-left h3 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); }
+.cg-cta-card-left p { font-size:var(--text-sm); color:var(--color-text-muted); }
+.btn-cg-open {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-sm); font-weight:600;
+  padding:var(--space-3) var(--space-6); border-radius:var(--radius-md);
+  border:none; cursor:pointer; white-space:nowrap; flex-shrink:0;
+  transition:background var(--transition-interactive);
+}
+.btn-cg-open:hover { background:var(--color-primary-hover); }
+
+/* Callouts */
+.cg-callouts { display:flex; flex-direction:column; gap:var(--space-3); margin-top:var(--space-6); }
+.cg-callout {
+  display:flex; align-items:flex-start; gap:var(--space-4);
+  padding:var(--space-5); border-radius:var(--radius-lg);
+  line-height:1.7; font-size:var(--text-sm); border-left:3.5px solid;
+}
+.cg-callout-icon {
+  flex-shrink:0; width:38px; height:38px; border-radius:var(--radius-md);
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.cg-callout--teal {
+  background:var(--color-primary-surface);
+  border-left-color:var(--color-primary); color:var(--color-text);
+}
+.cg-callout--teal .cg-callout-icon {
+  background:color-mix(in srgb, var(--color-primary) 18%, transparent);
+  color:var(--color-primary);
+}
+.cg-callout--teal strong { color:var(--color-primary); font-weight:600; }
+.cg-callout p { margin:0; }
+@media(max-width:480px){ .cg-callout { flex-direction:column; gap:var(--space-3); } }
+
+/* ── Worksheet Panel ── */
+.cg-panel { display:none; }
+.cg-panel.active { display:block; }
+.cg-back { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); color:var(--color-text-muted); cursor:pointer; background:none; border:none; padding:var(--space-4) var(--space-6) var(--space-2); text-decoration:none; }
+.cg-back:hover { color:var(--color-primary); }
+.cg-worksheet { max-width:1100px; margin:0 auto; padding:0 var(--space-6) var(--space-20); }
+
+/* Section Headers */
+.cg-section { margin-bottom:var(--space-8); }
+.cg-section-head {
+  display:flex; align-items:center; gap:var(--space-3);
+  margin-bottom:var(--space-5); padding-bottom:var(--space-3);
+  border-bottom:2px solid var(--color-primary);
+}
+.cg-section-num {
+  width:28px; height:28px; border-radius:50%;
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-xs); font-weight:700;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.cg-section-head h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0; }
+.cg-section-head p { font-size:var(--text-xs); color:var(--color-text-muted); margin:0; }
+
+/* Form Grid */
+.cg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
+@media(max-width:768px){ .cg-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .cg-grid { grid-template-columns:1fr; } }
+.cg-grid .form-group.span2 { grid-column:span 2; }
+.cg-grid .form-group.span3 { grid-column:span 3; }
+@media(max-width:768px){ .cg-grid .form-group.span3 { grid-column:span 2; } }
+@media(max-width:480px){ .cg-grid .form-group.span2, .cg-grid .form-group.span3 { grid-column:span 1; } }
+
+.form-group label {
+  display:block; font-size:var(--text-xs); font-weight:600;
+  color:var(--color-text-muted); letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:var(--space-2);
+}
+.input-wrap { position:relative; display:flex; align-items:center; }
+.input-prefix, .input-suffix {
+  position:absolute; font-size:var(--text-sm); font-weight:500;
+  color:var(--color-text-muted); pointer-events:none;
+}
+.input-prefix { left:0.75rem; }
+.input-suffix { right:0.75rem; }
+.form-group input, .form-group select {
+  width:100%; padding:0.625rem 0.75rem;
+  border:1px solid var(--color-border); border-radius:var(--radius-md);
+  font-size:var(--text-sm); background:var(--color-bg); color:var(--color-text);
+  font-family:var(--font-body); font-variant-numeric:tabular-nums;
+  transition:border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+}
+.form-group input:focus, .form-group select:focus {
+  outline:none; border-color:var(--color-primary);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+.has-prefix input { padding-left:1.75rem; }
+.has-suffix input { padding-right:2rem; }
+.form-hint { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); line-height:1.4; }
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm); padding:2px var(--space-2); cursor:pointer; transition:all var(--transition-interactive); }
+.bm-tag:hover { background:var(--color-primary-surface); border-color:var(--color-primary); color:var(--color-primary); }
+
+/* Calculate Button */
+.cg-calc-btn {
+  display:flex; align-items:center; justify-content:center; gap:var(--space-2);
+  width:100%; padding:var(--space-4);
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-base); font-weight:700;
+  border:none; border-radius:var(--radius-lg); cursor:pointer; margin-top:var(--space-2);
+  transition:background var(--transition-interactive), transform var(--transition-interactive);
+}
+.cg-calc-btn:hover { background:var(--color-primary-hover); transform:translateY(-1px); }
+
+/* ── Results ── */
+.cg-results { display:none; margin-top:var(--space-10); }
+.cg-results.show { display:block; }
+
+/* Tax Impact Hero */
+.cg-impact-hero {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+  display:flex; align-items:center; gap:var(--space-6); margin-bottom:var(--space-6);
+  box-shadow:var(--shadow-md);
+}
+.cg-impact-circle {
+  width:100px; height:100px; border-radius:50%; flex-shrink:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-family:var(--font-mono); color:#fff;
+}
+.cg-impact-circle .rate { font-size:1.6rem; font-weight:800; line-height:1; }
+.cg-impact-circle .label { font-size:0.6rem; font-weight:500; text-transform:uppercase; letter-spacing:.05em; opacity:.85; }
+.cg-impact-info h2 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin-bottom:var(--space-1); }
+.cg-impact-info p { font-size:var(--text-sm); color:var(--color-text-muted); margin:0; }
+
+/* Tax Breakdown Grid */
+.cg-breakdown-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-bottom:var(--space-6); }
+@media(max-width:768px){ .cg-breakdown-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .cg-breakdown-grid { grid-template-columns:1fr 1fr; } }
+.cg-tax-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4);
+}
+.cg-tax-card .card-label { font-size:var(--text-xs); color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em; margin-bottom:var(--space-1); }
+.cg-tax-card .card-value { font-size:var(--text-lg); font-weight:700; color:var(--color-text); font-family:var(--font-mono); }
+.cg-tax-card .card-detail { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-1); }
+.cg-tax-card.highlight { border-color:var(--color-primary); background:var(--color-primary-surface); }
+
+/* 7-Mistake Scorecard */
+.cg-scorecard { margin-bottom:var(--space-8); }
+.cg-scorecard h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin-bottom:var(--space-4); }
+.cg-score-list { display:flex; flex-direction:column; gap:var(--space-2); }
+.cg-score-item {
+  display:flex; align-items:center; gap:var(--space-3);
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-md); padding:var(--space-3) var(--space-4);
+}
+.cg-score-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.cg-score-dot.green { background:#27ae60; }
+.cg-score-dot.yellow { background:#f39c12; }
+.cg-score-dot.red { background:#c0392b; }
+.cg-score-name { font-size:var(--text-sm); font-weight:600; color:var(--color-text); flex:1; }
+.cg-score-msg { font-size:var(--text-xs); color:var(--color-text-muted); max-width:400px; text-align:right; }
+
+/* Comparison Table */
+.cg-comparison { margin-bottom:var(--space-8); }
+.cg-comparison h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin-bottom:var(--space-4); }
+.cg-comp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
+@media(max-width:640px){ .cg-comp-grid { grid-template-columns:1fr; } }
+.cg-comp-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5); text-align:center;
+}
+.cg-comp-card.best { border-color:var(--color-primary); border-width:2px; }
+.cg-comp-card.best::before {
+  content:'Lowest Tax'; display:block;
+  font-size:var(--text-xs); font-weight:700; color:var(--color-primary);
+  text-transform:uppercase; letter-spacing:.06em; margin-bottom:var(--space-2);
+}
+.cg-comp-card h4 { font-size:var(--text-sm); font-weight:700; color:var(--color-text); margin-bottom:var(--space-3); }
+.cg-comp-total { font-size:var(--text-xl); font-weight:800; color:var(--color-text); font-family:var(--font-mono); }
+.cg-comp-rate { font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1); }
+.cg-comp-detail { font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-3); line-height:1.5; }
+
+/* Export Button Row */
+.cg-export-row { display:flex; gap:var(--space-3); flex-wrap:wrap; margin-top:var(--space-6); }
+.btn-cg-export {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  padding:var(--space-3) var(--space-5); border-radius:var(--radius-md);
+  font-size:var(--text-sm); font-weight:600; cursor:pointer;
+  border:1.5px solid var(--color-border); background:var(--color-surface);
+  color:var(--color-text); transition:all var(--transition-interactive);
+}
+.btn-cg-export:hover { border-color:var(--color-primary); color:var(--color-primary); }
+
+/* Disclaimer */
+.cg-disclaimer {
+  font-size:var(--text-xs); color:var(--color-text-faint);
+  margin-top:var(--space-8); padding-top:var(--space-4);
+  border-top:1px solid var(--color-border); line-height:1.6;
+}
+
+@media(max-width:640px){
+  .cg-cta-card { flex-direction:column; align-items:flex-start; }
+  .cg-impact-hero { flex-direction:column; text-align:center; }
+  .cg-score-item { flex-direction:column; align-items:flex-start; gap:var(--space-1); }
+  .cg-score-msg { text-align:left; max-width:100%; }
+}
+</style>
+
+<style>
+  /* Embed mode overrides */
+  [data-theme-toggle] { display: none !important; }
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+<!-- ═══ HEADER ═══ -->
+
+
+<!-- ══════════════════════════════════════════════════
+     HUB PAGE
+═══════════════════════════════════════════════════ -->
+<div id="cgHub" class="cg-hub active">
+  <div class="cg-hub-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Tax Strategy
+  </div>
+  <h1 class="cg-hub-title">Capital Gains Tax <span>Impact Analyzer</span></h1>
+  <p class="cg-hub-desc">Before you sell, know what you'll owe. This tool calculates your total tax burden across seven critical dimensions that simple calculators miss — including the 3.8% NIIT surtax, Medicare IRMAA surcharges, and Social Security taxability shifts.</p>
+
+  <h2 style="font-size:var(--text-sm);font-weight:700;color:var(--color-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--space-4)">The 7 Mistakes This Tool Flags</h2>
+  <div class="cg-mistakes-grid">
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">1</div>
+      <div class="cg-mistake-text"><strong>Ignoring the NIIT Surtax</strong><span>3.8% extra tax when MAGI exceeds $200K (single) / $250K (married)</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">2</div>
+      <div class="cg-mistake-text"><strong>Triggering Medicare IRMAA</strong><span>Premium surcharges up to $5,300/yr per person from a 2-year-old gain</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">3</div>
+      <div class="cg-mistake-text"><strong>Bunching All Gains in One Year</strong><span>Selling everything at once pushes you into higher brackets</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">4</div>
+      <div class="cg-mistake-text"><strong>Not Harvesting Losses</strong><span>Unused losses can offset gains dollar-for-dollar plus $3K/yr ordinary income</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">5</div>
+      <div class="cg-mistake-text"><strong>Selling Before Step-Up in Basis</strong><span>Heirs inherit at fair market value — wiping out all deferred gains</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">6</div>
+      <div class="cg-mistake-text"><strong>Missing the Home Sale Exclusion</strong><span>Up to $250K/$500K tax-free on your primary residence</span></div>
+    </div>
+    <div class="cg-mistake">
+      <div class="cg-mistake-num">7</div>
+      <div class="cg-mistake-text"><strong>Ignoring the 0% Bracket Window</strong><span>Retirees with lower income may qualify for 0% on long-term gains</span></div>
+    </div>
+  </div>
+
+  <div class="cg-cta-card">
+    <div class="cg-cta-card-left">
+      <h3>Capital Gains Tax Impact Analyzer</h3>
+      <p>Full analysis — no account required</p>
+    </div>
+    <button class="btn-cg-open" onclick="openAnalyzer()">
+      Open Analyzer
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+
+  <div class="cg-callouts">
+    <div class="cg-callout cg-callout--teal">
+      <div class="cg-callout-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <p><strong>No AI required.</strong> All calculations run locally in your browser using 2026 IRS brackets. Nothing is stored, nothing is sent to a server. This tool is for educational purposes — consult a tax professional before making decisions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     ANALYZER PANEL
+═══════════════════════════════════════════════════ -->
+<div id="cgPanel" class="cg-panel">
+  <button class="cg-back" onclick="backToHub()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Capital Gains Hub
+  </button>
+
+  <div class="cg-worksheet">
+    <div style="margin-bottom:var(--space-6)">
+      <h2 style="font-size:var(--text-xl);font-weight:800;color:var(--color-text);margin-bottom:var(--space-2)">Capital Gains Tax Impact Analyzer</h2>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);max-width:620px;line-height:1.6">Enter your income details and the asset sale you're considering. The analyzer calculates your total tax burden, flags the 7 common mistakes, and shows optimization scenarios.</p>
+      <div id="mpContainer" style="margin-top:var(--space-4)"></div>
+    </div>
+
+    <!-- Section 1: Your Profile -->
+    <div class="cg-section">
+      <div class="cg-section-head">
+        <div class="cg-section-num">1</div>
+        <div><h3>Your Profile</h3><p>Filing status, age, and state of residence</p></div>
+      </div>
+      <div class="cg-grid">
+        <div class="form-group">
+          <label>Filing Status</label>
+          <select id="filingStatus">
+            <option value="single">Single</option>
+            <option value="mfj" selected>Married Filing Jointly</option>
+            <option value="mfs">Married Filing Separately</option>
+            <option value="hoh">Head of Household</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Age</label>
+          <input type="number" id="age" value="67" min="18" max="110">
+          <div class="form-hint">Used for Medicare and step-up analysis</div>
+        </div>
+        <div class="form-group">
+          <label>State of Residence</label>
+          <select id="stateRes">
+            <option value="none">No State Income Tax</option>
+            <option value="AL">Alabama (5.0%)</option>
+            <option value="AZ">Arizona (2.5%)</option>
+            <option value="AR">Arkansas (3.9%)</option>
+            <option value="CA" selected>California (13.3%)</option>
+            <option value="CO">Colorado (4.4%)</option>
+            <option value="CT">Connecticut (6.99%)</option>
+            <option value="DE">Delaware (6.6%)</option>
+            <option value="DC">DC (10.75%)</option>
+            <option value="GA">Georgia (5.39%)</option>
+            <option value="HI">Hawaii (11.0%)</option>
+            <option value="ID">Idaho (5.695%)</option>
+            <option value="IL">Illinois (4.95%)</option>
+            <option value="IN">Indiana (3.05%)</option>
+            <option value="IA">Iowa (5.7%)</option>
+            <option value="KS">Kansas (5.7%)</option>
+            <option value="KY">Kentucky (4.0%)</option>
+            <option value="LA">Louisiana (4.25%)</option>
+            <option value="ME">Maine (7.15%)</option>
+            <option value="MD">Maryland (5.75%)</option>
+            <option value="MA">Massachusetts (9.0%)</option>
+            <option value="MI">Michigan (4.25%)</option>
+            <option value="MN">Minnesota (9.85%)</option>
+            <option value="MS">Mississippi (5.0%)</option>
+            <option value="MO">Missouri (4.8%)</option>
+            <option value="MT">Montana (5.9%)</option>
+            <option value="NE">Nebraska (5.84%)</option>
+            <option value="NJ">New Jersey (10.75%)</option>
+            <option value="NM">New Mexico (5.9%)</option>
+            <option value="NY">New York (10.9%)</option>
+            <option value="NC">North Carolina (4.5%)</option>
+            <option value="ND">North Dakota (2.5%)</option>
+            <option value="OH">Ohio (3.5%)</option>
+            <option value="OK">Oklahoma (4.75%)</option>
+            <option value="OR">Oregon (9.9%)</option>
+            <option value="PA">Pennsylvania (3.07%)</option>
+            <option value="RI">Rhode Island (5.99%)</option>
+            <option value="SC">South Carolina (6.4%)</option>
+            <option value="UT">Utah (4.65%)</option>
+            <option value="VT">Vermont (8.75%)</option>
+            <option value="VA">Virginia (5.75%)</option>
+            <option value="WV">West Virginia (5.12%)</option>
+            <option value="WI">Wisconsin (7.65%)</option>
+          </select>
+          <div class="benchmarks">
+            <span class="bm-tag" onclick="document.getElementById('stateRes').value='none';document.getElementById('stateRes').dispatchEvent(new Event('change'))">No Tax States</span>
+            <span class="bm-tag" onclick="document.getElementById('stateRes').value='CA'">CA 13.3%</span>
+            <span class="bm-tag" onclick="document.getElementById('stateRes').value='NY'">NY 10.9%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>On Medicare?</label>
+          <select id="onMedicare">
+            <option value="yes" selected>Yes</option>
+            <option value="no">No</option>
+          </select>
+          <div class="form-hint">For IRMAA surcharge analysis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Income Sources -->
+    <div class="cg-section">
+      <div class="cg-section-head">
+        <div class="cg-section-num">2</div>
+        <div><h3>Current Income Sources</h3><p>Your annual income before the asset sale</p></div>
+      </div>
+      <div class="cg-grid">
+        <div class="form-group">
+          <label>Ordinary Income</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="ordinaryIncome" value="45000" min="0" step="1000">
+          </div>
+          <div class="form-hint">Wages, pension, RMDs, rental income</div>
+        </div>
+        <div class="form-group">
+          <label>Social Security Benefits</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="ssIncome" value="28000" min="0" step="1000">
+          </div>
+          <div class="form-hint">Annual gross Social Security income</div>
+        </div>
+        <div class="form-group">
+          <label>Other Investment Income</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="otherInvestIncome" value="12000" min="0" step="1000">
+          </div>
+          <div class="form-hint">Dividends, interest, rental (non-sale)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Asset Sale Details -->
+    <div class="cg-section">
+      <div class="cg-section-head">
+        <div class="cg-section-num">3</div>
+        <div><h3>The Sale You're Considering</h3><p>Details of the asset you plan to sell</p></div>
+      </div>
+      <div class="cg-grid">
+        <div class="form-group">
+          <label>Asset Type</label>
+          <select id="assetType">
+            <option value="investment_property" selected>Investment Property</option>
+            <option value="primary_residence">Primary Residence</option>
+            <option value="stocks">Stocks / Mutual Funds</option>
+            <option value="business">Business / Partnership</option>
+            <option value="other">Other Asset</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sale Price</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="salePrice" value="1200000" min="0" step="10000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cost Basis</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="costBasis" value="400000" min="0" step="10000">
+          </div>
+          <div class="form-hint">Original price + improvements</div>
+        </div>
+        <div class="form-group">
+          <label>Years Held</label>
+          <input type="number" id="yearsHeld" value="15" min="0" max="99">
+          <div class="benchmarks">
+            <span class="bm-tag" onclick="document.getElementById('yearsHeld').value='0'">< 1 yr</span>
+            <span class="bm-tag" onclick="document.getElementById('yearsHeld').value='5'">5 yr</span>
+            <span class="bm-tag" onclick="document.getElementById('yearsHeld').value='20'">20 yr</span>
+          </div>
+        </div>
+        <div class="form-group" id="residenceGroup" style="display:none">
+          <label>Lived in as Primary Residence?</label>
+          <select id="metResidenceTest">
+            <option value="yes" selected>Yes — 2 of last 5 years</option>
+            <option value="no">No</option>
+          </select>
+          <div class="form-hint">Qualifies for $250K/$500K exclusion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Tax Optimization -->
+    <div class="cg-section">
+      <div class="cg-section-head">
+        <div class="cg-section-num">4</div>
+        <div><h3>Tax Optimization Inputs</h3><p>Available offsets and planning options</p></div>
+      </div>
+      <div class="cg-grid">
+        <div class="form-group">
+          <label>Available Capital Losses</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="availableLosses" value="0" min="0" step="1000">
+          </div>
+          <div class="form-hint">Realized losses + carryforward from prior years</div>
+        </div>
+        <div class="form-group">
+          <label>Consider Spreading Sale?</label>
+          <select id="spreadYears">
+            <option value="1" selected>No — sell all this year</option>
+            <option value="2">Spread over 2 years</option>
+            <option value="3">Spread over 3 years</option>
+          </select>
+          <div class="form-hint">Comparison shown in results</div>
+        </div>
+        <div class="form-group">
+          <label>Planning Estate Transfer?</label>
+          <select id="estateTransfer">
+            <option value="no" selected>No — selling the asset</option>
+            <option value="yes">Yes — considering holding</option>
+          </select>
+          <div class="form-hint">Step-up in basis analysis</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="cg-calc-btn" onclick="analyzeImpact()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Analyze My Tax Impact
+    </button>
+
+    <!-- ── Results Panel ── -->
+    <div class="cg-results" id="cgResults">
+      <!-- Impact Hero -->
+      <div class="cg-impact-hero" id="impactHero"></div>
+
+      <!-- Tax Breakdown -->
+      <div class="cg-breakdown-grid" id="breakdownGrid"></div>
+
+      <!-- 7-Mistake Scorecard -->
+      <div class="cg-scorecard">
+        <h3>7-Mistake Scorecard</h3>
+        <div class="cg-score-list" id="scoreList"></div>
+      </div>
+
+      <!-- Comparison -->
+      <div class="cg-comparison" id="compSection">
+        <h3>Optimization Scenarios</h3>
+        <div class="cg-comp-grid" id="compGrid"></div>
+      </div>
+
+      <!-- Export -->
+      <div class="cg-export-row">
+        <button class="btn-cg-export" onclick="exportPDF()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Export PDF Report
+        </button>
+        <button class="btn-cg-export" onclick="printResults()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print
+        </button>
+      </div>
+
+      <div class="cg-disclaimer">
+        <strong>Disclaimer:</strong> This tool is for educational purposes only and does not constitute tax, legal, or financial advice. Tax laws change frequently. The calculations use 2026 federal brackets and approximate state rates. Consult a qualified tax professional or CPA before making any financial decisions. IntelliTC Solutions is not a tax advisory firm.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+
+<script src="../../shared/feedback.js"></script>
+<script>
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+function openAnalyzer(){
+  document.getElementById('cgHub').classList.remove('active');
+  document.getElementById('cgHub').style.display='none';
+  document.getElementById('cgPanel').classList.add('active');
+  window.scrollTo(0,0);
+}
+function backToHub(){
+  document.getElementById('cgPanel').classList.remove('active');
+  document.getElementById('cgHub').style.display='';
+  document.getElementById('cgHub').classList.add('active');
+  window.scrollTo(0,0);
+}
+/* Show/hide residence test based on asset type */
+document.getElementById('assetType').addEventListener('change',function(){
+  document.getElementById('residenceGroup').style.display = this.value==='primary_residence'?'':'none';
+});
+
+/* ══════════════════════════════════════════
+   TAX BRACKET DATA (2026)
+══════════════════════════════════════════ */
+const LT_CG_BRACKETS = {
+  single:  [{max:49450,rate:0},{max:545500,rate:.15},{max:Infinity,rate:.20}],
+  mfj:     [{max:98900,rate:0},{max:613700,rate:.15},{max:Infinity,rate:.20}],
+  mfs:     [{max:49450,rate:0},{max:306850,rate:.15},{max:Infinity,rate:.20}],
+  hoh:     [{max:66200,rate:0},{max:579600,rate:.15},{max:Infinity,rate:.20}]
+};
+const ORD_BRACKETS = {
+  single:  [{max:12400,rate:.10},{max:50400,rate:.12},{max:105700,rate:.22},{max:201775,rate:.24},{max:256225,rate:.32},{max:640600,rate:.35},{max:Infinity,rate:.37}],
+  mfj:     [{max:24800,rate:.10},{max:100800,rate:.12},{max:211400,rate:.22},{max:403550,rate:.24},{max:512450,rate:.32},{max:768700,rate:.35},{max:Infinity,rate:.37}],
+  mfs:     [{max:12400,rate:.10},{max:50400,rate:.12},{max:105700,rate:.22},{max:201775,rate:.24},{max:256225,rate:.32},{max:384350,rate:.35},{max:Infinity,rate:.37}],
+  hoh:     [{max:17700,rate:.10},{max:67450,rate:.12},{max:105700,rate:.22},{max:201750,rate:.24},{max:256200,rate:.32},{max:640600,rate:.35},{max:Infinity,rate:.37}]
+};
+const NIIT_THRESHOLDS = { single:200000, mfj:250000, mfs:125000, hoh:200000 };
+const IRMAA_TIERS = {
+  single: [
+    {max:103000, partB:0, partD:0},
+    {max:129000, partB:74.00, partD:13.70},
+    {max:161000, partB:185.00, partD:35.30},
+    {max:193000, partB:295.90, partD:57.00},
+    {max:500000, partB:406.90, partD:78.60},
+    {max:Infinity, partB:443.90, partD:85.80}
+  ],
+  mfj: [
+    {max:206000, partB:0, partD:0},
+    {max:258000, partB:74.00, partD:13.70},
+    {max:322000, partB:185.00, partD:35.30},
+    {max:386000, partB:295.90, partD:57.00},
+    {max:750000, partB:406.90, partD:78.60},
+    {max:Infinity, partB:443.90, partD:85.80}
+  ],
+  mfs: [
+    {max:103000, partB:0, partD:0},
+    {max:129000, partB:74.00, partD:13.70},
+    {max:161000, partB:185.00, partD:35.30},
+    {max:193000, partB:295.90, partD:57.00},
+    {max:500000, partB:406.90, partD:78.60},
+    {max:Infinity, partB:443.90, partD:85.80}
+  ],
+  hoh: [
+    {max:103000, partB:0, partD:0},
+    {max:129000, partB:74.00, partD:13.70},
+    {max:161000, partB:185.00, partD:35.30},
+    {max:193000, partB:295.90, partD:57.00},
+    {max:500000, partB:406.90, partD:78.60},
+    {max:Infinity, partB:443.90, partD:85.80}
+  ]
+};
+const STATE_RATES = {
+  none:0,AL:.05,AZ:.025,AR:.039,CA:.133,CO:.044,CT:.0699,DE:.066,DC:.1075,
+  GA:.0539,HI:.11,ID:.05695,IL:.0495,IN:.0305,IA:.057,KS:.057,KY:.04,
+  LA:.0425,ME:.0715,MD:.0575,MA:.09,MI:.0425,MN:.0985,MS:.05,MO:.048,
+  MT:.059,NE:.0584,NJ:.1075,NM:.059,NY:.109,NC:.045,ND:.025,OH:.035,
+  OK:.0475,OR:.099,PA:.0307,RI:.0599,SC:.064,UT:.0465,VT:.0875,VA:.0575,
+  WV:.0512,WI:.0765
+};
+
+/* ══════════════════════════════════════════
+   CORE CALCULATIONS
+══════════════════════════════════════════ */
+function calcBracketTax(income, brackets){
+  let tax=0, prev=0;
+  for(const b of brackets){
+    if(income<=prev) break;
+    const taxable=Math.min(income,b.max)-prev;
+    tax+=taxable*b.rate;
+    prev=b.max;
+  }
+  return tax;
+}
+
+function calcSSBTaxable(ordIncome, capGain, ssIncome, filing){
+  if(ssIncome<=0) return 0;
+  const combined = ordIncome + capGain + ssIncome*0.5;
+  const t1 = filing==='mfj'?32000:25000;
+  const t2 = filing==='mfj'?44000:34000;
+  if(combined<=t1) return 0;
+  if(combined<=t2) return Math.min(ssIncome*0.5, (combined-t1)*0.5);
+  const base = Math.min(ssIncome*0.5, (t2-t1)*0.5);
+  return Math.min(ssIncome*0.85, base + (combined-t2)*0.85);
+}
+
+function getIRMAA(magi, filing, onMedicare){
+  if(onMedicare!=='yes') return {annual:0, tier:'N/A'};
+  const key = (filing==='hoh')?'single':filing;
+  const tiers = IRMAA_TIERS[key]||IRMAA_TIERS.single;
+  for(let i=0;i<tiers.length;i++){
+    if(magi<=tiers[i].max){
+      const monthly = tiers[i].partB + tiers[i].partD;
+      const persons = (filing==='mfj')?2:1;
+      return {annual:monthly*12*persons, tier:i, monthly:monthly};
+    }
+  }
+  return {annual:0,tier:0};
+}
+
+function analyzeImpact(){
+  const filing = document.getElementById('filingStatus').value;
+  const age = +document.getElementById('age').value;
+  const stateKey = document.getElementById('stateRes').value;
+  const onMedicare = document.getElementById('onMedicare').value;
+  const ordIncome = +document.getElementById('ordinaryIncome').value||0;
+  const ssIncome = +document.getElementById('ssIncome').value||0;
+  const otherInvest = +document.getElementById('otherInvestIncome').value||0;
+  const assetType = document.getElementById('assetType').value;
+  const salePrice = +document.getElementById('salePrice').value||0;
+  const costBasis = +document.getElementById('costBasis').value||0;
+  const yearsHeld = +document.getElementById('yearsHeld').value||0;
+  const metResTest = document.getElementById('metResidenceTest').value;
+  const losses = +document.getElementById('availableLosses').value||0;
+  const estateTransfer = document.getElementById('estateTransfer').value;
+
+  let rawGain = salePrice - costBasis;
+  if(rawGain<0) rawGain=0;
+
+  /* Primary residence exclusion */
+  let exclusion = 0;
+  if(assetType==='primary_residence' && metResTest==='yes'){
+    exclusion = (filing==='mfj')?500000:250000;
+  }
+  let gainAfterExclusion = Math.max(0, rawGain - exclusion);
+
+  /* Apply losses */
+  let netGain = Math.max(0, gainAfterExclusion - losses);
+  const excessLoss = Math.max(0, losses - gainAfterExclusion);
+  const ordDeduction = Math.min(excessLoss, 3000);
+
+  const isLongTerm = yearsHeld >= 1;
+
+  /* SS taxability */
+  const ssTaxableWithGain = calcSSBTaxable(ordIncome + otherInvest, netGain, ssIncome, filing);
+  const ssTaxableWithout = calcSSBTaxable(ordIncome + otherInvest, 0, ssIncome, filing);
+  const ssImpact = ssTaxableWithGain - ssTaxableWithout;
+
+  /* Taxable ordinary income (simplified — with standard deduction) */
+  const stdDeduction = ({single:15700,mfj:31400,mfs:15700,hoh:23500})[filing]||15700;
+  const extraDeduction = (age>=65)?((filing==='mfj')?3200:2000):0;
+  const totalDeduction = stdDeduction + extraDeduction;
+  const taxableOrdinary = Math.max(0, ordIncome + otherInvest + ssTaxableWithGain - ordDeduction - totalDeduction);
+
+  /* Federal capital gains tax */
+  let fedCGTax;
+  if(isLongTerm){
+    const brackets = LT_CG_BRACKETS[filing];
+    /* Stack CG on top of ordinary income */
+    const taxWithGain = calcLTCGTax(taxableOrdinary, netGain, brackets);
+    fedCGTax = taxWithGain;
+  } else {
+    /* Short-term: taxed as ordinary income */
+    const totalOrd = taxableOrdinary + netGain;
+    const taxWith = calcBracketTax(totalOrd, ORD_BRACKETS[filing]);
+    const taxWithout = calcBracketTax(taxableOrdinary, ORD_BRACKETS[filing]);
+    fedCGTax = taxWith - taxWithout;
+  }
+
+  /* NIIT */
+  const magi = ordIncome + otherInvest + netGain + ssTaxableWithGain;
+  const niitThreshold = NIIT_THRESHOLDS[filing];
+  const niitExcess = Math.max(0, magi - niitThreshold);
+  const niitInvestIncome = netGain + otherInvest;
+  const niitBase = Math.min(niitExcess, niitInvestIncome);
+  const niitTax = niitBase * 0.038;
+
+  /* IRMAA */
+  const magiForIRMAA = magi;
+  const irmaaWithGain = getIRMAA(magiForIRMAA, filing, onMedicare);
+  const irmaaWithout = getIRMAA(ordIncome + otherInvest + ssTaxableWithout, filing, onMedicare);
+  const irmaaImpact = irmaaWithGain.annual - irmaaWithout.annual;
+
+  /* State tax */
+  const stateRate = STATE_RATES[stateKey]||0;
+  const stateTax = netGain * stateRate;
+
+  /* Total */
+  const totalTax = fedCGTax + niitTax + irmaaImpact + stateTax;
+  const effectiveRate = netGain>0 ? (totalTax / netGain * 100) : 0;
+
+  /* ── Spread scenario ── */
+  function calcScenarioTax(gain, years){
+    const annualGain = gain / years;
+    let total = 0;
+    for(let y=0;y<years;y++){
+      const ssT = calcSSBTaxable(ordIncome+otherInvest, annualGain, ssIncome, filing);
+      const tOrd = Math.max(0, ordIncome+otherInvest+ssT-totalDeduction);
+      let cg;
+      if(isLongTerm){
+        cg = calcLTCGTax(tOrd, annualGain, LT_CG_BRACKETS[filing]);
+      } else {
+        cg = calcBracketTax(tOrd+annualGain, ORD_BRACKETS[filing]) - calcBracketTax(tOrd, ORD_BRACKETS[filing]);
+      }
+      const m = ordIncome+otherInvest+annualGain+ssT;
+      const ne = Math.max(0,m-niitThreshold);
+      const ni = Math.min(ne, annualGain+otherInvest);
+      const nTax = ni*0.038;
+      const ir = getIRMAA(m, filing, onMedicare);
+      const irBase = getIRMAA(ordIncome+otherInvest+calcSSBTaxable(ordIncome+otherInvest,0,ssIncome,filing), filing, onMedicare);
+      const irDiff = ir.annual - irBase.annual;
+      const sT = annualGain * stateRate;
+      total += cg + nTax + irDiff + sT;
+    }
+    return total;
+  }
+  const tax1yr = totalTax;
+  const tax2yr = calcScenarioTax(netGain, 2);
+  const tax3yr = calcScenarioTax(netGain, 3);
+
+  /* ── 7-Mistake Scorecard ── */
+  const scores = [];
+  /* 1. NIIT */
+  if(niitTax>0) scores.push({color:'red',name:'NIIT Surtax (3.8%)',msg:'Triggered — adds '+fmtUSD(niitTax)+' to your tax bill'});
+  else if(niitExcess>-20000 && magi>niitThreshold*0.9) scores.push({color:'yellow',name:'NIIT Surtax (3.8%)',msg:'Close to threshold — monitor income carefully'});
+  else scores.push({color:'green',name:'NIIT Surtax (3.8%)',msg:'Not triggered — MAGI stays below '+fmtUSD(niitThreshold)});
+
+  /* 2. IRMAA */
+  if(irmaaImpact>0) scores.push({color:'red',name:'Medicare IRMAA',msg:'Surcharge of '+fmtUSD(irmaaImpact)+'/yr triggered (2-yr lookback)'});
+  else if(onMedicare==='yes') scores.push({color:'green',name:'Medicare IRMAA',msg:'No surcharge triggered at this income level'});
+  else scores.push({color:'green',name:'Medicare IRMAA',msg:'Not on Medicare — not applicable'});
+
+  /* 3. Bunching */
+  if(netGain>200000) scores.push({color:'red',name:'Gain Bunching',msg:'Spreading over 2 yrs saves '+fmtUSD(Math.max(0,tax1yr-tax2yr))});
+  else if(netGain>100000) scores.push({color:'yellow',name:'Gain Bunching',msg:'Consider spreading — potential savings of '+fmtUSD(Math.max(0,tax1yr-tax2yr))});
+  else scores.push({color:'green',name:'Gain Bunching',msg:'Gain is moderate — single-year sale is reasonable'});
+
+  /* 4. Tax-Loss Harvesting */
+  if(losses>0 && losses>=gainAfterExclusion*0.5) scores.push({color:'green',name:'Tax-Loss Harvesting',msg:'Good — '+fmtUSD(losses)+' in losses offsets '+fmtUSD(Math.min(losses,gainAfterExclusion))+' of gain'});
+  else if(losses>0) scores.push({color:'yellow',name:'Tax-Loss Harvesting',msg:'Partial offset — consider harvesting more losses before year-end'});
+  else if(netGain>50000) scores.push({color:'red',name:'Tax-Loss Harvesting',msg:'No losses entered — review portfolio for harvestable positions'});
+  else scores.push({color:'green',name:'Tax-Loss Harvesting',msg:'Gain is small — loss harvesting less critical'});
+
+  /* 5. Step-Up in Basis */
+  if(age>=70 && estateTransfer==='no' && rawGain>200000) scores.push({color:'yellow',name:'Step-Up in Basis',msg:'At age '+age+', holding until estate transfer saves heirs '+fmtUSD(totalTax)});
+  else if(estateTransfer==='yes') scores.push({color:'green',name:'Step-Up in Basis',msg:'Good — heirs inherit at FMV, eliminating '+fmtUSD(totalTax)+' in taxes'});
+  else scores.push({color:'green',name:'Step-Up in Basis',msg:'Not applicable to your current plan'});
+
+  /* 6. Home Sale Exclusion */
+  if(assetType==='primary_residence' && metResTest==='yes' && exclusion>0) scores.push({color:'green',name:'Home Sale Exclusion',msg:fmtUSD(exclusion)+' excluded — saving '+fmtUSD(Math.min(exclusion,rawGain)*0.15)+' or more'});
+  else if(assetType==='primary_residence' && metResTest==='no') scores.push({color:'red',name:'Home Sale Exclusion',msg:'Does not meet 2-of-5-year test — full gain is taxable'});
+  else scores.push({color:'green',name:'Home Sale Exclusion',msg:'Not a primary residence sale — exclusion N/A'});
+
+  /* 7. 0% Bracket Window */
+  const zeroBracket = LT_CG_BRACKETS[filing][0].max;
+  if(isLongTerm && taxableOrdinary < zeroBracket){
+    const room = zeroBracket - taxableOrdinary;
+    if(room >= netGain) scores.push({color:'green',name:'0% Bracket Window',msg:'Entire gain fits in the 0% bracket — '+fmtUSD(room)+' of room'});
+    else scores.push({color:'yellow',name:'0% Bracket Window',msg:fmtUSD(room)+' fits at 0% — consider spreading to maximize'});
+  } else if(isLongTerm) {
+    scores.push({color:'red',name:'0% Bracket Window',msg:'Ordinary income fills the 0% bracket — all gain taxed at 15%+'});
+  } else {
+    scores.push({color:'red',name:'0% Bracket Window',msg:'Short-term gain — taxed at ordinary rates (no 0% bracket)'});
+  }
+
+  /* ── RENDER ── */
+  renderResults({
+    rawGain, exclusion, gainAfterExclusion, netGain, losses, ordDeduction,
+    fedCGTax, niitTax, irmaaImpact, stateTax, stateRate, totalTax, effectiveRate,
+    ssImpact, isLongTerm, scores,
+    tax1yr, tax2yr, tax3yr, estateTransfer,
+    filing, age, onMedicare, salePrice, costBasis
+  });
+}
+
+function calcLTCGTax(ordinaryTaxableIncome, ltGain, brackets){
+  /* Long-term CG stacks on top of ordinary income */
+  let tax=0, filled=ordinaryTaxableIncome;
+  let remaining=ltGain;
+  for(const b of brackets){
+    if(remaining<=0) break;
+    const space = Math.max(0, b.max - filled);
+    const inBracket = Math.min(remaining, space);
+    tax += inBracket * b.rate;
+    remaining -= inBracket;
+    filled += inBracket;
+  }
+  return tax;
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+function fmtUSD(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+function fmtPct(n){ return n.toFixed(1)+'%'; }
+
+function renderResults(d){
+  document.getElementById('cgResults').classList.add('show');
+
+  /* Hero */
+  const heroColor = d.effectiveRate>30?'#c0392b':d.effectiveRate>20?'#f39c12':'#27ae60';
+  document.getElementById('impactHero').innerHTML = `
+    <div class="cg-impact-circle" style="background:${heroColor}">
+      <span class="rate">${fmtPct(d.effectiveRate)}</span>
+      <span class="label">Eff. Rate</span>
+    </div>
+    <div class="cg-impact-info">
+      <h2>Total Tax Impact: ${fmtUSD(d.totalTax)}</h2>
+      <p>On a ${fmtUSD(d.netGain)} net ${d.isLongTerm?'long':'short'}-term capital gain${d.exclusion>0?' (after '+fmtUSD(d.exclusion)+' home sale exclusion)':''}</p>
+      <p style="margin-top:var(--space-2);font-size:var(--text-sm);font-weight:600;color:${heroColor}">${d.effectiveRate>30?'High tax burden — optimization strongly recommended':d.effectiveRate>20?'Moderate burden — review scorecard for savings':'Favorable rate — well-positioned'}</p>
+    </div>`;
+
+  /* Breakdown */
+  document.getElementById('breakdownGrid').innerHTML = `
+    <div class="cg-tax-card highlight">
+      <div class="card-label">Federal Capital Gains</div>
+      <div class="card-value">${fmtUSD(d.fedCGTax)}</div>
+      <div class="card-detail">${d.isLongTerm?'Long-term rates (0/15/20%)':'Short-term (ordinary rates)'}</div>
+    </div>
+    <div class="cg-tax-card${d.niitTax>0?' highlight':''}">
+      <div class="card-label">NIIT Surtax (3.8%)</div>
+      <div class="card-value">${fmtUSD(d.niitTax)}</div>
+      <div class="card-detail">${d.niitTax>0?'Triggered — MAGI exceeds threshold':'Not triggered'}</div>
+    </div>
+    <div class="cg-tax-card${d.irmaaImpact>0?' highlight':''}">
+      <div class="card-label">Medicare IRMAA Impact</div>
+      <div class="card-value">${fmtUSD(d.irmaaImpact)}</div>
+      <div class="card-detail">${d.irmaaImpact>0?'Annual premium surcharge (2-yr lookback)':'No surcharge triggered'}</div>
+    </div>
+    <div class="cg-tax-card">
+      <div class="card-label">State Tax</div>
+      <div class="card-value">${fmtUSD(d.stateTax)}</div>
+      <div class="card-detail">${d.stateRate>0?fmtPct(d.stateRate*100)+' state rate':'No state income tax'}</div>
+    </div>
+    <div class="cg-tax-card">
+      <div class="card-label">SS Taxability Increase</div>
+      <div class="card-value">${fmtUSD(d.ssImpact)}</div>
+      <div class="card-detail">${d.ssImpact>0?'Additional SS benefits now taxable':'No change in SS taxation'}</div>
+    </div>
+    <div class="cg-tax-card">
+      <div class="card-label">Net After Tax</div>
+      <div class="card-value">${fmtUSD(d.salePrice - d.costBasis - d.totalTax)}</div>
+      <div class="card-detail">Sale proceeds minus total tax impact</div>
+    </div>`;
+
+  /* Scorecard */
+  document.getElementById('scoreList').innerHTML = d.scores.map((s,i)=>`
+    <div class="cg-score-item">
+      <div class="cg-score-dot ${s.color}"></div>
+      <span class="cg-score-name">${i+1}. ${s.name}</span>
+      <span class="cg-score-msg">${s.msg}</span>
+    </div>`).join('');
+
+  /* Comparison */
+  const scenarios = [
+    {title:'Sell All This Year', tax:d.tax1yr, detail:'All gain realized in one tax year'},
+    {title:'Spread Over 2 Years', tax:d.tax2yr, detail:'Half the gain each year — lower brackets'},
+    {title:'Spread Over 3 Years', tax:d.tax3yr, detail:'One-third each year — maximizes bracket optimization'},
+  ];
+  if(d.estateTransfer==='yes'){
+    scenarios.push({title:'Hold for Step-Up', tax:0, detail:'Heirs inherit at FMV — all deferred gains eliminated'});
+  }
+  const minTax = Math.min(...scenarios.map(s=>s.tax));
+  document.getElementById('compGrid').innerHTML = scenarios.map(s=>`
+    <div class="cg-comp-card${s.tax===minTax?' best':''}">
+      <h4>${s.title}</h4>
+      <div class="cg-comp-total">${fmtUSD(s.tax)}</div>
+      <div class="cg-comp-rate">${s.tax>0?fmtPct(s.tax/d.netGain*100)+' effective rate':'No tax due'}</div>
+      <div class="cg-comp-detail">${s.detail}</div>
+      ${s.tax>minTax?'<div class="cg-comp-detail" style="color:#c0392b;font-weight:600;margin-top:var(--space-1)">'+fmtUSD(s.tax-minTax)+' more than lowest</div>':''}
+    </div>`).join('');
+
+  // Save sale price and cost basis for cross-calculator use
+  var sp = document.getElementById('salePrice') ? +document.getElementById('salePrice').value || 0 : 0;
+  var cb = document.getElementById('costBasis')  ? +document.getElementById('costBasis').value  || 0 : 0;
+  if (sp > 0) DealData.save({ salePrice: sp, costBasis: cb });
+
+  document.getElementById('cgResults').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ══════════════════════════════════════════
+   EXPORT PDF
+══════════════════════════════════════════ */
+function exportPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p','pt','letter');
+  const W = doc.internal.pageSize.getWidth();
+  const M = 50;
+  let y = 50;
+
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.setTextColor(1,105,111);
+  doc.text('Capital Gains Tax Impact Report',M,y);
+  y+=24;
+  doc.setFontSize(10);
+  doc.setTextColor(120);
+  doc.text('Generated by IntelliTC Solutions — '+new Date().toLocaleDateString(),M,y);
+  y+=30;
+
+  doc.setDrawColor(1,105,111);
+  doc.setLineWidth(1.5);
+  doc.line(M,y,W-M,y);
+  y+=20;
+
+  /* Summary */
+  const hero = document.getElementById('impactHero');
+  if(hero){
+    doc.setFontSize(12);doc.setTextColor(40);doc.setFont('helvetica','bold');
+    doc.text(hero.querySelector('h2')?.textContent||'',M,y);y+=16;
+    doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(100);
+    const ps=hero.querySelectorAll('p');
+    ps.forEach(p=>{doc.text(p.textContent,M,y,{maxWidth:W-2*M});y+=14;});
+    y+=10;
+  }
+
+  /* Breakdown */
+  doc.setFontSize(12);doc.setTextColor(40);doc.setFont('helvetica','bold');
+  doc.text('Tax Breakdown',M,y);y+=16;
+  const cards=document.querySelectorAll('.cg-tax-card');
+  doc.setFontSize(10);doc.setFont('helvetica','normal');
+  cards.forEach(c=>{
+    if(y>720){doc.addPage();y=50;}
+    const lbl=c.querySelector('.card-label')?.textContent||'';
+    const val=c.querySelector('.card-value')?.textContent||'';
+    doc.setTextColor(100);doc.text(lbl,M,y);
+    doc.setTextColor(40);doc.setFont('helvetica','bold');doc.text(val,M+200,y);
+    doc.setFont('helvetica','normal');y+=16;
+  });
+  y+=10;
+
+  /* Scorecard */
+  if(y>620){doc.addPage();y=50;}
+  doc.setFontSize(12);doc.setTextColor(40);doc.setFont('helvetica','bold');
+  doc.text('7-Mistake Scorecard',M,y);y+=16;
+  const items=document.querySelectorAll('.cg-score-item');
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  items.forEach(item=>{
+    if(y>720){doc.addPage();y=50;}
+    const dot=item.querySelector('.cg-score-dot');
+    const color=dot.classList.contains('green')?'green':dot.classList.contains('yellow')?'yellow':'red';
+    const name=item.querySelector('.cg-score-name')?.textContent||'';
+    const msg=item.querySelector('.cg-score-msg')?.textContent||'';
+    const colors={green:[39,174,96],yellow:[243,156,18],red:[192,57,43]};
+    doc.setFillColor(...(colors[color]||colors.red));
+    doc.circle(M+4,y-3,4,'F');
+    doc.setTextColor(40);doc.text(name,M+14,y);
+    doc.setTextColor(100);doc.text(msg,M+14,y+11,{maxWidth:W-2*M-14});
+    y+=26;
+  });
+
+  /* Disclaimer */
+  if(y>680){doc.addPage();y=50;}
+  y+=10;
+  doc.setFontSize(8);doc.setTextColor(150);
+  doc.text('Disclaimer: This report is for educational purposes only and does not constitute tax, legal, or financial advice. Consult a qualified tax professional.',M,y,{maxWidth:W-2*M});
+
+  doc.save('IntelliTC_Capital_Gains_Impact_Report.pdf');
+}
+function printResults(){ window.print(); }
+</script>
+<script>
+/* Theme toggle */
+(function(){
+  var saved = localStorage.getItem('itc-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('[data-theme-toggle]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var current = document.documentElement.getAttribute('data-theme') || 'light';
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('itc-theme', next);
+    });
+  });
+})();
+</script>
+
+<!-- ═══ LEARN MODE ═══ -->
+<script>
+/* Adapter: bridge CG page structure to learn-mode.js expectations */
+(function(){
+  /* 1. Add .field class to .form-group so tooltip injection works */
+  document.querySelectorAll('#cgPanel .form-group').forEach(function(el){ el.classList.add('field'); });
+
+  /* 2. Insert a .divider after the worksheet heading so examples slot in */
+  var heading = document.querySelector('.cg-worksheet > div:first-child');
+  if (heading && !document.querySelector('.cg-worksheet > .divider')) {
+    var d = document.createElement('div');
+    d.className = 'divider';
+    heading.parentNode.insertBefore(d, heading.nextSibling);
+  }
+
+  /* 3. Create #resultsPanel wrapper inside #cgResults for Why/Coupled panels */
+  var cgR = document.getElementById('cgResults');
+  if (cgR && !document.getElementById('resultsPanel')) {
+    var rp = document.createElement('div');
+    rp.id = 'resultsPanel';
+    cgR.appendChild(rp);
+  }
+
+  /* 4. Give the analyze button id="calcBtn" for re-injection after calculate */
+  var analyzeBtn = document.querySelector('.cg-calc-btn');
+  if (analyzeBtn) analyzeBtn.id = 'calcBtn';
+})();
+</script>
+<script>
+window.LEARN_DATA = {
+  tooltips: {
+    filingStatus: "<strong>Filing Status</strong> — Determines your tax bracket thresholds and NIIT threshold. Married Filing Jointly has the widest 0% capital gains bracket ($0–$98,900 in 2026). Married Filing Separately has the lowest NIIT threshold ($125K vs $250K for MFJ).",
+    age: "<strong>Your Age</strong> — Critical for Medicare IRMAA analysis (applies at 65+) and estate step-up planning. If you're over 65, a large capital gain can push your Modified AGI above IRMAA thresholds, increasing Medicare premiums for 2 years.",
+    stateRes: "<strong>State of Residence</strong> — Nine states have no income tax (AK, FL, NV, NH, SD, TN, TX, WA, WY). California tops the list at 13.3%. Your state tax can add 3–13% on top of federal capital gains tax.",
+    onMedicare: "<strong>Medicare Status</strong> — If you're on Medicare, the sale can trigger Income-Related Monthly Adjustment Amount (IRMAA) surcharges on Part B and Part D premiums. These surcharges are based on your MAGI from 2 years prior.",
+    ordinaryIncome: "<strong>Ordinary Income</strong> — Wages, pension, RMDs, rental income, business income. This is your baseline taxable income before the capital gain. Higher ordinary income pushes your capital gain into higher brackets.",
+    ssIncome: "<strong>Social Security Benefits</strong> — A capital gain increases your provisional income, which can push up to 85% of your Social Security benefits into taxable territory. This is one of the 7 most commonly missed impacts.",
+    otherInvestIncome: "<strong>Other Investment Income</strong> — Dividends, interest, and non-sale investment income. Combined with the capital gain, this determines whether you trigger the 3.8% Net Investment Income Tax (NIIT).",
+    assetType: "<strong>Asset Type</strong> — Determines available exclusions. Primary residence sales may qualify for $250K/$500K exclusion (Section 121). Investment property may use 1031 exchange. Stocks have no special exclusions.",
+    salePrice: "<strong>Sale Price</strong> — The gross proceeds from the sale. This minus your cost basis equals your capital gain. Make sure to account for selling costs (commissions, fees) which reduce the effective sale price.",
+    costBasis: "<strong>Cost Basis</strong> — Your original purchase price plus capital improvements (new roof, additions, renovations). Higher basis = lower taxable gain. Keep records of all improvements.",
+    yearsHeld: "<strong>Years Held</strong> — If held ≤ 1 year, gains are taxed as ordinary income (up to 37%). If held > 1 year, you qualify for preferential long-term capital gains rates (0%, 15%, or 20%).",
+    availableLosses: "<strong>Capital Losses</strong> — Realized losses from other investments plus carryforward losses from prior years. These offset capital gains dollar-for-dollar, and excess losses offset up to $3,000 of ordinary income per year.",
+    spreadYears: "<strong>Installment Sale</strong> — Spreading the sale over 2–3 years using an installment note can keep each year's gain in lower brackets, potentially avoiding NIIT and IRMAA thresholds. Compare scenarios in the results.",
+    estateTransfer: "<strong>Step-Up in Basis</strong> — If you hold the asset until death, your heirs receive a 'stepped-up' basis equal to fair market value at date of death. This eliminates the capital gains tax entirely. The analyzer calculates the breakeven."
+  },
+  examples: [
+    {
+      name: "Retiree Selling Rental Property",
+      desc: "67-year-old couple on Medicare selling a long-held rental in California — classic tax trap scenario",
+      values: {
+        filingStatus: "mfj",
+        age: 67,
+        stateRes: "CA",
+        onMedicare: "yes",
+        ordinaryIncome: 45000,
+        ssIncome: 28000,
+        otherInvestIncome: 12000,
+        assetType: "investment_property",
+        salePrice: 1200000,
+        costBasis: 400000,
+        yearsHeld: 15,
+        availableLosses: 0,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    },
+    {
+      name: "Stock Portfolio Rebalance",
+      desc: "Single professional selling concentrated stock position — NIIT and bracket management",
+      values: {
+        filingStatus: "single",
+        age: 52,
+        stateRes: "NY",
+        onMedicare: "no",
+        ordinaryIncome: 180000,
+        ssIncome: 0,
+        otherInvestIncome: 25000,
+        assetType: "stocks",
+        salePrice: 500000,
+        costBasis: 200000,
+        yearsHeld: 8,
+        availableLosses: 15000,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    },
+    {
+      name: "Primary Home, Tax-Free Zone?",
+      desc: "Married couple selling primary residence — does the Section 121 exclusion cover everything?",
+      values: {
+        filingStatus: "mfj",
+        age: 58,
+        stateRes: "none",
+        onMedicare: "no",
+        ordinaryIncome: 95000,
+        ssIncome: 0,
+        otherInvestIncome: 8000,
+        assetType: "primary_residence",
+        salePrice: 850000,
+        costBasis: 280000,
+        yearsHeld: 22,
+        availableLosses: 0,
+        spreadYears: "1",
+        estateTransfer: "no"
+      }
+    }
+  ],
+  whyThisMatters: {
+    title: "Why Analyze Capital Gains Tax Impact?",
+    purpose: "A capital gains event doesn't just trigger one tax — it can cascade into 5–7 separate tax consequences. Federal capital gains tax, NIIT, state tax, Social Security taxation, and Medicare IRMAA surcharges all interact. Missing any one of these can cost tens of thousands of dollars.",
+    whenToUse: [
+      "Before selling investment property — especially if you're on Medicare or receive Social Security",
+      "When rebalancing a stock portfolio with large unrealized gains",
+      "To compare selling now vs. installment sale vs. holding for step-up in basis",
+      "During year-end tax planning to understand how a sale changes your total tax picture"
+    ],
+    keyInsight: "The biggest mistake isn't the capital gains tax itself — it's the hidden cascading effects. A $800K gain can trigger $12K+ in IRMAA surcharges over 2 years, push 85% of Social Security into taxable income, and add 3.8% NIIT on top. This tool catches all 7 mistake categories.",
+    proTip: "If you're within 2 years of estate transfer, always compare the step-up savings. The tax eliminated through step-up in basis often exceeds the return you'd get from selling and reinvesting after tax."
+  },
+  kpiExplains: {},
+  coupled: [
+    {
+      name: "Investment Analysis",
+      folder: "investment-analysis",
+      reason: "Model your after-tax proceeds against reinvestment scenarios and ROI targets"
+    },
+    {
+      name: "Cash Flow Calculator",
+      folder: "cashflow",
+      reason: "See if holding the property produces better after-tax cash flow than selling"
+    },
+    {
+      name: "Deal Grading",
+      folder: "deal-grading",
+      reason: "Score a 1031 exchange replacement property before committing"
+    }
+  ]
+};
+</script>
+<script src="../../capital-gains/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/deal-data.js"></script>
+<script src="../../shared/zip3-metro-map.js"></script>
+<script src="../../shared/market-presets.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Capital-gains has no market-specific pre-fills; chip shows market context only
+  MarketPresets.init("mpContainer", {});
+  // Prefill salePrice and costBasis from prior deal if available
+  DealData.prefill({
+    salePrice:  "salePrice",
+    costBasis:  "costBasis",
+    purchasePrice: "costBasis"
+  });
+});
+</script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

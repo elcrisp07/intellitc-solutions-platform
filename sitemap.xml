@@ -82,6 +82,9 @@
   </url>
   <url>
     <loc>https://intellitcsolutions.com/consider-this/</loc>
+  </url>
+  <url>
+    <loc>https://intellitcsolutions.com/embed/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

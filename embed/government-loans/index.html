@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/government-loans">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government Loan Comparison — IntelliTC Solutions</title>
+<meta name="description" content="Compare FHA, VA, USDA, and Conventional loan programs side by side — rates, fees, MI, and DTI limits.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Government Loan Comparison — IntelliTC Solutions">
+<meta property="og:description" content="Compare FHA, VA, USDA, and Conventional loan programs side by side — rates, fees, MI, and DTI limits.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/government-loans">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Government Loan Comparison — IntelliTC Solutions">
+<meta name="twitter:description" content="Compare FHA, VA, USDA, and Conventional loan programs side by side — rates, fees, MI, and DTI limits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Government Loan Comparison</h1>
+      <p class="panel-subtitle">Compare FHA, VA, USDA, and Conventional loan programs side by side — rates, fees, MI, and DTI limits.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property & Borrower</h3>
+<div class="field">
+            <label for="price" title="Property purchase price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="credit" title="Your FICO credit score">Credit Score</label>
+            <input type="text" id="credit" value="720" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="income" title="Total monthly gross income">Gross Monthly Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="income" value="8,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="debt" title="Car, student loan, credit card minimums">Monthly Debt Payments</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="debt" value="650" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="veteran">Veteran Status</label>
+            <select id="veteran"><option value="no">Not a Veteran</option><option value="yes">Veteran/Active Military</option></select>
+          </div>
+<div class="field">
+            <label for="rural">USDA Eligible Area</label>
+            <select id="rural"><option value="no">No</option><option value="yes">Yes - Rural Area</option></select>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Loan Preferences</h3>
+<div class="field">
+            <label for="dp" title="Down payment percentage">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Conventional 30yr rate (programs adjust from this)">Base Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="6.75" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term" title="Amortization period">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Best Program</span>
+          <span class="kpi-value" id="kpiBestProg">—</span>
+          <span class="kpi-delta" id="kpiBestProgDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Lowest Payment</span>
+          <span class="kpi-value" id="kpiLowestPmt">—</span>
+          <span class="kpi-delta" id="kpiLowestPmtDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Least Cash Needed</span>
+          <span class="kpi-value" id="kpiLowestCash">—</span>
+          <span class="kpi-delta" id="kpiLowestCashDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Lowest Total Cost</span>
+          <span class="kpi-value" id="kpiLowestTotal">—</span>
+          <span class="kpi-delta" id="kpiLowestTotalDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Monthly Payment Comparison</h3>
+          <p class="chart-subtitle">Total PITI + MI by program</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartPayments"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Total Cost Over 7 Years</h3>
+          <p class="chart-subtitle">All-in cost including fees and MI</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartTotalCost"></canvas>
+          </div>
+        </div>
+</div>
+
+      <h3 style="font-size:var(--text-lg);font-weight:700;margin:var(--space-6) 0 var(--space-4)">Program Comparison</h3><div class="table-wrap"><table class="results-table"><thead><tr><th>Feature</th><th class="text-right">Conventional</th><th class="text-right">FHA</th><th class="text-right">VA</th><th class="text-right">USDA</th></tr></thead><tbody id="govBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../government-loans/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Compare Government Loan Programs?",
+    "purpose": "FHA, VA, and USDA loans offer lower down payments and more flexible qualifications than conventional loans. This calculator compares all three side by side so you can choose the best program for your situation.",
+    "whenToUse": [
+      "When you have less than 20% down — government programs may save you thousands",
+      "If you're a veteran — VA loans offer 0% down with no PMI",
+      "When your credit score is below 680 — FHA is more forgiving than conventional"
+    ],
+    "keyInsight": "VA loans are the best mortgage product in America — 0% down, no PMI, competitive rates. If you qualify, use it. FHA allows 3.5% down with 580+ credit. USDA offers 0% down in rural areas. Know your eligibility before defaulting to conventional."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Qualification Analysis",
+      "folder": "qualification-analysis",
+      "reason": "Determine which specific programs you qualify for based on your profile"
+    },
+    {
+      "name": "Affordability",
+      "folder": "affordability",
+      "reason": "See how different loan programs change your buying power"
+    },
+    {
+      "name": "DTI Stress Test",
+      "folder": "dti-stress-test",
+      "reason": "Stress test the payment under each program's terms"
+    }
+  ]
+};</script>
+<script src="../../government-loans/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

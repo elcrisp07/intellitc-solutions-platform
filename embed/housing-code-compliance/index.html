@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/housing-code-compliance">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housing Code Compliance Estimator — IntelliTC Solutions</title>
+<meta name="description" content="Estimate violation remediation costs, risk score, and priority for housing code compliance issues.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Housing Code Compliance Estimator — IntelliTC Solutions">
+<meta property="og:description" content="Estimate violation remediation costs, risk score, and priority for housing code compliance issues.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/housing-code-compliance">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Housing Code Compliance Estimator — IntelliTC Solutions">
+<meta name="twitter:description" content="Estimate violation remediation costs, risk score, and priority for housing code compliance issues.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Housing Code Compliance Estimator</h1>
+      <p class="panel-subtitle">Estimate violation remediation costs, risk score, and priority for housing code compliance issues.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Info</h3>
+<div class="field">
+            <label for="propType">Property Type</label>
+            <select id="propType"><option value="sfr">Single Family</option><option value="duplex">Duplex</option><option value="triplex">Triplex</option><option value="fourplex">Fourplex</option><option value="apartment">Apartment (5+)</option></select>
+          </div>
+<div class="field">
+            <label for="yearBuilt">Year Built</label>
+            <input type="text" id="yearBuilt" value="1975" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="units">Number of Units</label>
+            <div class="input-with-unit"><input type="text" id="units" value="1" inputmode="decimal"><span class='unit'>units</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Structural & Safety</h3>
+<div class="field">
+            <label for="electrical" title="Wiring, panels, outlets">Electrical Violations</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="electrical" value="2,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="plumbing" title="Pipes, fixtures, water heater">Plumbing Violations</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="plumbing" value="1,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="structural" title="Foundation, framing, roof">Structural Violations</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="structural" value="5,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="fire" title="Smoke detectors, egress, extinguishers">Fire Safety Violations</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="fire" value="1,200" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Habitability</h3>
+<div class="field">
+            <label for="hvac" title="Heating, cooling, ventilation">HVAC Violations</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hvac" value="2,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="mold" title="Mold testing and removal">Mold Remediation</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="mold" value="3,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="pest" title="Infestation treatment">Pest Control</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="pest" value="800" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="leadPaint" title="Lead paint abatement (pre-1978)">Lead Paint</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="leadPaint" value="4,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Total Remediation Cost</span>
+          <span class="kpi-value" id="kpiTotalCost">—</span>
+          <span class="kpi-delta" id="kpiTotalCostDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Risk Score</span>
+          <span class="kpi-value" id="kpiRiskScore">—</span>
+          <span class="kpi-delta" id="kpiRiskScoreDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Critical Violations</span>
+          <span class="kpi-value" id="kpiCritical">—</span>
+          <span class="kpi-delta" id="kpiCriticalDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Penalty Risk</span>
+          <span class="kpi-value" id="kpiPenaltyRisk">—</span>
+          <span class="kpi-delta" id="kpiPenaltyRiskDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Violation Cost by Category</h3>
+          <p class="chart-subtitle">Cost breakdown across violation types</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartSeverity"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Priority Matrix</h3>
+          <p class="chart-subtitle">Urgency ranking of remediation items</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartPriority"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+    </section>
+  </main>
+  
+  <script src="../../housing-code-compliance/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Estimate Compliance Costs?",
+    "purpose": "Housing code violations can derail a deal or eat into rehab budgets. This calculator estimates the cost of common code compliance items — helping investors budget accurately for older or neglected properties.",
+    "whenToUse": [
+      "When evaluating a property with known or suspected code violations",
+      "To budget for code-related repairs in a rehab project",
+      "When assessing the true cost of bringing a distressed property to rentable condition"
+    ],
+    "keyInsight": "Code violations aren't optional expenses — they're legal requirements. Unpermitted work, lead paint, asbestos, missing smoke detectors, and electrical issues must be addressed. Budget these BEFORE making an offer, not after."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "Add compliance costs to your rehab budget"
+    },
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Factor compliance into the rehab phase of BRRRR"
+    },
+    {
+      "name": "Distressed Asset",
+      "folder": "distressed-asset",
+      "reason": "Distressed properties almost always have code issues"
+    }
+  ]
+};</script>
+<script src="../../housing-code-compliance/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

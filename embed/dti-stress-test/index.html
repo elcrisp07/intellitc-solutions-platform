@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/dti-stress-test">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTI & Payment Shock Stress Test — IntelliTC Solutions</title>
+<meta name="description" content="See how rate changes affect your payment — and whether you can truly afford the house at today's rate and beyond.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="DTI & Payment Shock Stress Test — IntelliTC Solutions">
+<meta property="og:description" content="See how rate changes affect your payment — and whether you can truly afford the house at today's rate and beyond.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/dti-stress-test">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DTI & Payment Shock Stress Test — IntelliTC Solutions">
+<meta name="twitter:description" content="See how rate changes affect your payment — and whether you can truly afford the house at today's rate and beyond.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+<style>
+/* Cross-link suggestions */
+.next-steps { background: var(--color-surface, #f9f8f5); border-radius: 10px; padding: 24px; margin: 28px 0 8px; border: 1px solid var(--color-border, #d4d1ca); }
+[data-theme="dark"] .next-steps { background: var(--dark-surface, #1c1b19); border-color: var(--dark-border, #393836); }
+.next-steps h3 { margin: 0 0 14px; font-size: 1.05rem; color: var(--color-text, #28251d); }
+[data-theme="dark"] .next-steps h3 { color: var(--dark-text, #cdccca); }
+.next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.next-step-card {
+  display: block; padding: 14px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--color-bg, #f7f6f2); border: 1px solid var(--color-border, #d4d1ca);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .next-step-card { background: var(--dark-bg, #171614); border-color: var(--dark-border, #393836); }
+.next-step-card:hover { border-color: #01696f; box-shadow: 0 2px 8px rgba(1,105,111,0.12); }
+.next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
+.next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
+[data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+</style>
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">DTI & Payment Shock Stress Test</h1>
+      <p class="panel-subtitle">See how rate changes affect your payment — and whether you can truly afford the house at today's rate and beyond.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Your Income</h3>
+<div class="field">
+            <label for="grossIncome" title="Your total monthly income before taxes">Gross Monthly Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="grossIncome" value="7,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="coIncome" title="Leave at $0 if buying alone">Co-Borrower Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="coIncome" value="0" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Home & Loan</h3>
+<div class="field">
+            <label for="price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dpPct">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dpPct" value="10" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Today's rate from your lender">Current Mortgage Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Property Costs</h3>
+<div class="field">
+            <label for="taxRate" title="Annual property tax rate">Property Tax Rate</label>
+            <div class="input-with-unit"><input type="text" id="taxRate" value="1.1" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="insYr" title="Homeowner's insurance per year">Annual Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insYr" value="2,400" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="hoa" title="Homeowners association dues">Monthly HOA</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="hoa" value="0" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Your Existing Debts</h3>
+<div class="field">
+            <label for="carPmt" title="All vehicle loan payments">Car Payments</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="carPmt" value="450" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+<div class="field">
+            <label for="studentLoans" title="Federal and private student loans">Student Loans</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="studentLoans" value="300" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+<div class="field">
+            <label for="creditCards" title="Minimum monthly payments">Credit Card Minimums</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="creditCards" value="150" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+<div class="field">
+            <label for="otherDebt" title="Personal loans, child support, etc.">Other Monthly Debts</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="otherDebt" value="0" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Front-End DTI</span>
+          <span class="kpi-value" id="kpiFrontDTI">—</span>
+          <span class="kpi-delta" id="kpiFrontDTIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Back-End DTI</span>
+          <span class="kpi-value" id="kpiBackDTI">—</span>
+          <span class="kpi-delta" id="kpiBackDTIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Payment at +1%</span>
+          <span class="kpi-value" id="kpiPmtPlus1">—</span>
+          <span class="kpi-delta" id="kpiPmtPlus1Detail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Payment at +2%</span>
+          <span class="kpi-value" id="kpiPmtPlus2">—</span>
+          <span class="kpi-delta" id="kpiPmtPlus2Detail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Rate Shock Comparison</h3>
+          <p class="chart-subtitle">Total PITI at current, +1%, and +2% rates</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartShock"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">DTI Gauge</h3>
+          <p class="chart-subtitle">Your DTI vs conventional and FHA limits</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartDTI"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><tbody id="stressBody"></tbody></table></div>
+    </section>
+  </main>
+  
+<div class="next-steps">
+  <h3>What to explore next</h3>
+  <div class="next-steps-grid">
+    <a class="next-step-card" href="../../affordability/index.html"><strong>Affordability Calculator</strong><span>See your maximum purchase price across scenarios</span></a>
+    <a class="next-step-card" href="../../cash-to-close/index.html"><strong>Cash-to-Close Calculator</strong><span>Calculate total funds needed at closing</span></a>
+    <a class="next-step-card" href="../../government-loans/index.html"><strong>Government Loans</strong><span>Explore FHA, VA, or USDA options if DTI is tight</span></a>
+  </div>
+</div>
+
+  
+  <script src="../../dti-stress-test/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "income": "<strong>Annual Gross Income</strong> — Your total pre-tax household income. This is the denominator in the DTI ratio — a higher income means a lower DTI at the same payment level.",
+    "homePrice": "<strong>Home Price</strong> — The purchase price of the home you're considering. This drives your loan amount and therefore your monthly payment.",
+    "downPayment": "<strong>Down Payment</strong> — Cash paid upfront. A larger down payment means a smaller loan, which means a lower monthly payment and better DTI ratio.",
+    "currentRate": "<strong>Current Interest Rate</strong> — Today's mortgage rate. The stress test shows what happens if rates rise 1% and 2% from this starting point.",
+    "loanTerm": "<strong>Loan Term</strong> — Number of years to repay. 30 years = lower payments. 15 years = higher payments but massive interest savings.",
+    "monthlyDebts": "<strong>Monthly Debts</strong> — All non-housing debt payments (auto, student loans, credit cards). These add to your back-end DTI and reduce how much housing you can carry.",
+    "propertyTax": "<strong>Property Tax Rate</strong> — Annual tax as a percentage of home value. This is a significant part of your monthly payment that many first-time buyers underestimate.",
+    "insurance": "<strong>Annual Insurance</strong> — Homeowner's insurance premium. Required by all lenders. Shop around — quotes can vary by 30-50% between carriers."
+  },
+  "examples": [
+    {
+      "name": "First-Time Buyer, Cautious",
+      "desc": "$65K income eyeing a $250K home — will the payment be comfortable?",
+      "values": {
+        "income": 65000,
+        "homePrice": 250000,
+        "downPayment": 15000,
+        "currentRate": "7.0",
+        "loanTerm": "30",
+        "monthlyDebts": 350,
+        "propertyTax": "1.2",
+        "insurance": 1500
+      }
+    },
+    {
+      "name": "Stretch Purchase",
+      "desc": "$90K income reaching for a $400K home — stress test reveals the risk",
+      "values": {
+        "income": 90000,
+        "homePrice": 400000,
+        "downPayment": 30000,
+        "currentRate": "6.75",
+        "loanTerm": "30",
+        "monthlyDebts": 600,
+        "propertyTax": "1.3",
+        "insurance": 2000
+      }
+    },
+    {
+      "name": "ARM Rate Reset",
+      "desc": "Bought with 5/1 ARM at 5.5% — what happens when it adjusts?",
+      "values": {
+        "income": 80000,
+        "homePrice": 350000,
+        "downPayment": 70000,
+        "currentRate": "5.5",
+        "loanTerm": "30",
+        "monthlyDebts": 400,
+        "propertyTax": "1.1",
+        "insurance": 1800
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Stress Test Your Payment?",
+    "purpose": "This calculator shows you what happens to your DTI ratio and monthly payment if interest rates increase. It's the financial equivalent of asking 'What if things get harder?' before you commit.",
+    "whenToUse": [
+      "Before making an offer — ensure you can handle rate changes if you have an adjustable-rate mortgage",
+      "When deciding between a fixed and adjustable-rate mortgage",
+      "To understand your financial cushion — how much room do you have before payments become unmanageable?"
+    ],
+    "keyInsight": "A 1% rate increase on a $300K loan adds roughly $200/month to your payment. Over 30 years, that's $72,000 more in interest. The stress test helps you visualize this impact before you're locked in.",
+    "proTip": "If your DTI exceeds 43% at the +1% stress level, consider a less expensive home or a larger down payment. Financial resilience means being able to handle the unexpected."
+  },
+  "kpiExplains": {
+    "kpiCurrentPmt": "Your <strong>monthly payment at today's rate</strong> — this is your baseline. Compare this to the stressed scenarios to see your exposure.",
+    "kpiCurrentDTI": "Your <strong>debt-to-income ratio at today's rate</strong>. Below 36% is comfortable. 36-43% is acceptable. Above 43% means most conventional lenders will decline.",
+    "kpiStress1": "What your payment becomes if rates rise <strong>1 percentage point</strong>. This is a realistic scenario — rates moved 2%+ in 2022 alone.",
+    "kpiStress2": "The <strong>worst-case scenario</strong> at +2% above current rates. If you can still afford this payment, you have strong financial resilience."
+  },
+  "coupled": [
+    {
+      "name": "Affordability Calculator",
+      "folder": "affordability",
+      "reason": "Find the right price range before stress testing a specific home"
+    },
+    {
+      "name": "Rate Buydown",
+      "folder": "rate-buydown",
+      "reason": "See if paying points to lock a lower rate is worth the upfront cost"
+    },
+    {
+      "name": "Cash to Close",
+      "folder": "cash-to-close",
+      "reason": "Calculate exactly how much cash you need beyond the down payment"
+    }
+  ]
+};</script>
+<script src="../../dti-stress-test/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

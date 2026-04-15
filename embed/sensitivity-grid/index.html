@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/sensitivity-grid">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Sensitivity Grid — IntelliTC Solutions</title>
+<meta name="description" content="Powerful what-if tool: see how an investment performs across multiple variable combinations with a color-coded grid.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Investment Sensitivity Grid — IntelliTC Solutions">
+<meta property="og:description" content="Powerful what-if tool: see how an investment performs across multiple variable combinations with a color-coded grid.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/sensitivity-grid">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Investment Sensitivity Grid — IntelliTC Solutions">
+<meta name="twitter:description" content="Powerful what-if tool: see how an investment performs across multiple variable combinations with a color-coded grid.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<style>
+.heatmap-legend{display:flex;align-items:center;gap:var(--space-2);justify-content:center;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted)}
+.heatmap-legend-bar{width:200px;height:12px;border-radius:var(--radius-full);background:linear-gradient(to right,rgba(239,68,68,0.35),rgba(245,158,11,0.35),rgba(16,185,129,0.35));border:1px solid var(--color-divider)}
+.heatmap-legend-label{font-weight:600;text-transform:uppercase;letter-spacing:0.05em;font-size:11px}
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
+.bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Investment Sensitivity Grid</h1>
+      <p class="panel-subtitle">Powerful what-if tool: see how an investment performs across multiple variable combinations with a color-coded grid.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Base Deal</h3>
+<div class="field">
+            <label for="price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="300,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dp">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="20" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rate').value='6.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='7.5';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span> <span class="bm-tag" onclick="document.getElementById('rate').value='8';document.getElementById('rate').dispatchEvent(new Event('input',{bubbles:true}))">8%</span></div>
+          </div>
+<div class="field">
+            <label for="term">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rent" value="2,200" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Sensitivity Variables</h3>
+<div class="field">
+            <label for="var1">Variable 1</label>
+            <select id="var1"><option value="vacancy">Vacancy Rate</option><option value="rent">Rent Amount</option><option value="rate">Interest Rate</option><option value="expenses">Expense Ratio</option><option value="price">Purchase Price</option></select>
+          </div>
+<div class="field">
+            <label for="var2">Variable 2</label>
+            <select id="var2"><option value="vacancy">Vacancy Rate</option><option value="rent">Rent Amount</option><option value="rate">Interest Rate</option><option value="expenses">Expense Ratio</option><option value="price">Purchase Price</option></select>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Fixed Assumptions</h3>
+<div class="field">
+            <label for="opex" title="As % of effective gross income">Operating Expenses</label>
+            <div class="input-with-unit"><input type="text" id="opex" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('opex').value='35';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">35%</span> <span class="bm-tag" onclick="document.getElementById('opex').value='40';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">40%</span> <span class="bm-tag" onclick="document.getElementById('opex').value='50';document.getElementById('opex').dispatchEvent(new Event('input',{bubbles:true}))">50%</span></div>
+          </div>
+<div class="field">
+            <label for="vac">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vac" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('vac').value='5';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">5%</span> <span class="bm-tag" onclick="document.getElementById('vac').value='8';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">8% Avg</span> <span class="bm-tag" onclick="document.getElementById('vac').value='10';document.getElementById('vac').dispatchEvent(new Event('input',{bubbles:true}))">10%</span></div>
+          </div>
+<div class="field">
+            <label for="appRate" title="Annual property value growth">Appreciation Rate</label>
+            <div class="input-with-unit"><input type="text" id="appRate" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('appRate').value='2';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('appRate').value='3.5';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">3.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('appRate').value='5';document.getElementById('appRate').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Output Metric</h3>
+<div class="field">
+            <label for="metric">Output Metric</label>
+            <select id="metric"><option value="cashflow">Cash Flow (Annual)</option><option value="caprate">Cap Rate</option><option value="coc">Cash-on-Cash Return</option><option value="dscr">DSCR</option></select>
+          </div>
+</div>
+</div>
+
+      <div id="validationMsg" style="display:none;color:var(--color-error,#a12c7b);font-size:var(--text-sm);font-weight:500;padding:var(--space-2) var(--space-3);background:var(--color-error-surface,rgba(161,44,123,0.08));border-radius:var(--radius-md);margin-bottom:var(--space-3);text-align:center"></div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Best Case</span>
+          <span class="kpi-value" id="kpiBest">—</span>
+          <span class="kpi-delta" id="kpiBestDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Base Case</span>
+          <span class="kpi-value" id="kpiBase">—</span>
+          <span class="kpi-delta" id="kpiBaseDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Worst Case</span>
+          <span class="kpi-value" id="kpiWorst">—</span>
+          <span class="kpi-delta" id="kpiWorstDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Range (Best − Worst)</span>
+          <span class="kpi-value" id="kpiRange">—</span>
+          <span class="kpi-delta" id="kpiRangeDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Base Case Waterfall</h3>
+          <p class="chart-subtitle">Revenue through cash flow breakdown</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartWaterfall"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div id="sensitivityGrid" style="margin-top:var(--space-6);overflow-x:auto"></div>
+    </section>
+  </main>
+  
+  <script src="../../sensitivity-grid/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Use a Sensitivity Grid?",
+    "purpose": "Investment returns depend on assumptions — rent growth, appreciation, vacancy, rates. The Sensitivity Grid shows how your returns change across a RANGE of assumptions, revealing which variables matter most and where the deal breaks.",
+    "whenToUse": [
+      "When stress-testing a deal against multiple scenarios simultaneously",
+      "To identify the 'break-even' point for each key variable",
+      "When presenting risk analysis to partners or lenders — the grid tells the complete story"
+    ],
+    "keyInsight": "Most investors run one scenario and make a decision. The Sensitivity Grid runs dozens. If a deal is profitable across 80% of the scenarios, it's robust. If it only works in the best case, it's fragile. This tool shows you the difference."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Investment Analysis",
+      "folder": "investment-analysis",
+      "reason": "Run the base case, then stress-test it with the Sensitivity Grid"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Cash flow is the most common variable to stress-test"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "The sensitivity analysis feeds into overall deal quality assessment"
+    }
+  ]
+};</script>
+<script src="../../sensitivity-grid/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

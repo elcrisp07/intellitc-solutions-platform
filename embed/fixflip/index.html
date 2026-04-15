@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/fixflip">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix &amp; Flip Calculator — IntelliTC Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+<style>
+/* Cross-link suggestions */
+.next-steps { background: var(--color-surface, #f9f8f5); border-radius: 10px; padding: 24px; margin: 28px 0 8px; border: 1px solid var(--color-border, #d4d1ca); }
+[data-theme="dark"] .next-steps { background: var(--dark-surface, #1c1b19); border-color: var(--dark-border, #393836); }
+.next-steps h3 { margin: 0 0 14px; font-size: 1.05rem; color: var(--color-text, #28251d); }
+[data-theme="dark"] .next-steps h3 { color: var(--dark-text, #cdccca); }
+.next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.next-step-card {
+  display: block; padding: 14px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--color-bg, #f7f6f2); border: 1px solid var(--color-border, #d4d1ca);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .next-step-card { background: var(--dark-bg, #171614); border-color: var(--dark-border, #393836); }
+.next-step-card:hover { border-color: #01696f; box-shadow: 0 2px 8px rgba(1,105,111,0.12); }
+.next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
+.next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
+[data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
+.bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
+</style>
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+
+
+
+<main class="main">
+
+  <!-- ===== INPUT PANEL ===== -->
+  <section id="inputPanel" class="panel">
+    <h1 class="panel-title">Fix &amp; Flip Calculator</h1>
+    <p class="panel-subtitle">Analyze rehab profit, risk, and margin for your next flip deal.</p>
+
+    <div class="params-grid">
+
+<div class="param-group">
+<h3 class="param-group-title">Property Identification</h3>
+<div class="field">
+            <label for="propertyAddress" title="Street address of the subject property">Property Address</label>
+            <input type="text" id="propertyAddress" value="" placeholder="123 Main St, City, ST" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+</div>
+      <!-- Purchase & Value -->
+      <div class="param-group">
+        <h2 class="param-group-title">Purchase &amp; Value</h2>
+        <div class="field">
+          <label>Purchase Price <span class="tooltip info-badge" data-tip="The price you will pay to acquire the property">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="purchasePrice" value="200,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>After Repair Value (ARV) <span class="tooltip info-badge" data-tip="Expected market value once all renovations are complete">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="arv" value="300,000" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Repair Costs <span class="tooltip info-badge" data-tip="Total estimated cost of all repairs and renovations">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="repairCosts" value="50,000" data-currency></div>
+        </div>
+      </div>
+
+      <!-- Holding Costs -->
+      <div class="param-group">
+        <h2 class="param-group-title">Holding Costs</h2>
+        <div class="field">
+          <label>Holding Period <span class="tooltip info-badge" data-tip="Months from purchase to sale (rehab + marketing time)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="holdingMonths" value="6" min="1" max="36" step="1"><span class="unit">mo</span></div>
+        </div>
+        <div class="field">
+          <label>Insurance / Month <span class="tooltip info-badge" data-tip="Monthly property insurance premium during holding period">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdInsurance" value="150" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Property Taxes / Month <span class="tooltip info-badge" data-tip="Monthly property tax during holding period">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdTaxes" value="250" data-currency></div>
+        </div>
+        <div class="field">
+          <label>Utilities / Month <span class="tooltip info-badge" data-tip="Monthly utilities (electric, water, gas) during rehab">?</span></label>
+          <div class="input-with-unit"><span class="unit">$</span><input type="text" id="holdUtilities" value="200" data-currency></div>
+        </div>
+      </div>
+
+      <!-- Closing Costs -->
+      <div class="param-group">
+        <h2 class="param-group-title">Closing Costs</h2>
+        <div class="field">
+          <label>Closing Costs — Buy Side <span class="tooltip info-badge" data-tip="Buyer-side closing costs as % of purchase price (title, escrow, etc.)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="closingBuyPct" value="2" min="0" max="10" step="0.1"><span class="unit">%</span></div>
+        </div>
+        <div class="field">
+          <label>Closing Costs — Sell Side <span class="tooltip info-badge" data-tip="Seller-side closing costs as % of ARV (agent commissions, title, transfer tax)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="closingSellPct" value="8" min="0" max="15" step="0.1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+      <!-- Hard Money Financing -->
+      <div class="param-group">
+        <h2 class="param-group-title">Hard Money Financing</h2>
+        <div class="field">
+          <label>Interest Rate <span class="tooltip info-badge" data-tip="Annual interest rate on the hard money loan">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmRate" value="12" min="0" max="30" step="0.25"><span class="unit">%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('hmRate').value='10';document.getElementById('hmRate').dispatchEvent(new Event('input',{bubbles:true}))">10%</span> <span class="bm-tag" onclick="document.getElementById('hmRate').value='12';document.getElementById('hmRate').dispatchEvent(new Event('input',{bubbles:true}))">12% Avg</span> <span class="bm-tag" onclick="document.getElementById('hmRate').value='14';document.getElementById('hmRate').dispatchEvent(new Event('input',{bubbles:true}))">14%</span></div>
+        </div>
+        <div class="field">
+          <label>Points <span class="tooltip info-badge" data-tip="Upfront origination fee (1 point = 1% of loan amount)">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmPoints" value="2" min="0" max="10" step="0.5"><span class="unit">pts</span></div>
+        </div>
+        <div class="field">
+          <label>Loan-to-Value (LTV) <span class="tooltip info-badge" data-tip="Percentage of purchase price financed by the lender">?</span></label>
+          <div class="input-with-unit"><input type="number" id="hmLTV" value="80" min="0" max="100" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+      <!-- Profit Target -->
+      <div class="param-group">
+        <h2 class="param-group-title">Profit Target</h2>
+        <div class="field">
+          <label>Desired Profit Margin <span class="tooltip info-badge" data-tip="Your target net profit as a percentage of ARV">?</span></label>
+          <div class="input-with-unit"><input type="number" id="desiredMargin" value="15" min="0" max="50" step="1"><span class="unit">%</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="errorMsg" class="hidden" style="color:var(--color-error);text-align:center;margin-top:var(--space-4);font-size:var(--text-sm);font-weight:500;"></div>
+
+    <button id="calcBtn" class="btn btn-primary btn-run">
+      Calculate Flip Analysis
+    </button>
+  </section>
+
+  <!-- ===== RESULTS PANEL ===== -->
+  <section id="resultsPanel" class="panel hidden" style="margin-top:var(--space-6);">
+
+    <div class="results-header">
+      <div>
+        <h2 class="panel-title">Flip Analysis Results</h2>
+        <p class="panel-subtitle" id="resultsSummary"></p>
+      </div>
+      <button class="btn btn-ghost" id="btnModify">← Modify Inputs</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3 class="chart-title">Cost Breakdown Waterfall</h3>
+        <p class="chart-subtitle">How every dollar adds up from purchase to profit</p>
+        <div class="chart-container chart-container-bar"><canvas id="waterfallChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Profit Sensitivity</h3>
+        <p class="chart-subtitle">Net profit at varying ARV levels (±5%, ±10%, ±15%)</p>
+        <div class="chart-container chart-container-bar"><canvas id="sensitivityChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Deal Scorecard -->
+    <div class="chart-card" style="margin-bottom:var(--space-6);">
+      <h3 class="chart-title">Deal Scorecard</h3>
+      <p class="chart-subtitle">Pass/fail thresholds for key deal metrics</p>
+      <div id="scorecardBody"></div>
+    </div>
+
+    <!-- Cost Itemization Table -->
+    <h3 style="font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-4);">Full Cost Itemization</h3>
+    <div class="table-wrap" style="margin-bottom:var(--space-6);">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Line Item</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">% of Total Cost</th>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody"></tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-ghost" id="btnModify2">← Modify Inputs</button>
+  </section>
+
+</main>
+
+
+<div class="next-steps">
+  <h3>What to explore next</h3>
+  <div class="next-steps-grid">
+    <a class="next-step-card" href="../../brrrr/index.html"><strong>BRRRR Calculator</strong><span>Consider keeping the property as a rental instead of flipping</span></a>
+    <a class="next-step-card" href="../../private-money/index.html"><strong>Private Money Calculator</strong><span>Model hard money or private lending costs for the rehab</span></a>
+    <a class="next-step-card" href="../../cashflow/index.html"><strong>Cash Flow Calculator</strong><span>What if you held this as a rental after rehab?</span></a>
+  </div>
+</div>
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "purchasePrice": "<strong>Purchase Price</strong> — What you're paying for the property. The profit in a flip is made at the purchase, not the sale. Buy below 70% of ARV minus repairs.",
+    "rehabCost": "<strong>Rehab Cost</strong> — Total renovation budget. Get multiple contractor bids. Add 15-20% contingency — rehabs almost always cost more than estimated.",
+    "arv": "<strong>After-Repair Value</strong> — What the home will sell for after renovation. Pull recent comps (sold, not listed). This is the most important number in the entire analysis.",
+    "holdingMonths": "<strong>Holding Period</strong> — Months from purchase to sale. Average flip takes 4-6 months. Every extra month costs you in holding expenses.",
+    "sellingCosts": "<strong>Selling Costs %</strong> — Agent commissions + closing costs when you sell. Typically 8-10% of the sale price.",
+    "financingCost": "<strong>Financing Costs</strong> — Hard money loan interest, points, and fees. Hard money rates run 10-14% with 1-3 points upfront."
+  },
+  "examples": [
+    {
+      "name": "Bread & Butter Flip",
+      "desc": "$130K buy, $40K rehab, $225K ARV — clean cosmetic flip with good margins",
+      "values": {
+        "purchasePrice": 130000,
+        "rehabCost": 40000,
+        "arv": 225000,
+        "holdingMonths": "5",
+        "sellingCosts": "9",
+        "financingCost": 8500
+      }
+    },
+    {
+      "name": "Tight Margin Flip",
+      "desc": "Numbers look okay until you add all costs — see the real profit",
+      "values": {
+        "purchasePrice": 195000,
+        "rehabCost": 55000,
+        "arv": 290000,
+        "holdingMonths": "7",
+        "sellingCosts": "9",
+        "financingCost": 14000
+      }
+    },
+    {
+      "name": "Luxury Flip",
+      "desc": "High-end renovation — bigger investment, bigger potential return",
+      "values": {
+        "purchasePrice": 320000,
+        "rehabCost": 120000,
+        "arv": 575000,
+        "holdingMonths": "8",
+        "sellingCosts": "8",
+        "financingCost": 28000
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Use the Fix & Flip Calculator?",
+    "purpose": "Flipping looks profitable on TV, but the margins are thinner than most people think. This calculator reveals the true profit after accounting for rehab, holding costs, financing, and selling expenses — the costs that turn a 'great deal' into a break-even.",
+    "whenToUse": [
+      "Before making an offer on a flip property — know your maximum allowable offer (MAO)",
+      "To compare potential flip deals and prioritize the most profitable one",
+      "When deciding: should I flip this property or hold it as a BRRRR rental?"
+    ],
+    "keyInsight": "The 70% Rule: Never pay more than 70% of ARV minus repair costs. On a $200K ARV property needing $30K in work: Max offer = ($200K × 0.70) - $30K = $110K. This rule leaves room for holding costs, selling costs, and profit.",
+    "proTip": "Your holding costs are a ticking clock. Every month you hold adds mortgage payments, insurance, utilities, and taxes. Finish the rehab on time and price it to sell fast. A quick nickel beats a slow dime."
+  },
+  "kpiExplains": {
+    "kpiProfit": "Your <strong>net profit</strong> — what you keep after every single cost. If this number is below $20K, the risk may not be worth it.",
+    "kpiROI": "<strong>Return on investment</strong> — profit ÷ total cash invested. Compare this annualized to other investment options.",
+    "kpiMargin": "<strong>Profit margin</strong> — profit as a percentage of the sale price. Experienced flippers target 10-15% minimum.",
+    "kpiMAO": "<strong>Maximum Allowable Offer</strong> — the most you should pay using the 70% rule. Offer above this and your margins evaporate."
+  },
+  "coupled": [
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Compare: should you flip (sell) or BRRRR (hold and rent)?"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the flip opportunity across multiple risk dimensions"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "If the flip doesn't sell quickly, can you hold it as a rental?"
+    }
+  ]
+};</script>
+<script src="../../fixflip/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

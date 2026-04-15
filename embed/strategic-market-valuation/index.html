@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/strategic-market-valuation">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Market Valuation — IntelliTC Solutions</title>
+<meta name="description" content="Multi-factor market scoring — normalize 8 key indicators into a composite heat score for any real estate market.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Strategic Market Valuation — IntelliTC Solutions">
+<meta property="og:description" content="Multi-factor market scoring — normalize 8 key indicators into a composite heat score for any real estate market.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/strategic-market-valuation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Strategic Market Valuation — IntelliTC Solutions">
+<meta name="twitter:description" content="Multi-factor market scoring — normalize 8 key indicators into a composite heat score for any real estate market.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Strategic Market Valuation</h1>
+      <p class="panel-subtitle">Multi-factor market scoring — normalize 8 key indicators into a composite heat score for any real estate market.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Affordability</h3>
+<div class="field">
+            <label for="medianPrice">Median Home Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="medianPrice" value="400,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="medianIncome">Median Household Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="medianIncome" value="85,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="avgRent">Average Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="avgRent" value="2,200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="mortgageRate">Current Mortgage Rate</label>
+            <div class="input-with-unit"><input type="text" id="mortgageRate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('mortgageRate').value='6.5';document.getElementById('mortgageRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('mortgageRate').value='7';document.getElementById('mortgageRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('mortgageRate').value='7.5';document.getElementById('mortgageRate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Supply & Demand</h3>
+<div class="field">
+            <label for="monthsSupply" title="Active listings / monthly sales">Months of Supply</label>
+            <div class="input-with-unit"><input type="text" id="monthsSupply" value="3.5" inputmode="decimal"><span class='unit'>mo</span></div>
+          </div>
+<div class="field">
+            <label for="popGrowth" title="Annual metro population growth">Population Growth Rate</label>
+            <div class="input-with-unit"><input type="text" id="popGrowth" value="1.2" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('popGrowth').value='0.5';document.getElementById('popGrowth').dispatchEvent(new Event('input',{bubbles:true}))">0.5%</span> <span class="bm-tag" onclick="document.getElementById('popGrowth').value='1';document.getElementById('popGrowth').dispatchEvent(new Event('input',{bubbles:true}))">1% Avg</span> <span class="bm-tag" onclick="document.getElementById('popGrowth').value='2';document.getElementById('popGrowth').dispatchEvent(new Event('input',{bubbles:true}))">2%</span></div>
+          </div>
+<div class="field">
+            <label for="jobGrowth" title="Annual employment growth">Job Growth Rate</label>
+            <div class="input-with-unit"><input type="text" id="jobGrowth" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('jobGrowth').value='1';document.getElementById('jobGrowth').dispatchEvent(new Event('input',{bubbles:true}))">1%</span> <span class="bm-tag" onclick="document.getElementById('jobGrowth').value='2';document.getElementById('jobGrowth').dispatchEvent(new Event('input',{bubbles:true}))">2% Avg</span> <span class="bm-tag" onclick="document.getElementById('jobGrowth').value='3';document.getElementById('jobGrowth').dispatchEvent(new Event('input',{bubbles:true}))">3%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Market Dynamics</h3>
+<div class="field">
+            <label for="daysOnMarket">Avg Days on Market</label>
+            <div class="input-with-unit"><input type="text" id="daysOnMarket" value="28" inputmode="decimal"><span class='unit'>days</span></div>
+          </div>
+<div class="field">
+            <label for="pctOverAsking" title="Percentage of sales above list price">% Sold Over Asking</label>
+            <div class="input-with-unit"><input type="text" id="pctOverAsking" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rentGrowth" title="Year-over-year rent growth">Annual Rent Growth</label>
+            <div class="input-with-unit"><input type="text" id="rentGrowth" value="4.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rentGrowth').value='2';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('rentGrowth').value='3';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">3% Avg</span> <span class="bm-tag" onclick="document.getElementById('rentGrowth').value='5';document.getElementById('rentGrowth').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Heat Score (0-100)</span>
+          <span class="kpi-value" id="kpiHeatScore">—</span>
+          <span class="kpi-delta" id="kpiHeatScoreDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Affordability Index</span>
+          <span class="kpi-value" id="kpiAffordability">—</span>
+          <span class="kpi-delta" id="kpiAffordabilityDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Supply/Demand Score</span>
+          <span class="kpi-value" id="kpiSupplyDemand">—</span>
+          <span class="kpi-delta" id="kpiSupplyDemandDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Market Verdict</span>
+          <span class="kpi-value" id="kpiVerdict">—</span>
+          <span class="kpi-delta" id="kpiVerdictDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Factor Breakdown</h3>
+          <p class="chart-subtitle">Normalized scores across 8 dimensions</p>
+          <div class="chart-container">
+            <canvas id="chartRadar"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Score Components</h3>
+          <p class="chart-subtitle">Individual factor contributions</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartBar"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+    </section>
+  </main>
+  
+  <script src="../../strategic-market-valuation/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze Market Valuation?",
+    "purpose": "This calculator assesses whether a real estate market is fairly valued, overheated, or undervalued based on multiple indicators — price-to-rent ratios, price-to-income ratios, and historical trends.",
+    "whenToUse": [
+      "When deciding WHICH market to invest in — not just which property",
+      "To time market entry and exit based on valuation signals",
+      "When comparing markets across different cities or regions"
+    ],
+    "keyInsight": "Market-level analysis comes before property-level analysis. Even the best deal in an overheated market carries macro risk. Conversely, an average deal in an undervalued market has a tailwind. This calculator helps you pick the right market first."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Buffett Indicator",
+      "folder": "buffett-indicator",
+      "reason": "National macro context for your market-level analysis"
+    },
+    {
+      "name": "Market Agility Index",
+      "folder": "agility-index",
+      "reason": "Operational market dynamics beyond just valuation"
+    },
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Market cap rates indicate whether a market is expensive or cheap"
+    }
+  ]
+};</script>
+<script src="../../strategic-market-valuation/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

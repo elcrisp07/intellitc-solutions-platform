@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/cash-to-close">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash-to-Close Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Find out exactly how much cash you need to bring to closing — no surprises on closing day.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Cash-to-Close Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Find out exactly how much cash you need to bring to closing — no surprises on closing day.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/cash-to-close">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cash-to-Close Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Find out exactly how much cash you need to bring to closing — no surprises on closing day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<style>
+/* Cross-link suggestions */
+.next-steps { background: var(--color-surface, #f9f8f5); border-radius: 10px; padding: 24px; margin: 28px 0 8px; border: 1px solid var(--color-border, #d4d1ca); }
+[data-theme="dark"] .next-steps { background: var(--dark-surface, #1c1b19); border-color: var(--dark-border, #393836); }
+.next-steps h3 { margin: 0 0 14px; font-size: 1.05rem; color: var(--color-text, #28251d); }
+[data-theme="dark"] .next-steps h3 { color: var(--dark-text, #cdccca); }
+.next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.next-step-card {
+  display: block; padding: 14px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--color-bg, #f7f6f2); border: 1px solid var(--color-border, #d4d1ca);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .next-step-card { background: var(--dark-bg, #171614); border-color: var(--dark-border, #393836); }
+.next-step-card:hover { border-color: #01696f; box-shadow: 0 2px 8px rgba(1,105,111,0.12); }
+.next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
+.next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
+[data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+</style>
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Cash-to-Close Calculator</h1>
+      <p class="panel-subtitle">Find out exactly how much cash you need to bring to closing — no surprises on closing day.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Identification</h3>
+<div class="field">
+            <label for="propertyAddress" title="Street address of the subject property">Property Address</label>
+            <input type="text" id="propertyAddress" value="" placeholder="123 Main St, City, ST" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Home Purchase</h3>
+<div class="field">
+            <label for="price" title="The agreed-upon price for the home">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dpPctSel">Down Payment %</label>
+            <select id="dpPctSel"><option value="3.5">3.5% — FHA Minimum</option><option value="5">5% — Conventional Minimum</option><option value="10">10%</option><option value="15">15%</option><option value="20">20% — No PMI</option><option value="other">Other (enter below)</option></select>
+          </div>
+<div class="field">
+            <label for="dpDollar" title="Leave blank to auto-calculate from % above">Down Payment $ Override</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="dpDollar" value="" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Closing Costs</h3>
+<div class="field">
+            <label for="closingPct" title="Typically 2-5% of purchase price">Closing Costs %</label>
+            <div class="input-with-unit"><input type="text" id="closingPct" value="2.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="lenderFees" title="Origination, underwriting, processing">Lender Fees</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="lenderFees" value="1,200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="titleEscrow" title="Title search, title insurance, escrow fees">Title & Escrow</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="titleEscrow" value="2,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="appraisal" title="Required by your lender">Appraisal Fee</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="appraisal" value="550" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="inspection" title="Highly recommended for all buyers">Home Inspection</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="inspection" value="450" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Pre-Paids & Escrow</h3>
+<div class="field">
+            <label for="prepaidDays" title="Interest from closing to end of month">Pre-paid Interest (days)</label>
+            <div class="input-with-unit"><input type="text" id="prepaidDays" value="15" inputmode="decimal"><span class='unit'>days</span></div>
+          </div>
+<div class="field">
+            <label for="insYr" title="First year paid upfront at closing">Homeowners Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insYr" value="1,800" inputmode="numeric" data-currency><span class='unit'>/yr</span></div>
+          </div>
+<div class="field">
+            <label for="escrowMonths" title="Months of taxes your lender holds in reserve">Property Tax Escrow</label>
+            <div class="input-with-unit"><input type="text" id="escrowMonths" value="3" inputmode="decimal"><span class='unit'>months</span></div>
+          </div>
+<div class="field">
+            <label for="taxRate" title="Annual property tax as % of home value">Property Tax Rate</label>
+            <div class="input-with-unit"><input type="text" id="taxRate" value="1.1" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Other Costs</h3>
+<div class="field">
+            <label for="earnest" title="Already deposited — applied toward your down payment">Earnest Money Deposit</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="earnest" value="5,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="moving" title="Moving truck, movers, packing supplies">Moving Budget</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="moving" value="3,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="furniture" title="New furniture, paint, immediate repairs">Furniture & Repairs Reserve</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="furniture" value="5,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Total Cash to Close</span>
+          <span class="kpi-value" id="kpiTotal">—</span>
+          <span class="kpi-delta" id="kpiTotalDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Down Payment</span>
+          <span class="kpi-value" id="kpiDP">—</span>
+          <span class="kpi-delta" id="kpiDPDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Closing Costs</span>
+          <span class="kpi-value" id="kpiClosing">—</span>
+          <span class="kpi-delta" id="kpiClosingDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Recommended Reserves</span>
+          <span class="kpi-value" id="kpiReserves">—</span>
+          <span class="kpi-delta" id="kpiReservesDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Cash-to-Close Breakdown</h3>
+          <p class="chart-subtitle">Every dollar you need at closing</p>
+          <div class="chart-container">
+            <canvas id="chartBreakdown"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Down Payment Comparison</h3>
+          <p class="chart-subtitle">Cash needed at different down payment levels</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartCompare"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Amount</th><th>Notes</th></tr></thead><tbody id="closeBody"></tbody></table></div>
+    </section>
+  </main>
+  
+<div class="next-steps">
+  <h3>What to explore next</h3>
+  <div class="next-steps-grid">
+    <a class="next-step-card" href="../../affordability/index.html"><strong>Affordability Calculator</strong><span>Confirm the purchase price fits your income</span></a>
+    <a class="next-step-card" href="../../dti-stress-test/index.html"><strong>DTI Stress Test</strong><span>See how rate changes could affect your monthly payment</span></a>
+    <a class="next-step-card" href="../../government-loans/index.html"><strong>Government Loans</strong><span>Compare loan programs that could reduce closing costs</span></a>
+  </div>
+</div>
+
+  
+  <script src="../../cash-to-close/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "purchasePrice": "<strong>Purchase Price</strong> — The agreed-upon price for the home. This determines your loan amount, transfer taxes, and several closing cost items that are calculated as a percentage of the price.",
+    "downPaymentPct": "<strong>Down Payment %</strong> — Percentage of purchase price paid in cash. 20% avoids PMI. FHA requires 3.5% minimum. Conventional loans start at 3%.",
+    "loanOrigination": "<strong>Loan Origination Fee</strong> — What the lender charges to process your loan, typically 0.5%–1% of the loan amount. This is negotiable — ask your lender.",
+    "appraisalFee": "<strong>Appraisal Fee</strong> — Paid to a licensed appraiser to confirm the home's value. Typically $400–$700. Required by the lender to ensure they're not over-lending.",
+    "titleInsurance": "<strong>Title Insurance</strong> — Protects against ownership disputes. The lender requires a policy, and you should get an owner's policy too. Costs $1,000–$3,000 depending on the state.",
+    "inspectionFee": "<strong>Inspection Fee</strong> — Covers a professional home inspection. Not required by lenders but strongly recommended. Typically $300–$500. Worth every penny.",
+    "escrowMonths": "<strong>Escrow Months</strong> — Lenders require 2–6 months of property tax and insurance to be deposited in escrow at closing. This protects them (and you) if you miss future payments.",
+    "prepaidInterest": "<strong>Prepaid Interest Days</strong> — Interest from your closing date to the end of that month. Close early in the month = more prepaid interest. Close late = less."
+  },
+  "examples": [
+    {
+      "name": "FHA First-Time Buyer",
+      "desc": "3.5% down on a $280K home — see the real cash needed beyond just the down payment",
+      "values": {
+        "purchasePrice": 280000,
+        "downPaymentPct": "3.5",
+        "loanOrigination": "1.0",
+        "appraisalFee": 550,
+        "titleInsurance": 1800,
+        "inspectionFee": 450,
+        "escrowMonths": "3",
+        "prepaidInterest": "15"
+      }
+    },
+    {
+      "name": "Conventional 20% Down",
+      "desc": "$375K home with 20% down — no PMI but significant closing costs",
+      "values": {
+        "purchasePrice": 375000,
+        "downPaymentPct": "20",
+        "loanOrigination": "0.75",
+        "appraisalFee": 600,
+        "titleInsurance": 2200,
+        "inspectionFee": 500,
+        "escrowMonths": "4",
+        "prepaidInterest": "10"
+      }
+    },
+    {
+      "name": "VA Loan, Zero Down",
+      "desc": "Veteran buying $320K home — $0 down but still need closing cash",
+      "values": {
+        "purchasePrice": 320000,
+        "downPaymentPct": "0",
+        "loanOrigination": "1.0",
+        "appraisalFee": 500,
+        "titleInsurance": 1600,
+        "inspectionFee": 400,
+        "escrowMonths": "3",
+        "prepaidInterest": "20"
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Calculate Cash to Close?",
+    "purpose": "The down payment is just one part of the cash you need at closing. This calculator reveals all the other costs — lender fees, title insurance, escrow deposits, and prepaid items — so you're not blindsided at the closing table.",
+    "whenToUse": [
+      "After you've found a home and before making an offer — ensure you actually have enough cash",
+      "When comparing loan programs — FHA, VA, and Conventional have different closing cost structures",
+      "To plan your savings timeline — knowing the total helps you set a realistic savings goal"
+    ],
+    "keyInsight": "Closing costs typically add 2–5% of the purchase price ON TOP of your down payment. On a $300K home, that's $6,000–$15,000 extra that many first-time buyers don't budget for. This calculator prevents that surprise.",
+    "proTip": "You can negotiate seller concessions (seller pays part of your closing costs) — common in buyer's markets. Ask your agent about writing this into the offer."
+  },
+  "kpiExplains": {
+    "kpiTotalCash": "The <strong>total amount of cash</strong> you need to bring to the closing table. This includes your down payment plus all fees, escrow deposits, and prepaid items.",
+    "kpiDownPayment": "Your <strong>down payment amount</strong> — the largest single item. This goes directly toward your home equity.",
+    "kpiClosingCosts": "All <strong>fees and charges</strong> beyond the down payment — lender fees, title, appraisal, inspections, and prepaid items.",
+    "kpiEscrow": "Cash deposited into an <strong>escrow account</strong> to cover upcoming property taxes and insurance payments. You get this money 'back' as the lender pays those bills from escrow."
+  },
+  "coupled": [
+    {
+      "name": "Affordability Calculator",
+      "folder": "affordability",
+      "reason": "Make sure the home price fits your budget before calculating closing costs"
+    },
+    {
+      "name": "DTI Stress Test",
+      "folder": "dti-stress-test",
+      "reason": "Verify the monthly payment is sustainable at different rate scenarios"
+    },
+    {
+      "name": "Government Loans",
+      "folder": "government-loans",
+      "reason": "Compare FHA, VA, and USDA — each has different closing cost structures and down payment rules"
+    }
+  ]
+};</script>
+<script src="../../cash-to-close/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

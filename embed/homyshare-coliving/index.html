@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/homyshare-coliving">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomyShare Co-Living Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Co-living and shared housing investment analysis — room-by-room revenue, house-hacking savings, and occupancy sensitivity.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="HomyShare Co-Living Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Co-living and shared housing investment analysis — room-by-room revenue, house-hacking savings, and occupancy sensitivity.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/homyshare-coliving">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HomyShare Co-Living Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Co-living and shared housing investment analysis — room-by-room revenue, house-hacking savings, and occupancy sensitivity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">HomyShare Co-Living Calculator</h1>
+      <p class="panel-subtitle">Co-living and shared housing investment analysis — room-by-room revenue, house-hacking savings, and occupancy sensitivity.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property & Financing</h3>
+<div class="field">
+            <label for="price" title="Total property purchase price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="450,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dpPct" title="Down payment percentage">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dpPct" value="20" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate" title="Annual mortgage rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="6.75" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term" title="Mortgage term in years">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Co-Living Setup</h3>
+<div class="field">
+            <label for="totalRooms" title="Number of rooms available for rent">Total Rentable Rooms</label>
+            <input type="text" id="totalRooms" value="5" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="rentPerRoom" title="Average monthly rent per room">Rent per Room</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rentPerRoom" value="950" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="commonCosts" title="Shared utilities, internet, cleaning">Common Area Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="commonCosts" value="300" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+<div class="field">
+            <label for="furnishCost" title="One-time setup cost for co-living conversion">Furnishing/Conversion Cost</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="furnishCost" value="15,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Operating</h3>
+<div class="field">
+            <label for="vacancyPct" title="Expected vacancy across all rooms">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vacancyPct" value="10" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="mgmtPct" title="Property management as % of collected rent">Management Fee</label>
+            <div class="input-with-unit"><input type="text" id="mgmtPct" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="taxesYr" title="Annual property taxes">Property Taxes</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="taxesYr" value="5,400" inputmode="numeric" data-currency><span class='unit'>/yr</span></div>
+          </div>
+<div class="field">
+            <label for="insYr" title="Annual property insurance">Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insYr" value="2,400" inputmode="numeric" data-currency><span class='unit'>/yr</span></div>
+          </div>
+<div class="field">
+            <label for="maintPct" title="Annual maintenance as % of gross rent">Maintenance</label>
+            <div class="input-with-unit"><input type="text" id="maintPct" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">House Hacking</h3>
+<div class="field">
+            <label for="ownerOccupy">Owner Occupies a Room</label>
+            <select id="ownerOccupy"><option value="yes">Yes — Owner lives in one room</option><option value="no">No — All rooms rented</option></select>
+          </div>
+<div class="field">
+            <label for="altRent" title="What owner would pay in rent elsewhere">Alternative Rent (if not here)</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="altRent" value="1,800" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Cash Flow</span>
+          <span class="kpi-value" id="kpiMonthlyCF">—</span>
+          <span class="kpi-delta" id="kpiMonthlyCFDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Revenue per Room</span>
+          <span class="kpi-value" id="kpiRevenueRoom">—</span>
+          <span class="kpi-delta" id="kpiRevenueRoomDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">CoC Return</span>
+          <span class="kpi-value" id="kpiCoC">—</span>
+          <span class="kpi-delta" id="kpiCoCDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Break-Even Rooms</span>
+          <span class="kpi-value" id="kpiBreakEvenRooms">—</span>
+          <span class="kpi-delta" id="kpiBreakEvenRoomsDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Room Revenue Breakdown</h3>
+          <p class="chart-subtitle">Income contribution by room</p>
+          <div class="chart-container">
+            <canvas id="chartRevenue"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Co-Living vs Whole-Unit</h3>
+          <p class="chart-subtitle">Revenue comparison</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartCompare"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Room</th><th class="text-right">Gross Rent</th><th class="text-right">Effective Rent</th><th class="text-right">Expenses</th><th class="text-right">NOI</th></tr></thead><tbody id="roomBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../homyshare-coliving/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze Co-Living / HomyShare?",
+    "purpose": "Co-living rents rooms individually in a single property, generating 30-80% more revenue than renting to a single tenant. This calculator models the per-room economics to show the income boost and added complexity.",
+    "whenToUse": [
+      "When considering renting rooms individually vs. the whole house",
+      "To model house-hacking income — live in one room, rent the others",
+      "When evaluating larger homes (4+ bedrooms) for investment potential"
+    ],
+    "keyInsight": "A 4-bedroom home renting for $2,000/month to a family could rent for $800/room ($3,200/month) as a co-living arrangement. But factor in higher turnover, utilities you'll pay, furnishing costs, and more management time."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Compare co-living income vs. traditional single-tenant rental"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Model the cash flow using co-living rental income"
+    }
+  ]
+};</script>
+<script src="../../homyshare-coliving/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/refinance">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refinance Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Analyze whether refinancing saves money — break-even timeline, cumulative savings, and balance comparison.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Refinance Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Analyze whether refinancing saves money — break-even timeline, cumulative savings, and balance comparison.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/refinance">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Refinance Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze whether refinancing saves money — break-even timeline, cumulative savings, and balance comparison.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Refinance Analyzer</h1>
+      <p class="panel-subtitle">Analyze whether refinancing saves money — break-even timeline, cumulative savings, and balance comparison.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Identification</h3>
+<div class="field">
+            <label for="propertyAddress" title="Street address of the subject property">Property Address</label>
+            <input type="text" id="propertyAddress" value="" placeholder="123 Main St, City, ST" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Current Loan</h3>
+<div class="field">
+            <label for="curBal" title="Remaining mortgage balance">Current Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="curBal" value="280,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="curRate" title="Current annual interest rate">Current Rate</label>
+            <div class="input-with-unit"><input type="text" id="curRate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="curTerm" title="Years left on current mortgage">Remaining Term</label>
+            <div class="input-with-unit"><input type="text" id="curTerm" value="27" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="curPmt" title="Current monthly P&I payment">Current Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="curPmt" value="1,870" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">New Loan</h3>
+<div class="field">
+            <label for="newRate" title="New annual interest rate">New Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="newRate" value="5.75" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('newRate').value='6';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">6%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='6.5';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('newRate').value='7';document.getElementById('newRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span></div>
+          </div>
+<div class="field">
+            <label for="newTerm" title="New amortization period">New Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="newTerm" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="newClosing" title="Total refinance closing costs">Closing Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="newClosing" value="6,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="cashOut" title="Additional cash taken out at refinance">Cash Out Amount</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="cashOut" value="0" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">New Payment</span>
+          <span class="kpi-value" id="kpiNewPmt">—</span>
+          <span class="kpi-delta" id="kpiNewPmtDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Savings</span>
+          <span class="kpi-value" id="kpiMonthlySave">—</span>
+          <span class="kpi-delta" id="kpiMonthlySaveDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Break-Even</span>
+          <span class="kpi-value" id="kpiBreakEven">—</span>
+          <span class="kpi-delta" id="kpiBreakEvenDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Lifetime Savings</span>
+          <span class="kpi-value" id="kpiLifeSave">—</span>
+          <span class="kpi-delta" id="kpiLifeSaveDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Cumulative Savings</h3>
+          <p class="chart-subtitle">Monthly savings minus closing costs over time</p>
+          <div class="chart-container">
+            <canvas id="chartCumulative"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Balance Comparison</h3>
+          <p class="chart-subtitle">Remaining balance: current vs new loan</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartBalance"></canvas>
+          </div>
+        </div>
+</div>
+
+      <h3 style="font-size:var(--text-lg);font-weight:700;margin:var(--space-6) 0 var(--space-4)">Refinance Comparison</h3><div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Monthly</th><th class="text-right">Total</th></tr></thead><tbody id="refiBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../refinance/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze a Refinance?",
+    "purpose": "Refinancing replaces your current mortgage with a new one — ideally at a lower rate, shorter term, or with cash out. This calculator shows the break-even point, total savings, and whether the upfront costs are worth it.",
+    "whenToUse": [
+      "When interest rates drop below your current rate — even 0.5-1% can save thousands",
+      "When considering a cash-out refinance to fund investments or renovations",
+      "When switching from an adjustable-rate to a fixed-rate mortgage for stability"
+    ],
+    "keyInsight": "The break-even point is critical: how many months until your monthly savings exceed the closing costs? If you plan to stay in the home longer than the break-even period, refinancing makes sense. If not, it's a net loss."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "HELOC Optimizer",
+      "folder": "heloc-optimizer",
+      "reason": "Compare cash-out refi vs. HELOC for accessing equity"
+    },
+    {
+      "name": "Rate Buydown",
+      "folder": "rate-buydown",
+      "reason": "See if buying down the rate makes the refinance even better"
+    },
+    {
+      "name": "Home Equity",
+      "folder": "home-equity",
+      "reason": "Check your current equity position before refinancing"
+    }
+  ]
+};</script>
+<script src="../../refinance/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

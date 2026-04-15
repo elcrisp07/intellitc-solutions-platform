@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/brrrr">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRRRR Strategy Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Analyze the Buy-Rehab-Rent-Refinance-Repeat cycle to calculate cash left in deal, cash flow, and whether you achieve an infinite return.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="BRRRR Strategy Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Analyze the Buy-Rehab-Rent-Refinance-Repeat cycle to calculate cash left in deal, cash flow, and whether you achieve an infinite return.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/brrrr">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BRRRR Strategy Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze the Buy-Rehab-Rent-Refinance-Repeat cycle to calculate cash left in deal, cash flow, and whether you achieve an infinite return.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<link rel="stylesheet" href="../../shared/market-presets.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<style>
+/* Cross-link suggestions */
+.next-steps { background: var(--color-surface, #f9f8f5); border-radius: 10px; padding: 24px; margin: 28px 0 8px; border: 1px solid var(--color-border, #d4d1ca); }
+[data-theme="dark"] .next-steps { background: var(--dark-surface, #1c1b19); border-color: var(--dark-border, #393836); }
+.next-steps h3 { margin: 0 0 14px; font-size: 1.05rem; color: var(--color-text, #28251d); }
+[data-theme="dark"] .next-steps h3 { color: var(--dark-text, #cdccca); }
+.next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.next-step-card {
+  display: block; padding: 14px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--color-bg, #f7f6f2); border: 1px solid var(--color-border, #d4d1ca);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="dark"] .next-step-card { background: var(--dark-bg, #171614); border-color: var(--dark-border, #393836); }
+.next-step-card:hover { border-color: #01696f; box-shadow: 0 2px 8px rgba(1,105,111,0.12); }
+.next-step-card strong { display: block; color: #01696f; font-size: 0.92rem; margin-bottom: 4px; }
+.next-step-card span { font-size: 0.82rem; color: var(--color-text-muted, #7a7974); line-height: 1.4; }
+[data-theme="dark"] .next-step-card span { color: var(--dark-text-muted, #797876); }
+
+/* Benchmark badges */
+.benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
+.bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
+.bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
+</style>
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">BRRRR Strategy Calculator</h1>
+      <p class="panel-subtitle">Analyze the Buy-Rehab-Rent-Refinance-Repeat cycle to calculate cash left in deal, cash flow, and whether you achieve an infinite return.</p>
+      <div id="mpContainer"></div>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Identification</h3>
+<div class="field">
+            <label for="propertyAddress" title="Street address of the subject property">Property Address</label>
+            <input type="text" id="propertyAddress" value="" placeholder="123 Main St, City, ST" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Purchase & Rehab</h3>
+<div class="field">
+            <label for="purchasePrice" title="Acquisition cost of the property">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="purchasePrice" value="180,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="rehabCosts" title="Total renovation budget">Rehab Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rehabCosts" value="40,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="arv" title="Estimated value after rehab">After Repair Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="arv" value="280,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="purchaseDP" title="Initial down payment percentage">Down Payment on Purchase</label>
+            <div class="input-with-unit"><input type="text" id="purchaseDP" value="20" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="closingCosts" title="Buying closing costs">Closing Costs</label>
+            <div class="input-with-unit"><input type="text" id="closingCosts" value="3" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Holding Period</h3>
+<div class="field">
+            <label for="holdMonths" title="Months to complete rehab">Rehab Duration</label>
+            <div class="input-with-unit"><input type="text" id="holdMonths" value="4" inputmode="decimal"><span class='unit'>mo</span></div>
+          </div>
+<div class="field">
+            <label for="holdCostMo" title="Insurance, taxes, utilities during rehab">Monthly Holding Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="holdCostMo" value="1,500" inputmode="numeric" data-currency><span class='unit'>/mo</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Refinance Terms</h3>
+<div class="field">
+            <label for="refiLTV" title="Loan-to-value on refinance">Refinance LTV</label>
+            <div class="input-with-unit"><input type="text" id="refiLTV" value="75" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="refiRate" title="Interest rate on new loan">Refinance Rate</label>
+            <div class="input-with-unit"><input type="text" id="refiRate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('refiRate').value='6.5';document.getElementById('refiRate').dispatchEvent(new Event('input',{bubbles:true}))">6.5%</span> <span class="bm-tag" onclick="document.getElementById('refiRate').value='7';document.getElementById('refiRate').dispatchEvent(new Event('input',{bubbles:true}))">7%</span> <span class="bm-tag" onclick="document.getElementById('refiRate').value='7.5';document.getElementById('refiRate').dispatchEvent(new Event('input',{bubbles:true}))">7.5%</span> <span class="bm-tag" onclick="document.getElementById('refiRate').value='8';document.getElementById('refiRate').dispatchEvent(new Event('input',{bubbles:true}))">8%</span></div>
+          </div>
+<div class="field">
+            <label for="refiTerm" title="New loan term">Refinance Term</label>
+            <div class="input-with-unit"><input type="text" id="refiTerm" value="30" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="refiCosts" title="Refinance closing costs as % of new loan">Refinance Closing</label>
+            <div class="input-with-unit"><input type="text" id="refiCosts" value="2" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Rental Income</h3>
+<div class="field">
+            <label for="monthlyRent" title="Expected rent after rehab">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyRent" value="2,200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="vacancy" title="Expected vacancy percentage">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vacancy" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('vacancy').value='5';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">5%</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='8';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">8% Avg</span> <span class="bm-tag" onclick="document.getElementById('vacancy').value='10';document.getElementById('vacancy').dispatchEvent(new Event('input',{bubbles:true}))">10%</span></div>
+          </div>
+<div class="field">
+            <label for="expenses" title="Total expenses as % of effective rent">Operating Expenses</label>
+            <div class="input-with-unit"><input type="text" id="expenses" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('expenses').value='35';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">35%</span> <span class="bm-tag" onclick="document.getElementById('expenses').value='40';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">40%</span> <span class="bm-tag" onclick="document.getElementById('expenses').value='50';document.getElementById('expenses').dispatchEvent(new Event('input',{bubbles:true}))">50%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Cash Left in Deal</span>
+          <span class="kpi-value" id="kpiCashLeft">—</span>
+          <span class="kpi-delta" id="kpiCashLeftDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Cash Flow</span>
+          <span class="kpi-value" id="kpiCashFlow">—</span>
+          <span class="kpi-delta" id="kpiCashFlowDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cash-on-Cash Return</span>
+          <span class="kpi-value" id="kpiCoC">—</span>
+          <span class="kpi-delta" id="kpiCoCDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Infinite Return?</span>
+          <span class="kpi-value" id="kpiInfinite">—</span>
+          <span class="kpi-delta" id="kpiInfiniteDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">BRRRR Phase Analysis</h3>
+          <p class="chart-subtitle">Money flow through each phase</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartPhases"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Equity Position</h3>
+          <p class="chart-subtitle">Your equity after refinance</p>
+          <div class="chart-container">
+            <canvas id="chartEquity"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Projected Cash Flow</h3>
+          <p class="chart-subtitle">Monthly net income over 5 years</p>
+          <div class="chart-container">
+            <canvas id="chartCF"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Phase</th><th class="text-right">Amount</th><th>Description</th></tr></thead><tbody id="phaseBody"></tbody></table></div>
+    </section>
+  </main>
+  
+<div class="next-steps">
+  <h3>What to explore next</h3>
+  <div class="next-steps-grid">
+    <a class="next-step-card" href="../../fixflip/index.html"><strong>Fix & Flip Calculator</strong><span>Model the rehab phase with detailed cost and timeline projections</span></a>
+    <a class="next-step-card" href="../../cashflow/index.html"><strong>Cash Flow Calculator</strong><span>Analyze the rental income after your BRRRR refinance</span></a>
+    <a class="next-step-card" href="../../dscr-loan/index.html"><strong>DSCR Loan Calculator</strong><span>Check if the property qualifies for a DSCR refinance</span></a>
+  </div>
+</div>
+
+  
+  <script src="../../brrrr/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "purchasePrice": "<strong>Purchase Price</strong> — The acquisition cost of the distressed property. BRRRR works best when you buy 20-30% below after-repair value (ARV).",
+    "rehabCost": "<strong>Rehab Cost</strong> — Total renovation budget. Get contractor bids BEFORE buying. Add 10-15% contingency for unexpected issues.",
+    "arv": "<strong>After-Repair Value (ARV)</strong> — What the property will be worth after renovation. Base this on recent comparable sales (comps) of similar, renovated homes within 0.5 miles.",
+    "monthlyRent": "<strong>Monthly Rent</strong> — Expected rental income after rehab. Research comparable rents on Rentometer or Zillow. Conservative estimate = market rent minus $50-100.",
+    "refinanceRate": "<strong>Refinance Rate</strong> — The interest rate on your permanent (refinance) loan. This replaces your initial hard money or cash purchase.",
+    "refinanceLTV": "<strong>Refinance LTV</strong> — Loan-to-Value ratio the lender will allow. 75% is standard for investment properties. Some portfolio lenders offer up to 80%."
+  },
+  "examples": [
+    {
+      "name": "Classic BRRRR, Midwest",
+      "desc": "$80K purchase, $35K rehab, $165K ARV — textbook deal in a cash-flow market",
+      "values": {
+        "purchasePrice": 80000,
+        "rehabCost": 35000,
+        "arv": 165000,
+        "monthlyRent": 1400,
+        "refinanceRate": "7.5",
+        "refinanceLTV": "75"
+      }
+    },
+    {
+      "name": "High-Value BRRRR, Southeast",
+      "desc": "$180K purchase, $60K rehab, $320K ARV — larger deal, larger returns",
+      "values": {
+        "purchasePrice": 180000,
+        "rehabCost": 60000,
+        "arv": 320000,
+        "monthlyRent": 2200,
+        "refinanceRate": "7.25",
+        "refinanceLTV": "75"
+      }
+    },
+    {
+      "name": "Failed BRRRR (Learn From It)",
+      "desc": "Rehab over budget, ARV missed — see what happens when numbers are tight",
+      "values": {
+        "purchasePrice": 150000,
+        "rehabCost": 75000,
+        "arv": 250000,
+        "monthlyRent": 1600,
+        "refinanceRate": "8.0",
+        "refinanceLTV": "70"
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why Use the BRRRR Calculator?",
+    "purpose": "BRRRR (Buy, Rehab, Rent, Refinance, Repeat) is the most powerful wealth-building strategy in real estate. This calculator shows whether a deal lets you pull out most or all of your invested cash through refinancing — so you can do it again.",
+    "whenToUse": [
+      "When evaluating a distressed property — is the spread between purchase+rehab and ARV wide enough?",
+      "To determine how much cash stays trapped in the deal after refinancing",
+      "When comparing multiple potential BRRRR deals side by side"
+    ],
+    "keyInsight": "The magic of BRRRR is 'infinite returns' — when the refinance proceeds return ALL your original cash. This happens when (Purchase + Rehab) ≤ ARV × LTV. If you buy at 70% of ARV and rehab for 10-15% of ARV, the math usually works.",
+    "proTip": "Never estimate ARV yourself. Pull 3-5 recent sold comps within 0.5 miles, same bed/bath count, similar condition. The deal lives or dies on an accurate ARV."
+  },
+  "kpiExplains": {
+    "kpiCashLeft": "Cash <strong>remaining in the deal</strong> after the refinance. Ideally this is $0 or negative (you got MORE back than you put in). If it's high, your capital is trapped.",
+    "kpiCashFlow": "Monthly <strong>cash flow after all expenses</strong> — mortgage, taxes, insurance, maintenance, vacancy, and management. This needs to be positive for the deal to work long-term.",
+    "kpiCOC": "Your <strong>cash-on-cash return</strong> on the money left in the deal. If you pulled all cash out, this is infinity — you're earning returns on $0 invested.",
+    "kpiROI": "The <strong>total return on investment</strong> including equity captured through the rehab. This is the full picture of what the deal produces."
+  },
+  "coupled": [
+    {
+      "name": "Fix & Flip",
+      "folder": "fixflip",
+      "reason": "Compare: should you BRRRR (hold) or flip (sell) this property?"
+    },
+    {
+      "name": "Rental Analysis",
+      "folder": "rental-analysis",
+      "reason": "Deep-dive into the rental income projections after the refinance"
+    },
+    {
+      "name": "DSCR Loan",
+      "folder": "dscr-loan",
+      "reason": "Many BRRRR refinances use DSCR loans — check if the rental income qualifies"
+    },
+    {
+      "name": "Deal Grading",
+      "folder": "deal-grading",
+      "reason": "Score the overall deal quality before committing capital"
+    }
+  ]
+};</script>
+<script src="../../brrrr/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/deal-data.js"></script>
+<script src="../../shared/zip3-metro-map.js"></script>
+<script src="../../shared/market-presets.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  MarketPresets.init("mpContainer", {
+    avgRent2br: "monthlyRent",
+    vacancy:    "vacancy"
+  });
+  DealData.prefill({
+    purchasePrice: "purchasePrice"
+  });
+});
+</script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

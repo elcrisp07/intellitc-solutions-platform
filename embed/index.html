@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embed Our Calculators — IntelliTC Solutions</title>
+<meta name="description" content="Embed IntelliTC's professional real estate calculators on your website. Free, brandable widgets for agents, brokers, and real estate professionals.">
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="canonical" href="https://intellitcsolutions.com/embed">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Embed Our Calculators — IntelliTC Solutions">
+<meta property="og:description" content="Add professional real estate calculators to your website in 30 seconds. Free embeddable widgets.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+<style>
+  .embed-hero {
+    text-align: center;
+    padding: var(--space-12) var(--space-6) var(--space-8);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .embed-hero h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+    line-height: 1.15;
+  }
+  .embed-hero .accent { color: var(--color-primary); }
+  .embed-hero p {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto var(--space-6);
+    line-height: 1.6;
+  }
+  .embed-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+  }
+  .embed-stat {
+    text-align: center;
+  }
+  .embed-stat-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    display: block;
+  }
+  .embed-stat-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .generator-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--space-6) var(--space-12);
+  }
+  .gen-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+  .gen-card h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+  }
+  .gen-card .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin-right: var(--space-2);
+    flex-shrink: 0;
+  }
+  .gen-card p.step-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .gen-field {
+    margin-bottom: var(--space-5);
+  }
+  .gen-field label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+  .gen-field select,
+  .gen-field input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--text-base);
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .gen-field select:focus,
+  .gen-field input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(1, 105, 111, 0.12);
+  }
+  .gen-field .radio-row {
+    display: flex;
+    gap: var(--space-4);
+  }
+  .gen-field .radio-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+  .gen-field .radio-option input[type="radio"] {
+    width: auto;
+    accent-color: var(--color-primary);
+  }
+  .code-output {
+    position: relative;
+    background: var(--color-bg);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .code-output pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+    overflow-x: auto;
+  }
+  .code-output .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 6px 14px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .code-output .copy-btn:hover { opacity: 0.85; }
+  .code-output .copy-btn.copied {
+    background: #437a22;
+  }
+  .preview-frame {
+    margin-top: var(--space-6);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+  .preview-frame iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+  }
+  .preview-label {
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-divider);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .preview-label svg { flex-shrink: 0; }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+  .feature-item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .feature-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(1, 105, 111, 0.08);
+    color: var(--color-primary);
+  }
+  .feature-item h3 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 2px;
+  }
+  .feature-item p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+  .how-it-works {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin: var(--space-8) 0;
+    text-align: center;
+  }
+  @media (max-width: 640px) {
+    .how-it-works { grid-template-columns: 1fr; }
+  }
+  .how-step {
+    padding: var(--space-5);
+  }
+  .how-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+  .how-step h3 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+  .how-step p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../zero-experience/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none">Start Here</a>
+      <a href="../get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Your Role?</a>
+      <a href="../workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="../learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="../seniors-corner/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Senior's Corner</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certificate</a>
+      <a href="../guides/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Guides</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none;white-space:nowrap">Start Here</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html">Your Role?</a>
+    <a href="../workflows/index.html">Workflows</a>
+    <a href="../learning-paths/index.html">Learn</a>
+    <a href="../seniors-corner/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Senior's Corner</a>
+    <a href="../certification/index.html">Certificate</a>
+    <a href="../guides/index.html">Guides</a>
+  </nav>
+</header>
+
+<main class="main" style="max-width:100%;padding:0">
+
+  <!-- Hero -->
+  <section class="embed-hero">
+    <h1>Embed <span class="accent">Professional Calculators</span> on Your Website</h1>
+    <p>Add any of our 60 real estate analysis tools to your site in under 30 seconds. Free for agents, brokers, and real estate professionals.</p>
+    <div class="embed-stats">
+      <div class="embed-stat">
+        <span class="embed-stat-value">60</span>
+        <span class="embed-stat-label">Embeddable Tools</span>
+      </div>
+      <div class="embed-stat">
+        <span class="embed-stat-value">2 Lines</span>
+        <span class="embed-stat-label">of Code to Embed</span>
+      </div>
+      <div class="embed-stat">
+        <span class="embed-stat-value">Free</span>
+        <span class="embed-stat-label">Forever</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="generator-section">
+    <div class="how-it-works">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <h3>Choose a Calculator</h3>
+        <p>Select from 60 professional tools organized by category — buyer, investor, agent, financing, and more.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <h3>Copy the Code</h3>
+        <p>Two lines of HTML. Paste them anywhere on your website — WordPress, Squarespace, Wix, or custom sites.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <h3>Done</h3>
+        <p>The calculator appears on your site with full functionality — charts, results tables, dark mode, and auto-save.</p>
+      </div>
+    </div>
+
+    <!-- Generator -->
+    <div class="gen-card" id="generator">
+      <h2><span class="step-num">1</span> Select Your Calculator</h2>
+      <p class="step-desc">Choose the tool you want to embed on your site.</p>
+
+      <div class="gen-field">
+        <label for="toolSelect">Calculator</label>
+        <select id="toolSelect" onchange="updateCode()">
+          <option value="">— Select a calculator —</option>
+        <optgroup label="Buyer Tools">
+          <option value="affordability">Affordability Calculator</option>
+          <option value="rent-vs-buy">Rent vs. Buy Calculator</option>
+          <option value="cash-to-close">Cash to Close Calculator</option>
+          <option value="true-cost-ownership">True Cost of Ownership</option>
+          <option value="government-loans">Government Loan Programs</option>
+          <option value="rate-buydown">Rate Buydown Calculator</option>
+          <option value="buy-before-you-sell">Buy Before You Sell Calculator</option>
+          <option value="home-equity">Home Equity Calculator</option>
+          <option value="heloc-optimizer">HELOC Optimizer</option>
+          <option value="payment-reverse-engineering">Payment Reverse Engineering</option>
+        </optgroup>
+        <optgroup label="Investment Analysis">
+          <option value="caprate">Cap Rate Calculator</option>
+          <option value="cashflow">Cash Flow Calculator</option>
+          <option value="cash-on-cash-breakdown">Cash-on-Cash Breakdown</option>
+          <option value="investment-analysis">Investment Analysis</option>
+          <option value="real-estate-investment-analyzer">Real Estate Investment Analyzer</option>
+          <option value="re-investment-analyzer">Re-Investment Analyzer</option>
+          <option value="deal-grading">Deal Grading Scorecard</option>
+          <option value="sensitivity-grid">Sensitivity Grid</option>
+          <option value="portfolio-manager">Portfolio Manager</option>
+          <option value="buffett-indicator">Buffett Indicator</option>
+          <option value="agility-index">Agility Index Analyzer</option>
+        </optgroup>
+        <optgroup label="Rental & Leasing">
+          <option value="rental-analysis">Rental Analysis</option>
+          <option value="net-effective-rent">Net Effective Rent Calculator</option>
+          <option value="short-term-rental">Short-Term Rental Calculator</option>
+          <option value="rv-park-investment">RV Park Investment Analyzer</option>
+          <option value="self-storage">Self Storage Investment Analyzer</option>
+          <option value="multifamily">Multifamily Analyzer</option>
+          <option value="lease-expiration">Lease Expiration Tracker</option>
+          <option value="lease-option">Lease Option Calculator</option>
+          <option value="tenant-turnover">Tenant Turnover Calculator</option>
+          <option value="homyshare-coliving">HomyShare Co-Living Calculator</option>
+        </optgroup>
+        <optgroup label="Fix & Flip / BRRRR">
+          <option value="fixflip">Fix & Flip Calculator</option>
+          <option value="brrrr">BRRRR Strategy Calculator</option>
+          <option value="distressed-asset">Distressed Asset Analyzer</option>
+          <option value="sources-uses">Sources & Uses</option>
+          <option value="budget-variance">Budget Variance Tracker</option>
+          <option value="land-development">Land Development Pro Forma</option>
+        </optgroup>
+        <optgroup label="Financing">
+          <option value="dscr-loan">DSCR Loan Calculator</option>
+          <option value="dti-stress-test">DTI Stress Test</option>
+          <option value="qualification-analysis">Qualification Analysis</option>
+          <option value="private-money">Private Money Lender Calculator</option>
+          <option value="refinance">Refinance Calculator</option>
+          <option value="seller-financing">Seller Financing Calculator</option>
+          <option value="wrap-calculator">Wrap Calculator</option>
+          <option value="iul-portfolio">IUL Portfolio Analyzer</option>
+        </optgroup>
+        <optgroup label="Agent & Broker">
+          <option value="cma">CMA Validation Tool</option>
+          <option value="commission">Commission Calculator</option>
+          <option value="seller-net-sheet">Seller Net Sheet</option>
+          <option value="strategic-market-valuation">Strategic Market Valuation</option>
+          <option value="housing-code-compliance">Housing Code Compliance</option>
+        </optgroup>
+        <optgroup label="Tax & Legal">
+          <option value="1031-exchange">1031 Exchange Calculator</option>
+          <option value="capital-gains">Capital Gains Tax Impact Analyzer</option>
+          <option value="burial-cemetery-tax">Burial & Cemetery Tax Planner</option>
+        </optgroup>
+        <optgroup label="Creative Finance">
+          <option value="creative-finance-casestudy">Creative Finance Case Study</option>
+          <option value="subject-to">Subject-To Calculator</option>
+          <option value="subject-to-risk-dashboard">Subject-To Risk Dashboard</option>
+        </optgroup>
+        <optgroup label="Specialty">
+          <option value="solar-roi">Solar ROI Calculator</option>
+          <option value="land-flip">Land Flip Calculator</option>
+          <option value="seniors-corner">Senior's Corner</option>
+          <option value="underwriting">Deal Underwriting Worksheet</option>
+        </optgroup>
+
+        </select>
+      </div>
+
+      <div class="gen-field">
+        <label>Theme</label>
+        <div class="radio-row">
+          <label class="radio-option">
+            <input type="radio" name="theme" value="auto" checked onchange="updateCode()">
+            Auto (matches visitor's system)
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="theme" value="light" onchange="updateCode()">
+            Light
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="theme" value="dark" onchange="updateCode()">
+            Dark
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="gen-card" id="codeCard" style="display:none">
+      <h2><span class="step-num">2</span> Copy This Code</h2>
+      <p class="step-desc">Paste this snippet into your website HTML where you want the calculator to appear.</p>
+      <div class="code-output">
+        <button class="copy-btn" onclick="copyCode()">Copy</button>
+        <pre id="codeOutput"></pre>
+      </div>
+    </div>
+
+    <div id="previewCard" style="display:none">
+      <div class="gen-card" style="padding-bottom:0">
+        <h2><span class="step-num">3</span> Preview</h2>
+        <p class="step-desc">This is exactly how it will look on your website.</p>
+      </div>
+      <div class="preview-frame">
+        <div class="preview-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Live Preview — Fully Interactive
+        </div>
+        <iframe id="previewFrame" title="Widget preview"></iframe>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div style="margin-top:var(--space-12)">
+      <h2 style="font-size:var(--text-xl);font-weight:700;text-align:center;margin-bottom:var(--space-2)">What's Included in Every Widget</h2>
+      <p style="text-align:center;color:var(--color-text-muted);font-size:var(--text-base);margin-bottom:var(--space-6)">No stripped-down versions. Your visitors get the full calculator experience.</p>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+          </div>
+          <div>
+            <h3>Interactive Charts</h3>
+            <p>Dynamic Chart.js visualizations that update in real time as inputs change.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </div>
+          <div>
+            <h3>Dark Mode</h3>
+            <p>Respects the visitor's system preference or can be locked to light/dark.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          </div>
+          <div>
+            <h3>Auto-Save Progress</h3>
+            <p>Visitors' inputs are saved automatically and restored on their next visit.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <div>
+            <h3>Responsive</h3>
+            <p>Automatically resizes to fit any container. Works on mobile, tablet, and desktop.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h3>PDF Export</h3>
+            <p>Visitors can export results as professional PDF reports with your branding retained.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <div>
+            <h3>Contextual Tooltips</h3>
+            <p>Hover definitions for every financial term — plain English, no jargon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Embeddable widgets are provided free of charge for non-commercial real estate educational use.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+
+<script>
+// Theme toggle (reuse from main site)
+(function(){var toggles=document.querySelectorAll('[data-theme-toggle]'),r=document.documentElement;var d=localStorage.getItem('intellitc-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',d);function updateIcon(){var icon=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';toggles.forEach(function(t){t.innerHTML=icon;});}updateIcon();toggles.forEach(function(t){t.addEventListener('click',function(){d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);localStorage.setItem('intellitc-theme',d);updateIcon();});});})();
+
+var DOMAIN = 'https://intellitcsolutions.com';
+
+function updateCode() {
+  var tool = document.getElementById('toolSelect').value;
+  if (!tool) {
+    document.getElementById('codeCard').style.display = 'none';
+    document.getElementById('previewCard').style.display = 'none';
+    return;
+  }
+
+  var theme = document.querySelector('input[name="theme"]:checked').value;
+  var themeAttr = theme !== 'auto' ? '\n           data-theme="' + theme + '"' : '';
+
+  var code = '<div id="intellitc-widget"></div>\n' +
+    '<script src="' + DOMAIN + '/embed/intellitc-embed.js"\n' +
+    '        data-tool="' + tool + '"' + themeAttr + '>\n' +
+    '<\/script>';
+
+  document.getElementById('codeOutput').textContent = code;
+  document.getElementById('codeCard').style.display = 'block';
+
+  // Update preview
+  var previewSrc = DOMAIN + '/embed/' + tool + '/index.html';
+  if (theme !== 'auto') previewSrc += '?theme=' + theme;
+  document.getElementById('previewFrame').src = previewSrc;
+  document.getElementById('previewCard').style.display = 'block';
+
+  // Listen for height
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'intellitc-resize') {
+      document.getElementById('previewFrame').style.height = (e.data.height + 20) + 'px';
+    }
+  });
+}
+
+function copyCode() {
+  var code = document.getElementById('codeOutput').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

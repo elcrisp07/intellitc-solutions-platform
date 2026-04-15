@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/portfolio-manager">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Manager — IntelliTC Solutions</title>
+<meta name="description" content="Track and analyze your multi-property real estate portfolio. Add up to 6 properties for performance tracking.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Portfolio Manager — IntelliTC Solutions">
+<meta property="og:description" content="Track and analyze your multi-property real estate portfolio. Add up to 6 properties for performance tracking.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/portfolio-manager">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio Manager — IntelliTC Solutions">
+<meta name="twitter:description" content="Track and analyze your multi-property real estate portfolio. Add up to 6 properties for performance tracking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Portfolio Manager</h1>
+      <p class="panel-subtitle">Track and analyze your multi-property real estate portfolio. Add up to 6 properties for performance tracking.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property 1</h3>
+<div class="field">
+            <label for="p1name">Name</label>
+            <input type="text" id="p1name" value="Rental #1" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="p1price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1price" value="250,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p1value">Current Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1value" value="290,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p1rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1rent" value="2,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p1exp">Monthly Expenses</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1exp" value="600" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p1mortBal">Mortgage Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1mortBal" value="185,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p1mortPmt">Mortgage Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p1mortPmt" value="1,200" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Property 2</h3>
+<div class="field">
+            <label for="p2name">Name</label>
+            <input type="text" id="p2name" value="Rental #2" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="p2price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2price" value="320,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p2value">Current Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2value" value="355,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p2rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2rent" value="2,400" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p2exp">Monthly Expenses</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2exp" value="750" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p2mortBal">Mortgage Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2mortBal" value="240,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p2mortPmt">Mortgage Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p2mortPmt" value="1,550" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Property 3 (Optional)</h3>
+<div class="field">
+            <label for="p3name" title="Leave blank to skip">Name</label>
+            <input type="text" id="p3name" value="" inputmode="numeric">
+          </div>
+<div class="field">
+            <label for="p3price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3price" value="" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p3value">Current Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3value" value="" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p3rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3rent" value="" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p3exp">Monthly Expenses</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3exp" value="" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p3mortBal">Mortgage Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3mortBal" value="" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="p3mortPmt" title=" ">Mortgage Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="p3mortPmt" value="" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <div id="validationMsg" style="display:none;color:var(--color-error,#a12c7b);font-size:var(--text-sm);font-weight:500;padding:var(--space-2) var(--space-3);background:var(--color-error-surface,rgba(161,44,123,0.08));border-radius:var(--radius-md);margin-bottom:var(--space-3);text-align:center"></div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Total Portfolio Value</span>
+          <span class="kpi-value" id="kpiTotalValue">—</span>
+          <span class="kpi-delta" id="kpiTotalValueDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Total Equity</span>
+          <span class="kpi-value" id="kpiTotalEquity">—</span>
+          <span class="kpi-delta" id="kpiTotalEquityDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Cash Flow</span>
+          <span class="kpi-value" id="kpiTotalCF">—</span>
+          <span class="kpi-delta" id="kpiTotalCFDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Avg CoC Return</span>
+          <span class="kpi-value" id="kpiAvgCoC">—</span>
+          <span class="kpi-delta" id="kpiAvgCoCDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Portfolio Allocation</h3>
+          <p class="chart-subtitle">Value distribution across properties</p>
+          <div class="chart-container">
+            <canvas id="chartAlloc"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Cash Flow Contribution</h3>
+          <p class="chart-subtitle">Monthly cash flow by property</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartCF"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Property</th><th class="text-right">Value</th><th class="text-right">Equity</th><th class="text-right">Cash Flow</th><th class="text-right">CoC %</th><th class="text-right">Cap Rate</th></tr></thead><tbody id="portBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../portfolio-manager/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Use the Portfolio Manager?",
+    "purpose": "Individual property analysis is important, but portfolio-level thinking is what builds real wealth. This tool helps you see your entire real estate portfolio as one entity — total equity, aggregate cash flow, diversification, and overall return on investment.",
+    "whenToUse": [
+      "When you own 2+ investment properties and need the big picture",
+      "To identify which properties to sell, refinance, or reinvest in",
+      "When reviewing your portfolio allocation across markets, property types, and strategies"
+    ],
+    "keyInsight": "Portfolio management is about optimization: which property contributes most to your goals? Sometimes selling your worst performer and reinvesting into a better deal creates more value than buying a new property with fresh capital."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Analyze individual property performance within the portfolio"
+    },
+    {
+      "name": "1031 Exchange",
+      "folder": "1031-exchange",
+      "reason": "Tax-deferred way to swap underperformers for better assets"
+    },
+    {
+      "name": "Sensitivity Grid",
+      "folder": "sensitivity-grid",
+      "reason": "Stress-test your portfolio against market changes"
+    }
+  ]
+};</script>
+<script src="../../portfolio-manager/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

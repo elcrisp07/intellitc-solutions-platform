@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/real-estate-investment-analyzer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Investment Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Comprehensive deal analysis across 5 wealth-building dimensions: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Real Estate Investment Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Comprehensive deal analysis across 5 wealth-building dimensions: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/real-estate-investment-analyzer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Real Estate Investment Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Comprehensive deal analysis across 5 wealth-building dimensions: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+<link rel="stylesheet" href="../../shared/workflow-context.css">
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Real Estate Investment Analyzer</h1>
+      <p class="panel-subtitle">Comprehensive deal analysis across 5 wealth-building dimensions: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property Details</h3>
+<div class="field">
+            <label for="propertyAddress" title="Street address of the subject property">Property Address</label>
+            <input type="text" id="propertyAddress" value="" placeholder="123 Main St, City, ST" style="width:100%;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+          </div>
+<div class="field">
+            <label for="purchasePrice" title="Total acquisition cost of the property">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="purchasePrice" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="arv" title="Estimated value after all repairs/improvements">After Repair Value</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="arv" value="400,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="repairCosts" title="Total renovation/improvement budget">Repair Costs</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="repairCosts" value="25,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="downPayment" title="Percentage of purchase price as down payment">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="downPayment" value="20" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="interestRate" title="Annual mortgage interest rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="interestRate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="loanTerm" title="Mortgage term in years">Loan Term (years)</label>
+            <input type="text" id="loanTerm" value="30" inputmode="numeric">
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Income & Expenses</h3>
+<div class="field">
+            <label for="monthlyRent" title="Expected gross monthly rental income">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyRent" value="2,800" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="vacancyRate" title="Expected vacancy as % of gross rent">Vacancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="vacancyRate" value="5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="propertyTax" title="Annual property tax as % of value">Property Tax Rate</label>
+            <div class="input-with-unit"><input type="text" id="propertyTax" value="1.1" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="insurance" title="Annual property insurance premium">Insurance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="insurance" value="1,800" inputmode="numeric" data-currency><span class='unit'>/yr</span></div>
+          </div>
+<div class="field">
+            <label for="maintenance" title="Annual maintenance as % of property value">Maintenance</label>
+            <div class="input-with-unit"><input type="text" id="maintenance" value="1.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="management" title="Monthly management fee as % of rent">Property Management</label>
+            <div class="input-with-unit"><input type="text" id="management" value="8" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Growth Assumptions</h3>
+<div class="field">
+            <label for="appreciation" title="Expected annual property value increase">Annual Appreciation</label>
+            <div class="input-with-unit"><input type="text" id="appreciation" value="3.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="closingCosts" title="Buying closing costs as % of purchase price">Closing Costs</label>
+            <div class="input-with-unit"><input type="text" id="closingCosts" value="3.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="taxBracket" title="Your marginal income tax rate for depreciation benefits">Income Tax Bracket</label>
+            <div class="input-with-unit"><input type="text" id="taxBracket" value="24" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Monthly Cash Flow</span>
+          <span class="kpi-value" id="kpiCashFlow">—</span>
+          <span class="kpi-delta" id="kpiCashFlowDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cash-on-Cash Return</span>
+          <span class="kpi-value" id="kpiCoC">—</span>
+          <span class="kpi-delta" id="kpiCoCDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cap Rate</span>
+          <span class="kpi-value" id="kpiCapRate">—</span>
+          <span class="kpi-delta" id="kpiCapRateDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">5-Year Total ROI</span>
+          <span class="kpi-value" id="kpiTotalROI">—</span>
+          <span class="kpi-delta" id="kpiTotalROIDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">5-Year Wealth Accumulation</h3>
+          <p class="chart-subtitle">Stacked by each wealth dimension</p>
+          <div class="chart-container">
+            <canvas id="chartWealth"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Monthly Cash Flow Breakdown</h3>
+          <p class="chart-subtitle">Income minus each expense category</p>
+          <div class="chart-container">
+            <canvas id="chartWaterfall"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Equity Buildup Over Time</h3>
+          <p class="chart-subtitle">Principal paydown + appreciation</p>
+          <div class="chart-container">
+            <canvas id="chartEquity"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)">
+        <table class="results-table" id="yearTable">
+          <thead><tr><th>Year</th><th class="text-right">Cash Flow</th><th class="text-right">Appreciation</th><th class="text-right">Principal Paydown</th><th class="text-right">Tax Benefits</th><th class="text-right">Leverage Gain</th><th class="text-right">Total Return</th></tr></thead>
+          <tbody id="yearTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  
+  <script src="../../real-estate-investment-analyzer/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why This Analyzer?",
+    "purpose": "A comprehensive real estate investment analysis tool that evaluates properties across multiple return metrics — cash flow, appreciation, tax benefits, and equity buildup — giving you the complete investment picture.",
+    "whenToUse": [
+      "When evaluating any investment property for purchase",
+      "To model different holding periods and exit strategies",
+      "When comparing real estate returns against stocks, bonds, or other investments"
+    ],
+    "keyInsight": "Real estate's total return is much higher than cash flow alone suggests. A property yielding 8% cash-on-cash might deliver 20%+ total returns when you include appreciation, debt paydown, and tax benefits. This calculator captures it all."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Detailed monthly cash flow breakdown"
+    },
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Compare cap rates across properties"
+    }
+  ]
+};</script>
+<script src="../../real-estate-investment-analyzer/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+<script src="../../shared/workflow-context.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

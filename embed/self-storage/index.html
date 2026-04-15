@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/self-storage">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Storage Investment Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Analyze self-storage facility acquisitions with multi-unit-type revenue modeling, NOI, cap rate, and occupancy sensitivity.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Self-Storage Investment Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Analyze self-storage facility acquisitions with multi-unit-type revenue modeling, NOI, cap rate, and occupancy sensitivity.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/self-storage">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Self-Storage Investment Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze self-storage facility acquisitions with multi-unit-type revenue modeling, NOI, cap rate, and occupancy sensitivity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Self-Storage Investment Analyzer</h1>
+      <p class="panel-subtitle">Analyze self-storage facility acquisitions with multi-unit-type revenue modeling, NOI, cap rate, and occupancy sensitivity.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Property & Financing</h3>
+<div class="field">
+            <label for="price" title="Total acquisition price">Purchase Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="price" value="800,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="dp">Down Payment</label>
+            <div class="input-with-unit"><input type="text" id="dp" value="25" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="rate">Interest Rate</label>
+            <div class="input-with-unit"><input type="text" id="rate" value="7.0" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="term">Loan Term</label>
+            <div class="input-with-unit"><input type="text" id="term" value="25" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Unit Mix — 5×10</h3>
+<div class="field">
+            <label for="units5x10">Number of 5×10 Units</label>
+            <div class="input-with-unit"><input type="text" id="units5x10" value="30" inputmode="decimal"><span class='unit'>units</span></div>
+          </div>
+<div class="field">
+            <label for="rent5x10" title="Per unit rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rent5x10" value="75" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Unit Mix — 10×10</h3>
+<div class="field">
+            <label for="units10x10">Number of 10×10 Units</label>
+            <div class="input-with-unit"><input type="text" id="units10x10" value="40" inputmode="decimal"><span class='unit'>units</span></div>
+          </div>
+<div class="field">
+            <label for="rent10x10" title="Per unit rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rent10x10" value="125" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Unit Mix — 10×20</h3>
+<div class="field">
+            <label for="units10x20">Number of 10×20 Units</label>
+            <div class="input-with-unit"><input type="text" id="units10x20" value="20" inputmode="decimal"><span class='unit'>units</span></div>
+          </div>
+<div class="field">
+            <label for="rent10x20" title="Per unit rent">Monthly Rent</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="rent10x20" value="200" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Operations</h3>
+<div class="field">
+            <label for="occupancy" title="Average facility occupancy">Occupancy Rate</label>
+            <div class="input-with-unit"><input type="text" id="occupancy" value="88" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="expRatio" title="Operating expenses as % of gross revenue">Expense Ratio</label>
+            <div class="input-with-unit"><input type="text" id="expRatio" value="35" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Net Operating Income</span>
+          <span class="kpi-value" id="kpiNOI">—</span>
+          <span class="kpi-delta" id="kpiNOIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cap Rate</span>
+          <span class="kpi-value" id="kpiCapRate">—</span>
+          <span class="kpi-delta" id="kpiCapRateDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Revenue / Sq Ft</span>
+          <span class="kpi-value" id="kpiRevSqFt">—</span>
+          <span class="kpi-delta" id="kpiRevSqFtDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Cash-on-Cash Return</span>
+          <span class="kpi-value" id="kpiCoC">—</span>
+          <span class="kpi-delta" id="kpiCoCDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Revenue by Unit Size</h3>
+          <p class="chart-subtitle">Annual revenue contribution per unit type</p>
+          <div class="chart-container">
+            <canvas id="chartRevenue"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Occupancy Sensitivity</h3>
+          <p class="chart-subtitle">NOI at varying occupancy levels</p>
+          <div class="chart-container">
+            <canvas id="chartSensitivity"></canvas>
+          </div>
+        </div>
+</div>
+
+      
+    </section>
+  </main>
+  
+  <script src="../../self-storage/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Analyze Self-Storage?",
+    "purpose": "Self-storage is one of the most recession-resilient real estate asset classes. This calculator models unit mix, occupancy, and operating costs specific to self-storage facilities.",
+    "whenToUse": [
+      "When evaluating a self-storage facility purchase",
+      "To model different unit mixes (5x10, 10x10, 10x20, climate-controlled)",
+      "When comparing self-storage vs. other commercial real estate investments"
+    ],
+    "keyInsight": "Self-storage has the highest operating margins in real estate (60-70% NOI margins) because there are no kitchens, bathrooms, or living spaces to maintain. Demand is also sticky — people rarely move their stuff out quickly, providing stable income."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Cap Rate",
+      "folder": "caprate",
+      "reason": "Compare storage facility cap rates to market benchmarks"
+    },
+    {
+      "name": "RV Park Investment",
+      "folder": "rv-park-investment",
+      "reason": "Compare two niche commercial asset classes"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "Model the monthly cash flow from the storage facility"
+    }
+  ]
+};</script>
+<script src="../../self-storage/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

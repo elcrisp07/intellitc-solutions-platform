@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/heloc-optimizer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELOC Optimizer — IntelliTC Solutions</title>
+<meta name="description" content="Velocity banking and mortgage payoff acceleration — compare standard payments, extra payments, and HELOC chunking strategies.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="HELOC Optimizer — IntelliTC Solutions">
+<meta property="og:description" content="Velocity banking and mortgage payoff acceleration — compare standard payments, extra payments, and HELOC chunking strategies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/heloc-optimizer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HELOC Optimizer — IntelliTC Solutions">
+<meta name="twitter:description" content="Velocity banking and mortgage payoff acceleration — compare standard payments, extra payments, and HELOC chunking strategies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">HELOC Optimizer</h1>
+      <p class="panel-subtitle">Velocity banking and mortgage payoff acceleration — compare standard payments, extra payments, and HELOC chunking strategies.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Mortgage</h3>
+<div class="field">
+            <label for="mortBal" title="Remaining balance on primary mortgage">Mortgage Balance</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="mortBal" value="280,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="mortRate" title="Current annual interest rate">Mortgage Rate</label>
+            <div class="input-with-unit"><input type="text" id="mortRate" value="6.5" inputmode="decimal"><span class='unit'>%</span></div>
+          </div>
+<div class="field">
+            <label for="mortRemYrs" title="Years remaining on mortgage">Remaining Term</label>
+            <div class="input-with-unit"><input type="text" id="mortRemYrs" value="27" inputmode="decimal"><span class='unit'>yrs</span></div>
+          </div>
+<div class="field">
+            <label for="mortPmt" title="Current monthly P&I payment">Monthly Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="mortPmt" value="1,896" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">HELOC</h3>
+<div class="field">
+            <label for="helocLimit" title="Available HELOC credit line">HELOC Limit</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="helocLimit" value="30,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="helocRate" title="Annual interest rate on HELOC">HELOC Rate</label>
+            <div class="input-with-unit"><input type="text" id="helocRate" value="8.5" inputmode="decimal"><span class='unit'>%</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('helocRate').value='8.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">8.5%</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='9.5';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">9.5% Avg</span> <span class="bm-tag" onclick="document.getElementById('helocRate').value='11';document.getElementById('helocRate').dispatchEvent(new Event('input',{bubbles:true}))">11%</span></div>
+          </div>
+<div class="field">
+            <label for="helocChunk" title="Amount to transfer from HELOC to mortgage each cycle">Chunk Amount</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="helocChunk" value="10,000" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Cash Flow</h3>
+<div class="field">
+            <label for="monthlyIncome" title="Total monthly take-home income">Monthly Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyIncome" value="7,500" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="monthlyExpenses" title="Total monthly expenses (excluding mortgage)">Monthly Expenses</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="monthlyExpenses" value="5,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="extraPmt" title="Additional amount for standard extra-payment strategy">Extra Monthly Payment</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="extraPmt" value="500" inputmode="numeric" data-currency></div>
+          </div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Years Saved</span>
+          <span class="kpi-value" id="kpiYearsSaved">—</span>
+          <span class="kpi-delta" id="kpiYearsSavedDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Interest Saved</span>
+          <span class="kpi-value" id="kpiIntSaved">—</span>
+          <span class="kpi-delta" id="kpiIntSavedDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">New Payoff Date</span>
+          <span class="kpi-value" id="kpiNewPayoff">—</span>
+          <span class="kpi-delta" id="kpiNewPayoffDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Strategy Requirement</span>
+          <span class="kpi-value" id="kpiStrategyPmt">—</span>
+          <span class="kpi-delta" id="kpiStrategyPmtDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Payoff Comparison</h3>
+          <p class="chart-subtitle">Balance over time: standard vs strategies</p>
+          <div class="chart-container">
+            <canvas id="chartPayoff"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Interest Savings</h3>
+          <p class="chart-subtitle">Cumulative interest by strategy</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartSavings"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Metric</th><th class="text-right">Standard</th><th class="text-right">Extra Payments</th><th class="text-right">HELOC Velocity</th></tr></thead><tbody id="compBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../heloc-optimizer/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Optimize Your HELOC?",
+    "purpose": "A Home Equity Line of Credit (HELOC) is one of the most versatile financial tools available. This calculator helps you determine how much equity is accessible, what the payments would be, and whether using a HELOC makes financial sense for your goal.",
+    "whenToUse": [
+      "When considering using home equity for renovations, investments, or debt consolidation",
+      "To compare HELOC vs. cash-out refinance vs. personal loan",
+      "When planning to use HELOC funds as a down payment on an investment property"
+    ],
+    "keyInsight": "A HELOC is a line of credit, not a lump sum — you only pay interest on what you draw. This makes it ideal for variable-cost projects (rehabs) or as an emergency fund. But remember: your home is the collateral. Default = potential foreclosure."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Home Equity",
+      "folder": "home-equity",
+      "reason": "First check how much equity you have available"
+    },
+    {
+      "name": "Refinance",
+      "folder": "refinance",
+      "reason": "Compare HELOC vs. cash-out refinance for accessing equity"
+    },
+    {
+      "name": "BRRRR Strategy",
+      "folder": "brrrr",
+      "reason": "Use HELOC as the funding source for BRRRR acquisitions"
+    }
+  ]
+};</script>
+<script src="../../heloc-optimizer/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

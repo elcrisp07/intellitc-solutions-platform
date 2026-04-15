@@ -840,6 +840,42 @@
   .consider-this-banner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .consider-this-cta { align-self: stretch; text-align: center; }
 }
+/* Embed Widget Banner */
+.embed-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: linear-gradient(135deg, #01696f 0%, #014d52 50%, #013538 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.75rem;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 12px rgba(1,105,111,0.3);
+  margin-top: var(--space-6);
+}
+.embed-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(1,105,111,0.45);
+}
+.embed-banner-left { display: flex; align-items: center; gap: 1rem; }
+.embed-banner-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+.embed-banner-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.embed-banner-title {
+  font-family: var(--font-display, 'DM Sans', sans-serif);
+  font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em;
+}
+.embed-banner-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.65); font-weight: 400; }
+.embed-banner-cta {
+  background: rgba(255,255,255,0.12); color: #ffffff; font-weight: 700; font-size: 0.85rem;
+  padding: 0.55rem 1.2rem; border-radius: 9999px; white-space: nowrap; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2); transition: background 0.15s, border-color 0.15s;
+}
+.embed-banner:hover .embed-banner-cta { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.35); }
+@media(max-width:600px) {
+  .embed-banner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .embed-banner-cta { align-self: stretch; text-align: center; }
+}
 .calc-card {
   background: var(--color-surface-offset);
   border: 1px solid var(--color-divider);
@@ -1921,6 +1957,18 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
   </div>
 </div>
 
+
+<!-- Embed Widget Banner -->
+<a href="./embed/index.html" class="embed-banner" style="max-width:900px;margin-left:auto;margin-right:auto;margin-bottom:var(--space-8);display:flex">
+  <div class="embed-banner-left">
+    <div class="embed-banner-icon">&lt;/&gt;</div>
+    <div class="embed-banner-text">
+      <span class="embed-banner-title">Embed Our Calculators on Your Website</span>
+      <span class="embed-banner-subtitle">Add any of our 60 professional real estate tools to your site in 30 seconds. Free for agents and brokers.</span>
+    </div>
+  </div>
+  <span class="embed-banner-cta">Get Embed Code &rarr;</span>
+</a>
 
 <!-- Email Capture -->
 <div class="email-capture" id="emailCapture">

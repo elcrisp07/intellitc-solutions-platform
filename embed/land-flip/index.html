@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/land-flip">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vacant Land Flip Analyzer — IntelliTC Solutions</title>
+<meta name="description" content="Analyze vacant land flip deals: due diligence scoring, exit strategy comparison (cash sale vs. owner financing), and full profit/ROI projections.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Vacant Land Flip Analyzer — IntelliTC Solutions">
+<meta property="og:description" content="Analyze vacant land flip deals: due diligence scoring, exit strategy comparison, and full profit/ROI projections.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/land-flip">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vacant Land Flip Analyzer — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze vacant land flip deals with due diligence scoring and exit strategy comparison.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+
+
+<style>
+/* ── Land Flip Hero ── */
+.lf-hero { max-width:var(--content-default); margin:0 auto; padding:var(--space-10) var(--space-6) var(--space-6); text-align:center; }
+.lf-badge { display:inline-block; font-size:var(--text-xs); font-weight:600; padding:4px 14px; border-radius:var(--radius-full); background:#e8f0e4; color:#3d6b2e; margin-bottom:var(--space-4); }
+.lf-title { font-size:var(--text-xl); font-weight:700; color:var(--color-text); margin:0 0 var(--space-3); line-height:1.2; }
+.lf-subtitle { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.6; max-width:680px; margin:0 auto var(--space-2); }
+.lf-crosslink { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); color:var(--color-primary); text-decoration:none; margin-top:var(--space-4); font-weight:500; }
+.lf-crosslink:hover { text-decoration:underline; }
+
+/* ── Tool Cards ── */
+.lf-tools { max-width:var(--content-default); margin:0 auto; padding:0 var(--space-6) var(--space-10); }
+.lf-tools-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); }
+@media(max-width:720px) { .lf-tools-grid { grid-template-columns:1fr; } }
+
+.lf-tool-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-6);
+  display:flex; flex-direction:column;
+}
+.lf-tool-icon { width:48px; height:48px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4); font-size:1.5rem; }
+.lf-tool-icon.deal { background:#e8f0e4; }
+.lf-tool-icon.exit { background:var(--color-primary-surface); }
+.lf-tool-card h3 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.lf-tool-card p { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.6; margin:0 0 var(--space-5); flex:1; }
+.lf-tool-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  padding:var(--space-3) var(--space-5); border-radius:var(--radius-lg);
+  font-size:var(--text-sm); font-weight:600; text-decoration:none;
+  cursor:pointer; border:none; font-family:var(--font-body);
+  transition:background var(--transition-interactive), transform 0.15s;
+}
+.lf-tool-btn:hover { transform:translateY(-1px); }
+.lf-tool-btn.primary { background:var(--color-primary); color:#fff; }
+.lf-tool-btn.primary:hover { background:var(--color-primary-hover); }
+
+/* ── Calculator Panel (shared) ── */
+.calc-panel {
+  display:none; max-width:var(--content-default); margin:0 auto;
+  padding:0 var(--space-6) var(--space-10);
+}
+.calc-panel.active { display:block; }
+.calc-back { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); font-weight:600; color:var(--color-primary); cursor:pointer; background:none; border:none; margin-bottom:var(--space-5); font-family:var(--font-body); }
+.calc-back:hover { text-decoration:underline; }
+
+.calc-container {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+}
+.calc-container h2 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.calc-container .calc-desc { font-size:var(--text-sm); color:var(--color-text-muted); margin:0 0 var(--space-6); line-height:1.6; }
+
+.form-group { margin-bottom:var(--space-5); }
+.form-group label { display:block; font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin-bottom:var(--space-2); }
+.form-group input, .form-group select {
+  width:100%; padding:var(--space-3) var(--space-4);
+  border:1px solid var(--color-border); border-radius:var(--radius-md);
+  font-size:var(--text-base); background:var(--color-bg);
+  color:var(--color-text); font-family:var(--font-body);
+}
+.form-group input:focus, .form-group select:focus {
+  outline:none; border-color:var(--color-primary);
+  box-shadow:0 0 0 3px var(--color-primary-surface);
+}
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); }
+@media(max-width:560px) { .form-row { grid-template-columns:1fr; } }
+
+.form-hint { font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1); }
+
+.calc-submit {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  padding:var(--space-3) var(--space-6); border-radius:var(--radius-lg);
+  font-size:var(--text-sm); font-weight:600; background:var(--color-primary); color:#fff;
+  cursor:pointer; border:none; font-family:var(--font-body); margin-top:var(--space-2);
+  transition:background var(--transition-interactive);
+}
+.calc-submit:hover { background:var(--color-primary-hover); }
+
+/* ── Section Divider ── */
+.form-section { margin-top:var(--space-6); padding-top:var(--space-5); border-top:1px solid var(--color-divider); }
+.form-section-title { font-size:var(--text-sm); font-weight:700; color:var(--color-primary); margin:0 0 var(--space-4); text-transform:uppercase; letter-spacing:0.04em; }
+
+/* ── Results ── */
+.calc-results { margin-top:var(--space-6); display:none; }
+.calc-results.show { display:block; }
+.result-card {
+  background:var(--color-surface-2); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5); margin-bottom:var(--space-4);
+}
+.result-card h4 { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0 0 var(--space-3); }
+.result-row { display:flex; justify-content:space-between; align-items:center; padding:var(--space-2) 0; border-bottom:1px solid var(--color-divider); }
+.result-row:last-child { border-bottom:none; }
+.result-label { font-size:var(--text-sm); color:var(--color-text-muted); }
+.result-value { font-size:var(--text-sm); font-weight:600; color:var(--color-text); font-family:var(--font-mono); }
+.result-value.positive { color:var(--color-success); }
+.result-value.negative { color:var(--color-error); }
+.result-value.alert { color:var(--color-error); }
+.result-value.safe { color:var(--color-success); }
+
+.result-highlight {
+  background:var(--color-primary-surface); border-radius:var(--radius-lg);
+  padding:var(--space-5); margin-bottom:var(--space-4);
+}
+.result-highlight h4 { font-size:var(--text-sm); font-weight:700; color:var(--color-primary); margin:0 0 var(--space-3); }
+.result-highlight .big-number { font-size:var(--text-xl); font-weight:700; color:var(--color-text); font-family:var(--font-mono); margin-bottom:var(--space-1); }
+
+.result-explanation {
+  background:var(--color-primary-surface); border-radius:var(--radius-lg);
+  padding:var(--space-5); margin-top:var(--space-4);
+}
+.result-explanation h4 { font-size:var(--text-sm); font-weight:600; color:var(--color-primary); margin:0 0 var(--space-2); }
+.result-explanation p { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:0; }
+.result-explanation ul { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:var(--space-2) 0 0; padding-left:var(--space-5); }
+.result-explanation li { margin-bottom:var(--space-1); }
+
+/* ── Due Diligence Checklist ── */
+.dd-checklist { margin-top:var(--space-4); }
+.dd-item { display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) 0; border-bottom:1px solid var(--color-divider); }
+.dd-item:last-child { border-bottom:none; }
+.dd-check { flex-shrink:0; width:20px; height:20px; border-radius:var(--radius-sm); border:2px solid var(--color-border); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all var(--transition-interactive); margin-top:2px; }
+.dd-check.checked { background:var(--color-success); border-color:var(--color-success); }
+.dd-check.checked::after { content:'✓'; color:#fff; font-size:12px; font-weight:700; }
+.dd-check.flagged { background:var(--color-error); border-color:var(--color-error); }
+.dd-check.flagged::after { content:'✕'; color:#fff; font-size:12px; font-weight:700; }
+.dd-text { flex:1; }
+.dd-text strong { font-size:var(--text-sm); font-weight:600; color:var(--color-text); display:block; }
+.dd-text span { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.5; }
+.dd-actions { display:flex; gap:var(--space-1); }
+.dd-btn { width:28px; height:28px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:12px; cursor:pointer; border:1px solid var(--color-border); background:var(--color-bg); color:var(--color-text-muted); transition:all var(--transition-interactive); }
+.dd-btn:hover { border-color:var(--color-primary); color:var(--color-primary); }
+.dd-btn.pass:hover { border-color:var(--color-success); color:var(--color-success); }
+.dd-btn.fail:hover { border-color:var(--color-error); color:var(--color-error); }
+
+/* ── Score Meter ── */
+.score-meter { margin:var(--space-4) 0; }
+.score-bar { height:10px; background:var(--color-border); border-radius:var(--radius-full); overflow:hidden; }
+.score-fill { height:100%; border-radius:var(--radius-full); transition:width 0.6s ease, background 0.3s ease; }
+.score-labels { display:flex; justify-content:space-between; margin-top:var(--space-1); }
+.score-labels span { font-size:var(--text-xs); color:var(--color-text-muted); }
+
+/* ── Chart Area ── */
+.chart-wrapper { margin-top:var(--space-5); }
+.chart-wrapper canvas { width:100%!important; max-height:300px; }
+.chart-title-lf { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0 0 var(--space-3); }
+
+/* ── Comparison Table ── */
+.compare-table { width:100%; border-collapse:collapse; margin-top:var(--space-4); }
+.compare-table th { font-size:var(--text-xs); font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.04em; padding:var(--space-2) var(--space-3); text-align:left; border-bottom:2px solid var(--color-border); }
+.compare-table td { font-size:var(--text-sm); padding:var(--space-3); border-bottom:1px solid var(--color-divider); color:var(--color-text); }
+.compare-table td:not(:first-child) { font-family:var(--font-mono); text-align:right; }
+.compare-table th:not(:first-child) { text-align:right; }
+.compare-table tr.best td { background:var(--color-primary-surface); font-weight:600; }
+
+.disclaimer-box {
+  background:var(--color-surface-offset); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4); margin-top:var(--space-5);
+}
+.disclaimer-box p { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.6; margin:0; }
+
+/* ── Export Button ── */
+.export-row { display:flex; gap:var(--space-3); margin-top:var(--space-5); flex-wrap:wrap; }
+.btn-export {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  padding:var(--space-2) var(--space-4); border-radius:var(--radius-md);
+  font-size:var(--text-xs); font-weight:600; cursor:pointer; border:1px solid var(--color-border);
+  background:var(--color-surface); color:var(--color-text); font-family:var(--font-body);
+  transition:all var(--transition-interactive);
+}
+.btn-export:hover { border-color:var(--color-primary); color:var(--color-primary); }
+</style>
+
+<style>
+  /* Embed mode overrides */
+  [data-theme-toggle] { display: none !important; }
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+
+
+
+<!-- ── Hero Section ── -->
+<section class="lf-hero" id="lfHome">
+  <span class="lf-badge">Property Strategy Companion</span>
+  <h1 class="lf-title">Vacant Land Flip Analyzer</h1>
+  <p class="lf-subtitle">Buy vacant land at a discount, perform due diligence, and sell for a profit — without building a thing. This tool analyzes your deal from acquisition through exit, scoring risk factors and comparing three exit strategies side by side.</p>
+  <a href="../../land-development/index.html" class="lf-crosslink">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    Planning to build instead? Use the Land Development Calculator
+  </a>
+</section>
+
+<!-- ── Tool Cards ── -->
+<section class="lf-tools" id="lfToolCards">
+  <div class="lf-tools-grid">
+    <div class="lf-tool-card">
+      <div class="lf-tool-icon deal">🏞️</div>
+      <h3>Deal Analyzer &amp; Due Diligence</h3>
+      <p>Enter your acquisition details and walk through a 12-point due diligence checklist covering title, zoning, access, utilities, environmental risk, and more. Get a deal risk score before you commit.</p>
+      <button class="lf-tool-btn primary" onclick="showCalc('deal')">Open Analyzer →</button>
+    </div>
+    <div class="lf-tool-card">
+      <div class="lf-tool-icon exit">📊</div>
+      <h3>Exit Strategy &amp; Profit Calculator</h3>
+      <p>Compare three exit strategies side by side — cash sale, owner financing, and improve-and-sell. See net profit, ROI, annualized return, and a full cost breakdown for each path.</p>
+      <button class="lf-tool-btn primary" onclick="showCalc('exit')">Open Calculator →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     TOOL 1: Deal Analyzer & Due Diligence
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="dealPanel">
+  <button class="calc-back" onclick="showHome()">← Back to Land Flip Analyzer</button>
+  <div class="calc-container">
+    <h2>Deal Analyzer &amp; Due Diligence</h2>
+    <p class="calc-desc">Enter your acquisition details and check each due diligence item. The tool will score your deal risk and estimate baseline profit potential before you choose an exit strategy.</p>
+
+    <!-- Acquisition Details -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dAcqCost">Acquisition Cost</label>
+        <input type="text" id="dAcqCost" value="5,000" inputmode="numeric">
+        <span class="form-hint">Your all-in purchase price</span>
+      </div>
+      <div class="form-group">
+        <label for="dAcqClosing">Buyer Closing Costs</label>
+        <input type="text" id="dAcqClosing" value="500" inputmode="numeric">
+        <span class="form-hint">Title search, recording, notary ($200–$800 typical)</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dCompValue">Estimated Market Value (Comps)</label>
+        <input type="text" id="dCompValue" value="15,000" inputmode="numeric">
+        <span class="form-hint">Based on comparable sold parcels nearby</span>
+      </div>
+      <div class="form-group">
+        <label for="dAcreage">Parcel Size</label>
+        <input type="text" id="dAcreage" value="2.5" inputmode="decimal">
+        <span class="form-hint">Acres</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dBackTaxes">Back Taxes Owed</label>
+        <input type="text" id="dBackTaxes" value="0" inputmode="numeric">
+        <span class="form-hint">Delinquent property taxes you'll pay at purchase</span>
+      </div>
+      <div class="form-group">
+        <label for="dHoldMonths">Expected Hold Time</label>
+        <input type="text" id="dHoldMonths" value="3" inputmode="decimal">
+        <span class="form-hint">Months until sale (typical: 1–6 months)</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dMonthlyTax">Monthly Property Tax</label>
+        <input type="text" id="dMonthlyTax" value="25" inputmode="numeric">
+        <span class="form-hint">Ongoing taxes while you hold</span>
+      </div>
+      <div class="form-group">
+        <label for="dInsurance">Monthly Insurance</label>
+        <input type="text" id="dInsurance" value="0" inputmode="numeric">
+        <span class="form-hint">Liability coverage if applicable</span>
+      </div>
+    </div>
+
+    <!-- Due Diligence Checklist -->
+    <div class="form-section">
+      <h3 class="form-section-title">12-Point Due Diligence Checklist</h3>
+      <p class="calc-desc" style="margin-bottom:var(--space-3)">Click ✓ (pass) or ✕ (flag) for each item. Flagged items lower your deal score and may indicate a no-go.</p>
+      <div class="dd-checklist" id="ddChecklist">
+        <!-- JS populates -->
+      </div>
+      <div class="score-meter" id="ddScoreMeter" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-2)">
+          <span style="font-size:var(--text-sm);font-weight:600;color:var(--color-text)">Due Diligence Score</span>
+          <span id="ddScoreNum" style="font-size:var(--text-lg);font-weight:700;font-family:var(--font-mono);color:var(--color-text)">—</span>
+        </div>
+        <div class="score-bar"><div class="score-fill" id="ddScoreFill" style="width:0"></div></div>
+        <div class="score-labels"><span>High Risk</span><span>Low Risk</span></div>
+        <p id="ddScoreVerdict" style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2);line-height:1.6"></p>
+      </div>
+    </div>
+
+    <button class="calc-submit" onclick="analyzeDeal()">Analyze Deal</button>
+
+    <!-- Deal Results -->
+    <div class="calc-results" id="dealResults">
+      <div class="result-highlight">
+        <h4>Quick Deal Snapshot</h4>
+        <div class="result-row">
+          <span class="result-label">Total Acquisition Cost</span>
+          <span class="result-value" id="drTotalAcq">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Total Holding Costs</span>
+          <span class="result-value" id="drHoldCosts">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Total Invested (All-In Basis)</span>
+          <span class="result-value" id="drAllIn">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Estimated Market Value</span>
+          <span class="result-value" id="drMarketVal">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Equity Spread (Before Selling Costs)</span>
+          <span class="result-value" id="drSpread">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Price Per Acre Acquired</span>
+          <span class="result-value" id="drPPA">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Discount to Market</span>
+          <span class="result-value" id="drDiscount">—</span>
+        </div>
+      </div>
+
+      <div class="result-explanation">
+        <h4>What This Means</h4>
+        <p id="drExplanation">—</p>
+      </div>
+
+      <div class="disclaimer-box">
+        <p><strong>Disclaimer:</strong> This tool is for educational purposes only and does not constitute financial, legal, or investment advice. Always consult with a real estate attorney, title company, and tax professional before purchasing vacant land. Closing costs, tax rates, and regulations vary by state and county.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     TOOL 2: Exit Strategy & Profit Calculator
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="exitPanel">
+  <button class="calc-back" onclick="showHome()">← Back to Land Flip Analyzer</button>
+  <div class="calc-container">
+    <h2>Exit Strategy &amp; Profit Calculator</h2>
+    <p class="calc-desc">Enter your deal numbers and compare three common exit strategies. The tool calculates net profit, ROI, and annualized return for each path so you can choose the best fit.</p>
+
+    <!-- Deal Basics -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="eAcqCost">Total Acquisition Cost (All-In)</label>
+        <input type="text" id="eAcqCost" value="5,500" inputmode="numeric">
+        <span class="form-hint">Purchase price + closing + back taxes</span>
+      </div>
+      <div class="form-group">
+        <label for="eHoldCosts">Total Holding Costs</label>
+        <input type="text" id="eHoldCosts" value="75" inputmode="numeric">
+        <span class="form-hint">Taxes + insurance over your hold period</span>
+      </div>
+    </div>
+
+    <!-- Strategy 1: Cash Sale -->
+    <div class="form-section">
+      <h3 class="form-section-title">Strategy 1 — Cash Sale (Quick Flip)</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eCashPrice">Target Sale Price</label>
+          <input type="text" id="eCashPrice" value="15,000" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label for="eCashClosing">Seller Closing Costs</label>
+          <input type="text" id="eCashClosing" value="750" inputmode="numeric">
+          <span class="form-hint">Title, recording, transfer tax (2–5% typical)</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eCashAgent">Agent Commission</label>
+          <select id="eCashAgent">
+            <option value="0">FSBO — No Agent (0%)</option>
+            <option value="3">Buyer's Agent Only (3%)</option>
+            <option value="6">Full Agent (6%)</option>
+            <option value="10">Land-Specialist Agent (10%)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="eCashMarketing">Marketing Costs</label>
+          <input type="text" id="eCashMarketing" value="100" inputmode="numeric">
+          <span class="form-hint">Signs, Facebook ads, listing boosts</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="eCashTimeline">Estimated Time to Sell</label>
+        <input type="text" id="eCashTimeline" value="2" inputmode="decimal">
+        <span class="form-hint">Months from listing to close</span>
+      </div>
+    </div>
+
+    <!-- Strategy 2: Owner Financing -->
+    <div class="form-section">
+      <h3 class="form-section-title">Strategy 2 — Owner Financing (Note Income)</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eOfPrice">Sale Price (Financed)</label>
+          <input type="text" id="eOfPrice" value="18,000" inputmode="numeric">
+          <span class="form-hint">Can be higher than cash — buyers pay premium for terms</span>
+        </div>
+        <div class="form-group">
+          <label for="eOfDown">Buyer Down Payment</label>
+          <input type="text" id="eOfDown" value="2,000" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eOfRate">Interest Rate</label>
+          <input type="text" id="eOfRate" value="9" inputmode="decimal">
+          <span class="form-hint">Typical seller financing: 6–12%</span>
+        </div>
+        <div class="form-group">
+          <label for="eOfTerm">Loan Term</label>
+          <input type="text" id="eOfTerm" value="60" inputmode="numeric">
+          <span class="form-hint">Months (typical: 36–84)</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eOfClosing">Seller Closing Costs</label>
+          <input type="text" id="eOfClosing" value="500" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label for="eOfDefault">Default Risk Discount</label>
+          <select id="eOfDefault">
+            <option value="0">Low Risk (0% discount)</option>
+            <option value="5" selected>Moderate Risk (5% discount)</option>
+            <option value="10">High Risk (10% discount)</option>
+            <option value="15">Very High Risk (15% discount)</option>
+          </select>
+          <span class="form-hint">Accounts for potential buyer default</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy 3: Improve & Sell -->
+    <div class="form-section">
+      <h3 class="form-section-title">Strategy 3 — Improve &amp; Sell</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eImpCost">Improvement Costs</label>
+          <input type="text" id="eImpCost" value="3,000" inputmode="numeric">
+          <span class="form-hint">Clearing, survey, perc test, grading, etc.</span>
+        </div>
+        <div class="form-group">
+          <label for="eImpPrice">Target Sale Price (After Improvements)</label>
+          <input type="text" id="eImpPrice" value="25,000" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eImpClosing">Seller Closing Costs</label>
+          <input type="text" id="eImpClosing" value="1,000" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label for="eImpAgent">Agent Commission</label>
+          <select id="eImpAgent">
+            <option value="0">FSBO — No Agent (0%)</option>
+            <option value="3">Buyer's Agent Only (3%)</option>
+            <option value="6" selected>Full Agent (6%)</option>
+            <option value="10">Land-Specialist Agent (10%)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eImpMarketing">Marketing Costs</label>
+          <input type="text" id="eImpMarketing" value="200" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label for="eImpTimeline">Total Time (Improve + Sell)</label>
+          <input type="text" id="eImpTimeline" value="5" inputmode="decimal">
+          <span class="form-hint">Months</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="calc-submit" onclick="calcExit()">Compare Exit Strategies</button>
+
+    <!-- Exit Results -->
+    <div class="calc-results" id="exitResults">
+      <!-- Comparison Table -->
+      <div class="result-card">
+        <h4>Side-by-Side Comparison</h4>
+        <div style="overflow-x:auto">
+        <table class="compare-table" id="exitTable">
+          <thead>
+            <tr><th>Metric</th><th>Cash Sale</th><th>Owner Finance</th><th>Improve &amp; Sell</th></tr>
+          </thead>
+          <tbody id="exitTableBody">
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="result-card">
+        <p class="chart-title-lf">Net Profit Comparison</p>
+        <div class="chart-wrapper">
+          <canvas id="exitChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Owner Financing Amortization Summary -->
+      <div class="result-card" id="ofSummary" style="display:none">
+        <h4>Owner Financing — Payment Schedule Summary</h4>
+        <div id="ofScheduleInfo"></div>
+      </div>
+
+      <!-- Recommendation -->
+      <div class="result-explanation" id="exitRec">
+        <h4>Analysis</h4>
+        <p id="exitRecText">—</p>
+      </div>
+
+      <!-- Export buttons injected by shared/export.js (CSV + PDF) -->
+
+      <div class="disclaimer-box">
+        <p><strong>Disclaimer:</strong> This tool is for educational purposes only and does not constitute financial, legal, or investment advice. Profit projections are estimates. Owner financing involves legal obligations — consult a real estate attorney for proper loan documentation. Closing costs, tax rates, and regulations vary by state and county.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+/* ── Navigation ── */
+function showCalc(which) {
+  document.getElementById('lfHome').style.display = 'none';
+  document.getElementById('lfToolCards').style.display = 'none';
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(which + 'Panel').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showHome() {
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('lfHome').style.display = '';
+  document.getElementById('lfToolCards').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Utilities ── */
+function parseNum(v) {
+  if (!v) return 0;
+  return parseFloat(String(v).replace(/[^0-9.\-]/g, '')) || 0;
+}
+function fmt(n) {
+  if (Math.abs(n) >= 1000) return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtPct(n) { return n.toFixed(1) + '%'; }
+
+/* ── Auto-format currency inputs ── */
+document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
+  inp.addEventListener('blur', function() {
+    const v = parseNum(this.value);
+    if (!isNaN(v) && v > 0) this.value = v.toLocaleString('en-US');
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════
+   DUE DILIGENCE CHECKLIST
+   ══════════════════════════════════════════════════════════════ */
+const DD_ITEMS = [
+  { id: 'title', name: 'Clear Title', desc: 'Title search shows no liens, judgments, or encumbrances. Chain of ownership is clean.' },
+  { id: 'taxes', name: 'Property Taxes Current', desc: 'No delinquent taxes, or back taxes are accounted for in your acquisition cost.' },
+  { id: 'zoning', name: 'Zoning Verified', desc: 'Parcel zoning allows your intended use. No overlay restrictions (flood, historic, airport).' },
+  { id: 'access', name: 'Legal Access Confirmed', desc: 'Property has legal road access — public road frontage or recorded easement. Not landlocked.' },
+  { id: 'utilities', name: 'Utility Availability Checked', desc: 'Proximity to electric, water, sewer assessed. Off-grid alternatives (well, septic, solar) evaluated if needed.' },
+  { id: 'survey', name: 'Survey / Boundaries', desc: 'Boundaries are marked or a recent survey is available. No encroachment disputes.' },
+  { id: 'environ', name: 'Environmental Review', desc: 'No wetlands, contamination, or protected habitat issues. Phase I not required for most vacant land.' },
+  { id: 'topo', name: 'Topography & Drainage', desc: 'Land is reasonably flat or usable. No severe slope, flood risk, or drainage problems.' },
+  { id: 'hoa', name: 'HOA / Restrictions', desc: 'No HOA or restrictive covenants that limit resale potential or add ongoing costs.' },
+  { id: 'comps', name: 'Comparable Sales Verified', desc: 'At least 3 recent comparable sales confirm your estimated market value.' },
+  { id: 'demand', name: 'Buyer Demand Assessed', desc: 'Area has active land sales. Listings don\'t sit for 6+ months. Population or recreation demand exists.' },
+  { id: 'exit', name: 'Exit Strategy Identified', desc: 'You have a clear plan: cash flip, owner finance, or improve-and-sell. Timeline is realistic.' },
+];
+
+let ddStates = {}; // 'pass' | 'fail' | null
+
+function buildChecklist() {
+  const container = document.getElementById('ddChecklist');
+  container.innerHTML = '';
+  DD_ITEMS.forEach(item => {
+    ddStates[item.id] = null;
+    const div = document.createElement('div');
+    div.className = 'dd-item';
+    div.innerHTML = `
+      <div class="dd-actions">
+        <button class="dd-btn pass" data-id="${item.id}" data-action="pass" title="Pass" onclick="toggleDD('${item.id}','pass')">✓</button>
+        <button class="dd-btn fail" data-id="${item.id}" data-action="fail" title="Flag" onclick="toggleDD('${item.id}','fail')">✕</button>
+      </div>
+      <div class="dd-text">
+        <strong>${item.name}</strong>
+        <span>${item.desc}</span>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleDD(id, action) {
+  ddStates[id] = ddStates[id] === action ? null : action;
+  // Update button styles
+  document.querySelectorAll(`.dd-btn[data-id="${id}"]`).forEach(btn => {
+    const a = btn.getAttribute('data-action');
+    if (a === ddStates[id]) {
+      btn.style.background = a === 'pass' ? 'var(--color-success)' : 'var(--color-error)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = a === 'pass' ? 'var(--color-success)' : 'var(--color-error)';
+    } else {
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }
+  });
+  updateDDScore();
+}
+
+function updateDDScore() {
+  const total = DD_ITEMS.length;
+  let passed = 0, failed = 0, pending = 0;
+  DD_ITEMS.forEach(item => {
+    if (ddStates[item.id] === 'pass') passed++;
+    else if (ddStates[item.id] === 'fail') failed++;
+    else pending++;
+  });
+  
+  if (passed + failed === 0) {
+    document.getElementById('ddScoreMeter').style.display = 'none';
+    return;
+  }
+  
+  document.getElementById('ddScoreMeter').style.display = '';
+  const assessed = passed + failed;
+  const score = Math.round((passed / total) * 100);
+  document.getElementById('ddScoreNum').textContent = score + '/100';
+  
+  const fill = document.getElementById('ddScoreFill');
+  fill.style.width = score + '%';
+  if (score >= 80) fill.style.background = 'var(--color-success)';
+  else if (score >= 50) fill.style.background = 'var(--color-warning)';
+  else fill.style.background = 'var(--color-error)';
+  
+  let verdict = '';
+  if (pending > 0) verdict = `${pending} items still unassessed. `;
+  if (failed === 0 && pending === 0) verdict += 'All items pass — low-risk deal.';
+  else if (failed <= 2) verdict += `${failed} flagged item(s). Review carefully — some may be deal-breakers.`;
+  else if (failed <= 4) verdict += `${failed} flagged items. Significant risk — proceed with caution or renegotiate.`;
+  else verdict += `${failed} flagged items. High risk — consider walking away or demanding major price concessions.`;
+  document.getElementById('ddScoreVerdict').textContent = verdict;
+}
+
+buildChecklist();
+
+/* ══════════════════════════════════════════════════════════════
+   DEAL ANALYZER
+   ══════════════════════════════════════════════════════════════ */
+function analyzeDeal() {
+  const acq = parseNum(document.getElementById('dAcqCost').value);
+  const acqClose = parseNum(document.getElementById('dAcqClosing').value);
+  const comp = parseNum(document.getElementById('dCompValue').value);
+  const acres = parseNum(document.getElementById('dAcreage').value);
+  const backTax = parseNum(document.getElementById('dBackTaxes').value);
+  const holdMo = parseNum(document.getElementById('dHoldMonths').value);
+  const moTax = parseNum(document.getElementById('dMonthlyTax').value);
+  const moIns = parseNum(document.getElementById('dInsurance').value);
+
+  const totalAcq = acq + acqClose + backTax;
+  const holdCosts = (moTax + moIns) * holdMo;
+  const allIn = totalAcq + holdCosts;
+  const spread = comp - allIn;
+  const ppa = acres > 0 ? acq / acres : 0;
+  const discount = comp > 0 ? ((comp - acq) / comp * 100) : 0;
+
+  document.getElementById('drTotalAcq').textContent = fmt(totalAcq);
+  document.getElementById('drHoldCosts').textContent = fmt(holdCosts);
+  document.getElementById('drAllIn').textContent = fmt(allIn);
+  document.getElementById('drMarketVal').textContent = fmt(comp);
+  document.getElementById('drSpread').textContent = fmt(spread);
+  document.getElementById('drSpread').className = 'result-value ' + (spread >= 0 ? 'positive' : 'negative');
+  document.getElementById('drPPA').textContent = fmt(ppa) + '/acre';
+  document.getElementById('drDiscount').textContent = fmtPct(discount);
+  document.getElementById('drDiscount').className = 'result-value ' + (discount >= 30 ? 'positive' : discount >= 15 ? '' : 'negative');
+
+  let explanation = '';
+  if (discount >= 50) {
+    explanation = `You're acquiring this parcel at ${fmtPct(discount)} below market value — an exceptional discount. At ${fmt(ppa)} per acre, your all-in basis of ${fmt(allIn)} leaves a ${fmt(spread)} equity spread before selling costs. This is a strong acquisition. Head to the Exit Strategy calculator to model your best path to profit.`;
+  } else if (discount >= 30) {
+    explanation = `Acquiring at ${fmtPct(discount)} below market is a solid discount for land flipping. Your total investment of ${fmt(allIn)} against a ${fmt(comp)} market value gives you ${fmt(spread)} in equity spread to work with. After typical selling costs (2–10%), this should yield a healthy profit.`;
+  } else if (discount >= 15) {
+    explanation = `A ${fmtPct(discount)} discount is workable but leaves less margin for error. Selling costs (closing + potential agent commission) will eat into the ${fmt(spread)} spread. Consider whether you can negotiate a lower purchase price or sell without an agent to protect your profit margin.`;
+  } else {
+    explanation = `At only ${fmtPct(discount)} below market value, this deal has thin margins. After selling costs, your net profit could be minimal or negative. Land flippers typically target 30–60% discounts to market. Consider renegotiating or walking away.`;
+  }
+
+  document.getElementById('drExplanation').textContent = explanation;
+  document.getElementById('dealResults').classList.add('show');
+  document.getElementById('dealResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXIT STRATEGY CALCULATOR
+   ══════════════════════════════════════════════════════════════ */
+let exitChartInstance = null;
+
+function calcExit() {
+  const allIn = parseNum(document.getElementById('eAcqCost').value);
+  const holdCosts = parseNum(document.getElementById('eHoldCosts').value);
+  const basis = allIn + holdCosts;
+
+  // Strategy 1: Cash Sale
+  const cashPrice = parseNum(document.getElementById('eCashPrice').value);
+  const cashClosing = parseNum(document.getElementById('eCashClosing').value);
+  const cashAgentPct = parseNum(document.getElementById('eCashAgent').value) / 100;
+  const cashMarketing = parseNum(document.getElementById('eCashMarketing').value);
+  const cashTimeline = parseNum(document.getElementById('eCashTimeline').value);
+  const cashCommission = cashPrice * cashAgentPct;
+  const cashTotalCosts = basis + cashClosing + cashCommission + cashMarketing;
+  const cashProfit = cashPrice - cashTotalCosts;
+  const cashROI = basis > 0 ? (cashProfit / basis * 100) : 0;
+  const cashTotalMo = cashTimeline;
+  const cashAnnual = cashTotalMo > 0 ? (cashROI / cashTotalMo * 12) : 0;
+
+  // Strategy 2: Owner Financing
+  const ofPrice = parseNum(document.getElementById('eOfPrice').value);
+  const ofDown = parseNum(document.getElementById('eOfDown').value);
+  const ofRate = parseNum(document.getElementById('eOfRate').value) / 100;
+  const ofTerm = parseNum(document.getElementById('eOfTerm').value);
+  const ofClosing = parseNum(document.getElementById('eOfClosing').value);
+  const ofDefaultPct = parseNum(document.getElementById('eOfDefault').value) / 100;
+  
+  const ofLoan = ofPrice - ofDown;
+  const moRate = ofRate / 12;
+  let monthlyPmt = 0;
+  if (moRate > 0 && ofTerm > 0) {
+    monthlyPmt = ofLoan * (moRate * Math.pow(1 + moRate, ofTerm)) / (Math.pow(1 + moRate, ofTerm) - 1);
+  } else if (ofTerm > 0) {
+    monthlyPmt = ofLoan / ofTerm;
+  }
+  const totalPayments = monthlyPmt * ofTerm;
+  const totalInterest = totalPayments - ofLoan;
+  const ofGrossIncome = ofDown + totalPayments;
+  const ofTotalCosts = basis + ofClosing;
+  const ofProfitGross = ofGrossIncome - ofTotalCosts;
+  const ofProfitAdj = ofProfitGross * (1 - ofDefaultPct);
+  const ofROI = basis > 0 ? (ofProfitAdj / basis * 100) : 0;
+  const ofTotalMo = ofTerm;
+  const ofAnnual = ofTotalMo > 0 ? (ofROI / ofTotalMo * 12) : 0;
+
+  // Strategy 3: Improve & Sell
+  const impCost = parseNum(document.getElementById('eImpCost').value);
+  const impPrice = parseNum(document.getElementById('eImpPrice').value);
+  const impClosing = parseNum(document.getElementById('eImpClosing').value);
+  const impAgentPct = parseNum(document.getElementById('eImpAgent').value) / 100;
+  const impMarketing = parseNum(document.getElementById('eImpMarketing').value);
+  const impTimeline = parseNum(document.getElementById('eImpTimeline').value);
+  const impCommission = impPrice * impAgentPct;
+  const impTotalCosts = basis + impCost + impClosing + impCommission + impMarketing;
+  const impProfit = impPrice - impTotalCosts;
+  const impBasis = basis + impCost;
+  const impROI = impBasis > 0 ? (impProfit / impBasis * 100) : 0;
+  const impTotalMo = impTimeline;
+  const impAnnual = impTotalMo > 0 ? (impROI / impTotalMo * 12) : 0;
+
+  // Find best
+  const profits = [cashProfit, ofProfitAdj, impProfit];
+  const rois = [cashROI, ofROI, impROI];
+  const annuals = [cashAnnual, ofAnnual, impAnnual];
+  const bestProfit = Math.max(...profits);
+  const bestAnnual = Math.max(...annuals);
+
+  // Build table
+  const rows = [
+    ['Sale Price', fmt(cashPrice), fmt(ofPrice), fmt(impPrice)],
+    ['Gross Revenue', fmt(cashPrice), fmt(ofGrossIncome), fmt(impPrice)],
+    ['Total Investment', fmt(basis), fmt(basis), fmt(impBasis)],
+    ['Selling Costs', fmt(cashClosing + cashCommission + cashMarketing), fmt(ofClosing), fmt(impClosing + impCommission + impMarketing)],
+    ['Net Profit', fmt(cashProfit), fmt(ofProfitAdj), fmt(impProfit)],
+    ['ROI', fmtPct(cashROI), fmtPct(ofROI), fmtPct(impROI)],
+    ['Annualized Return', fmtPct(cashAnnual), fmtPct(ofAnnual), fmtPct(impAnnual)],
+    ['Timeline', cashTotalMo + ' mo', ofTotalMo + ' mo', impTotalMo + ' mo'],
+  ];
+
+  const tbody = document.getElementById('exitTableBody');
+  tbody.innerHTML = '';
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    row.forEach((cell, i) => {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      if (row[0] === 'Net Profit' && i > 0) {
+        const val = profits[i - 1];
+        td.style.color = val >= 0 ? 'var(--color-success)' : 'var(--color-error)';
+        td.style.fontWeight = '700';
+        if (val === bestProfit) td.style.textDecoration = 'underline';
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // Chart
+  if (exitChartInstance) exitChartInstance.destroy();
+  const cs = getComputedStyle(document.documentElement);
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  exitChartInstance = new Chart(document.getElementById('exitChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Cash Sale', 'Owner Finance', 'Improve & Sell'],
+      datasets: [
+        {
+          label: 'Net Profit',
+          data: [cashProfit, ofProfitAdj, impProfit],
+          backgroundColor: [cashProfit >= 0 ? '#20808D' : '#A13544', ofProfitAdj >= 0 ? '#1B474D' : '#A13544', impProfit >= 0 ? '#3d6b2e' : '#A13544'],
+          borderRadius: 6,
+        },
+        {
+          label: 'Total Costs',
+          data: [cashTotalCosts, ofTotalCosts, impTotalCosts],
+          backgroundColor: ['#A84B2F', '#A84B2F', '#A84B2F'],
+          borderRadius: 6,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      plugins: {
+        legend: { labels: { color: isDark ? '#cdccca' : '#28251d', font: { family: "'DM Sans', sans-serif" } } },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmt(ctx.raw) } }
+      },
+      scales: {
+        x: { ticks: { color: isDark ? '#8a8985' : '#7a7974' }, grid: { display: false } },
+        y: { ticks: { color: isDark ? '#8a8985' : '#7a7974', callback: v => fmt(v) }, grid: { color: isDark ? '#2d2c2a' : '#e6e4df' } }
+      }
+    }
+  });
+
+  // Owner financing summary
+  const ofSummaryDiv = document.getElementById('ofSummary');
+  ofSummaryDiv.style.display = '';
+  document.getElementById('ofScheduleInfo').innerHTML = `
+    <div class="result-row"><span class="result-label">Loan Amount</span><span class="result-value">${fmt(ofLoan)}</span></div>
+    <div class="result-row"><span class="result-label">Monthly Payment</span><span class="result-value">${fmt(monthlyPmt)}</span></div>
+    <div class="result-row"><span class="result-label">Total Interest Earned</span><span class="result-value positive">${fmt(totalInterest)}</span></div>
+    <div class="result-row"><span class="result-label">Total Received (Down + All Payments)</span><span class="result-value">${fmt(ofGrossIncome)}</span></div>
+    <div class="result-row"><span class="result-label">Default Risk Adjustment (${(ofDefaultPct*100).toFixed(0)}%)</span><span class="result-value negative">−${fmt(ofProfitGross * ofDefaultPct)}</span></div>
+    <div class="result-row"><span class="result-label">Adjusted Net Profit</span><span class="result-value ${ofProfitAdj >= 0 ? 'positive' : 'negative'}">${fmt(ofProfitAdj)}</span></div>
+  `;
+
+  // Recommendation
+  let rec = '';
+  const names = ['Cash Sale', 'Owner Financing', 'Improve & Sell'];
+  const bestProfitIdx = profits.indexOf(bestProfit);
+  const bestAnnualIdx = annuals.indexOf(bestAnnual);
+  
+  if (bestProfitIdx === bestAnnualIdx) {
+    rec = `${names[bestProfitIdx]} delivers both the highest net profit (${fmt(bestProfit)}) and the best annualized return (${fmtPct(annuals[bestAnnualIdx])}). `;
+  } else {
+    rec = `${names[bestProfitIdx]} yields the highest total profit (${fmt(bestProfit)}), but ${names[bestAnnualIdx]} has the best annualized return (${fmtPct(annuals[bestAnnualIdx])}), meaning your capital works harder per month. `;
+  }
+  
+  if (ofProfitAdj > cashProfit * 1.5) {
+    rec += `Owner financing adds ${fmt(totalInterest)} in interest income, significantly boosting total return — but your capital is locked up for ${ofTerm} months and you carry default risk. `;
+  }
+  if (impProfit > cashProfit && impCost > 0) {
+    rec += `The improvements add ${fmt(impCost)} in cost but generate ${fmt(impProfit - cashProfit)} more profit than a cash flip. `;
+  }
+  if (cashProfit < 0) {
+    rec += 'Warning: The cash sale strategy shows a loss — consider negotiating a lower acquisition price or higher sale price. ';
+  }
+  
+  rec += 'Remember: these are estimates. Actual results depend on market conditions, buyer demand, and your execution speed.';
+  document.getElementById('exitRecText').textContent = rec;
+
+  document.getElementById('exitResults').classList.add('show');
+  document.getElementById('exitResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* Export handled by shared/export.js (CSV + PDF) */
+
+/* ── Theme toggle ── */
+(function(){
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  else if (matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('data-theme','dark');
+  document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  });
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../../shared/export.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<script src="../../land-flip/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/buffett-indicator">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buffett Indicator — IntelliTC Solutions</title>
+<meta name="description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Buffett Indicator — IntelliTC Solutions">
+<meta property="og:description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/buffett-indicator">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buffett Indicator — IntelliTC Solutions">
+<meta name="twitter:description" content="Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../../shared/base.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/learn-mode.css">
+<link rel="stylesheet" href="../../shared/mindmap.css">
+<link rel="stylesheet" href="../../shared/progress-save.css">
+<link rel="stylesheet" href="../../shared/share-link.css">
+<link rel="stylesheet" href="../../shared/tooltips.css">
+<link rel="stylesheet" href="../../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+
+
+<style>
+  /* Embed mode overrides */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    overflow-x: hidden;
+  }
+  .main {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+  }
+  /* Hide mind map toggle in embed - too complex for iframe */
+  .mindmap-toggle, .mindmap-panel { display: none !important; }
+  /* Powered-by badge */
+  .intellitc-embed-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    margin-top: var(--space-4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-top: 1px solid var(--color-divider);
+    transition: color 0.2s;
+  }
+  .intellitc-embed-badge:hover {
+    color: var(--color-primary);
+  }
+  .intellitc-embed-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+  }
+  /* Compact KPI cards in embed */
+  @media (max-width: 480px) {
+    .kpi-row { gap: var(--space-2) !important; }
+    .kpi-card { padding: var(--space-3) !important; }
+  }
+</style>
+</head>
+<body><script>
+// Embed theme forcing — respects ?theme= query parameter
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var forced = params.get('theme');
+  if (forced === 'light' || forced === 'dark') {
+    document.documentElement.setAttribute('data-theme', forced);
+    // Override the theme toggle to stay on forced theme
+    localStorage.setItem('intellitc-theme', forced);
+  }
+})();
+</script>
+
+  
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <h1 class="panel-title">Buffett Indicator</h1>
+      <p class="panel-subtitle">Macro market valuation signal — compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Market Data</h3>
+<div class="field">
+            <label for="totalHousingValue" title="Total US housing market value in trillions">Total Housing Market Value</label>
+            <div class="input-with-unit"><input type="text" id="totalHousingValue" value="45" inputmode="decimal"><span class='unit'>T</span></div>
+          </div>
+<div class="field">
+            <label for="gdp" title="Annual GDP in trillions">Gross Domestic Product</label>
+            <div class="input-with-unit"><input type="text" id="gdp" value="28" inputmode="decimal"><span class='unit'>T</span></div>
+          </div>
+<div class="field">
+            <label for="historicalAvg" title="Long-term average Housing/GDP ratio">Historical Average Ratio</label>
+            <div class="input-with-unit"><input type="text" id="historicalAvg" value="1.4" inputmode="decimal"><span class='unit'>x</span></div>
+          </div>
+</div>
+<div class="param-group">
+<h3 class="param-group-title">Local Market (Optional)</h3>
+<div class="field">
+            <label for="localMedianPrice">Local Median Home Price</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="localMedianPrice" value="350,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="localMedianIncome">Local Median Household Income</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="localMedianIncome" value="75,000" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="localPriceToIncome" title="Long-term local average">Historical Price-to-Income</label>
+            <div class="input-with-unit"><input type="text" id="localPriceToIncome" value="4.0" inputmode="decimal"><span class='unit'>x</span></div>
+          </div>
+</div>
+</div>
+
+      <div id="validationMsg" style="display:none;color:var(--color-error,#a12c7b);font-size:var(--text-sm);font-weight:500;padding:var(--space-2) var(--space-3);background:var(--color-error-surface,rgba(161,44,123,0.08));border-radius:var(--radius-md);margin-bottom:var(--space-3);text-align:center"></div>
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Housing/GDP Ratio</span>
+          <span class="kpi-value" id="kpiRatio">—</span>
+          <span class="kpi-delta" id="kpiRatioDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Valuation Zone</span>
+          <span class="kpi-value" id="kpiZone">—</span>
+          <span class="kpi-delta" id="kpiZoneDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Local Price-to-Income</span>
+          <span class="kpi-value" id="kpiLocalPI">—</span>
+          <span class="kpi-delta" id="kpiLocalPIDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Deviation from Avg</span>
+          <span class="kpi-value" id="kpiDeviation">—</span>
+          <span class="kpi-delta" id="kpiDeviationDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Buffett Indicator Gauge</h3>
+          <p class="chart-subtitle">Current ratio vs historical zones</p>
+          <div class="chart-container">
+            <canvas id="chartGauge"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Local Market Context</h3>
+          <p class="chart-subtitle">Price-to-income vs historical norm</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartLocal"></canvas>
+          </div>
+        </div>
+</div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Metric</th><th class="text-right">Value</th><th class="text-right">Assessment</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
+    </section>
+  </main>
+  
+  <script src="../../buffett-indicator/app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Track the Buffett Indicator?",
+    "purpose": "The Buffett Indicator (total market cap ÷ GDP) measures whether the stock market is overvalued relative to the economy. For real estate investors, this macro signal helps time entries — when stocks are overvalued, capital often rotates into real estate.",
+    "whenToUse": [
+      "When assessing whether to allocate more capital to stocks or real estate",
+      "As a macro market health indicator for your overall investment strategy",
+      "When evaluating market cycle timing for large real estate acquisitions"
+    ],
+    "keyInsight": "Warren Buffett called this 'the best single measure of where valuations stand at any given moment.' Above 120% historically signals overvaluation. Real estate investors watch this because capital flows between asset classes based on relative value."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Strategic Market Valuation",
+      "folder": "strategic-market-valuation",
+      "reason": "Broader market analysis to complement the Buffett signal"
+    },
+    {
+      "name": "Market Agility Index",
+      "folder": "agility-index",
+      "reason": "Local market conditions to pair with macro indicators"
+    }
+  ]
+};</script>
+<script src="../../buffett-indicator/mindmap-data.js"></script>
+<script src="../../shared/mindmap.js"></script>
+<script src="../../shared/learn-mode.js"></script>
+<script src="../../shared/export.js"></script>
+
+<script src="../../shared/recent-tracker.js"></script>
+<script src="../../shared/progress-save.js"></script>
+<script src="../../shared/share-link.js"></script>
+<script src="../../shared/tooltips.js"></script>
+<script src="../../shared/feedback.js"></script>
+
+<a href="https://intellitcsolutions.com" target="_blank" rel="noopener" class="intellitc-embed-badge">
+  <img src="../../assets/logo.jpg" alt="" width="18" height="18">
+  Powered by IntelliTC Solutions &mdash; 60 Professional Real Estate Tools
+</a>
+
+<script>
+// Report height to parent for responsive iframe sizing
+(function() {
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'intellitc-resize', height: h }, '*');
+  }
+  // Report on load, resize, and periodically (for dynamic content)
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  new MutationObserver(reportHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+  // Initial report
+  setTimeout(reportHeight, 100);
+  setTimeout(reportHeight, 500);
+  setTimeout(reportHeight, 1500);
+})();
+</script>
+
+</body>
+</html>
