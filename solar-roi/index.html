@@ -45,15 +45,7 @@
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
   cursor:pointer;
 }
-.surprise-card::before{
-  content:'';position:absolute;inset:-2px;
-  border-radius:inherit;
-  background:conic-gradient(from 0deg,var(--color-primary),#D19900,var(--color-primary));
-  opacity:0;transition:opacity .4s ease;
-  z-index:-1;
-}
-.surprise-card:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 24px rgba(1,105,111,.18);border-color:transparent;}
-.surprise-card:hover::before{opacity:1;}
+.surprise-card:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 24px rgba(1,105,111,.14);border-color:var(--color-primary);border-style:solid;}
 .surprise-card:hover .surprise-icon-ring{background:var(--color-primary);color:#fff;}
 .surprise-card:hover .surprise-cta{opacity:1;transform:translateY(0);}
 .surprise-icon-ring{
@@ -76,7 +68,7 @@
   .surprise-cta{opacity:1;transform:none;}
 }
 [data-theme="dark"] .surprise-card{background:var(--color-surface);border-color:var(--color-primary);}
-[data-theme="dark"] .surprise-card:hover{box-shadow:0 8px 24px rgba(79,152,163,.2);}
+[data-theme="dark"] .surprise-card:hover{box-shadow:0 8px 24px rgba(79,152,163,.14);border-style:solid;}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
