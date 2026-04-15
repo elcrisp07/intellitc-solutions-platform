@@ -67,6 +67,19 @@ window.MINDMAP_DATA = {
           { name: "Landowner Takeover Option", desc: "Some leases allow the landowner to purchase the solar system at fair market value and continue operating it independently." },
           { name: "Panel Degradation (~0.5%/year)", desc: "Solar panels lose approximately 0.5% of output per year. After 25 years, panels still produce roughly 87% of original capacity." }
         ]
+      },
+      {
+        name: "Battery Storage Co-Location",
+        children: [
+          { name: "Lithium-Ion Battery Systems", desc: "Commercial-scale lithium-ion batteries installed alongside solar arrays. Typical farm systems range from 500 kW to 2+ MWh with 2–4 hour discharge capacity for strategic energy management." },
+          { name: "Time-of-Use Arbitrage", desc: "Batteries store excess solar energy during low-cost midday hours and discharge during expensive evening peak periods, converting low-value grid exports into high-value on-site consumption." },
+          { name: "Demand Charge Reduction", desc: "Battery systems discharge during peak demand events (irrigation pumps, refrigeration, ventilation) to flatten the load profile and reduce utility demand charges assessed on peak consumption." },
+          { name: "Resilience & Backup Power", desc: "Properly designed battery systems keep critical loads powered for several hours during grid interruptions, protecting crops, livestock, cold storage, and temperature-sensitive operations." },
+          { name: "Battery Lease Premium", desc: "Co-located battery storage can increase lease rates because it boosts overall project revenue for the developer through arbitrage, demand management, and ancillary grid services." },
+          { name: "30% Investment Tax Credit (ITC)", desc: "Commercial solar+storage projects may qualify for a 30% federal Investment Tax Credit when prevailing wage and apprenticeship requirements are met. The developer captures this credit, which helps fund higher lease rates." },
+          { name: "Storage Cost Decline (~90% since 2010)", desc: "Installed battery storage costs have fallen approximately 90% over the past 15 years, making co-located systems economically viable for agricultural and solar farm applications." },
+          { name: "USDA REAP Program", desc: "The Rural Energy for America Program historically provided grants and loan guarantees for farms installing renewable energy and storage. Program availability varies by year and legislative changes." }
+        ]
       }
     ]
   }

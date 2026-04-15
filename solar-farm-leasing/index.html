@@ -56,6 +56,19 @@
 .eol-card{background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);}
 .eol-card h4{font-size:var(--text-sm);font-weight:600;color:var(--color-primary);}
 .eol-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+/* ---- Battery Storage Section ---- */
+.battery-section{display:none;}
+.battery-section.active{display:block;}
+.battery-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);margin-top:var(--space-4);}
+.battery-info-card{background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;gap:var(--space-3);}
+.battery-info-card .batt-icon{flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);background:var(--color-primary-surface);color:var(--color-primary);}
+.battery-info-card h4{font-size:var(--text-sm);font-weight:600;color:var(--color-text);margin-bottom:2px;}
+.battery-info-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+.battery-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--space-3);margin-top:var(--space-4);}
+.battery-kpi{background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-4);text-align:center;}
+.battery-kpi-label{font-size:var(--text-xs);font-weight:500;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.04em;}
+.battery-kpi-value{font-size:var(--text-lg);font-weight:700;color:var(--color-primary);margin-top:2px;}
+.battery-kpi-note{font-size:11px;color:var(--color-text-muted);margin-top:2px;}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/ld+json">
@@ -221,6 +234,36 @@
           </div>
 </div>
 </div>
+<div class="param-group">
+<h3 class="param-group-title">Battery Storage Co-Location (Optional)</h3>
+<div class="field">
+            <label for="batteryIncluded" title="Will the developer co-locate battery storage with the solar farm?">Battery Storage Included?</label>
+            <select id="batteryIncluded" onchange="toggleBatteryFields()">
+              <option value="no" selected>No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+<div id="batteryFields" style="display:none">
+<div class="field">
+            <label for="batteryCapacity" title="Total battery capacity in megawatt-hours (MWh). Typical farm systems range from 1–4 MWh.">Battery Capacity</label>
+            <div class="input-with-unit"><input type="text" id="batteryCapacity" value="2" inputmode="decimal"><span class='unit'>MWh</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('batteryCapacity').value='1';document.getElementById('batteryCapacity').dispatchEvent(new Event('input',{bubbles:true}))">1 MWh Small</span> <span class="bm-tag" onclick="document.getElementById('batteryCapacity').value='2';document.getElementById('batteryCapacity').dispatchEvent(new Event('input',{bubbles:true}))">2 MWh Typical</span> <span class="bm-tag" onclick="document.getElementById('batteryCapacity').value='4';document.getElementById('batteryCapacity').dispatchEvent(new Event('input',{bubbles:true}))">4 MWh Large</span></div>
+          </div>
+<div class="field">
+            <label for="batteryPremium" title="Additional annual lease payment per acre when battery storage is co-located. Developers may pay more because batteries increase project revenue.">Battery Lease Premium</label>
+            <div class="input-with-unit"><span class='unit'>$</span><input type="text" id="batteryPremium" value="200" inputmode="numeric" data-currency><span class='unit'>/acre/yr</span></div>
+          <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('batteryPremium').value='100';document.getElementById('batteryPremium').dispatchEvent(new Event('input',{bubbles:true}))">$100 Low</span> <span class="bm-tag" onclick="document.getElementById('batteryPremium').value='200';document.getElementById('batteryPremium').dispatchEvent(new Event('input',{bubbles:true}))">$200 Avg</span> <span class="bm-tag" onclick="document.getElementById('batteryPremium').value='350';document.getElementById('batteryPremium').dispatchEvent(new Event('input',{bubbles:true}))">$350 Prime</span></div>
+          </div>
+<div class="field">
+            <label for="batteryITC" title="The federal Investment Tax Credit (ITC) provides up to 30% credit on solar+storage project costs when prevailing wage requirements are met.">30% ITC Eligible?</label>
+            <select id="batteryITC">
+              <option value="yes" selected>Yes (30% ITC)</option>
+              <option value="no">No / Unknown</option>
+            </select>
+          </div>
+</div>
+</div>
+</div>
 
       <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
     </section>
@@ -303,7 +346,61 @@
         </div>
       </div>
 
-      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Year</th><th class="text-right">Annual Payment</th><th class="text-right">Cumulative</th></tr></thead><tbody id="leaseBody"></tbody></table></div>
+      <!-- Battery Storage Impact -->
+      <div class="chart-card battery-section" id="batterySection" style="margin-bottom:var(--space-6)">
+        <h3 class="chart-title">Battery Storage Impact</h3>
+        <p class="chart-subtitle">How co-located battery storage enhances your lease value</p>
+        <div class="battery-kpi-row" id="batteryKPIRow">
+          <div class="battery-kpi">
+            <div class="battery-kpi-label">Battery Premium / Year</div>
+            <div class="battery-kpi-value" id="bkpiPremium">—</div>
+            <div class="battery-kpi-note" id="bkpiPremiumNote"></div>
+          </div>
+          <div class="battery-kpi">
+            <div class="battery-kpi-label">Lifetime Battery Uplift</div>
+            <div class="battery-kpi-value" id="bkpiLifetime">—</div>
+            <div class="battery-kpi-note" id="bkpiLifetimeNote"></div>
+          </div>
+          <div class="battery-kpi">
+            <div class="battery-kpi-label">Effective Rate w/ Battery</div>
+            <div class="battery-kpi-value" id="bkpiRate">—</div>
+            <div class="battery-kpi-note" id="bkpiRateNote"></div>
+          </div>
+          <div class="battery-kpi">
+            <div class="battery-kpi-label">Battery Capacity</div>
+            <div class="battery-kpi-value" id="bkpiCapacity">—</div>
+            <div class="battery-kpi-note" id="bkpiCapacityNote"></div>
+          </div>
+        </div>
+        <div class="battery-info-grid">
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v6"/><path d="M17 2v6"/><rect x="2" y="8" width="20" height="14" rx="2"/><path d="M7 15h4"/><path d="M9 13v4"/></svg></div>
+            <div><h4>Demand Charge Reduction</h4><p>Batteries discharge during peak demand events, lowering your load profile and directly reducing the charges utilities assess based on peak consumption.</p></div>
+          </div>
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M2 12h20"/><path d="M5 5l14 14"/></svg></div>
+            <div><h4>Time-of-Use Arbitrage</h4><p>Excess solar charges batteries during low-cost midday hours, then discharges during expensive evening peaks — turning low-value exports into high-value savings.</p></div>
+          </div>
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h4>Resilience & Backup</h4><p>Properly designed battery systems keep critical loads powered for several hours during grid interruptions, protecting crops, livestock, and stored products.</p></div>
+          </div>
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+            <div><h4>30% Investment Tax Credit</h4><p id="batteryITCNote">Commercial solar+storage projects may qualify for a 30% ITC on project costs when prevailing wage and apprenticeship requirements are met.</p></div>
+          </div>
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div><h4>Cost Decline: 90% Since 2010</h4><p>Battery storage costs have fallen approximately 90% over the past 15 years, making co-located systems economically viable for projects that would have been impractical previously.</p></div>
+          </div>
+          <div class="battery-info-card">
+            <div class="batt-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><h4>Enables Larger Solar Capacity</h4><p>Pairing solar with storage helps keep exports within allowable thresholds, often enabling larger system designs that increase the developer's willingness to pay higher lease rates.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Year</th><th class="text-right">Annual Payment</th><th class="text-right" id="batteryColHeader" style="display:none">Battery Premium</th><th class="text-right">Cumulative</th></tr></thead><tbody id="leaseBody"></tbody></table></div>
 
       <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
     </section>
@@ -323,9 +420,11 @@
       "When a solar developer approaches you with a lease offer",
       "To evaluate whether your land qualifies for a solar farm lease",
       "When comparing lease income against current agricultural revenue",
-      "Before negotiating lease terms to understand fair market rates"
+      "Before negotiating lease terms to understand fair market rates",
+      "When a developer proposes co-locating battery storage on your land",
+      "To quantify the additional lease premium battery storage can bring"
     ],
-    "keyInsight": "Solar farm leases typically pay $500–$2,000+ per acre per year with 1.5–2.5% annual escalators over 20–40 year terms. Unlike crop income, lease payments are guaranteed regardless of weather, commodity prices, or market conditions. The key factors developers evaluate are proximity to electrical infrastructure, terrain flatness, and usable acreage."
+    "keyInsight": "Solar farm leases typically pay $500–$2,000+ per acre per year with 1.5–2.5% annual escalators over 20–40 year terms. Unlike crop income, lease payments are guaranteed regardless of weather, commodity prices, or market conditions. The key factors developers evaluate are proximity to electrical infrastructure, terrain flatness, and usable acreage. Co-located battery storage can further increase lease rates by $100–$350+ per acre per year, as batteries boost the developer's project revenue through time-of-use arbitrage, demand charge reduction, and grid backup services."
   },
   "kpiExplains": {},
   "coupled": [

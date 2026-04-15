@@ -18,6 +18,9 @@ function chartOpts(title,type){const cs=getCS();return{responsive:true,maintainA
 /* ---- Currency auto-format ---- */
 document.querySelectorAll('input[data-currency]').forEach(inp=>{inp.addEventListener('blur',()=>{const v=parseNum(inp.value);if(v)inp.value=Math.round(v).toLocaleString();});});
 
+/* ---- Battery fields toggle ---- */
+function toggleBatteryFields(){const sel=document.getElementById('batteryIncluded');const fields=document.getElementById('batteryFields');if(sel.value==='yes'){fields.style.display='block';}else{fields.style.display='none';}}
+
 /* ---- Panel toggle ---- */
 const inputPanel=document.getElementById('inputPanel');
 const resultsPanel=document.getElementById('resultsPanel');
@@ -145,33 +148,42 @@ function calculate(){
   const signingBonus=parseNum(document.getElementById('signingBonus').value);
   const legalCosts=parseNum(document.getElementById('legalCosts').value);
 
+  // Battery storage inputs
+  const batteryIncluded=document.getElementById('batteryIncluded').value==='yes';
+  const batteryCapacity=batteryIncluded?parseNum(document.getElementById('batteryCapacity').value):0;
+  const batteryPremium=batteryIncluded?parseNum(document.getElementById('batteryPremium').value):0;
+  const batteryITC=batteryIncluded?(document.getElementById('batteryITC').value==='yes'):false;
+
   // Year-by-year projections
-  const yrs=[];const annual=[];const cumulative=[];
-  let yr1Income=0;let lifetimeIncome=signingBonus;let cumTotal=signingBonus;
+  const yrs=[];const annual=[];const batteryAnnual=[];const cumulative=[];
+  let yr1Income=0;let yr1Battery=0;let lifetimeIncome=signingBonus;let lifetimeBattery=0;let cumTotal=signingBonus;
   for(let y=1;y<=leaseTerm;y++){
     const payment=usableAcres*leaseRate*Math.pow(1+escalator,y-1);
-    if(y===1)yr1Income=payment;
-    lifetimeIncome+=payment;
-    cumTotal+=payment;
+    const bPayment=batteryIncluded?(usableAcres*batteryPremium*Math.pow(1+escalator,y-1)):0;
+    if(y===1){yr1Income=payment;yr1Battery=bPayment;}
+    lifetimeIncome+=payment+bPayment;
+    lifetimeBattery+=bPayment;
+    cumTotal+=payment+bPayment;
     yrs.push('Year '+y);
     annual.push(Math.round(payment));
+    batteryAnnual.push(Math.round(bPayment));
     cumulative.push(Math.round(cumTotal));
   }
 
   const netLifetime=lifetimeIncome-legalCosts;
-  const perAcreMonth=yr1Income/usableAcres/12;
+  const perAcreMonth=(yr1Income+yr1Battery)/usableAcres/12;
   // Estimate capacity: 5-8 acres per MW → use 6.5 avg
   const estimatedMW=usableAcres/6.5;
   const homesServed=Math.round(estimatedMW*173);
 
   // KPIs
-  document.getElementById('kpiYear1').textContent=formatCurrency(yr1Income);
+  document.getElementById('kpiYear1').textContent=formatCurrency(yr1Income+yr1Battery);
   document.getElementById('kpiYear1').className='kpi-value kpi-positive';
-  document.getElementById('kpiYear1Detail').textContent=formatCurrency(leaseRate)+'/acre × '+formatNum(usableAcres)+' acres';
+  document.getElementById('kpiYear1Detail').textContent=formatCurrency(leaseRate+(batteryIncluded?batteryPremium:0))+'/acre × '+formatNum(usableAcres)+' acres'+(batteryIncluded?' (incl. battery)':'');
 
   document.getElementById('kpiLifetime').textContent=formatCurrency(netLifetime);
   document.getElementById('kpiLifetime').className='kpi-value kpi-positive';
-  document.getElementById('kpiLifetimeDetail').textContent=leaseTerm+'-year total after legal costs'+(signingBonus>0?' (incl. signing bonus)':'');
+  document.getElementById('kpiLifetimeDetail').textContent=leaseTerm+'-year total after legal costs'+(signingBonus>0?' (incl. signing bonus)':'')+(batteryIncluded?' (incl. battery premium)':'');
 
   document.getElementById('kpiPerMonth').textContent='$'+Math.round(perAcreMonth).toLocaleString();
   document.getElementById('kpiPerMonth').className='kpi-value';
@@ -184,7 +196,9 @@ function calculate(){
   // Charts
   destroyCharts();const cs=getCS();
 
-  window.__charts.income=new Chart(document.getElementById('chartIncome'),{type:'bar',data:{labels:yrs,datasets:[{label:'Annual Lease Payment',data:annual,backgroundColor:cs.c1}]},options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:false}},scales:{x:{ticks:{color:cs.text,maxTicksLimit:Math.min(leaseTerm,15)},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}});
+  const incomeDatasets=[{label:'Base Lease Payment',data:annual,backgroundColor:cs.c1}];
+  if(batteryIncluded){incomeDatasets.push({label:'Battery Premium',data:batteryAnnual,backgroundColor:cs.c6});}
+  window.__charts.income=new Chart(document.getElementById('chartIncome'),{type:'bar',data:{labels:yrs,datasets:incomeDatasets},options:{...chartOpts('','bar'),plugins:{...chartOpts('','bar').plugins,legend:{display:batteryIncluded,labels:{color:cs.text,font:{family:'DM Sans'}}}},scales:{x:{stacked:batteryIncluded,ticks:{color:cs.text,maxTicksLimit:Math.min(leaseTerm,15)},grid:{display:false}},y:{stacked:batteryIncluded,ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}});
 
   window.__charts.cum=new Chart(document.getElementById('chartCumulative'),{type:'line',data:{labels:yrs,datasets:[{label:'Cumulative Revenue',data:cumulative,borderColor:cs.c1,backgroundColor:cs.c1+'22',fill:true,tension:0.3}]},options:{...chartOpts('','line'),scales:{x:{ticks:{color:cs.text,maxTicksLimit:Math.min(leaseTerm,15)},grid:{display:false}},y:{ticks:{color:cs.text,callback:v=>formatCurrency(v)},grid:{color:cs.grid}}}}});
 
@@ -195,13 +209,42 @@ function calculate(){
   const suitResult=scoreSuitability({usableAcres,terrain,substationDist,threePhase,roadAccess,zoning});
   renderSuitability(suitResult);
 
+  // Battery Storage Section
+  const batterySection=document.getElementById('batterySection');
+  const batteryColHeader=document.getElementById('batteryColHeader');
+  if(batteryIncluded){
+    batterySection.classList.add('active');
+    batteryColHeader.style.display='';
+    // Battery KPIs
+    document.getElementById('bkpiPremium').textContent=formatCurrency(yr1Battery);
+    document.getElementById('bkpiPremiumNote').textContent=formatCurrency(batteryPremium)+'/acre × '+formatNum(usableAcres)+' acres (Year 1)';
+    document.getElementById('bkpiLifetime').textContent=formatCurrency(lifetimeBattery);
+    document.getElementById('bkpiLifetimeNote').textContent='Additional income over '+leaseTerm+' years from battery co-location';
+    document.getElementById('bkpiRate').textContent=formatCurrency(leaseRate+batteryPremium);
+    document.getElementById('bkpiRateNote').textContent='Base '+formatCurrency(leaseRate)+' + '+formatCurrency(batteryPremium)+' battery premium per acre';
+    document.getElementById('bkpiCapacity').textContent=batteryCapacity+' MWh';
+    const hoursRange=batteryCapacity<=1?'2-hour range':'2-4 hour range';
+    document.getElementById('bkpiCapacityNote').textContent=hoursRange+' — lithium-ion system';
+    // ITC note
+    const itcNote=document.getElementById('batteryITCNote');
+    if(batteryITC){
+      itcNote.textContent='This project may qualify for a 30% Investment Tax Credit (ITC) on solar+storage costs when prevailing wage requirements are met. The developer captures this benefit but it funds higher lease rates for landowners.';
+    }else{
+      itcNote.textContent='ITC eligibility not confirmed. The 30% ITC for solar+storage projects requires prevailing wage and apprenticeship compliance, and may phase out as early as June 2026.';
+    }
+  }else{
+    batterySection.classList.remove('active');
+    batteryColHeader.style.display='none';
+  }
+
   // Year-by-year table
   const leaseBody=document.getElementById('leaseBody');
   if(leaseBody){
     leaseBody.innerHTML='';
     for(let y=0;y<leaseTerm;y++){
       const highlight=y===0||y===leaseTerm-1||(y+1)%5===0?'font-weight:600':'';
-      leaseBody.innerHTML+=`<tr style="${highlight}"><td>Year ${y+1}</td><td class="text-right">${formatCurrency(annual[y])}</td><td class="text-right">${formatCurrency(cumulative[y])}</td></tr>`;
+      const battCol=batteryIncluded?`<td class="text-right">${formatCurrency(batteryAnnual[y])}</td>`:'';
+      leaseBody.innerHTML+=`<tr style="${highlight}"><td>Year ${y+1}</td><td class="text-right">${formatCurrency(annual[y])}</td>${battCol}<td class="text-right">${formatCurrency(cumulative[y])}</td></tr>`;
     }
   }
 
@@ -210,23 +253,36 @@ function calculate(){
   if(summaryBody){
     summaryBody.innerHTML='';
     const finalYrPayment=annual[leaseTerm-1]||0;
+    const finalYrTotal=finalYrPayment+(batteryIncluded?(batteryAnnual[leaseTerm-1]||0):0);
+    const yr1Total=yr1Income+yr1Battery;
     const items=[
       ['Usable Acres',formatNum(usableAcres)+' acres',''],
-      ['Lease Rate (Year 1)',formatCurrency(leaseRate)+'/acre/year',''],
+      ['Base Lease Rate (Year 1)',formatCurrency(leaseRate)+'/acre/year',''],
       ['Annual Escalator',formatPct(escalator*100),''],
       ['Lease Term',leaseTerm+' years',''],
-      ['Signing Bonus',formatCurrency(signingBonus),''],
-      ['Year 1 Annual Income',formatCurrency(yr1Income),'highlight'],
-      ['Final Year Annual Income',formatCurrency(finalYrPayment),'highlight'],
-      ['Income Growth (Year 1 → '+leaseTerm+')',formatPct((finalYrPayment/yr1Income-1)*100),''],
-      ['Lifetime Gross Income',formatCurrency(lifetimeIncome),''],
-      ['Legal / Negotiation Costs','-'+formatCurrency(legalCosts),''],
-      ['Lifetime Net Income',formatCurrency(netLifetime),'highlight'],
-      ['Estimated Solar Capacity',estimatedMW.toFixed(1)+' MW',''],
-      ['Homes Powered (est.)',formatNum(homesServed),''],
-      ['Development Period',devPeriod+' months',''],
-      ['Site Suitability Grade',suitResult.grade+' ('+suitResult.pct+'%)','highlight']
+      ['Signing Bonus',formatCurrency(signingBonus),'']
     ];
+    if(batteryIncluded){
+      items.push(['Battery Storage','Yes — '+batteryCapacity+' MWh','']);
+      items.push(['Battery Lease Premium','+'+formatCurrency(batteryPremium)+'/acre/year','']);
+      items.push(['Effective Rate (Base + Battery)',formatCurrency(leaseRate+batteryPremium)+'/acre/year','highlight']);
+    }
+    items.push(['Year 1 Annual Income',formatCurrency(yr1Total),'highlight']);
+    items.push(['Final Year Annual Income',formatCurrency(finalYrTotal),'highlight']);
+    items.push(['Income Growth (Year 1 → '+leaseTerm+')',formatPct((finalYrTotal/yr1Total-1)*100),'']);
+    if(batteryIncluded){
+      items.push(['Lifetime Battery Premium Income',formatCurrency(lifetimeBattery),'']);
+    }
+    items.push(['Lifetime Gross Income',formatCurrency(lifetimeIncome),'']);
+    items.push(['Legal / Negotiation Costs','-'+formatCurrency(legalCosts),'']);
+    items.push(['Lifetime Net Income',formatCurrency(netLifetime),'highlight']);
+    items.push(['Estimated Solar Capacity',estimatedMW.toFixed(1)+' MW','']);
+    items.push(['Homes Powered (est.)',formatNum(homesServed),'']);
+    items.push(['Development Period',devPeriod+' months','']);
+    items.push(['Site Suitability Grade',suitResult.grade+' ('+suitResult.pct+'%)','highlight']);
+    if(batteryIncluded&&batteryITC){
+      items.push(['30% ITC Eligible','Yes — developer captures credit','']);
+    }
     items.forEach(r=>{const style=r[2]==='highlight'?'font-weight:600':'';summaryBody.innerHTML+=`<tr style="${style}"><td>${r[0]}</td><td class="text-right">${r[1]}</td></tr>`;});
   }
   showResults();
