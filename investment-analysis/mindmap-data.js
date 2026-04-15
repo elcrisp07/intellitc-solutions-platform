@@ -55,6 +55,22 @@ window.MINDMAP_DATA = {
           ]
         },
         {
+          name: 'Cost Segregation & Tax Strategy',
+          children: [
+            { name: 'Depreciable Basis', desc: 'Purchase price minus land value, plus renovation costs. This is the total amount eligible for depreciation deductions.' },
+            { name: 'Standard Depreciation (27.5 / 39 year)', desc: 'The default IRS depreciation schedule: 27.5 years for residential rental property, 39 years for commercial property. Straight-line method.' },
+            { name: 'Cost Segregation Study', desc: 'An engineering-based analysis that reclassifies building components into shorter depreciation categories (5, 7, and 15-year property) instead of the full 27.5 or 39-year schedule.' },
+            { name: '5-Year Personal Property', desc: 'Components like carpet, appliances, cabinetry, and specialty lighting that qualify for 5-year accelerated depreciation under MACRS.' },
+            { name: '7-Year Personal Property', desc: 'Office furniture, certain fixtures, and specialized equipment within the property that qualify for 7-year depreciation.' },
+            { name: '15-Year Land Improvements', desc: 'Landscaping, parking lots, sidewalks, fencing, outdoor lighting, and drainage systems that qualify for 15-year depreciation.' },
+            { name: 'Bonus Depreciation', desc: 'Allows a percentage of qualifying asset cost to be deducted in the first year. Was 100% (2017-2022), phasing down 20% per year: 80% (2023), 60% (2024), 40% (2025), 20% (2026), 0% (2027).' },
+            { name: 'Year-1 Accelerated Deduction', desc: 'The total first-year depreciation deduction combining bonus depreciation on reclassified assets plus standard depreciation on the remaining building basis.' },
+            { name: 'Tax Savings (Deduction × Tax Rate)', desc: 'The actual dollar reduction in federal income tax. Calculated by multiplying the depreciation deduction by your marginal tax rate.' },
+            { name: 'After-Tax Cash Flow Impact', desc: 'How cost segregation improves effective cash flow by reducing tax liability. Transforms a property from negative to positive returns when tax benefits are included.' },
+            { name: 'Depreciation Recapture (Section 1250)', desc: 'When you sell the property, the IRS recaptures accelerated depreciation at a 25% rate. Cost segregation front-loads benefits but does not eliminate total tax — it defers it.' }
+          ]
+        },
+        {
           name: 'Holding Period & Exit',
           children: [
             { name: 'Projected Hold Duration (years)', desc: 'A forecast of hold duration (years) based on current data and assumptions.' },
