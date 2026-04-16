@@ -1217,7 +1217,7 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <h3>Request Sent</h3>
-          <p>Your demo request has been submitted. We'll reach out within one business day to confirm your session.</p>
+          <p>Your inquiry has been submitted. We'll respond within one business day.</p>
         </div>
       </div>
 
@@ -1279,9 +1279,9 @@
       return;
     }
 
-    var subject = 'IntelliTC Lab-as-a-Service Demo Request — ' + orgName;
+    var subject = 'IntelliTC Lab-as-a-Service Inquiry — ' + orgName;
     var body = [
-      'DEMO REQUEST — IntelliTC Lab-as-a-Service for Schools',
+      'INQUIRY — IntelliTC Lab-as-a-Service for Schools',
       '======================================================',
       '',
       'School / Organization: ' + orgName,
@@ -1297,7 +1297,7 @@
       'Submitted via intellitcsolutions.com/schools'
     ].join('\n');
 
-    var mailto = 'mailto:testimony@intellitcsolutions.com'
+    var mailto = 'mailto:customerservice@intellitcsolutions.com'
       + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(body);
 
@@ -1309,7 +1309,7 @@
 
     // GA4 event
     if (typeof gtag === 'function') {
-      gtag('event', 'demo_request', {
+      gtag('event', 'school_inquiry', {
         event_category: 'schools_b2b',
         event_label: orgName,
         role: role,
