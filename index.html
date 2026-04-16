@@ -1277,6 +1277,7 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <a href="./seniors-corner/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Senior's Corner</a>
       <a href="./certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certificate</a>
       <a href="./guides/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Guides</a>
+      <a href="./goal-pilot/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none">Goal Pilot</a>
         <a href="./index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
     <button class="hdr-search-btn" id="hdrSearchBtn" onclick="openSpotlight()" aria-label="Search calculators (Ctrl+K)" title="Search (Ctrl+K)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -1315,8 +1316,15 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
   <span class="hero-badge">54 Professional Calculators</span>
   <h1>Make Smarter Real Estate Decisions</h1>
   <p>Professional-grade analysis tools for every step of your real estate journey — whether you're buying your first home or managing a portfolio.</p>
-  <button class="hero-wizard-trigger" id="heroWizardBtn" onclick="openWizard()">
-    <span class="wizard-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+  <a href="./goal-pilot/index.html" class="hero-wizard-trigger" style="text-decoration:none">
+    <span class="wizard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+    <span class="wizard-label">
+      <span class="wizard-label-title">Goal Pilot — What's Your Goal?</span>
+      <span class="wizard-label-sub">Describe your goal, get a step-by-step tool chain</span>
+    </span>
+  </a>
+  <button class="hero-wizard-trigger" id="heroWizardBtn" onclick="openWizard()" style="border-color:var(--color-border)">
+    <span class="wizard-icon" style="background:var(--color-surface-offset);color:var(--color-text-muted)"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
     <span class="wizard-label">
       <span class="wizard-label-title">Not Sure Where to Start?</span>
       <span class="wizard-label-sub">Find the right tools for you</span>
@@ -1985,6 +1993,7 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 <footer class="footer">
   <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
   <p><img src="./assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="./terms/index.html">Terms of Service</a> &bull; <a href="./privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+  <p style="margin-top:6px;font-size:var(--text-xs)"><a href="./schools/index.html" style="color:var(--color-text-muted)">For Schools &amp; Institutions</a> &bull; <a href="./verify/index.html" style="color:var(--color-text-muted)">Verify a Certificate</a> &bull; <a href="./ce-equivalency/index.html" style="color:var(--color-text-muted)">CE Equivalency</a></p>
 </footer>
 
 <script>
