@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/ce-equivalency">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CE Credit Equivalency Reference — IntelliTC Solutions</title>
+<meta name="description" content="See how the ICREA Certificate Program aligns with national and state continuing education standards from NAR, CCIM, state licensing boards, and more.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="CE Credit Equivalency Reference — IntelliTC Solutions">
+<meta property="og:description" content="See how the ICREA Certificate Program aligns with national and state continuing education standards from NAR, CCIM, state licensing boards, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/ce-equivalency">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CE Credit Equivalency Reference — IntelliTC Solutions">
+<meta name="twitter:description" content="See how the ICREA Certificate Program aligns with national and state continuing education standards from NAR, CCIM, state licensing boards, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+<style>
+
+/* ─── Layout Helpers ─────────────────────────────── */
+.ce-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* ─── Hero ─────────────────────────────────────────── */
+.ce-hero {
+  background: linear-gradient(135deg, #01696f 0%, #0c4e54 100%);
+  padding: var(--space-16) var(--space-6) var(--space-12);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ce-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 20%, rgba(209,153,0,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ce-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.92);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-5);
+}
+.ce-hero h1 {
+  font-size: clamp(1.9rem, 1.4rem + 2.5vw, 2.9rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 var(--space-4);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.ce-hero .subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,0.82);
+  max-width: 700px;
+  margin: 0 auto var(--space-5);
+  line-height: 1.65;
+}
+.ce-hero .disclaimer-note {
+  display: inline-block;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.72);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  max-width: 640px;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* ─── Section Heading ──────────────────────────────── */
+.ce-section {
+  padding: var(--space-14) 0;
+}
+.ce-section + .ce-section {
+  border-top: 1px solid var(--color-border);
+}
+.section-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.section-title {
+  font-size: clamp(1.35rem, 1rem + 1.5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-3);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.section-desc {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  max-width: 680px;
+  line-height: 1.65;
+  margin: 0 0 var(--space-8);
+}
+
+/* ─── Tier Alignment Table ──────────────────────────── */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.ce-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  min-width: 560px;
+}
+.ce-table thead tr {
+  background: var(--color-surface);
+}
+.ce-table thead th {
+  padding: var(--space-3) var(--space-5);
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+.ce-table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.15s;
+}
+.ce-table tbody tr:last-child {
+  border-bottom: none;
+}
+.ce-table tbody tr:nth-child(even) {
+  background: var(--color-bg);
+}
+.ce-table tbody tr:nth-child(odd) {
+  background: var(--color-surface);
+}
+.ce-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-primary) 5%, var(--color-surface));
+}
+.ce-table td {
+  padding: var(--space-4) var(--space-5);
+  color: var(--color-text);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+.tier-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-dot.associate { background: #437a22; }
+.tier-dot.professional { background: #01696f; }
+.tier-dot.master { background: #D19900; }
+
+.ce-hours {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-primary);
+}
+.standards-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.standards-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.standards-list li::before {
+  content: '→';
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── Scenario Lab Mapping ──────────────────────────── */
+.scenario-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+.scenario-group {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.scenario-group-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.scenario-group-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.scenario-group-icon.invest { background: rgba(1,105,111,0.12); color: #01696f; }
+.scenario-group-icon.tax { background: rgba(209,153,0,0.12); color: #9a7200; }
+.scenario-group-icon.market { background: rgba(67,122,34,0.12); color: #437a22; }
+[data-theme="dark"] .scenario-group-icon.tax { color: #D19900; }
+[data-theme="dark"] .scenario-group-icon.invest { color: #1abecb; }
+[data-theme="dark"] .scenario-group-icon.market { color: #5da832; }
+.scenario-group-title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+.scenario-group-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.scenario-items {
+  padding: var(--space-2) 0;
+}
+.scenario-item {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+}
+.scenario-item:last-child {
+  border-bottom: none;
+}
+.scenario-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding-top: 2px;
+  min-width: 20px;
+}
+.scenario-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+.scenario-maps-to {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.maps-label {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-right: var(--space-1);
+}
+
+/* ─── Industry Alignment Grid ──────────────────────── */
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+.org-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.org-card-header {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.org-logo-block {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  line-height: 1;
+  text-align: center;
+}
+.org-logo-nar  { background: #1a3a6b; color: #ffffff; }
+.org-logo-ccim { background: #003087; color: #ffffff; }
+.org-logo-slb  { background: #393836; color: #ffffff; }
+[data-theme="dark"] .org-logo-slb { background: #4a4946; }
+.org-logo-ai   { background: #8b1a2b; color: #ffffff; }
+.org-card-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+.org-card-abbr {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.org-alignments {
+  padding: var(--space-2) 0;
+}
+.org-alignment-item {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+.org-alignment-item:last-child {
+  border-bottom: none;
+}
+.org-align-topic {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.org-align-topic-tag {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+.tag-nar  { background: rgba(26,58,107,0.1); color: #1a3a6b; }
+.tag-ccim { background: rgba(0,48,135,0.1); color: #003087; }
+.tag-slb  { background: rgba(57,56,54,0.1); color: #28251d; }
+.tag-ai   { background: rgba(139,26,43,0.1); color: #8b1a2b; }
+[data-theme="dark"] .tag-nar  { background: rgba(26,58,107,0.25); color: #7fa3d4; }
+[data-theme="dark"] .tag-ccim { background: rgba(0,48,135,0.25); color: #7fa3d4; }
+[data-theme="dark"] .tag-slb  { background: rgba(100,100,96,0.25); color: #cdccca; }
+[data-theme="dark"] .tag-ai   { background: rgba(139,26,43,0.25); color: #e08090; }
+.org-align-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+/* ─── Methodology Note ──────────────────────────────── */
+.methodology-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-7) var(--space-8);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+.methodology-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg);
+  background: rgba(1,105,111,0.1);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.methodology-content .method-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+.methodology-content p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ─── CTA Section ───────────────────────────────────── */
+.ce-cta-section {
+  background: linear-gradient(135deg, #01696f 0%, #0c4e54 100%);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-14) var(--space-8);
+  text-align: center;
+  margin: var(--space-14) 0 var(--space-16);
+  position: relative;
+  overflow: hidden;
+}
+.ce-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 80%, rgba(209,153,0,0.1) 0%, transparent 55%);
+  pointer-events: none;
+}
+.ce-cta-section h2 {
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2.1rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 var(--space-3);
+  letter-spacing: -0.02em;
+}
+.ce-cta-section p {
+  color: rgba(255,255,255,0.78);
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-7);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.ce-cta-btns {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: #D19900;
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: background 0.18s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-cta-primary:hover {
+  background: #b88500;
+  transform: translateY(-1px);
+}
+.btn-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: background 0.18s, transform 0.15s;
+}
+.btn-cta-secondary:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-1px);
+}
+
+/* ─── Tier Summary Pills (above table) ─────────────── */
+.tier-pills {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+.tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1.5px solid;
+}
+.tier-pill.associate  { color: #437a22; border-color: #437a22; background: rgba(67,122,34,0.08); }
+.tier-pill.professional { color: #01696f; border-color: #01696f; background: rgba(1,105,111,0.08); }
+.tier-pill.master     { color: #9a7200; border-color: #D19900; background: rgba(209,153,0,0.08); }
+[data-theme="dark"] .tier-pill.master { color: #D19900; }
+
+/* ─── Mobile overrides ──────────────────────────────── */
+@media (max-width: 640px) {
+  .ce-hero {
+    padding: var(--space-10) var(--space-4) var(--space-8);
+  }
+  .ce-container {
+    padding: 0 var(--space-4);
+  }
+  .scenario-groups,
+  .org-grid {
+    grid-template-columns: 1fr;
+  }
+  .methodology-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .ce-cta-section {
+    padding: var(--space-10) var(--space-5);
+  }
+  .ce-cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Header ─────────────────────────────────────── -->
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:var(--space-4)">
+      <a href="../zero-experience/index.html" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary);text-decoration:none">Start Here</a>
+      <a href="../get-started/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Your Role?</a>
+      <a href="../workflows/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Workflows</a>
+      <a href="../learning-paths/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Learn</a>
+      <a href="../seniors-corner/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Senior's Corner</a>
+      <a href="../certification/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Certificate</a>
+      <a href="../guides/index.html" style="font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);text-decoration:none">Guides</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch to dark mode" style="margin-left:var(--space-2)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── Hero ────────────────────────────────────────── -->
+<section class="ce-hero">
+  <div style="max-width:760px;margin:0 auto">
+    <div class="ce-hero-eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      CE Equivalency Reference
+    </div>
+    <h1>CE Credit Equivalency Reference</h1>
+    <p class="subtitle">See how the ICREA Certificate Program aligns with national and state continuing education standards. Our curriculum is designed to meet or exceed the analytical rigor required by leading real estate organizations.</p>
+    <p class="disclaimer-note">This reference is for informational purposes. Formal CE credit recognition is pursued on an ongoing basis with each organization listed.</p>
+  </div>
+</section>
+
+<!-- ─── Section 1: Tier Alignment Table ─────────────── -->
+<div class="ce-container">
+
+  <section class="ce-section">
+    <p class="section-label">ICREA Certificate Program</p>
+    <h2 class="section-title">Tier CE Hour Alignment</h2>
+    <p class="section-desc">Each ICREA certificate tier is mapped to estimated CE hour equivalencies and compared against recognized industry standards.</p>
+
+    <div class="tier-pills">
+      <span class="tier-pill associate"><span class="tier-dot associate"></span>Associate (ACREA)</span>
+      <span class="tier-pill professional"><span class="tier-dot professional"></span>Professional (PCREA)</span>
+      <span class="tier-pill master"><span class="tier-dot master"></span>Master (MCREA)</span>
+    </div>
+
+    <div class="table-scroll">
+      <table class="ce-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">ICREA Certificate Tier</th>
+            <th scope="col">Est. CE Hours</th>
+            <th scope="col">Comparable Standards</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="tier-badge">
+                <span class="tier-dot associate"></span>
+                Associate (ACREA)
+              </div>
+            </td>
+            <td><span class="ce-hours">8–12 hrs</span></td>
+            <td>
+              <ul class="standards-list">
+                <li>State pre-licensing supplemental education</li>
+                <li>NAR intro-level electives</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="tier-badge">
+                <span class="tier-dot professional"></span>
+                Professional (PCREA)
+              </div>
+            </td>
+            <td><span class="ce-hours">16–24 hrs</span></td>
+            <td>
+              <ul class="standards-list">
+                <li>CCIM intro courses (CI 101/102 equivalent depth)</li>
+                <li>State broker CE requirements</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="tier-badge">
+                <span class="tier-dot master"></span>
+                Master (MCREA)
+              </div>
+            </td>
+            <td><span class="ce-hours">30–40 hrs</span></td>
+            <td>
+              <ul class="standards-list">
+                <li>CCIM advanced analysis (CI 103/104 equivalent depth)</li>
+                <li>CRE designation program depth</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── Section 2: Scenario Lab CE Mapping ────────── -->
+  <section class="ce-section">
+    <p class="section-label">Scenario Lab</p>
+    <h2 class="section-title">Scenario Lab CE Topic Mapping</h2>
+    <p class="section-desc">All 12 Scenario Lab exercises map to specific CE topic areas recognized by state licensing boards and national organizations.</p>
+
+    <div class="scenario-groups">
+
+      <!-- Investment Analysis -->
+      <div class="scenario-group">
+        <div class="scenario-group-header">
+          <div class="scenario-group-icon invest">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="scenario-group-title">Investment Analysis Scenarios</div>
+            <div class="scenario-group-subtitle">4 exercises</div>
+          </div>
+        </div>
+        <div class="scenario-items">
+          <div class="scenario-item">
+            <span class="scenario-num">01</span>
+            <div>
+              <div class="scenario-name">Cash Flow Modeling</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Real estate finance CE, investment analysis</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">02</span>
+            <div>
+              <div class="scenario-name">Deal Underwriting</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Broker-level transaction analysis CE</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">03</span>
+            <div>
+              <div class="scenario-name">BRRRR Strategy</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Investment strategy CE, portfolio management</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">04</span>
+            <div>
+              <div class="scenario-name">Comparative Market Analysis</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Appraisal/valuation CE, market analysis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tax & Legal -->
+      <div class="scenario-group">
+        <div class="scenario-group-header">
+          <div class="scenario-group-icon tax">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div>
+            <div class="scenario-group-title">Tax &amp; Legal Scenarios</div>
+            <div class="scenario-group-subtitle">4 exercises</div>
+          </div>
+        </div>
+        <div class="scenario-items">
+          <div class="scenario-item">
+            <span class="scenario-num">05</span>
+            <div>
+              <div class="scenario-name">Capital Gains Optimization</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Tax planning CE, IRC Section 1031</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">06</span>
+            <div>
+              <div class="scenario-name">1031 Exchange Planning</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Tax-deferred exchange CE (IRS requirements)</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">07</span>
+            <div>
+              <div class="scenario-name">Cost Segregation Analysis</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Advanced tax strategy CE, depreciation</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">08</span>
+            <div>
+              <div class="scenario-name">Creative Finance Structuring</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Transaction structuring CE, contract law</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market & Risk -->
+      <div class="scenario-group">
+        <div class="scenario-group-header">
+          <div class="scenario-group-icon market">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div class="scenario-group-title">Market &amp; Risk Scenarios</div>
+            <div class="scenario-group-subtitle">4 exercises</div>
+          </div>
+        </div>
+        <div class="scenario-items">
+          <div class="scenario-item">
+            <span class="scenario-num">09</span>
+            <div>
+              <div class="scenario-name">Market Valuation</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Appraisal CE, BPO methodology</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">10</span>
+            <div>
+              <div class="scenario-name">Risk Assessment</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Risk management CE, due diligence</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">11</span>
+            <div>
+              <div class="scenario-name">Portfolio Analysis</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Investment management CE, diversification</div>
+            </div>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-num">12</span>
+            <div>
+              <div class="scenario-name">Lease Analysis</div>
+              <div class="scenario-maps-to"><span class="maps-label">Maps to:</span>Commercial leasing CE, lease structuring</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Section 3: Industry Alignment Grid ──────── -->
+  <section class="ce-section">
+    <p class="section-label">Industry Alignment</p>
+    <h2 class="section-title">Organization Alignment Grid</h2>
+    <p class="section-desc">The ICREA Certificate Program is benchmarked against CE requirements from leading national real estate organizations and state licensing authorities.</p>
+
+    <div class="org-grid">
+
+      <!-- NAR -->
+      <div class="org-card">
+        <div class="org-card-header">
+          <div class="org-logo-block org-logo-nar" aria-label="NAR logo">NAR</div>
+          <div>
+            <div class="org-card-name">National Association of Realtors</div>
+            <div class="org-card-abbr">NAR</div>
+          </div>
+        </div>
+        <div class="org-alignments">
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Code of Ethics Requirement
+              <span class="org-align-topic-tag tag-nar">NAR</span>
+            </div>
+            <div class="org-align-desc">IntelliTC's ethical analysis framework supports CE ethics requirements through scenario-based decision-making exercises.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Designation Electives
+              <span class="org-align-topic-tag tag-nar">NAR</span>
+            </div>
+            <div class="org-align-desc">ICREA certificate tiers align with ABR, SRS, and investment-focused elective depth across all three program levels.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CCIM -->
+      <div class="org-card">
+        <div class="org-card-header">
+          <div class="org-logo-block org-logo-ccim" aria-label="CCIM logo">CCIM</div>
+          <div>
+            <div class="org-card-name">CCIM Institute</div>
+            <div class="org-card-abbr">CCIM</div>
+          </div>
+        </div>
+        <div class="org-alignments">
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              CI 101 Financial Analysis
+              <span class="org-align-topic-tag tag-ccim">CCIM</span>
+            </div>
+            <div class="org-align-desc">PCREA tier covers comparable analytical depth to CI 101 financial modeling and underwriting methodology.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              CI 102 Market Analysis
+              <span class="org-align-topic-tag tag-ccim">CCIM</span>
+            </div>
+            <div class="org-align-desc">CMA and market tools provide equivalent analytical rigor to CI 102 market segmentation and demand analysis.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              CI 103 Investment Analysis
+              <span class="org-align-topic-tag tag-ccim">CCIM</span>
+            </div>
+            <div class="org-align-desc">MCREA tier addresses advanced investment modeling methods comparable to CI 103 investment decision analysis.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              CI 104 Investment Strategy
+              <span class="org-align-topic-tag tag-ccim">CCIM</span>
+            </div>
+            <div class="org-align-desc">Portfolio and strategy scenarios match CI 104 depth in acquisition, disposition, and long-term investment strategy.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State Licensing -->
+      <div class="org-card">
+        <div class="org-card-header">
+          <div class="org-logo-block org-logo-slb" aria-label="State Licensing logo">SLB</div>
+          <div>
+            <div class="org-card-name">State Licensing Boards</div>
+            <div class="org-card-abbr">State CE Requirements</div>
+          </div>
+        </div>
+        <div class="org-alignments">
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Pre-Licensing Supplemental
+              <span class="org-align-topic-tag tag-slb">State</span>
+            </div>
+            <div class="org-align-desc">ACREA tier supplements state pre-licensing education with practical analytical skills not covered in standard courses.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Post-Licensing CE
+              <span class="org-align-topic-tag tag-slb">State</span>
+            </div>
+            <div class="org-align-desc">PCREA and MCREA tiers meet the analytical CE requirements in most states for post-licensing continuing education.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Broker-Level CE
+              <span class="org-align-topic-tag tag-slb">State</span>
+            </div>
+            <div class="org-align-desc">MCREA tier exceeds typical broker-level continuing education standards in real estate finance and investment analysis.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appraisal Institute -->
+      <div class="org-card">
+        <div class="org-card-header">
+          <div class="org-logo-block org-logo-ai" aria-label="Appraisal Institute logo">AI</div>
+          <div>
+            <div class="org-card-name">Appraisal Institute</div>
+            <div class="org-card-abbr">AI</div>
+          </div>
+        </div>
+        <div class="org-alignments">
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Quantitative Analysis
+              <span class="org-align-topic-tag tag-ai">AI</span>
+            </div>
+            <div class="org-align-desc">IntelliTC's calculator suite covers quantitative methods comparable to Appraisal Institute analytical standards for income property valuation.</div>
+          </div>
+          <div class="org-alignment-item">
+            <div class="org-align-topic">
+              Market Analysis
+              <span class="org-align-topic-tag tag-ai">AI</span>
+            </div>
+            <div class="org-align-desc">CMA and valuation tools align with appraisal methodology standards for market trend analysis, comparable selection, and adjustment reasoning.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Section 4: Methodology Note ──────────────── -->
+  <section class="ce-section">
+    <p class="section-label">Methodology</p>
+    <h2 class="section-title">How CE Hour Estimates Are Calculated</h2>
+
+    <div class="methodology-card">
+      <div class="methodology-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="methodology-content">
+        <div class="method-title">Estimation Approach</div>
+        <p>CE hour equivalencies are estimated based on the time required to complete all learning paths, scenario lab exercises, and assessments within each ICREA certificate tier. These estimates factor in study time, hands-on calculator practice, and assessment preparation. IntelliTC Solutions actively pursues formal CE credit recognition partnerships with state licensing boards and national organizations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ──────────────────────────────────────── -->
+  <div class="ce-cta-section">
+    <h2>Ready to integrate ICREA into your curriculum?</h2>
+    <p>Bring the ICREA Certificate Program to your institution. Our Lab-as-a-Service model makes it easy to add real-world analytical rigor to any real estate program.</p>
+    <div class="ce-cta-btns">
+      <a href="../schools/index.html" class="btn-cta-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Explore Lab-as-a-Service
+      </a>
+      <a href="../certification/index.html" class="btn-cta-secondary">
+        Learn about the ICREA Certificate Program
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /ce-container -->
+
+<!-- ─── Footer ───────────────────────────────────────── -->
+<footer class="footer">
+  <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+
+<!-- ─── Theme Toggle ─────────────────────────────────── -->
+<script>
+(function(){
+  const toggles = document.querySelectorAll('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = localStorage.getItem('intellitc-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  r.setAttribute('data-theme', d);
+  function u(){
+    const icon = d === 'dark'
+      ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    toggles.forEach(function(t){ t.innerHTML = icon; });
+  }
+  u();
+  toggles.forEach(function(t){
+    t.addEventListener('click', function(){ d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); localStorage.setItem('intellitc-theme', d); u(); });
+  });
+})();
+</script>
+
+</body>
+</html>
