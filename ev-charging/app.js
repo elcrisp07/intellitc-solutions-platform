@@ -220,7 +220,9 @@ function calculate(){
     }
   }
 
-  const lifetimeNet=totalRevenue-totalElecCost-totalOpCost-netInvestment;
+  // Home scenario: totalRevenue = fuelSavings (already net of electricity), so don't subtract elec again
+  // Other scenarios: totalRevenue is raw revenue, subtract electricity separately
+  const lifetimeNet=isHome?(totalRevenue-totalOpCost-netInvestment):(totalRevenue-totalElecCost-totalOpCost-netInvestment);
   const roi=netInvestment>0?(lifetimeNet/netInvestment*100):0;
   const yr1Net=annualNet[0]||0;
 
