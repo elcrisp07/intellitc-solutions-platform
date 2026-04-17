@@ -10,15 +10,15 @@
 <link rel="canonical" href="https://intellitcsolutions.com/scenario-lab">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scenario Lab — IntelliTC Solutions</title>
-<meta name="description" content="Practice real estate analysis with realistic deal scenarios. Test your skills, compare against expert benchmarks, and build confidence.">
+<meta name="description" content="85 interactive labs — guided challenges, timed drills, and sandbox environments. Practice real estate analysis with realistic deal scenarios.">
 <meta property="og:image" content="../assets/og-image.jpg">
 <meta property="og:title" content="Scenario Lab — IntelliTC Solutions">
-<meta property="og:description" content="Practice real estate analysis with realistic deal scenarios. Test your skills, compare against expert benchmarks, and build confidence.">
+<meta property="og:description" content="85 interactive labs — guided challenges, timed drills, and sandbox environments. Practice real estate analysis with realistic deal scenarios.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://intellitcsolutions.com/scenario-lab">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Scenario Lab — IntelliTC Solutions">
-<meta name="twitter:description" content="Practice real estate analysis with realistic deal scenarios. Test your skills, compare against expert benchmarks, and build confidence.">
+<meta name="twitter:description" content="85 interactive labs — guided challenges, timed drills, and sandbox environments. Practice real estate analysis with realistic deal scenarios.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -32,6 +32,10 @@
 .hero-section { text-align:center; padding:var(--space-12) var(--space-6) var(--space-8); }
 .hero-section h1 { font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em; margin-bottom:var(--space-3); }
 .hero-section p { color:var(--color-text-muted); font-size:var(--text-base); max-width:600px; margin:0 auto; line-height:1.6; }
+.hero-stat-row { display:flex; justify-content:center; gap:var(--space-8); margin-top:var(--space-6); flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat-num { font-size:clamp(1.5rem,3vw,2.25rem); font-weight:700; color:var(--color-primary); font-variant-numeric:tabular-nums; }
+.hero-stat-label { font-size:var(--text-xs); color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
 
 .mode-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:var(--space-4); max-width:960px; margin:var(--space-8) auto 0; }
 .mode-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-xl); padding:var(--space-6); cursor:pointer; transition:border-color var(--transition-interactive),box-shadow var(--transition-interactive); text-align:left; }
@@ -67,14 +71,53 @@
 .calc-link-num { width:24px; height:24px; background:var(--color-primary); color:white; border-radius:50%; display:grid; place-items:center; font-size:12px; font-weight:700; flex-shrink:0; }
 
 .filter-bar { display:flex; gap:var(--space-2); flex-wrap:wrap; margin-bottom:var(--space-6); }
-.filter-btn { padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); font-size:var(--text-sm); font-weight:500; border:1px solid var(--color-border); color:var(--color-text-muted); background:var(--color-surface); cursor:pointer; }
+.filter-btn { padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); font-size:var(--text-sm); font-weight:500; border:1px solid var(--color-border); color:var(--color-text-muted); background:var(--color-surface); cursor:pointer; transition:background var(--transition-interactive),color var(--transition-interactive),border-color var(--transition-interactive); }
 .filter-btn.active { background:var(--color-primary); color:white; border-color:var(--color-primary); }
+
+.filter-section-label { font-size:var(--text-xs); font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-right:var(--space-2); display:inline-flex; align-items:center; line-height:1; padding:var(--space-2) 0; }
 
 .sandbox-grid { display:grid; grid-template-columns:minmax(280px,380px) 1fr; gap:var(--space-6); }
 .sandbox-inputs { display:flex; flex-direction:column; gap:var(--space-4); }
-@media(max-width:768px) { .sandbox-grid { grid-template-columns:1fr; } .mode-cards { grid-template-columns:1fr; } }
+
+.sandbox-env-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:var(--space-4); margin-bottom:var(--space-6); }
+.sandbox-env-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); cursor:pointer; transition:border-color var(--transition-interactive),box-shadow var(--transition-interactive); }
+.sandbox-env-card:hover { border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-surface); }
+.sandbox-env-card.active { border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-surface); }
+.sandbox-env-card h4 { font-size:var(--text-base); font-weight:700; margin-bottom:var(--space-2); display:flex; align-items:center; gap:var(--space-2); }
+.sandbox-env-card p { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.5; }
+
+.timed-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); cursor:pointer; transition:border-color var(--transition-interactive),box-shadow var(--transition-interactive); }
+.timed-card:hover { border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-surface); }
+
+.track-group { margin-bottom:var(--space-8); }
+.track-group-header { font-size:var(--text-lg); font-weight:700; margin-bottom:var(--space-4); padding-bottom:var(--space-2); border-bottom:2px solid var(--color-primary); display:inline-block; }
+
+.tier-badge-sprint { background:#437A22; color:white; }
+.tier-badge-pressure { background:#D19900; color:white; }
+.tier-badge-gauntlet { background:#A13544; color:white; }
+
+.portfolio-property { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); margin-bottom:var(--space-4); }
+.portfolio-property h4 { font-size:var(--text-base); font-weight:700; margin-bottom:var(--space-3); }
+
+.market-compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); }
+.market-compare-col { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); }
+.market-compare-col h4 { font-size:var(--text-base); font-weight:700; margin-bottom:var(--space-3); color:var(--color-primary); }
+
+.whatif-toggles { display:flex; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-6); }
+.whatif-btn { padding:var(--space-2) var(--space-4); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:600; border:2px solid var(--color-border); color:var(--color-text-muted); background:var(--color-surface); cursor:pointer; transition:all var(--transition-interactive); }
+.whatif-btn.active { border-color:var(--color-primary); color:var(--color-primary); background:var(--color-primary-surface); }
+
+.no-results-msg { text-align:center; padding:var(--space-8) var(--space-4); color:var(--color-text-muted); font-size:var(--text-sm); }
+
+@media(max-width:768px) {
+  .sandbox-grid { grid-template-columns:1fr; }
+  .mode-cards { grid-template-columns:1fr; }
+  .market-compare-grid { grid-template-columns:1fr; }
+  .sandbox-env-grid { grid-template-columns:1fr; }
+  .hero-stat-row { gap:var(--space-4); }
+}
 </style>
-<!-- Google Analytics 4 — Replace G-M5XCCZMN4F with your Measurement ID (e.g. G-XXXXXXXXXX) -->
+<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -134,23 +177,28 @@
       <span class="badge" style="background:var(--color-primary);color:white;margin-bottom:var(--space-3);display:inline-flex">SCENARIO LAB</span>
       <h1>Practice Real Estate Analysis</h1>
       <p>Work through realistic deal scenarios, compare your analysis against expert benchmarks, and build the skills to evaluate any deal with confidence.</p>
+      <div class="hero-stat-row">
+        <div class="hero-stat"><div class="hero-stat-num">85</div><div class="hero-stat-label">Interactive Labs</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Learning Tracks</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Challenge Modes</div></div>
+      </div>
     </div>
     
     <div class="mode-cards">
       <div class="mode-card" onclick="showChallenges()">
         <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Guided Challenges</h3>
         <p>Work through curated scenarios with narrative setups, data tables, and expert analysis. Answer questions and compare your reasoning.</p>
-        <div class="mode-badge">12 Scenarios &bull; All Levels</div>
+        <div class="mode-badge">50 Scenarios &bull; All Levels</div>
       </div>
       <div class="mode-card" onclick="showTimed()">
         <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Timed Challenges</h3>
-        <p>Race the clock to analyze deals. Earn points for accuracy and speed. Track your improvement over time.</p>
-        <div class="mode-badge">6 Scenarios &bull; Intermediate+</div>
+        <p>Race the clock to analyze deals. Sprint, Pressure, and Gauntlet tiers test speed and accuracy under real-world time constraints.</p>
+        <div class="mode-badge">30 Scenarios &bull; Intermediate+</div>
       </div>
       <div class="mode-card" onclick="showSandbox()">
         <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Sandbox Mode</h3>
         <p>Free-form exploration with adjustable market conditions and real-time metrics. No scoring — just learning.</p>
-        <div class="mode-badge">Interactive &bull; All Levels</div>
+        <div class="mode-badge">5 Environments &bull; All Levels</div>
       </div>
     </div>
   </div>
@@ -161,899 +209,533 @@
     <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Guided Challenges</h2>
     <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Select a scenario to begin. Each challenge includes a realistic setup, data, and expert analysis.</p>
     
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterScenarios('all',this)">All (12)</button>
-      <button class="filter-btn" onclick="filterScenarios('Beginner',this)">Beginner</button>
-      <button class="filter-btn" onclick="filterScenarios('Intermediate',this)">Intermediate</button>
-      <button class="filter-btn" onclick="filterScenarios('Advanced',this)">Advanced</button>
-      <button class="filter-btn" onclick="filterScenarios('Homebuyer',this)">Homebuyer</button>
-      <button class="filter-btn" onclick="filterScenarios('Investor',this)">Investor</button>
-      <button class="filter-btn" onclick="filterScenarios('Agent',this)">Agent</button>
-      <button class="filter-btn" onclick="filterScenarios('Lender',this)">Lender</button>
+    <div class="filter-bar" id="guidedFilterBar">
+      <span class="filter-section-label">Track:</span>
+      <button class="filter-btn active" data-filter-type="track" data-filter-value="all" onclick="applyGuidedFilter(this)">All (50)</button>
+      <button class="filter-btn" data-filter-type="track" data-filter-value="Foundation" onclick="applyGuidedFilter(this)">Foundation (12)</button>
+      <button class="filter-btn" data-filter-type="track" data-filter-value="Multi-Tool Workflows" onclick="applyGuidedFilter(this)">Multi-Tool (10)</button>
+      <button class="filter-btn" data-filter-type="track" data-filter-value="Market Conditions" onclick="applyGuidedFilter(this)">Market (8)</button>
+      <button class="filter-btn" data-filter-type="track" data-filter-value="Investor Profiles" onclick="applyGuidedFilter(this)">Investor Profiles (8)</button>
+      <button class="filter-btn" data-filter-type="track" data-filter-value="Advanced Strategies" onclick="applyGuidedFilter(this)">Advanced (12)</button>
+    </div>
+    <div class="filter-bar" id="guidedFilterBar2">
+      <span class="filter-section-label">Level:</span>
+      <button class="filter-btn active" data-filter-type="diff" data-filter-value="all" onclick="applyGuidedFilter(this)">All Levels</button>
+      <button class="filter-btn" data-filter-type="diff" data-filter-value="Beginner" onclick="applyGuidedFilter(this)">Beginner</button>
+      <button class="filter-btn" data-filter-type="diff" data-filter-value="Intermediate" onclick="applyGuidedFilter(this)">Intermediate</button>
+      <button class="filter-btn" data-filter-type="diff" data-filter-value="Advanced" onclick="applyGuidedFilter(this)">Advanced</button>
+      <span class="filter-section-label" style="margin-left:var(--space-4)">Role:</span>
+      <button class="filter-btn active" data-filter-type="role" data-filter-value="all" onclick="applyGuidedFilter(this)">All Roles</button>
+      <button class="filter-btn" data-filter-type="role" data-filter-value="Investor" onclick="applyGuidedFilter(this)">Investor</button>
+      <button class="filter-btn" data-filter-type="role" data-filter-value="Homebuyer" onclick="applyGuidedFilter(this)">Homebuyer</button>
+      <button class="filter-btn" data-filter-type="role" data-filter-value="Agent" onclick="applyGuidedFilter(this)">Agent</button>
+      <button class="filter-btn" data-filter-type="role" data-filter-value="Homeowner" onclick="applyGuidedFilter(this)">Homeowner</button>
+      <button class="filter-btn" data-filter-type="role" data-filter-value="Lender" onclick="applyGuidedFilter(this)">Lender</button>
     </div>
     
-    <div class="scenario-grid" id="scenarioGrid">
-      <div class="scenario-card" data-scenario="0" onclick="showScenario(0)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Homebuyer</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Sarah's First Home</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Single mom with $58K income exploring homeownership. Can she qualify? What can she afford?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="1" onclick="showScenario(1)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The Memphis Rental</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">A turnkey rental in Memphis listed at $115K with $1,100/mo rent. Solid deal or money trap?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="2" onclick="showScenario(2)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Homeowner</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Rate Shock Recovery</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Bought with a 5/1 ARM at 3.5% — now it's adjusting to 7.25%. What are the options?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="3" onclick="showScenario(3)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The BRRRR in Cleveland</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">A distressed duplex in Cleveland with BRRRR potential. Can you get all your cash back out?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="4" onclick="showScenario(4)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Seller Financing Opportunity</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Motivated seller with a free-and-clear property. Structure a creative deal that works for both sides.</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="5" onclick="showScenario(5)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Agent</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The Agent's Dilemma</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Two competing offers on your listing. Which one actually nets your seller more?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="6" onclick="showScenario(6)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Subject-To in a High-Rate Market</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">A seller has a 3.25% mortgage and needs to move. Current rates are 7.5%. How much is that rate worth?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="7" onclick="showScenario(7)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The 4-Unit House Hack</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Owner-occupy one unit, rent three. How much could your housing cost drop to?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="8" onclick="showScenario(8)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Homeowner</span>
-    <span class="badge badge-outline">5 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The Solar ROI Decision</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">$28K system cost vs. $350/month electric bill. Does solar make financial sense?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="9" onclick="showScenario(9)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">The 1031 Exchange Puzzle</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Selling a $450K rental with $180K in gains. Exchange or pay the tax?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="10" onclick="showScenario(10)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Distressed Auction Property</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">Foreclosure auction, no inspection allowed. What's your maximum bid?</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-<div class="scenario-card" data-scenario="11" onclick="showScenario(11)">
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Lender</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Lender Qualification Review</h3>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">A borrower wants an investment property loan. Evaluate their file and recommend the best program.</p>
-  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
-</div>
-    </div>
+    <div class="scenario-grid" id="guidedGrid"></div>
+    <div class="no-results-msg hidden" id="guidedNoResults">No scenarios match the selected filters. Try adjusting your criteria.</div>
     
-    <div class="scenario-detail hidden" id="scenario_0">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Sarah's First Home</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Homebuyer</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>Sarah is a 32-year-old single mother working as a medical billing specialist earning $58,000/year. She has a car payment of $340/month and $180/month in student loans. Her credit score is 680, and she's saved $12,000 over the past two years.</p><p style="margin-top:var(--space-3)">She's been renting a 2-bedroom apartment for $1,100/month and wants to know if buying makes sense. She's looking at homes in the $180K–$240K range in a suburban market where property taxes are 1.15% and insurance averages $1,400/year.</p><p style="margin-top:var(--space-3)">Sarah has heard about FHA loans but isn't sure if she qualifies or what the real costs would be.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Annual Income</td><td style="text-align:right;font-family:var(--font-mono)">$58,000</td></tr><tr><td style="font-weight:500">Monthly Debts</td><td style="text-align:right;font-family:var(--font-mono)">$520 (car + student loans)</td></tr><tr><td style="font-weight:500">Credit Score</td><td style="text-align:right;font-family:var(--font-mono)">680</td></tr><tr><td style="font-weight:500">Savings</td><td style="text-align:right;font-family:var(--font-mono)">$12,000</td></tr><tr><td style="font-weight:500">Target Price Range</td><td style="text-align:right;font-family:var(--font-mono)">$180K – $240K</td></tr><tr><td style="font-weight:500">Interest Rate</td><td style="text-align:right;font-family:var(--font-mono)">6.75%</td></tr><tr><td style="font-weight:500">Property Tax Rate</td><td style="text-align:right;font-family:var(--font-mono)">1.15%</td></tr><tr><td style="font-weight:500">Annual Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$1,400</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../affordability/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Affordability</span></a><a href="../qualification-analysis/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Qualification Analysis</span></a><a href="../cash-to-close/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Cash to Close</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_0_0">
-  <p class="question-text"><strong>Question 1:</strong> What is the maximum home price Sarah can comfortably afford (Moderate scenario)?</p>
-  <input type="text" class="scenario-input" id="q0_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_0_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$185,000 – $200,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">At $58K income with $520 in monthly debts, Sarah's back-end DTI should stay under 43%. Running the Affordability Calculator with these inputs shows a Moderate max price around $190K. The Conservative scenario is lower (~$160K), giving her more breathing room.</p>
-  </div>
-</div><div class="question-block" id="qblock_0_1">
-  <p class="question-text"><strong>Question 2:</strong> Which loan program is best for Sarah?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q0_1" value="Conventional (5% down)"> Conventional (5% down)</label><label class="choice-label"><input type="radio" name="q0_1" value="FHA (3.5% down)"> FHA (3.5% down)</label><label class="choice-label"><input type="radio" name="q0_1" value="VA Loan"> VA Loan</label><label class="choice-label"><input type="radio" name="q0_1" value="USDA Loan"> USDA Loan</label></div>
-  <div class="expert-answer hidden" id="expert_0_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">FHA (3.5% down)</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">With a 680 credit score and only $12K saved, FHA is the best fit. It accepts 580+ credit scores, requires only 3.5% down ($6,650 on a $190K home), and has more flexible DTI limits. Conventional typically wants 680+ and 5-20% down, which would stretch her savings.</p>
-  </div>
-</div><div class="question-block" id="qblock_0_2">
-  <p class="question-text"><strong>Question 3:</strong> How much total cash will Sarah need at closing (approximately)?</p>
-  <input type="text" class="scenario-input" id="q0_2" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_0_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$11,000 – $14,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">On a $190K home with FHA (3.5% down = $6,650), closing costs add another $4,000–$6,500 (origination, title, escrow, prepaid). Total cash needed: roughly $11K–$13K. Her $12K in savings barely covers it — she should negotiate seller concessions or save another $2-3K for a cushion.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(0)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_0">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_1">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The Memphis Rental</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>You've found a 3-bedroom, 1-bath single-family home in a B-class Memphis neighborhood listed at $115,000. The property is tenant-occupied with a current lease at $1,100/month. The inspection reveals it needs about $8,000 in deferred maintenance (roof patching, HVAC servicing, and some plumbing).</p><p style="margin-top:var(--space-3)">You'd put 25% down and finance the rest at 7.5% on a 30-year term. Property taxes are $1,380/year, insurance is $1,200/year. You plan to use a property manager at 10% of rent.</p><p style="margin-top:var(--space-3)">The question: does this property cash flow enough to be worth your capital?</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">List Price</td><td style="text-align:right;font-family:var(--font-mono)">$115,000</td></tr><tr><td style="font-weight:500">Monthly Rent</td><td style="text-align:right;font-family:var(--font-mono)">$1,100</td></tr><tr><td style="font-weight:500">Deferred Maintenance</td><td style="text-align:right;font-family:var(--font-mono)">$8,000</td></tr><tr><td style="font-weight:500">Down Payment</td><td style="text-align:right;font-family:var(--font-mono)">25% ($28,750)</td></tr><tr><td style="font-weight:500">Interest Rate</td><td style="text-align:right;font-family:var(--font-mono)">7.5%</td></tr><tr><td style="font-weight:500">Property Tax</td><td style="text-align:right;font-family:var(--font-mono)">$1,380/year</td></tr><tr><td style="font-weight:500">Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$1,200/year</td></tr><tr><td style="font-weight:500">Management Fee</td><td style="text-align:right;font-family:var(--font-mono)">10% of rent</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Cash Flow</span></a><a href="../caprate/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cap Rate</span></a><a href="../deal-grading/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Deal Grading</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_1_0">
-  <p class="question-text"><strong>Question 1:</strong> What is the approximate monthly cash flow after all expenses?</p>
-  <input type="text" class="scenario-input" id="q1_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_1_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$80 – $150/month</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Mortgage (P&I on $86,250): ~$603. Taxes: $115. Insurance: $100. Management (10%): $110. Maintenance reserve (8%): $88. Vacancy (8%): $88. Total expenses: ~$1,104. Net cash flow: roughly $0–$100/month. The $8K in deferred maintenance adds to your all-in cost. This is a thin-margin deal.</p>
-  </div>
-</div><div class="question-block" id="qblock_1_1">
-  <p class="question-text"><strong>Question 2:</strong> What is the cap rate on this property?</p>
-  <input type="text" class="scenario-input" id="q1_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_1_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">5.5% – 6.5%</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">NOI = $1,100 × 12 × (1 - 8% vacancy) - $1,380 - $1,200 - ($1,100 × 12 × 10%) - ($1,100 × 12 × 8%) = roughly $6,500. Cap Rate = $6,500 / $115,000 = 5.65%. This is below the 7%+ that experienced Memphis investors target.</p>
-  </div>
-</div><div class="question-block" id="qblock_1_2">
-  <p class="question-text"><strong>Question 3:</strong> Should you buy this property at asking price?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q1_2" value="Yes, buy at asking"> Yes, buy at asking</label><label class="choice-label"><input type="radio" name="q1_2" value="No, pass entirely"> No, pass entirely</label><label class="choice-label"><input type="radio" name="q1_2" value="Make a lower offer ($95K-$105K)"> Make a lower offer ($95K-$105K)</label><label class="choice-label"><input type="radio" name="q1_2" value="Need more information"> Need more information</label></div>
-  <div class="expert-answer hidden" id="expert_1_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Make a lower offer ($95K-$105K)</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">At $115K the margins are too thin. But at $95-100K (factoring in the $8K maintenance), the cap rate improves to 7%+ and monthly cash flow hits $150-200. The right move is to negotiate down, not walk away — it's a viable rental in a proven market at the right price.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(1)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_1">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_2">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Rate Shock Recovery</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Homeowner</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>Mike and Lisa bought their home in 2021 for $340,000 with a 5/1 ARM at 3.5%. They put 10% down ($34,000) and have been paying $1,374/month for principal and interest. Their combined income is $92,000 with $700/month in other debts.</p><p style="margin-top:var(--space-3)">The ARM is about to adjust to 7.25%. Their home is now worth approximately $380,000, and the remaining balance is $285,000. They need to understand the impact and their options.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Original Purchase</td><td style="text-align:right;font-family:var(--font-mono)">$340,000</td></tr><tr><td style="font-weight:500">Current Value</td><td style="text-align:right;font-family:var(--font-mono)">$380,000</td></tr><tr><td style="font-weight:500">Remaining Balance</td><td style="text-align:right;font-family:var(--font-mono)">$285,000</td></tr><tr><td style="font-weight:500">Current Rate</td><td style="text-align:right;font-family:var(--font-mono)">3.5% (adjusting to 7.25%)</td></tr><tr><td style="font-weight:500">Combined Income</td><td style="text-align:right;font-family:var(--font-mono)">$92,000</td></tr><tr><td style="font-weight:500">Other Monthly Debts</td><td style="text-align:right;font-family:var(--font-mono)">$700</td></tr><tr><td style="font-weight:500">Current P&I</td><td style="text-align:right;font-family:var(--font-mono)">$1,374/month</td></tr><tr><td style="font-weight:500">Remaining Term</td><td style="text-align:right;font-family:var(--font-mono)">25 years</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../dti-stress-test/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>DTI Stress Test</span></a><a href="../refinance/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Refinance Analyzer</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_2_0">
-  <p class="question-text"><strong>Question 1:</strong> What will the new monthly P&I payment be after the ARM adjusts to 7.25%?</p>
-  <input type="text" class="scenario-input" id="q2_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_2_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$2,000 – $2,100</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">At 7.25% on $285K remaining over 25 years, the new P&I is approximately $2,050/month — a $676/month increase. That's an extra $8,112/year.</p>
-  </div>
-</div><div class="question-block" id="qblock_2_1">
-  <p class="question-text"><strong>Question 2:</strong> What will their new back-end DTI ratio be?</p>
-  <input type="text" class="scenario-input" id="q2_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_2_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">46% – 48%</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">New housing cost (P&I + tax + ins): ~$2,050 + $325 + $160 = $2,535. Total with debts: $2,535 + $700 = $3,235. DTI = $3,235 / ($92,000/12) = 42.2%. If we use the full PITI, they're borderline.</p>
-  </div>
-</div><div class="question-block" id="qblock_2_2">
-  <p class="question-text"><strong>Question 3:</strong> What is the best course of action?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q2_2" value="Refinance to fixed rate at 6.5%"> Refinance to fixed rate at 6.5%</label><label class="choice-label"><input type="radio" name="q2_2" value="Sell the home and downsize"> Sell the home and downsize</label><label class="choice-label"><input type="radio" name="q2_2" value="Do nothing and absorb the increase"> Do nothing and absorb the increase</label><label class="choice-label"><input type="radio" name="q2_2" value="Cash-out refi to pay off other debts"> Cash-out refi to pay off other debts</label></div>
-  <div class="expert-answer hidden" id="expert_2_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Refinance to fixed rate at 6.5%</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Refinancing $285K at 6.5% fixed gives a P&I of ~$1,800 — still higher than the 3.5% payment but $250 less than the adjusted ARM. Importantly, it locks in certainty. They have $95K in equity (25% LTV), so they qualify for good terms. Selling seems premature with strong equity. Doing nothing at 7.25% is risky if rates rise further.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(2)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_2">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_3">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The BRRRR in Cleveland</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>A 2-unit duplex in Cleveland's Tremont neighborhood is listed at $65,000. It needs approximately $30,000 in rehab (new kitchens, bathrooms, flooring, paint, and some electrical). After renovation, comparable duplexes in the area sell for $135,000-$145,000. Each unit should rent for $800/month ($1,600 total).</p><p style="margin-top:var(--space-3)">You plan to buy with cash (or hard money), rehab, rent both units, then refinance with a conventional investment loan at 75% LTV. Current investment rates are 7.75%.</p><p style="margin-top:var(--space-3)">Property taxes are $1,800/year, insurance $1,400/year. You'll self-manage initially.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Purchase Price</td><td style="text-align:right;font-family:var(--font-mono)">$65,000</td></tr><tr><td style="font-weight:500">Rehab Budget</td><td style="text-align:right;font-family:var(--font-mono)">$30,000</td></tr><tr><td style="font-weight:500">Total Investment</td><td style="text-align:right;font-family:var(--font-mono)">$95,000</td></tr><tr><td style="font-weight:500">ARV (After Repair Value)</td><td style="text-align:right;font-family:var(--font-mono)">$140,000</td></tr><tr><td style="font-weight:500">Rent (2 units)</td><td style="text-align:right;font-family:var(--font-mono)">$1,600/month total</td></tr><tr><td style="font-weight:500">Refinance LTV</td><td style="text-align:right;font-family:var(--font-mono)">75%</td></tr><tr><td style="font-weight:500">Refinance Rate</td><td style="text-align:right;font-family:var(--font-mono)">7.75%</td></tr><tr><td style="font-weight:500">Property Tax</td><td style="text-align:right;font-family:var(--font-mono)">$1,800/year</td></tr><tr><td style="font-weight:500">Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$1,400/year</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../brrrr/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>BRRRR Strategy</span></a><a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cash Flow</span></a><a href="../dscr-loan/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>DSCR Loan</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_3_0">
-  <p class="question-text"><strong>Question 1:</strong> How much cash will remain in the deal after refinancing at 75% LTV?</p>
-  <input type="text" class="scenario-input" id="q3_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_3_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$0 – $10,000 trapped</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Refinance at 75% of $140K ARV = $105K new loan. You invested $95K (purchase + rehab). Subtract closing costs (~$3-4K), and you get back roughly $101K — meaning only $0–$5K of your original cash stays in the deal. Near-perfect BRRRR!</p>
-  </div>
-</div><div class="question-block" id="qblock_3_1">
-  <p class="question-text"><strong>Question 2:</strong> What is the monthly cash flow after the refinance?</p>
-  <input type="text" class="scenario-input" id="q3_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_3_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$200 – $350/month</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Mortgage on $105K at 7.75%/30yr: ~$752. Taxes: $150. Insurance: $117. Vacancy (8%): $128. Maintenance (10%): $160. Total expenses: ~$1,307. Income: $1,600. Cash flow: ~$293/month. Solid for a property where you got nearly all your cash back.</p>
-  </div>
-</div><div class="question-block" id="qblock_3_2">
-  <p class="question-text"><strong>Question 3:</strong> What is the DSCR ratio on this deal?</p>
-  <input type="text" class="scenario-input" id="q3_2" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_3_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">1.15 – 1.25</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">DSCR = Rental Income / Total Debt Service (PITIA). PITIA = $752 + $150 + $117 = $1,019. DSCR = $1,600 / $1,019 = 1.57 (using gross rent). With adjustments for vacancy: ($1,600 × 0.92) / $1,019 = 1.44. Either way, this comfortably exceeds the 1.2x minimum most DSCR lenders require.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(3)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_3">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_4">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Seller Financing Opportunity</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>A retired couple in Tucson owns a 3-bedroom rental property free and clear, worth approximately $225,000. They've been landlords for 20 years and are tired of managing tenants. They want monthly income without the hassle.</p><p style="margin-top:var(--space-3)">The property currently rents for $1,650/month. Property taxes are $2,100/year, insurance $1,300/year. The home is in good condition with a recent roof (5 years old).</p><p style="margin-top:var(--space-3)">The sellers are open to carrying a note because: (1) they want steady monthly income, (2) they want to avoid a big capital gains tax hit from an outright sale, and (3) they're earning nothing in CDs. Your job is to structure a seller-financed deal that gives them attractive returns while giving you positive cash flow.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Property Value</td><td style="text-align:right;font-family:var(--font-mono)">$225,000</td></tr><tr><td style="font-weight:500">Existing Mortgage</td><td style="text-align:right;font-family:var(--font-mono)">None (free and clear)</td></tr><tr><td style="font-weight:500">Monthly Rent</td><td style="text-align:right;font-family:var(--font-mono)">$1,650</td></tr><tr><td style="font-weight:500">Property Tax</td><td style="text-align:right;font-family:var(--font-mono)">$2,100/year</td></tr><tr><td style="font-weight:500">Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$1,300/year</td></tr><tr><td style="font-weight:500">Seller's Tax Basis</td><td style="text-align:right;font-family:var(--font-mono)">$85,000</td></tr><tr><td style="font-weight:500">Capital Gains</td><td style="text-align:right;font-family:var(--font-mono)">~$140,000</td></tr><tr><td style="font-weight:500">Current CD Rates</td><td style="text-align:right;font-family:var(--font-mono)">~4.5%</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../seller-financing/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Seller Financing</span></a><a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cash Flow</span></a><a href="../wrap-calculator/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Wrap Calculator</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_4_0">
-  <p class="question-text"><strong>Question 1:</strong> What purchase price and terms would you offer?</p>
-  <input type="text" class="scenario-input" id="q4_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_4_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$210K-$220K, 5.5-6%, 30yr amortization, 5-7yr balloon</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Offering $215K at 5.5% interest, 30-year amortization with a 7-year balloon. This gives the sellers a better return than CDs (5.5% vs 4.5%), provides predictable monthly income ($1,221/mo), and defers their capital gains. You get below-market financing — bank rates for investment properties are 7.5%+.</p>
-  </div>
-</div><div class="question-block" id="qblock_4_1">
-  <p class="question-text"><strong>Question 2:</strong> What would your monthly cash flow be under these terms?</p>
-  <input type="text" class="scenario-input" id="q4_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_4_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$100 – $250/month</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">P&I at 5.5% on $215K: ~$1,221. Taxes: $175. Insurance: $108. Vacancy (5%): $83. Maintenance (8%): $132. Total: ~$1,719. Income: $1,650. At face value, you're slightly negative. BUT if you negotiate the price to $205K, P&I drops to $1,164, making you cash-flow positive at ~$80/month. The real win is the below-market rate saving you $200/month vs bank financing.</p>
-  </div>
-</div><div class="question-block" id="qblock_4_2">
-  <p class="question-text"><strong>Question 3:</strong> Why is this deal beneficial for the SELLER specifically?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q4_2" value="Higher sale price than market"> Higher sale price than market</label><label class="choice-label"><input type="radio" name="q4_2" value="Tax deferral through installment sale"> Tax deferral through installment sale</label><label class="choice-label"><input type="radio" name="q4_2" value="They get to keep the property"> They get to keep the property</label><label class="choice-label"><input type="radio" name="q4_2" value="Lower maintenance costs"> Lower maintenance costs</label></div>
-  <div class="expert-answer hidden" id="expert_4_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Tax deferral through installment sale</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">The #1 benefit for the seller is the installment sale tax treatment. On a $140K capital gain, selling outright could trigger $25K-$35K in federal + state taxes. By carrying a note, they spread the gain recognition over years, paying much less in total taxes. Plus they earn 5.5% interest — better than any CD or savings account — secured by a property they know well.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(4)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_4">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_5">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The Agent's Dilemma</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Agent</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>You're the listing agent for a $385,000 home. Your commission agreement is 5.5% total (3% listing side, 2.5% buyer's agent). The seller still owes $245,000 on their mortgage.</p><p style="margin-top:var(--space-3)">You've received two offers:</p><p style="margin-top:var(--space-3)">Offer A: $392,000 with $8,000 in seller concessions (closing cost credit) and a home warranty request ($550). Buyer is pre-approved, conventional loan, can close in 30 days.</p><p style="margin-top:var(--space-3)">Offer B: $378,000, no concessions, no contingencies beyond inspection. Cash buyer, can close in 14 days. Buyer requests a 1% commission credit.</p><p style="margin-top:var(--space-3)">Your seller wants to know: which offer puts more money in their pocket?</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">List Price</td><td style="text-align:right;font-family:var(--font-mono)">$385,000</td></tr><tr><td style="font-weight:500">Mortgage Balance</td><td style="text-align:right;font-family:var(--font-mono)">$245,000</td></tr><tr><td style="font-weight:500">Offer A Price</td><td style="text-align:right;font-family:var(--font-mono)">$392,000</td></tr><tr><td style="font-weight:500">Offer A Concessions</td><td style="text-align:right;font-family:var(--font-mono)">$8,000 + $550 warranty</td></tr><tr><td style="font-weight:500">Offer B Price</td><td style="text-align:right;font-family:var(--font-mono)">$378,000</td></tr><tr><td style="font-weight:500">Offer B Concessions</td><td style="text-align:right;font-family:var(--font-mono)">1% commission credit ($3,780)</td></tr><tr><td style="font-weight:500">Commission Rate</td><td style="text-align:right;font-family:var(--font-mono)">5.5% total</td></tr><tr><td style="font-weight:500">Estimated Closing Costs</td><td style="text-align:right;font-family:var(--font-mono)">~2% of sale price</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../seller-net-sheet/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Seller Net Sheet</span></a><a href="../commission/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Commission</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_5_0">
-  <p class="question-text"><strong>Question 1:</strong> What are the seller's net proceeds from Offer A?</p>
-  <input type="text" class="scenario-input" id="q5_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_5_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$116,000 – $120,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Offer A: $392K - 5.5% commission ($21,560) - 2% closing costs ($7,840) - $8,000 concessions - $550 warranty - $245K mortgage = $109,050 net. Actually, closing costs at 2% of the sale price vary. Using the Seller Net Sheet: approximately $118K net.</p>
-  </div>
-</div><div class="question-block" id="qblock_5_1">
-  <p class="question-text"><strong>Question 2:</strong> What are the seller's net proceeds from Offer B?</p>
-  <input type="text" class="scenario-input" id="q5_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_5_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$112,000 – $116,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Offer B: $378K - (5.5% - 1% credit = 4.5%) commission ($17,010) - 2% closing ($7,560) - $245K mortgage = $108,430 net. Wait — the 1% credit comes OFF the commission, so: $378K - $17,010 - $7,560 - $245K = $108,430. Offer A nets more despite the concessions because the higher price more than compensates.</p>
-  </div>
-</div><div class="question-block" id="qblock_5_2">
-  <p class="question-text"><strong>Question 3:</strong> Which offer would you recommend and why?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q5_2" value="Offer A (higher price, concessions)"> Offer A (higher price, concessions)</label><label class="choice-label"><input type="radio" name="q5_2" value="Offer B (cash, fast close)"> Offer B (cash, fast close)</label><label class="choice-label"><input type="radio" name="q5_2" value="Counter Offer A at $395K no concessions"> Counter Offer A at $395K no concessions</label><label class="choice-label"><input type="radio" name="q5_2" value="Counter Offer B at $385K"> Counter Offer B at $385K</label></div>
-  <div class="expert-answer hidden" id="expert_5_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Offer A (higher price, concessions)</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Offer A nets roughly $5-10K more despite the concessions. The $14K higher price ($392K vs $378K) more than covers the $8,550 in concessions. However, present BOTH net sheets to the seller — some sellers value speed and certainty (Offer B closes in 14 days with no financing contingency). Your job as an agent is to present the numbers and let the seller decide.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(5)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_5">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_6">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Subject-To in a High-Rate Market</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>A relocating homeowner in Phoenix has a property worth $310,000 with a mortgage balance of $235,000 at 3.25% fixed (25 years remaining). Their monthly P&I is $1,147. They've been unable to sell at their asking price and are becoming a motivated seller.</p><p style="margin-top:var(--space-3)">The property would rent for $1,950/month in the current market. Property taxes are $2,800/year, insurance $1,600/year.</p><p style="margin-top:var(--space-3)">You're considering a subject-to acquisition — taking the deed while the existing 3.25% mortgage stays in place. Current market rates for investment properties are 7.5%.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Property Value</td><td style="text-align:right;font-family:var(--font-mono)">$310,000</td></tr><tr><td style="font-weight:500">Mortgage Balance</td><td style="text-align:right;font-family:var(--font-mono)">$235,000 at 3.25%</td></tr><tr><td style="font-weight:500">Monthly P&I</td><td style="text-align:right;font-family:var(--font-mono)">$1,147</td></tr><tr><td style="font-weight:500">Market Rent</td><td style="text-align:right;font-family:var(--font-mono)">$1,950/month</td></tr><tr><td style="font-weight:500">Property Tax</td><td style="text-align:right;font-family:var(--font-mono)">$2,800/year</td></tr><tr><td style="font-weight:500">Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$1,600/year</td></tr><tr><td style="font-weight:500">Current Investment Rate</td><td style="text-align:right;font-family:var(--font-mono)">7.5%</td></tr><tr><td style="font-weight:500">Remaining Term</td><td style="text-align:right;font-family:var(--font-mono)">25 years</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../subject-to/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Subject-To</span></a><a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cash Flow</span></a><a href="../wrap-calculator/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Wrap Calculator</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_6_0">
-  <p class="question-text"><strong>Question 1:</strong> How much would the monthly P&I be with a NEW loan at 7.5%?</p>
-  <input type="text" class="scenario-input" id="q6_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_6_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$1,700 – $1,750</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">A new $235K loan at 7.5% for 30 years: $1,643/month. At 25 years: $1,743/month. The subject-to payment of $1,147 saves approximately $596/month — that's $7,152/year in savings just from the rate difference.</p>
-  </div>
-</div><div class="question-block" id="qblock_6_1">
-  <p class="question-text"><strong>Question 2:</strong> What is the monthly cash flow using the existing subject-to mortgage?</p>
-  <input type="text" class="scenario-input" id="q6_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_6_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$300 – $450/month</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Subject-to mortgage: $1,147. Taxes: $233. Insurance: $133. Vacancy (6%): $117. Maintenance (8%): $156. Management (8%): $156. Total: $1,942. Rent: $1,950. Cash flow: ~$8/month with management, or ~$164 self-managed. The real profit is in the equity capture and rate arbitrage.</p>
-  </div>
-</div><div class="question-block" id="qblock_6_2">
-  <p class="question-text"><strong>Question 3:</strong> What is the primary risk of this subject-to strategy?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q6_2" value="The property loses value"> The property loses value</label><label class="choice-label"><input type="radio" name="q6_2" value="The lender calls the loan due (due-on-sale clause)"> The lender calls the loan due (due-on-sale clause)</label><label class="choice-label"><input type="radio" name="q6_2" value="The tenant stops paying rent"> The tenant stops paying rent</label><label class="choice-label"><input type="radio" name="q6_2" value="Property taxes increase"> Property taxes increase</label></div>
-  <div class="expert-answer hidden" id="expert_6_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">The lender calls the loan due (due-on-sale clause)</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">The due-on-sale clause in most mortgages allows the lender to demand full repayment when ownership transfers. While lenders rarely enforce this on performing loans (they're getting paid), it's a real legal risk. Mitigation strategies include using a land trust, keeping payments current, and having a refinance exit plan ready.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(6)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_6">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_7">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The 4-Unit House Hack</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>You've found a 4-unit property in Indianapolis listed at $285,000. Each unit is a 2-bed/1-bath renting for $825/month. One unit will be vacant at closing — you'll move in. The other three units bring in $2,475/month combined.</p><p style="margin-top:var(--space-3)">You're planning to use an FHA loan with 3.5% down. The interest rate is 6.75% on a 30-year term. Property taxes are $3,200/year, insurance for a 4-unit is $2,400/year.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">List Price</td><td style="text-align:right;font-family:var(--font-mono)">$285,000</td></tr><tr><td style="font-weight:500">Units</td><td style="text-align:right;font-family:var(--font-mono)">4 (you live in 1, rent 3)</td></tr><tr><td style="font-weight:500">Rent per Unit</td><td style="text-align:right;font-family:var(--font-mono)">$825/month</td></tr><tr><td style="font-weight:500">Rental Income</td><td style="text-align:right;font-family:var(--font-mono)">$2,475/month (3 units)</td></tr><tr><td style="font-weight:500">Down Payment (FHA)</td><td style="text-align:right;font-family:var(--font-mono)">3.5% ($9,975)</td></tr><tr><td style="font-weight:500">Interest Rate</td><td style="text-align:right;font-family:var(--font-mono)">6.75%</td></tr><tr><td style="font-weight:500">Property Tax</td><td style="text-align:right;font-family:var(--font-mono)">$3,200/year</td></tr><tr><td style="font-weight:500">Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$2,400/year</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../multifamily/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Multi-Family</span></a><a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cash Flow</span></a><a href="../government-loans/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Government Loans</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_7_0">
-  <p class="question-text"><strong>Question 1:</strong> What is your effective monthly housing cost (mortgage minus rental income)?</p>
-  <input type="text" class="scenario-input" id="q7_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_7_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$0 – $200/month</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">FHA mortgage on $275K (after 3.5% down): ~$1,784 P&I. Plus FHA MIP: ~$160/month. Taxes: $267. Insurance: $200. Total PITI: ~$2,411. Rental income from 3 units: $2,475. Your effective housing cost: roughly -$64/month (you actually get PAID to live there). Even with 5% vacancy, you're under $200/month.</p>
-  </div>
-</div><div class="question-block" id="qblock_7_1">
-  <p class="question-text"><strong>Question 2:</strong> Can you use an FHA loan on a 4-unit property?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q7_1" value="Yes, with owner-occupancy"> Yes, with owner-occupancy</label><label class="choice-label"><input type="radio" name="q7_1" value="No, FHA is single-family only"> No, FHA is single-family only</label><label class="choice-label"><input type="radio" name="q7_1" value="Only with special approval"> Only with special approval</label><label class="choice-label"><input type="radio" name="q7_1" value="Only if it's a condo"> Only if it's a condo</label></div>
-  <div class="expert-answer hidden" id="expert_7_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Yes, with owner-occupancy</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">FHA loans allow 1-4 unit properties as long as you live in one unit. This is one of the most powerful wealth-building strategies for beginners: you get the low down payment (3.5%) AND the rental income from the other units. The rent often covers your entire mortgage.</p>
-  </div>
-</div><div class="question-block" id="qblock_7_2">
-  <p class="question-text"><strong>Question 3:</strong> What happens to the investment after you move out in 1-2 years?</p>
-  <input type="text" class="scenario-input" id="q7_2" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_7_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Full rental income of $3,300/month with strong cash flow</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Once you move out and rent your unit too, you'll have $3,300/month in income against ~$2,411 in PITI. That's roughly $500-700/month cash flow (after vacancy/maintenance reserves) on a property where you only put $10K down. Your cash-on-cash return at that point would be exceptional.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(7)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_7">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_8">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The Solar ROI Decision</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-success);color:white">Beginner</span>
-    <span class="badge badge-outline">Homeowner</span>
-    <span class="badge badge-outline">5 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>You own a home in Arizona valued at $375,000. Your average monthly electric bill is $350 (peaks at $500 in summer). A solar installer quoted a 10kW system at $28,000 before the 30% federal tax credit ($19,600 net cost).</p><p style="margin-top:var(--space-3)">The system is projected to offset 90% of your electricity usage. Your utility has net metering, and electricity rates have been rising about 3% per year.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">System Size</td><td style="text-align:right;font-family:var(--font-mono)">10 kW</td></tr><tr><td style="font-weight:500">Gross Cost</td><td style="text-align:right;font-family:var(--font-mono)">$28,000</td></tr><tr><td style="font-weight:500">Federal Tax Credit (30%)</td><td style="text-align:right;font-family:var(--font-mono)">-$8,400</td></tr><tr><td style="font-weight:500">Net Cost</td><td style="text-align:right;font-family:var(--font-mono)">$19,600</td></tr><tr><td style="font-weight:500">Monthly Electric Bill</td><td style="text-align:right;font-family:var(--font-mono)">$350 average</td></tr><tr><td style="font-weight:500">Estimated Offset</td><td style="text-align:right;font-family:var(--font-mono)">90%</td></tr><tr><td style="font-weight:500">Annual Rate Increase</td><td style="text-align:right;font-family:var(--font-mono)">~3%</td></tr><tr><td style="font-weight:500">System Warranty</td><td style="text-align:right;font-family:var(--font-mono)">25 years</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../solar-roi/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Solar ROI</span></a><a href="../true-cost-ownership/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>True Cost of Ownership</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_8_0">
-  <p class="question-text"><strong>Question 1:</strong> What is the estimated payback period?</p>
-  <input type="text" class="scenario-input" id="q8_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_8_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">5 – 7 years</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Annual savings: $350 × 12 × 90% = $3,780 in year 1. Net cost: $19,600. Simple payback: $19,600 / $3,780 = 5.2 years. With 3% annual rate increases, the effective payback is even shorter — roughly 4.5-5 years. After payback, it's essentially free electricity for 20+ years.</p>
-  </div>
-</div><div class="question-block" id="qblock_8_1">
-  <p class="question-text"><strong>Question 2:</strong> How much will solar add to your home value?</p>
-  <input type="text" class="scenario-input" id="q8_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_8_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$25,000 – $40,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Studies show solar adds approximately $4,000 per kW of installed capacity. For a 10kW system: ~$40,000 in added home value. Even at a conservative estimate of $2,500/kW, that's $25,000. You invest $19,600 net and gain $25-40K in home value — an immediate positive ROI on top of the monthly savings.</p>
-  </div>
-</div><div class="question-block" id="qblock_8_2">
-  <p class="question-text"><strong>Question 3:</strong> Should you buy, lease, or skip solar?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q8_2" value="Buy the system outright"> Buy the system outright</label><label class="choice-label"><input type="radio" name="q8_2" value="Lease / PPA (no upfront cost)"> Lease / PPA (no upfront cost)</label><label class="choice-label"><input type="radio" name="q8_2" value="Skip it entirely"> Skip it entirely</label><label class="choice-label"><input type="radio" name="q8_2" value="Wait for prices to drop"> Wait for prices to drop</label></div>
-  <div class="expert-answer hidden" id="expert_8_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Buy the system outright</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">With a 5-year payback, 25-year warranty, and $25K+ home value increase, buying outright is the clear winner IF you have the cash. Leasing/PPA provides savings but you don't own the system or get the value increase. Waiting is unlikely to beat the current 30% tax credit (which steps down after 2032). The math strongly favors buying now.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(8)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_8">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_9">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">The 1031 Exchange Puzzle</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">10 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>You've owned a rental property for 12 years. Original purchase: $270,000. Current value: $450,000. Total depreciation claimed: $98,182 (27.5 years straight-line, 12 years). Remaining mortgage: $165,000.</p><p style="margin-top:var(--space-3)">You're looking at a replacement property: an 8-unit apartment building listed at $680,000 that produces $6,800/month in gross rent.</p><p style="margin-top:var(--space-3)">Capital gains tax rate: 15% federal + 3.8% NIIT + 5% state = 23.8%. Depreciation recapture: 25%.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Sale Price</td><td style="text-align:right;font-family:var(--font-mono)">$450,000</td></tr><tr><td style="font-weight:500">Adjusted Basis</td><td style="text-align:right;font-family:var(--font-mono)">$171,818 ($270K - $98K depreciation)</td></tr><tr><td style="font-weight:500">Total Gain</td><td style="text-align:right;font-family:var(--font-mono)">$278,182</td></tr><tr><td style="font-weight:500">Capital Gain</td><td style="text-align:right;font-family:var(--font-mono)">$180,000</td></tr><tr><td style="font-weight:500">Depreciation Recapture</td><td style="text-align:right;font-family:var(--font-mono)">$98,182</td></tr><tr><td style="font-weight:500">Combined Tax Rate</td><td style="text-align:right;font-family:var(--font-mono)">~23.8%</td></tr><tr><td style="font-weight:500">Depreciation Recapture Rate</td><td style="text-align:right;font-family:var(--font-mono)">25%</td></tr><tr><td style="font-weight:500">Replacement Property</td><td style="text-align:right;font-family:var(--font-mono)">$680,000</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../1031-exchange/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>1031 Exchange</span></a><a href="../investment-analysis/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Investment Analysis</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_9_0">
-  <p class="question-text"><strong>Question 1:</strong> How much would you owe in taxes WITHOUT a 1031 exchange?</p>
-  <input type="text" class="scenario-input" id="q9_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_9_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$65,000 – $70,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Capital gains tax: $180,000 × 23.8% = $42,840. Depreciation recapture: $98,182 × 25% = $24,546. Total tax: approximately $67,386. That's money that could be working for you in the replacement property instead.</p>
-  </div>
-</div><div class="question-block" id="qblock_9_1">
-  <p class="question-text"><strong>Question 2:</strong> What is the minimum replacement property value to defer ALL taxes?</p>
-  <input type="text" class="scenario-input" id="q9_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_9_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$450,000 or more</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">To defer ALL gains, the replacement property must be equal to or greater than the sale price ($450K). Since the $680K apartment exceeds this, you can defer 100% of the taxes. You must also reinvest all net proceeds (not just the equity) into the new property.</p>
-  </div>
-</div><div class="question-block" id="qblock_9_2">
-  <p class="question-text"><strong>Question 3:</strong> What are the key 1031 exchange deadlines?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q9_2" value="45 days to identify, 180 days to close"> 45 days to identify, 180 days to close</label><label class="choice-label"><input type="radio" name="q9_2" value="30 days to identify, 120 days to close"> 30 days to identify, 120 days to close</label><label class="choice-label"><input type="radio" name="q9_2" value="60 days to identify, 365 days to close"> 60 days to identify, 365 days to close</label><label class="choice-label"><input type="radio" name="q9_2" value="No deadlines if you use a QI"> No deadlines if you use a QI</label></div>
-  <div class="expert-answer hidden" id="expert_9_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">45 days to identify, 180 days to close</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">After selling, you have 45 calendar days to identify up to 3 replacement properties (or more under certain rules) in writing to your Qualified Intermediary. You then have 180 calendar days from the sale to close on a replacement property. Miss either deadline and the exchange fails — you'll owe the full ~$67K in taxes.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(9)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_9">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_10">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Distressed Auction Property</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-error);color:white">Advanced</span>
-    <span class="badge badge-outline">Investor</span>
-    <span class="badge badge-outline">12 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>A bank-owned property is coming up for auction next week. It's a 3-bed/2-bath in a B+ neighborhood where renovated comps sell for $220,000-$240,000. Drive-by inspection shows: roof appears aged, exterior paint peeling, overgrown yard. Interior photos from the listing show dated kitchen and bathrooms but no obvious structural issues.</p><p style="margin-top:var(--space-3)">You cannot get an interior inspection before the auction. Title search shows clear title with no liens beyond the mortgage. The opening bid is $95,000.</p><p style="margin-top:var(--space-3)">You have $120,000 in available capital (cash or hard money line). Comparable renovated rentals in the area get $1,500/month.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Opening Bid</td><td style="text-align:right;font-family:var(--font-mono)">$95,000</td></tr><tr><td style="font-weight:500">Estimated ARV</td><td style="text-align:right;font-family:var(--font-mono)">$225,000 (midpoint)</td></tr><tr><td style="font-weight:500">Estimated Rehab (visible)</td><td style="text-align:right;font-family:var(--font-mono)">$35,000 – $50,000</td></tr><tr><td style="font-weight:500">Unknown Risk Reserve</td><td style="text-align:right;font-family:var(--font-mono)">15-20% of purchase</td></tr><tr><td style="font-weight:500">Comparable Rent</td><td style="text-align:right;font-family:var(--font-mono)">$1,500/month</td></tr><tr><td style="font-weight:500">Available Capital</td><td style="text-align:right;font-family:var(--font-mono)">$120,000</td></tr><tr><td style="font-weight:500">Holding Costs</td><td style="text-align:right;font-family:var(--font-mono)">~$1,500/month</td></tr><tr><td style="font-weight:500">Exit Strategy</td><td style="text-align:right;font-family:var(--font-mono)">BRRRR or Flip</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../distressed-asset/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Distressed Asset</span></a><a href="../fixflip/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Fix & Flip</span></a><a href="../deal-grading/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Deal Grading</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_10_0">
-  <p class="question-text"><strong>Question 1:</strong> What is your maximum allowable bid using the 70% rule?</p>
-  <input type="text" class="scenario-input" id="q10_0" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_10_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$107,500 – $115,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">70% Rule: Max Offer = ARV × 0.70 - Rehab Cost. At $225K ARV with $45K rehab (midpoint): $225K × 0.70 - $45K = $112,500. Add in a 15% unknown reserve on a $110K purchase ($16,500) and your all-in would be $171,500 — still well within BRRRR refinance range.</p>
-  </div>
-</div><div class="question-block" id="qblock_10_1">
-  <p class="question-text"><strong>Question 2:</strong> What should you budget for total investment (purchase + rehab + unknowns)?</p>
-  <input type="text" class="scenario-input" id="q10_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_10_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">$150,000 – $175,000</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">Purchase: ~$110K. Known rehab: $45K. Unknown reserve (15% of purchase): $16,500. Holding costs (4 months): $6,000. Closing/financing: $5,000. Total: approximately $182,500. This exceeds your $120K capital — you'll need a hard money lender or partner for the difference.</p>
-  </div>
-</div><div class="question-block" id="qblock_10_2">
-  <p class="question-text"><strong>Question 3:</strong> Should you bid on this property?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q10_2" value="Yes, bid up to $110K"> Yes, bid up to $110K</label><label class="choice-label"><input type="radio" name="q10_2" value="Yes, bid up to $95K (opening bid only)"> Yes, bid up to $95K (opening bid only)</label><label class="choice-label"><input type="radio" name="q10_2" value="No, too much risk without inspection"> No, too much risk without inspection</label><label class="choice-label"><input type="radio" name="q10_2" value="Need a partner to split the risk"> Need a partner to split the risk</label></div>
-  <div class="expert-answer hidden" id="expert_10_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Yes, bid up to $110K</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">The spread between all-in cost (~$160K) and ARV ($225K) provides a healthy 29% margin. Even with a worst-case rehab ($60K), your all-in is $185K against a $225K value. The risk is real (no inspection), but the 70% rule provides adequate cushion. Stay disciplined at $110K max — above that, the margins get too thin for the risk level.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(10)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_10">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
-<div class="scenario-detail hidden" id="scenario_11">
-  <button class="btn btn-ghost" onclick="hideScenario()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Lender Qualification Review</h2>
-  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
-    <span class="badge" style="background:var(--color-warning);color:white">Intermediate</span>
-    <span class="badge badge-outline">Lender</span>
-    <span class="badge badge-outline">8 min</span>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Setup</h3>
-    <p>A real estate investor has approached your lending institution for financing on their 5th investment property. Here's the borrower profile:</p><p style="margin-top:var(--space-3)">Income: $125,000/year (W-2 from tech company). Monthly debts: $2,800 (3 existing investment mortgages + car payment). Credit score: 745. Liquid reserves: $85,000.</p><p style="margin-top:var(--space-3)">The subject property: A duplex listed at $240,000 in a growing suburban market. Each unit rents for $1,050/month ($2,100 total). Taxes: $2,400/year, insurance: $1,800/year.</p><p style="margin-top:var(--space-3)">The borrower is requesting 75% LTV financing. Current investment property rates are 7.25% conventional and 7.75% DSCR.</p>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>The Data</h3>
-    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody><tr><td style="font-weight:500">Borrower Income</td><td style="text-align:right;font-family:var(--font-mono)">$125,000/year</td></tr><tr><td style="font-weight:500">Existing Monthly Debts</td><td style="text-align:right;font-family:var(--font-mono)">$2,800</td></tr><tr><td style="font-weight:500">Credit Score</td><td style="text-align:right;font-family:var(--font-mono)">745</td></tr><tr><td style="font-weight:500">Liquid Reserves</td><td style="text-align:right;font-family:var(--font-mono)">$85,000</td></tr><tr><td style="font-weight:500">Subject Property</td><td style="text-align:right;font-family:var(--font-mono)">$240,000 duplex</td></tr><tr><td style="font-weight:500">Monthly Rent</td><td style="text-align:right;font-family:var(--font-mono)">$2,100 (2 units)</td></tr><tr><td style="font-weight:500">Requested LTV</td><td style="text-align:right;font-family:var(--font-mono)">75%</td></tr><tr><td style="font-weight:500">Conv. Rate</td><td style="text-align:right;font-family:var(--font-mono)">7.25% / DSCR Rate: 7.75%</td></tr><tr><td style="font-weight:500">Taxes/Insurance</td><td style="text-align:right;font-family:var(--font-mono)">$2,400 + $1,800/year</td></tr></tbody></table></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Recommended Calculators</h3>
-    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap"><a href="../qualification-analysis/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Qualification Analysis</span></a><a href="../dscr-loan/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>DSCR Loan</span></a><a href="../rate-buydown/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Rate Buydown</span></a></div>
-  </div>
-  
-  <div class="scenario-section">
-    <h3>Your Analysis</h3>
-    <div class="question-block" id="qblock_11_0">
-  <p class="question-text"><strong>Question 1:</strong> Does the borrower qualify for conventional financing (max 10 financed properties)?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q11_0" value="Yes, DTI is within limits"> Yes, DTI is within limits</label><label class="choice-label"><input type="radio" name="q11_0" value="No, DTI is too high"> No, DTI is too high</label><label class="choice-label"><input type="radio" name="q11_0" value="Need more reserves documentation"> Need more reserves documentation</label><label class="choice-label"><input type="radio" name="q11_0" value="Borderline — needs compensating factors"> Borderline — needs compensating factors</label></div>
-  <div class="expert-answer hidden" id="expert_11_0">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">Borderline — needs compensating factors</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">With property #5, new PITI is ~$1,610 (P&I on $180K at 7.25% = $1,228, tax $200, ins $150, + 25% of rents don't count as qualifying income). Adding to $2,800 existing debts = $4,410+. DTI = $4,410 / $10,417 = 42.3%. This is just under the 45% max for investment properties, but borderline. Strong credit (745) and reserves ($85K = 6+ months PITI) are the compensating factors.</p>
-  </div>
-</div><div class="question-block" id="qblock_11_1">
-  <p class="question-text"><strong>Question 2:</strong> What is the DSCR ratio on this property?</p>
-  <input type="text" class="scenario-input" id="q11_1" placeholder="Enter your answer...">
-  <div class="expert-answer hidden" id="expert_11_1">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">1.25 – 1.40</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">DSCR = Gross Rent / PITIA. PITIA at 7.75%: P&I on $180K = $1,290 + Tax $200 + Ins $150 = $1,640. DSCR = $2,100 / $1,640 = 1.28. This exceeds the typical 1.2x minimum. The property qualifies for DSCR lending independently of the borrower's personal DTI.</p>
-  </div>
-</div><div class="question-block" id="qblock_11_2">
-  <p class="question-text"><strong>Question 3:</strong> Which loan program would you recommend?</p>
-  <div class="choice-group"><label class="choice-label"><input type="radio" name="q11_2" value="Conventional (7.25%)"> Conventional (7.25%)</label><label class="choice-label"><input type="radio" name="q11_2" value="DSCR (7.75%)"> DSCR (7.75%)</label><label class="choice-label"><input type="radio" name="q11_2" value="Portfolio loan"> Portfolio loan</label><label class="choice-label"><input type="radio" name="q11_2" value="FHA 203b"> FHA 203b</label></div>
-  <div class="expert-answer hidden" id="expert_11_2">
-    <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
-    <div style="font-weight:600;margin-bottom:var(--space-2)">DSCR (7.75%)</div>
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">While conventional offers a lower rate, the borrower is at their DTI limit with 4 existing mortgages. Adding property #5 conventionally would require perfect documentation and compensating factors. The DSCR loan at 7.75% qualifies based solely on property income (1.28 DSCR), keeping the borrower's personal DTI clean for future conventional purchases. The 0.5% rate premium is worth the flexibility.</p>
-  </div>
-</div>
-    <button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealAnswers(11)">Submit & See Expert Analysis</button>
-    <div class="score-card hidden" id="scorecard_11">
-      <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
-      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
-    </div>
-  </div>
-</div>
+    <div class="hidden" id="guidedDetail"></div>
   </div>
 
   <!-- Timed Challenges -->
   <div class="hidden" id="timedSection">
     <button class="btn btn-ghost" onclick="showModeSelect()" style="margin-bottom:var(--space-4)">&larr; Back</button>
     <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Timed Challenges</h2>
-    <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Same scenarios, but against the clock. Select a time limit and see how quickly you can analyze a deal.</p>
+    <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Race the clock to analyze deals. Pick a tier, pick a challenge, and test your speed.</p>
     
-    <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6);flex-wrap:wrap">
-      <button class="btn btn-ghost" style="font-variant-numeric:tabular-nums" onclick="startTimed(5)">5 Minutes</button>
-      <button class="btn btn-primary" onclick="startTimed(10)">10 Minutes</button>
-      <button class="btn btn-ghost" onclick="startTimed(15)">15 Minutes</button>
+    <div class="filter-bar" id="timedFilterBar">
+      <span class="filter-section-label">Tier:</span>
+      <button class="filter-btn active" data-filter-value="all" onclick="applyTimedFilter(this)">All (30)</button>
+      <button class="filter-btn" data-filter-value="Sprint" onclick="applyTimedFilter(this)">Sprint - 5 min (10)</button>
+      <button class="filter-btn" data-filter-value="Pressure" onclick="applyTimedFilter(this)">Pressure - 10 min (10)</button>
+      <button class="filter-btn" data-filter-value="Gauntlet" onclick="applyTimedFilter(this)">Gauntlet - 20 min (10)</button>
     </div>
     
-    <div id="timerDisplay" class="hidden" style="text-align:center;margin-bottom:var(--space-6)">
-      <div style="font-size:clamp(2rem,6vw,4rem);font-weight:700;font-variant-numeric:tabular-nums;font-family:var(--font-mono)" id="timerClock">10:00</div>
-      <p style="color:var(--color-text-muted);font-size:var(--text-sm)">Time remaining</p>
-    </div>
+    <div class="scenario-grid" id="timedGrid"></div>
+    <div class="no-results-msg hidden" id="timedNoResults">No challenges match the selected tier.</div>
     
-    <div id="timedScenarioArea"></div>
-    
-    <div class="hidden" id="timedResults" style="text-align:center;padding:var(--space-8)">
-      <div style="font-size:var(--text-xl);font-weight:700;color:var(--color-primary)">Time's Up!</div>
-      <p style="color:var(--color-text-muted);margin-top:var(--space-3)">Review the expert analysis to see how you did.</p>
-    </div>
+    <div class="hidden" id="timedDetail"></div>
   </div>
 
   <!-- Sandbox -->
-  <div class="sandbox-section hidden" id="sandboxSection">
-  <button class="btn btn-ghost" onclick="showModeSelect()" style="margin-bottom:var(--space-4)">&larr; Back</button>
-  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Investment Sandbox</h2>
-  <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Adjust the inputs and market conditions to see real-time investment metrics. No scoring — just learning and exploration.</p>
-  
-  <div class="sandbox-grid">
-    <div class="sandbox-inputs">
-      <h3 class="param-group-title">Property Details</h3>
-      <div class="field"><label>Purchase Price</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="sbPrice" value="200,000" inputmode="numeric" oninput="updateSandbox()"></div></div>
-      <div class="field"><label>Monthly Rent</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="sbRent" value="1,500" inputmode="numeric" oninput="updateSandbox()"></div></div>
-      <div class="field"><label>Down Payment %</label><div class="input-with-unit"><input type="text" id="sbDP" value="25" inputmode="decimal" oninput="updateSandbox()"><span class="unit">%</span></div></div>
-      <div class="field"><label>Rehab Cost</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="sbRehab" value="0" inputmode="numeric" oninput="updateSandbox()"></div></div>
-      
-      <h3 class="param-group-title" style="margin-top:var(--space-6)">Market Conditions</h3>
-      <div class="field"><label>Interest Rate</label><div class="input-with-unit"><input type="range" id="sbRate" min="3" max="12" step="0.25" value="7.0" oninput="updateSandbox()" style="border:none;background:transparent;height:auto"><span class="unit" id="sbRateVal">7.0%</span></div></div>
-      <div class="field"><label>Vacancy Rate</label><div class="input-with-unit"><input type="range" id="sbVacancy" min="0" max="20" step="1" value="8" oninput="updateSandbox()" style="border:none;background:transparent;height:auto"><span class="unit" id="sbVacancyVal">8%</span></div></div>
-      <div class="field"><label>Appreciation Rate</label><div class="input-with-unit"><input type="range" id="sbAppreciation" min="-5" max="10" step="0.5" value="3" oninput="updateSandbox()" style="border:none;background:transparent;height:auto"><span class="unit" id="sbApprecVal">3.0%</span></div></div>
-    </div>
+  <div class="hidden" id="sandboxSection">
+    <button class="btn btn-ghost" onclick="showModeSelect()" style="margin-bottom:var(--space-4)">&larr; Back</button>
+    <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Sandbox Environments</h2>
+    <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Choose an environment and explore. Adjust inputs and market conditions in real time. No scoring — just learning.</p>
     
+    <div class="sandbox-env-grid" id="sandboxEnvGrid"></div>
+    
+    <div class="hidden" id="sandboxWorkspace"></div>
+  </div>
+</main>
+
+<footer class="footer">
+    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+  </footer>
+
+<script src="lab-data.js"></script>
+<script>
+/* ================================================================
+   SCENARIO LAB — Dynamic Rendering Engine
+   Reads from lab-data.js (GUIDED_CHALLENGES, TIMED_CHALLENGES, SANDBOX_PRESETS)
+   ================================================================ */
+
+/* Theme Toggle */
+(function(){const toggles=document.querySelectorAll('[data-theme-toggle]'),r=document.documentElement;let d=localStorage.getItem('intellitc-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',d);function u(){const icon=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';toggles.forEach(function(t){t.innerHTML=icon;});}u();toggles.forEach(function(t){t.addEventListener('click',function(){d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);localStorage.setItem('intellitc-theme',d);u();});});})();
+
+/* ---- Utility ---- */
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function diffColor(d) { return d==='Beginner'?'var(--color-success)':d==='Intermediate'?'var(--color-warning)':'var(--color-error)'; }
+function tierClass(t) { return t==='Sprint'?'tier-badge-sprint':t==='Pressure'?'tier-badge-pressure':'tier-badge-gauntlet'; }
+
+/* ---- Navigation ---- */
+const sections = ['modeSelect','challengeSection','timedSection','sandboxSection'];
+function showOnly(id) {
+  sections.forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id));
+  window.scrollTo(0,0);
+}
+function showModeSelect() { showOnly('modeSelect'); }
+function showChallenges() {
+  showOnly('challengeSection');
+  document.getElementById('guidedGrid').classList.remove('hidden');
+  document.getElementById('guidedDetail').classList.add('hidden');
+  document.querySelectorAll('#challengeSection .filter-bar').forEach(b=>b.classList.remove('hidden'));
+}
+function showTimed() {
+  showOnly('timedSection');
+  document.getElementById('timedGrid').classList.remove('hidden');
+  document.getElementById('timedDetail').classList.add('hidden');
+  document.querySelectorAll('#timedSection .filter-bar').forEach(b=>b.classList.remove('hidden'));
+}
+function showSandbox() {
+  showOnly('sandboxSection');
+  document.getElementById('sandboxEnvGrid').classList.remove('hidden');
+  document.getElementById('sandboxWorkspace').classList.add('hidden');
+}
+
+/* ================================================================
+   GUIDED CHALLENGES — Rendering
+   ================================================================ */
+const guidedFilters = { track: 'all', diff: 'all', role: 'all' };
+
+function renderGuidedGrid() {
+  const grid = document.getElementById('guidedGrid');
+  let html = '';
+  let visible = 0;
+  GUIDED_CHALLENGES.forEach((sc, i) => {
+    const show = (guidedFilters.track === 'all' || sc.track === guidedFilters.track) &&
+                 (guidedFilters.diff === 'all' || sc.diff === guidedFilters.diff) &&
+                 (guidedFilters.role === 'all' || sc.role === guidedFilters.role);
+    if (show) visible++;
+    html += `<div class="scenario-card" data-idx="${i}" onclick="showGuidedDetail(${i})" style="${show?'':'display:none'}">
+  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
+    <span class="badge" style="background:${diffColor(sc.diff)};color:white">${esc(sc.diff)}</span>
+    <span class="badge badge-outline">${esc(sc.role)}</span>
+    <span class="badge badge-outline">${esc(sc.track)}</span>
+  </div>
+  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">${esc(sc.title)}</h3>
+  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">${esc(sc.desc)}</p>
+  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
+</div>`;
+  });
+  grid.innerHTML = html;
+  document.getElementById('guidedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function applyGuidedFilter(btn) {
+  const type = btn.getAttribute('data-filter-type');
+  const val = btn.getAttribute('data-filter-value');
+  guidedFilters[type] = val;
+  // Update active states within the same filter group
+  const bar = btn.closest('.filter-bar');
+  bar.querySelectorAll(`.filter-btn[data-filter-type="${type}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Re-render
+  const cards = document.querySelectorAll('#guidedGrid .scenario-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const i = parseInt(card.getAttribute('data-idx'));
+    const sc = GUIDED_CHALLENGES[i];
+    const show = (guidedFilters.track === 'all' || sc.track === guidedFilters.track) &&
+                 (guidedFilters.diff === 'all' || sc.diff === guidedFilters.diff) &&
+                 (guidedFilters.role === 'all' || sc.role === guidedFilters.role);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('guidedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function showGuidedDetail(idx) {
+  const sc = GUIDED_CHALLENGES[idx];
+  document.getElementById('guidedGrid').classList.add('hidden');
+  document.querySelectorAll('#challengeSection .filter-bar').forEach(b=>b.classList.add('hidden'));
+  document.getElementById('guidedNoResults').classList.add('hidden');
+  const det = document.getElementById('guidedDetail');
+  det.classList.remove('hidden');
+
+  let html = `<button class="btn btn-ghost" onclick="hideGuidedDetail()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">${esc(sc.title)}</h2>
+  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-6)">
+    <span class="badge" style="background:${diffColor(sc.diff)};color:white">${esc(sc.diff)}</span>
+    <span class="badge badge-outline">${esc(sc.role)}</span>
+    <span class="badge badge-outline">${esc(sc.track)}</span>
+  </div>`;
+
+  // Setup
+  html += `<div class="scenario-section"><h3>The Setup</h3>`;
+  sc.setup.split('\n').forEach(p => { html += `<p style="margin-top:var(--space-3)">${esc(p)}</p>`; });
+  html += `</div>`;
+
+  // Data table
+  if (sc.data && sc.data.length) {
+    html += `<div class="scenario-section"><h3>The Data</h3>
+    <div class="table-wrap"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody>`;
+    sc.data.forEach(row => {
+      html += `<tr><td style="font-weight:500">${esc(row[0])}</td><td style="text-align:right;font-family:var(--font-mono)">${esc(row[1])}</td></tr>`;
+    });
+    html += `</tbody></table></div></div>`;
+  }
+
+  // Recommended tools
+  if (sc.tools && sc.tools.length) {
+    html += `<div class="scenario-section"><h3>Recommended Calculators</h3><div style="display:flex;gap:var(--space-3);flex-wrap:wrap">`;
+    sc.tools.forEach((t, ti) => {
+      html += `<a href="${esc(t[1])}" target="_blank" class="calc-link-card"><span class="calc-link-num">${ti+1}</span><span>${esc(t[0])}</span></a>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Questions
+  html += `<div class="scenario-section"><h3>Your Analysis</h3>`;
+  sc.questions.forEach((q, qi) => {
+    const qid = `gq_${idx}_${qi}`;
+    html += `<div class="question-block" id="qblock_${qid}">
+    <p class="question-text"><strong>Question ${qi+1}:</strong> ${esc(q.text)}</p>`;
+    if (q.type === 'input') {
+      html += `<input type="text" class="scenario-input" id="${qid}" placeholder="Enter your answer...">`;
+    } else {
+      html += `<div class="choice-group">`;
+      q.choices.forEach(c => {
+        html += `<label class="choice-label"><input type="radio" name="${qid}" value="${esc(c)}"> ${esc(c)}</label>`;
+      });
+      html += `</div>`;
+    }
+    html += `<div class="expert-answer hidden" id="expert_${qid}">
+      <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
+      <div style="font-weight:600;margin-bottom:var(--space-2)">${esc(q.answer)}</div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">${esc(q.explain)}</p>
+    </div></div>`;
+  });
+  html += `</div>`;
+
+  // Submit button and scorecard
+  html += `<button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealGuidedAnswers(${idx})">Submit &amp; See Expert Analysis</button>
+  <div class="score-card hidden" id="scorecard_g${idx}">
+    <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare. Use the linked calculators to verify the numbers yourself.</p>
+  </div>`;
+
+  det.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+
+function hideGuidedDetail() {
+  document.getElementById('guidedDetail').classList.add('hidden');
+  document.getElementById('guidedGrid').classList.remove('hidden');
+  document.querySelectorAll('#challengeSection .filter-bar').forEach(b=>b.classList.remove('hidden'));
+  // Restore no-results if needed
+  let visible = 0;
+  document.querySelectorAll('#guidedGrid .scenario-card').forEach(c => { if (c.style.display !== 'none') visible++; });
+  document.getElementById('guidedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function revealGuidedAnswers(idx) {
+  const sc = GUIDED_CHALLENGES[idx];
+  sc.questions.forEach((q, qi) => {
+    const el = document.getElementById(`expert_gq_${idx}_${qi}`);
+    if (el) el.classList.remove('hidden');
+  });
+  const sc_el = document.getElementById(`scorecard_g${idx}`);
+  if (sc_el) sc_el.classList.remove('hidden');
+  if (!window.__labDone) window.__labDone = [];
+  if (!window.__labDone.includes('g'+idx)) window.__labDone.push('g'+idx);
+}
+
+/* ================================================================
+   TIMED CHALLENGES — Rendering
+   ================================================================ */
+let timedFilterValue = 'all';
+let timerInterval = null;
+
+function renderTimedGrid() {
+  const grid = document.getElementById('timedGrid');
+  let html = '';
+  let visible = 0;
+  TIMED_CHALLENGES.forEach((tc, i) => {
+    const show = timedFilterValue === 'all' || tc.tier === timedFilterValue;
+    if (show) visible++;
+    html += `<div class="timed-card" data-idx="${i}" onclick="showTimedDetail(${i})" style="${show?'':'display:none'}">
+  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)">
+    <span class="badge ${tierClass(tc.tier)}">${esc(tc.tier)}</span>
+    <span class="badge badge-outline">${tc.time} min</span>
+  </div>
+  <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">${esc(tc.title)}</h3>
+  <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5">${esc(tc.desc)}</p>
+  <button class="btn btn-primary" style="margin-top:var(--space-4);width:100%">Start Challenge</button>
+</div>`;
+  });
+  grid.innerHTML = html;
+  document.getElementById('timedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function applyTimedFilter(btn) {
+  timedFilterValue = btn.getAttribute('data-filter-value');
+  document.querySelectorAll('#timedFilterBar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('#timedGrid .timed-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const i = parseInt(card.getAttribute('data-idx'));
+    const tc = TIMED_CHALLENGES[i];
+    const show = timedFilterValue === 'all' || tc.tier === timedFilterValue;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('timedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function showTimedDetail(idx) {
+  const tc = TIMED_CHALLENGES[idx];
+  document.getElementById('timedGrid').classList.add('hidden');
+  document.querySelectorAll('#timedSection .filter-bar').forEach(b=>b.classList.add('hidden'));
+  document.getElementById('timedNoResults').classList.add('hidden');
+  const det = document.getElementById('timedDetail');
+  det.classList.remove('hidden');
+
+  let html = `<button class="btn btn-ghost" onclick="hideTimedDetail()" style="margin-bottom:var(--space-4)">&larr; Back to Challenges</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">${esc(tc.title)}</h2>
+  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4)">
+    <span class="badge ${tierClass(tc.tier)}">${esc(tc.tier)}</span>
+    <span class="badge badge-outline">${tc.time} min</span>
+  </div>
+  <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-4)">${esc(tc.desc)}</p>
+
+  <div style="text-align:center;margin-bottom:var(--space-6)">
+    <div style="font-size:clamp(2rem,6vw,4rem);font-weight:700;font-variant-numeric:tabular-nums;font-family:var(--font-mono)" id="timerClock_${idx}">${tc.time}:00</div>
+    <p style="color:var(--color-text-muted);font-size:var(--text-sm)">Time remaining</p>
+    <button class="btn btn-primary" style="margin-top:var(--space-3)" id="timerStartBtn_${idx}" onclick="startTimedTimer(${idx})">Start Timer</button>
+  </div>`;
+
+  // Questions
+  tc.questions.forEach((q, qi) => {
+    const qid = `tq_${idx}_${qi}`;
+    html += `<div class="question-block" id="qblock_${qid}">
+    <p class="question-text"><strong>Question ${qi+1}:</strong> ${esc(q.text)}</p>`;
+    if (q.type === 'input') {
+      html += `<input type="text" class="scenario-input" id="${qid}" placeholder="Enter your answer...">`;
+    } else {
+      html += `<div class="choice-group">`;
+      q.choices.forEach(c => {
+        html += `<label class="choice-label"><input type="radio" name="${qid}" value="${esc(c)}"> ${esc(c)}</label>`;
+      });
+      html += `</div>`;
+    }
+    html += `<div class="expert-answer hidden" id="expert_${qid}">
+      <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2)">Expert Answer</div>
+      <div style="font-weight:600;margin-bottom:var(--space-2)">${esc(q.answer)}</div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">${esc(q.explain)}</p>
+    </div></div>`;
+  });
+
+  html += `<button class="btn btn-primary" style="margin-top:var(--space-6);width:100%;max-width:400px" onclick="revealTimedAnswers(${idx})">Submit &amp; See Expert Analysis</button>
+  <div class="score-card hidden" id="scorecard_t${idx}">
+    <div style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">Challenge Complete</div>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Review the expert analysis above to see how your answers compare.</p>
+  </div>`;
+
+  det.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+
+function startTimedTimer(idx) {
+  const tc = TIMED_CHALLENGES[idx];
+  const clock = document.getElementById(`timerClock_${idx}`);
+  const btn = document.getElementById(`timerStartBtn_${idx}`);
+  if (btn) btn.style.display = 'none';
+  let remaining = tc.time * 60;
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    remaining--;
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    clock.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    if (remaining <= 60) clock.style.color = 'var(--color-error)';
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      revealTimedAnswers(idx);
+    }
+  }, 1000);
+}
+
+function hideTimedDetail() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timedDetail').classList.add('hidden');
+  document.getElementById('timedGrid').classList.remove('hidden');
+  document.querySelectorAll('#timedSection .filter-bar').forEach(b=>b.classList.remove('hidden'));
+  let visible = 0;
+  document.querySelectorAll('#timedGrid .timed-card').forEach(c => { if (c.style.display !== 'none') visible++; });
+  document.getElementById('timedNoResults').classList.toggle('hidden', visible > 0);
+}
+
+function revealTimedAnswers(idx) {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  const tc = TIMED_CHALLENGES[idx];
+  tc.questions.forEach((q, qi) => {
+    const el = document.getElementById(`expert_tq_${idx}_${qi}`);
+    if (el) el.classList.remove('hidden');
+  });
+  const sc_el = document.getElementById(`scorecard_t${idx}`);
+  if (sc_el) sc_el.classList.remove('hidden');
+}
+
+/* ================================================================
+   SANDBOX — Rendering & Calculation Engine
+   ================================================================ */
+const SANDBOX_ICONS = {
+  grid: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+  search: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  'bar-chart': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  layers: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+  sliders: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>'
+};
+
+function renderSandboxGrid() {
+  const grid = document.getElementById('sandboxEnvGrid');
+  let html = '';
+  SANDBOX_PRESETS.forEach((sb, i) => {
+    html += `<div class="sandbox-env-card" onclick="openSandbox('${sb.id}')">
+    <h4>${SANDBOX_ICONS[sb.icon] || ''} ${esc(sb.title)}</h4>
+    <p>${esc(sb.desc)}</p>
+  </div>`;
+  });
+  grid.innerHTML = html;
+}
+
+function openSandbox(envId) {
+  document.getElementById('sandboxEnvGrid').classList.add('hidden');
+  const ws = document.getElementById('sandboxWorkspace');
+  ws.classList.remove('hidden');
+  
+  if (envId === 'open') renderOpenSandbox(ws);
+  else if (envId === 'deal') renderDealAnalyzer(ws);
+  else if (envId === 'market') renderMarketComparison(ws);
+  else if (envId === 'portfolio') renderPortfolioBuilder(ws);
+  else if (envId === 'whatif') renderWhatIfExplorer(ws);
+  window.scrollTo(0, 0);
+}
+
+/* Shared math */
+function parseN(s) { return parseFloat(String(s).replace(/[^0-9.\-]/g,''))||0; }
+function fmtC(n) { return (n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString(); }
+function fmtP(n) { return n.toFixed(1)+'%'; }
+function calcPI(loan, rate, months) {
+  const mr = rate / 12;
+  if (mr <= 0) return loan / months;
+  return loan * (mr * Math.pow(1+mr, months)) / (Math.pow(1+mr, months) - 1);
+}
+function calcMetrics(price, rent, dpPct, rehab, rate, vacancy, apprec) {
+  const dp = price * dpPct;
+  const loan = price - dp;
+  const pi = calcPI(loan, rate, 360);
+  const taxMo = price * 0.012 / 12;
+  const insMo = price * 0.006 / 12;
+  const maintMo = rent * 0.08;
+  const mgmtMo = rent * 0.08;
+  const effRent = rent * (1 - vacancy);
+  const totalExp = pi + taxMo + insMo + maintMo + mgmtMo;
+  const cashFlow = effRent - totalExp;
+  const noi = (rent*12)*(1-vacancy) - (price*0.012) - (price*0.006) - (rent*12*0.08) - (rent*12*0.08);
+  const capRate = price > 0 ? (noi/price)*100 : 0;
+  const totalCash = dp + rehab;
+  const coc = totalCash > 0 ? (cashFlow*12/totalCash)*100 : 0;
+  const pitia = pi + taxMo + insMo;
+  const dscr = pitia > 0 ? rent/pitia : 0;
+  let balance = loan;
+  const mr2 = rate/12;
+  for (let i = 0; i < 60; i++) { balance = balance * (1 + mr2) - pi; }
+  const equity5 = price * Math.pow(1+apprec, 5) - Math.max(0, balance);
+  return { cashFlow, capRate, coc, dscr, pi, equity5, noi, dp, totalCash };
+}
+
+function kpiRow(metrics) {
+  return `<div class="kpi-row" style="grid-template-columns:1fr 1fr">
+    <div class="kpi-card"><span class="kpi-label">Monthly Cash Flow</span><span class="kpi-value ${metrics.cashFlow>=0?'kpi-positive':'kpi-negative'}">${fmtC(metrics.cashFlow)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Cap Rate</span><span class="kpi-value">${fmtP(metrics.capRate)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Cash-on-Cash Return</span><span class="kpi-value">${fmtP(metrics.coc)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">DSCR Ratio</span><span class="kpi-value ${metrics.dscr>=1.2?'kpi-positive':metrics.dscr>=1.0?'':'kpi-negative'}">${metrics.dscr.toFixed(2)}x</span></div>
+    <div class="kpi-card"><span class="kpi-label">Monthly Mortgage</span><span class="kpi-value">${fmtC(metrics.pi)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">5-Year Equity</span><span class="kpi-value">${fmtC(metrics.equity5)}</span></div>
+  </div>`;
+}
+
+function scenarioTable(price, rent, dpPct, rehab, rate, vacancy, apprec) {
+  const opt = calcMetrics(price, rent, dpPct, rehab, rate-0.01, vacancy-0.03, apprec+0.02);
+  const base = calcMetrics(price, rent, dpPct, rehab, rate, vacancy, apprec);
+  const pess = calcMetrics(price, rent, dpPct, rehab, rate+0.015, vacancy+0.05, apprec-0.02);
+  return `<div class="table-wrap"><table class="results-table"><thead><tr><th>Scenario</th><th class="text-right">Cash Flow</th><th class="text-right">CoC Return</th><th class="text-right">Cap Rate</th><th class="text-right">5-Year Equity</th></tr></thead><tbody>
+    <tr style="color:var(--color-success)"><td style="font-weight:600">Optimistic</td><td class="text-right">${fmtC(opt.cashFlow)}/mo</td><td class="text-right">${fmtP(opt.coc)}</td><td class="text-right">${fmtP(opt.capRate)}</td><td class="text-right">${fmtC(opt.equity5)}</td></tr>
+    <tr><td style="font-weight:600">Base Case</td><td class="text-right">${fmtC(base.cashFlow)}/mo</td><td class="text-right">${fmtP(base.coc)}</td><td class="text-right">${fmtP(base.capRate)}</td><td class="text-right">${fmtC(base.equity5)}</td></tr>
+    <tr style="color:var(--color-error)"><td style="font-weight:600">Pessimistic</td><td class="text-right">${fmtC(pess.cashFlow)}/mo</td><td class="text-right">${fmtP(pess.coc)}</td><td class="text-right">${fmtP(pess.capRate)}</td><td class="text-right">${fmtC(pess.equity5)}</td></tr>
+  </tbody></table></div>`;
+}
+
+function sandboxInputGroup(prefix, defaults, onInput) {
+  return `<div class="sandbox-inputs">
+    <h3 class="param-group-title">Property Details</h3>
+    <div class="field"><label>Purchase Price</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="${prefix}Price" value="${defaults.price}" inputmode="numeric" oninput="${onInput}()"></div></div>
+    <div class="field"><label>Monthly Rent</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="${prefix}Rent" value="${defaults.rent}" inputmode="numeric" oninput="${onInput}()"></div></div>
+    <div class="field"><label>Down Payment %</label><div class="input-with-unit"><input type="text" id="${prefix}DP" value="${defaults.dp}" inputmode="decimal" oninput="${onInput}()"><span class="unit">%</span></div></div>
+    <div class="field"><label>Rehab Cost</label><div class="input-with-unit"><span class="unit">$</span><input type="text" id="${prefix}Rehab" value="${defaults.rehab}" inputmode="numeric" oninput="${onInput}()"></div></div>
+    <h3 class="param-group-title" style="margin-top:var(--space-6)">Market Conditions</h3>
+    <div class="field"><label>Interest Rate</label><div class="input-with-unit"><input type="range" id="${prefix}Rate" min="3" max="12" step="0.25" value="${defaults.rate}" oninput="${onInput}()" style="border:none;background:transparent;height:auto"><span class="unit" id="${prefix}RateVal">${defaults.rate}%</span></div></div>
+    <div class="field"><label>Vacancy Rate</label><div class="input-with-unit"><input type="range" id="${prefix}Vacancy" min="0" max="20" step="1" value="${defaults.vac}" oninput="${onInput}()" style="border:none;background:transparent;height:auto"><span class="unit" id="${prefix}VacVal">${defaults.vac}%</span></div></div>
+    <div class="field"><label>Appreciation Rate</label><div class="input-with-unit"><input type="range" id="${prefix}Apprec" min="-5" max="10" step="0.5" value="${defaults.apprec}" oninput="${onInput}()" style="border:none;background:transparent;height:auto"><span class="unit" id="${prefix}ApprecVal">${defaults.apprec}%</span></div></div>
+  </div>`;
+}
+
+function readSandboxInputs(prefix) {
+  const el = id => document.getElementById(prefix + id);
+  const price = parseN(el('Price').value);
+  const rent = parseN(el('Rent').value);
+  const dpPct = parseN(el('DP').value) / 100;
+  const rehab = parseN(el('Rehab').value);
+  const rate = parseFloat(el('Rate').value) / 100;
+  const vac = parseFloat(el('Vacancy').value) / 100;
+  const apprec = parseFloat(el('Apprec').value) / 100;
+  el('RateVal').textContent = (rate * 100).toFixed(2) + '%';
+  el('VacVal').textContent = Math.round(vac * 100) + '%';
+  el('ApprecVal').textContent = (apprec * 100).toFixed(1) + '%';
+  return { price, rent, dpPct, rehab, rate, vac, apprec };
+}
+
+/* ---- Open Sandbox ---- */
+function renderOpenSandbox(ws) {
+  const defaults = { price:'200,000', rent:'1,500', dp:'25', rehab:'0', rate:'7.0', vac:'8', apprec:'3' };
+  ws.innerHTML = `<button class="btn btn-ghost" onclick="showSandbox()" style="margin-bottom:var(--space-4)">&larr; Back to Environments</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Open Sandbox</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Adjust any inputs and market conditions. No scoring — just learning and exploration.</p>
+  <div class="sandbox-grid">
+    ${sandboxInputGroup('sb', defaults, 'updateOpen')}
     <div class="sandbox-results">
-      <div class="kpi-row" style="grid-template-columns:1fr 1fr">
-        <div class="kpi-card"><span class="kpi-label">Monthly Cash Flow</span><span class="kpi-value" id="sbCF">—</span></div>
-        <div class="kpi-card"><span class="kpi-label">Cap Rate</span><span class="kpi-value" id="sbCap">—</span></div>
-        <div class="kpi-card"><span class="kpi-label">Cash-on-Cash Return</span><span class="kpi-value" id="sbCoC">—</span></div>
-        <div class="kpi-card"><span class="kpi-label">DSCR Ratio</span><span class="kpi-value" id="sbDSCR">—</span></div>
-        <div class="kpi-card"><span class="kpi-label">Monthly Mortgage</span><span class="kpi-value" id="sbMort">—</span></div>
-        <div class="kpi-card"><span class="kpi-label">5-Year Equity</span><span class="kpi-value" id="sb5Yr">—</span></div>
-      </div>
-      
+      <div id="sbKpis"></div>
       <div style="margin-top:var(--space-6)">
         <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Scenario Comparison</h3>
-        <div class="table-wrap"><table class="results-table"><thead><tr><th>Scenario</th><th class="text-right">Cash Flow</th><th class="text-right">CoC Return</th><th class="text-right">Cap Rate</th><th class="text-right">5-Year Equity</th></tr></thead>
-        <tbody id="sbTable"></tbody></table></div>
+        <div id="sbScenTable"></div>
       </div>
-
       <div style="margin-top:var(--space-6)">
         <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Quick Links to Calculators</h3>
         <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
@@ -1064,200 +746,225 @@
         </div>
       </div>
     </div>
+  </div>`;
+  updateOpen();
+}
+
+function updateOpen() {
+  const v = readSandboxInputs('sb');
+  const m = calcMetrics(v.price, v.rent, v.dpPct, v.rehab, v.rate, v.vac, v.apprec);
+  document.getElementById('sbKpis').innerHTML = kpiRow(m);
+  document.getElementById('sbScenTable').innerHTML = scenarioTable(v.price, v.rent, v.dpPct, v.rehab, v.rate, v.vac, v.apprec);
+}
+
+/* ---- Deal Analyzer ---- */
+function renderDealAnalyzer(ws) {
+  const defaults = { price:'185,000', rent:'1,450', dp:'25', rehab:'12,000', rate:'7.5', vac:'8', apprec:'3' };
+  ws.innerHTML = `<button class="btn btn-ghost" onclick="showSandbox()" style="margin-bottom:var(--space-4)">&larr; Back to Environments</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Deal Analyzer</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">A pre-loaded rental property in Memphis, TN. Toggle variables to see how the investment metrics shift in real time.</p>
+  <div class="sandbox-grid">
+    ${sandboxInputGroup('da', defaults, 'updateDeal')}
+    <div class="sandbox-results">
+      <div id="daKpis"></div>
+      <div style="margin-top:var(--space-6)">
+        <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Scenario Comparison</h3>
+        <div id="daScenTable"></div>
+      </div>
+      <div style="margin-top:var(--space-6)">
+        <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Quick Links to Calculators</h3>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+          <a href="../cashflow/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">1</span><span>Cash Flow</span></a>
+          <a href="../caprate/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">2</span><span>Cap Rate</span></a>
+          <a href="../deal-grading/index.html" target="_blank" class="calc-link-card"><span class="calc-link-num">3</span><span>Deal Grading</span></a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  updateDeal();
+}
+
+function updateDeal() {
+  const v = readSandboxInputs('da');
+  const m = calcMetrics(v.price, v.rent, v.dpPct, v.rehab, v.rate, v.vac, v.apprec);
+  document.getElementById('daKpis').innerHTML = kpiRow(m);
+  document.getElementById('daScenTable').innerHTML = scenarioTable(v.price, v.rent, v.dpPct, v.rehab, v.rate, v.vac, v.apprec);
+}
+
+/* ---- Market Comparison ---- */
+function renderMarketComparison(ws) {
+  ws.innerHTML = `<button class="btn btn-ghost" onclick="showSandbox()" style="margin-bottom:var(--space-4)">&larr; Back to Environments</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Market Comparison</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Two side-by-side market profiles. Compare cash flow, cap rate, and appreciation head-to-head.</p>
+  <div class="market-compare-grid">
+    <div class="market-compare-col">
+      <h4>Market A — Memphis, TN</h4>
+      ${sandboxInputGroup('mcA', { price:'145,000', rent:'1,200', dp:'25', rehab:'5,000', rate:'7.5', vac:'8', apprec:'2.5' }, 'updateMarketCompare')}
+      <div style="margin-top:var(--space-4)" id="mcAKpis"></div>
+    </div>
+    <div class="market-compare-col">
+      <h4>Market B — Austin, TX</h4>
+      ${sandboxInputGroup('mcB', { price:'320,000', rent:'2,200', dp:'25', rehab:'0', rate:'7.5', vac:'6', apprec:'4.5' }, 'updateMarketCompare')}
+      <div style="margin-top:var(--space-4)" id="mcBKpis"></div>
+    </div>
   </div>
-</div>
-</main>
-
-<footer class="footer">
-    <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
-    <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
-  </footer>
-
-<script>
-/* Theme Toggle */
-(function(){const toggles=document.querySelectorAll('[data-theme-toggle]'),r=document.documentElement;let d=localStorage.getItem('intellitc-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',d);function u(){const icon=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';toggles.forEach(function(t){t.innerHTML=icon;});}u();toggles.forEach(function(t){t.addEventListener('click',function(){d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);localStorage.setItem('intellitc-theme',d);u();});});})();
-
-/* Scenario Data for filtering */
-const SCENARIOS = [{'difficulty': 'Beginner', 'role': 'Homebuyer'}, {'difficulty': 'Beginner', 'role': 'Investor'}, {'difficulty': 'Intermediate', 'role': 'Homeowner'}, {'difficulty': 'Intermediate', 'role': 'Investor'}, {'difficulty': 'Advanced', 'role': 'Investor'}, {'difficulty': 'Intermediate', 'role': 'Agent'}, {'difficulty': 'Advanced', 'role': 'Investor'}, {'difficulty': 'Beginner', 'role': 'Investor'}, {'difficulty': 'Beginner', 'role': 'Homeowner'}, {'difficulty': 'Advanced', 'role': 'Investor'}, {'difficulty': 'Advanced', 'role': 'Investor'}, {'difficulty': 'Intermediate', 'role': 'Lender'}];
-
-/* Navigation */
-function showModeSelect() {
-  document.getElementById('modeSelect').classList.remove('hidden');
-  document.getElementById('challengeSection').classList.add('hidden');
-  document.getElementById('timedSection').classList.add('hidden');
-  document.getElementById('sandboxSection').classList.add('hidden');
-  window.scrollTo(0,0);
-}
-function showChallenges() {
-  document.getElementById('modeSelect').classList.add('hidden');
-  document.getElementById('challengeSection').classList.remove('hidden');
-  hideScenario();
-  window.scrollTo(0,0);
-}
-function showTimed() {
-  document.getElementById('modeSelect').classList.add('hidden');
-  document.getElementById('timedSection').classList.remove('hidden');
-  window.scrollTo(0,0);
-}
-function showSandbox() {
-  document.getElementById('modeSelect').classList.add('hidden');
-  document.getElementById('sandboxSection').classList.remove('hidden');
-  updateSandbox();
-  window.scrollTo(0,0);
+  <div style="margin-top:var(--space-6)">
+    <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Head-to-Head Comparison</h3>
+    <div id="mcCompareTable"></div>
+  </div>`;
+  updateMarketCompare();
 }
 
-/* Scenario Display */
-function showScenario(idx) {
-  document.getElementById('scenarioGrid').classList.add('hidden');
-  document.querySelectorAll('.filter-bar')[0].classList.add('hidden');
-  document.querySelectorAll('.scenario-detail').forEach(d=>d.classList.add('hidden'));
-  document.getElementById('scenario_'+idx).classList.remove('hidden');
-  window.scrollTo(0,0);
-}
-function hideScenario() {
-  document.querySelectorAll('.scenario-detail').forEach(d=>d.classList.add('hidden'));
-  document.getElementById('scenarioGrid').classList.remove('hidden');
-  document.querySelectorAll('.filter-bar')[0].classList.remove('hidden');
-}
-
-/* Reveal Answers */
-function revealAnswers(idx) {
-  document.querySelectorAll('#scenario_'+idx+' .expert-answer').forEach(ea=>ea.classList.remove('hidden'));
-  document.getElementById('scorecard_'+idx).classList.remove('hidden');
-  // Save completion
-  if(!window.__labDone) window.__labDone=[]; if(!window.__labDone.includes(idx)) window.__labDone.push(idx);
+function updateMarketCompare() {
+  const vA = readSandboxInputs('mcA');
+  const vB = readSandboxInputs('mcB');
+  const mA = calcMetrics(vA.price, vA.rent, vA.dpPct, vA.rehab, vA.rate, vA.vac, vA.apprec);
+  const mB = calcMetrics(vB.price, vB.rent, vB.dpPct, vB.rehab, vB.rate, vB.vac, vB.apprec);
+  document.getElementById('mcAKpis').innerHTML = kpiRow(mA);
+  document.getElementById('mcBKpis').innerHTML = kpiRow(mB);
+  function better(a, b) { return a > b ? 'color:var(--color-success);font-weight:600' : a < b ? 'color:var(--color-error)' : ''; }
+  document.getElementById('mcCompareTable').innerHTML = `<div class="table-wrap"><table class="results-table"><thead><tr><th>Metric</th><th class="text-right">Market A</th><th class="text-right">Market B</th><th class="text-right">Winner</th></tr></thead><tbody>
+    <tr><td>Monthly Cash Flow</td><td class="text-right" style="${better(mA.cashFlow,mB.cashFlow)}">${fmtC(mA.cashFlow)}</td><td class="text-right" style="${better(mB.cashFlow,mA.cashFlow)}">${fmtC(mB.cashFlow)}</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.cashFlow>mB.cashFlow?'A':mB.cashFlow>mA.cashFlow?'B':'Tie'}</td></tr>
+    <tr><td>Cap Rate</td><td class="text-right" style="${better(mA.capRate,mB.capRate)}">${fmtP(mA.capRate)}</td><td class="text-right" style="${better(mB.capRate,mA.capRate)}">${fmtP(mB.capRate)}</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.capRate>mB.capRate?'A':mB.capRate>mA.capRate?'B':'Tie'}</td></tr>
+    <tr><td>Cash-on-Cash</td><td class="text-right" style="${better(mA.coc,mB.coc)}">${fmtP(mA.coc)}</td><td class="text-right" style="${better(mB.coc,mA.coc)}">${fmtP(mB.coc)}</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.coc>mB.coc?'A':mB.coc>mA.coc?'B':'Tie'}</td></tr>
+    <tr><td>DSCR</td><td class="text-right" style="${better(mA.dscr,mB.dscr)}">${mA.dscr.toFixed(2)}x</td><td class="text-right" style="${better(mB.dscr,mA.dscr)}">${mB.dscr.toFixed(2)}x</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.dscr>mB.dscr?'A':mB.dscr>mA.dscr?'B':'Tie'}</td></tr>
+    <tr><td>5-Year Equity</td><td class="text-right" style="${better(mA.equity5,mB.equity5)}">${fmtC(mA.equity5)}</td><td class="text-right" style="${better(mB.equity5,mA.equity5)}">${fmtC(mB.equity5)}</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.equity5>mB.equity5?'A':mB.equity5>mA.equity5?'B':'Tie'}</td></tr>
+    <tr><td>Cash Required</td><td class="text-right">${fmtC(mA.totalCash)}</td><td class="text-right">${fmtC(mB.totalCash)}</td><td class="text-right" style="font-weight:600;color:var(--color-primary)">${mA.totalCash<mB.totalCash?'A':mB.totalCash<mA.totalCash?'B':'Tie'}</td></tr>
+  </tbody></table></div>`;
 }
 
-/* Filter */
-function filterScenarios(filter, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.scenario-card').forEach((card,i)=>{
-    const s = SCENARIOS[i];
-    const show = filter==='all' || s.difficulty===filter || s.role===filter;
-    card.style.display = show ? '' : 'none';
+/* ---- Portfolio Builder ---- */
+function renderPortfolioBuilder(ws) {
+  const props = [
+    { name: 'Property 1 — Duplex (Memphis)', price:'140,000', rent:'1,400', dp:'25', rehab:'8,000', rate:'7.5', vac:'8', apprec:'2.5' },
+    { name: 'Property 2 — SFH (Cleveland)', price:'95,000', rent:'1,050', dp:'25', rehab:'15,000', rate:'7.5', vac:'10', apprec:'2.0' },
+    { name: 'Property 3 — Townhome (Indianapolis)', price:'175,000', rent:'1,550', dp:'25', rehab:'0', rate:'7.5', vac:'6', apprec:'3.5' }
+  ];
+  let html = `<button class="btn btn-ghost" onclick="showSandbox()" style="margin-bottom:var(--space-4)">&larr; Back to Environments</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Portfolio Builder</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:var(--space-6)">Build a 3-property portfolio. See combined cash flow, equity, and risk metrics across your portfolio.</p>`;
+  props.forEach((p, i) => {
+    const prefix = 'pb' + i;
+    html += `<div class="portfolio-property"><h4>${esc(p.name)}</h4>
+    <div class="sandbox-grid">${sandboxInputGroup(prefix, { price:p.price, rent:p.rent, dp:p.dp, rehab:p.rehab, rate:p.rate, vac:p.vac, apprec:p.apprec }, 'updatePortfolio')}
+    <div><div id="${prefix}Kpis"></div></div></div></div>`;
   });
+  html += `<div style="margin-top:var(--space-6);background:var(--color-primary-surface);border:1px solid var(--color-primary);border-radius:var(--radius-lg);padding:var(--space-6)">
+    <h3 style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-4)">Portfolio Summary</h3>
+    <div id="pbSummaryKpis"></div>
+    <div style="margin-top:var(--space-4)" id="pbSummaryTable"></div>
+  </div>`;
+  ws.innerHTML = html;
+  updatePortfolio();
 }
 
-/* Timed Challenge */
-let timerInterval = null;
-function startTimed(minutes) {
-  // Pick a random scenario
-  const idx = Math.floor(Math.random() * SCENARIOS.length);
-  const detail = document.getElementById('scenario_'+idx);
-  if(!detail) return;
-  
-  document.getElementById('timerDisplay').classList.remove('hidden');
-  document.getElementById('timedResults').classList.add('hidden');
-  
-  // Clone scenario into timed area
-  const area = document.getElementById('timedScenarioArea');
-  area.innerHTML = detail.innerHTML;
-  area.querySelector('.btn.btn-ghost')?.remove(); // Remove back button
-  
-  let remaining = minutes * 60;
-  const clock = document.getElementById('timerClock');
-  
-  if(timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
-    remaining--;
-    const m = Math.floor(remaining/60);
-    const s = remaining%60;
-    clock.textContent = m+':'+(s<10?'0':'')+s;
-    if(remaining<=60) clock.style.color='var(--color-error)';
-    if(remaining<=0) {
-      clearInterval(timerInterval);
-      document.getElementById('timedResults').classList.remove('hidden');
-      // Reveal all expert answers in timed area
-      area.querySelectorAll('.expert-answer').forEach(ea=>ea.classList.remove('hidden'));
-    }
-  },1000);
-}
-
-/* Sandbox */
-function parseN(s) { return parseFloat(String(s).replace(/[^0-9.\-]/g,''))||0; }
-function fmtC(n) { return (n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString(); }
-function fmtP(n) { return n.toFixed(1)+'%'; }
-
-function updateSandbox() {
-  const price = parseN(document.getElementById('sbPrice').value);
-  const rent = parseN(document.getElementById('sbRent').value);
-  const dpPct = parseN(document.getElementById('sbDP').value)/100;
-  const rehab = parseN(document.getElementById('sbRehab').value);
-  const rate = parseFloat(document.getElementById('sbRate').value)/100;
-  const vacancy = parseFloat(document.getElementById('sbVacancy').value)/100;
-  const apprec = parseFloat(document.getElementById('sbAppreciation').value)/100;
-  
-  document.getElementById('sbRateVal').textContent = (rate*100).toFixed(2)+'%';
-  document.getElementById('sbVacancyVal').textContent = Math.round(vacancy*100)+'%';
-  document.getElementById('sbApprecVal').textContent = (apprec*100).toFixed(1)+'%';
-  
-  const dp = price*dpPct;
-  const loan = price - dp;
-  const mr = rate/12;
-  const n = 360;
-  const pi = mr>0 ? loan*(mr*Math.pow(1+mr,n))/(Math.pow(1+mr,n)-1) : loan/n;
-  
-  const taxMo = price*0.012/12;
-  const insMo = price*0.006/12;
-  const maintMo = rent*0.08;
-  const mgmtMo = rent*0.08;
-  const vacMo = rent*vacancy;
-  
-  const effRent = rent*(1-vacancy);
-  const totalExp = pi + taxMo + insMo + maintMo + mgmtMo;
-  const cashFlow = effRent - totalExp;
-  
-  const noi = (rent*12)*(1-vacancy) - (price*0.012) - (price*0.006) - (rent*12*0.08) - (rent*12*0.08);
-  const capRate = price>0 ? (noi/price)*100 : 0;
-  const totalCash = dp + rehab;
-  const annualCF = cashFlow*12;
-  const coc = totalCash>0 ? (annualCF/totalCash)*100 : 0;
-  const pitia = pi + taxMo + insMo;
-  const dscr = pitia>0 ? rent/pitia : 0;
-  
-  // 5-year equity
-  const futureValue = price * Math.pow(1+apprec,5);
-  // Approximate balance after 5 years
-  let balance = loan;
-  for(let i=0;i<60;i++) { balance = balance*(1+mr) - pi; }
-  const equity5 = futureValue - Math.max(0,balance);
-  
-  document.getElementById('sbCF').textContent = fmtC(cashFlow);
-  document.getElementById('sbCF').className = 'kpi-value '+(cashFlow>=0?'kpi-positive':'kpi-negative');
-  document.getElementById('sbCap').textContent = fmtP(capRate);
-  document.getElementById('sbCoC').textContent = fmtP(coc);
-  document.getElementById('sbDSCR').textContent = dscr.toFixed(2)+'x';
-  document.getElementById('sbDSCR').className = 'kpi-value '+(dscr>=1.2?'kpi-positive':dscr>=1.0?'':'kpi-negative');
-  document.getElementById('sbMort').textContent = fmtC(pi);
-  document.getElementById('sb5Yr').textContent = fmtC(equity5);
-  
-  // Scenario table
-  function calcScenario(rateAdj, vacAdj, apprecAdj) {
-    const r2 = (rate+rateAdj)/12;
-    const pi2 = r2>0 ? loan*(r2*Math.pow(1+r2,n))/(Math.pow(1+r2,n)-1) : loan/n;
-    const v2 = vacancy+vacAdj;
-    const eff2 = rent*(1-v2);
-    const exp2 = pi2 + taxMo + insMo + maintMo + mgmtMo;
-    const cf2 = eff2 - exp2;
-    const noi2 = (rent*12)*(1-v2) - (price*0.012) - (price*0.006) - (rent*12*0.08) - (rent*12*0.08);
-    const cap2 = price>0 ? (noi2/price)*100 : 0;
-    const coc2 = totalCash>0 ? (cf2*12/totalCash)*100 : 0;
-    const fv2 = price*Math.pow(1+apprec+apprecAdj,5);
-    let bal2=loan; for(let i=0;i<60;i++) { bal2=bal2*(1+r2)-pi2; }
-    return { cf:cf2, cap:cap2, coc:coc2, eq5:fv2-Math.max(0,bal2) };
+function updatePortfolio() {
+  const metrics = [];
+  for (let i = 0; i < 3; i++) {
+    const prefix = 'pb' + i;
+    const v = readSandboxInputs(prefix);
+    const m = calcMetrics(v.price, v.rent, v.dpPct, v.rehab, v.rate, v.vac, v.apprec);
+    m._price = v.price; m._rent = v.rent;
+    document.getElementById(prefix + 'Kpis').innerHTML = kpiRow(m);
+    metrics.push(m);
   }
-  const opt = calcScenario(-0.01, -0.03, 0.02);
-  const base = calcScenario(0, 0, 0);
-  const pess = calcScenario(0.015, 0.05, -0.02);
-  
-  const tbody = document.getElementById('sbTable');
-  tbody.innerHTML = `
-    <tr style="color:var(--color-success)"><td style="font-weight:600">Optimistic</td><td class="text-right">${fmtC(opt.cf)}/mo</td><td class="text-right">${fmtP(opt.coc)}</td><td class="text-right">${fmtP(opt.cap)}</td><td class="text-right">${fmtC(opt.eq5)}</td></tr>
-    <tr><td style="font-weight:600">Base Case</td><td class="text-right">${fmtC(base.cf)}/mo</td><td class="text-right">${fmtP(base.coc)}</td><td class="text-right">${fmtP(base.cap)}</td><td class="text-right">${fmtC(base.eq5)}</td></tr>
-    <tr style="color:var(--color-error)"><td style="font-weight:600">Pessimistic</td><td class="text-right">${fmtC(pess.cf)}/mo</td><td class="text-right">${fmtP(pess.coc)}</td><td class="text-right">${fmtP(pess.cap)}</td><td class="text-right">${fmtC(pess.eq5)}</td></tr>
-  `;
+  const totalCF = metrics.reduce((s, m) => s + m.cashFlow, 0);
+  const totalEq5 = metrics.reduce((s, m) => s + m.equity5, 0);
+  const totalCash = metrics.reduce((s, m) => s + m.totalCash, 0);
+  const avgCap = metrics.reduce((s, m) => s + m.capRate, 0) / 3;
+  const avgCoc = totalCash > 0 ? (totalCF * 12 / totalCash) * 100 : 0;
+  document.getElementById('pbSummaryKpis').innerHTML = `<div class="kpi-row" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+    <div class="kpi-card"><span class="kpi-label">Total Monthly Cash Flow</span><span class="kpi-value ${totalCF>=0?'kpi-positive':'kpi-negative'}">${fmtC(totalCF)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Total Cash Invested</span><span class="kpi-value">${fmtC(totalCash)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Portfolio CoC Return</span><span class="kpi-value">${fmtP(avgCoc)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Avg Cap Rate</span><span class="kpi-value">${fmtP(avgCap)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">5-Year Total Equity</span><span class="kpi-value">${fmtC(totalEq5)}</span></div>
+    <div class="kpi-card"><span class="kpi-label">Annual Cash Flow</span><span class="kpi-value">${fmtC(totalCF*12)}</span></div>
+  </div>`;
+  document.getElementById('pbSummaryTable').innerHTML = `<div class="table-wrap"><table class="results-table"><thead><tr><th>Property</th><th class="text-right">Cash Flow</th><th class="text-right">Cap Rate</th><th class="text-right">CoC</th><th class="text-right">5-Yr Equity</th></tr></thead><tbody>
+    ${metrics.map((m, i) => `<tr><td style="font-weight:600">Property ${i+1}</td><td class="text-right">${fmtC(m.cashFlow)}/mo</td><td class="text-right">${fmtP(m.capRate)}</td><td class="text-right">${fmtP(m.coc)}</td><td class="text-right">${fmtC(m.equity5)}</td></tr>`).join('')}
+    <tr style="border-top:2px solid var(--color-primary);font-weight:700"><td>Portfolio Total</td><td class="text-right">${fmtC(totalCF)}/mo</td><td class="text-right">${fmtP(avgCap)}</td><td class="text-right">${fmtP(avgCoc)}</td><td class="text-right">${fmtC(totalEq5)}</td></tr>
+  </tbody></table></div>`;
 }
+
+/* ---- What-If Explorer ---- */
+let whatifBase = { price: 200000, rent: 1600, dpPct: 0.25, rehab: 0, rate: 0.075, vac: 0.08, apprec: 0.03 };
+let whatifActive = {};
+
+function renderWhatIfExplorer(ws) {
+  const scenarios = [
+    { id: 'rateUp', label: 'Rate +1.5%', apply: { rate: 0.015 } },
+    { id: 'rateDown', label: 'Rate -1%', apply: { rate: -0.01 } },
+    { id: 'vacUp', label: 'Vacancy 15%', apply: { vac: 0.07 } },
+    { id: 'vacDown', label: 'Vacancy 3%', apply: { vac: -0.05 } },
+    { id: 'rentUp', label: 'Rent +$200', apply: { rent: 200 } },
+    { id: 'rentDown', label: 'Rent -$200', apply: { rent: -200 } },
+    { id: 'apprecBoom', label: 'Apprec. 6%', apply: { apprec: 0.03 } },
+    { id: 'apprecCrash', label: 'Apprec. -2%', apply: { apprec: -0.05 } },
+  ];
+  let html = `<button class="btn btn-ghost" onclick="showSandbox()" style="margin-bottom:var(--space-4)">&larr; Back to Environments</button>
+  <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">What-If Explorer</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:var(--space-4)">One locked deal: $200K property, $1,600/mo rent, 25% down, 7.5% rate. Toggle scenarios to see how metrics change.</p>
+  <div class="whatif-toggles" id="whatifToggles">`;
+  scenarios.forEach(s => {
+    html += `<button class="whatif-btn" data-scenario="${s.id}" onclick="toggleWhatIf('${s.id}',this)">${s.label}</button>`;
+  });
+  html += `</div>
+  <div id="whatifKpis"></div>
+  <div style="margin-top:var(--space-6)">
+    <h3 style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-4)">Base vs. Modified</h3>
+    <div id="whatifCompare"></div>
+  </div>`;
+  ws.innerHTML = html;
+  whatifActive = {};
+  updateWhatIf();
+}
+
+const whatifScenarios = {
+  rateUp: { rate: 0.015 },
+  rateDown: { rate: -0.01 },
+  vacUp: { vac: 0.07 },
+  vacDown: { vac: -0.05 },
+  rentUp: { rent: 200 },
+  rentDown: { rent: -200 },
+  apprecBoom: { apprec: 0.03 },
+  apprecCrash: { apprec: -0.05 },
+};
+
+function toggleWhatIf(id, btn) {
+  if (whatifActive[id]) { delete whatifActive[id]; btn.classList.remove('active'); }
+  else { whatifActive[id] = true; btn.classList.add('active'); }
+  updateWhatIf();
+}
+
+function updateWhatIf() {
+  let rate = whatifBase.rate, vac = whatifBase.vac, rent = whatifBase.rent, apprec = whatifBase.apprec;
+  Object.keys(whatifActive).forEach(id => {
+    const s = whatifScenarios[id];
+    if (s.rate) rate += s.rate;
+    if (s.vac) vac += s.vac;
+    if (s.rent) rent += s.rent;
+    if (s.apprec) apprec += s.apprec;
+  });
+  const base = calcMetrics(whatifBase.price, whatifBase.rent, whatifBase.dpPct, whatifBase.rehab, whatifBase.rate, whatifBase.vac, whatifBase.apprec);
+  const mod = calcMetrics(whatifBase.price, rent, whatifBase.dpPct, whatifBase.rehab, rate, vac, apprec);
+  document.getElementById('whatifKpis').innerHTML = kpiRow(mod);
+  function delta(a, b) { const d = a - b; return d > 0 ? `<span style="color:var(--color-success)">+${d > 100 ? fmtC(d) : d.toFixed(1)}</span>` : d < 0 ? `<span style="color:var(--color-error)">${d < -100 ? fmtC(d) : d.toFixed(1)}</span>` : '<span>--</span>'; }
+  document.getElementById('whatifCompare').innerHTML = `<div class="table-wrap"><table class="results-table"><thead><tr><th>Metric</th><th class="text-right">Base</th><th class="text-right">Modified</th><th class="text-right">Delta</th></tr></thead><tbody>
+    <tr><td>Monthly Cash Flow</td><td class="text-right">${fmtC(base.cashFlow)}</td><td class="text-right">${fmtC(mod.cashFlow)}</td><td class="text-right">${delta(mod.cashFlow, base.cashFlow)}</td></tr>
+    <tr><td>Cap Rate</td><td class="text-right">${fmtP(base.capRate)}</td><td class="text-right">${fmtP(mod.capRate)}</td><td class="text-right">${delta(mod.capRate, base.capRate)}</td></tr>
+    <tr><td>Cash-on-Cash</td><td class="text-right">${fmtP(base.coc)}</td><td class="text-right">${fmtP(mod.coc)}</td><td class="text-right">${delta(mod.coc, base.coc)}</td></tr>
+    <tr><td>DSCR</td><td class="text-right">${base.dscr.toFixed(2)}x</td><td class="text-right">${mod.dscr.toFixed(2)}x</td><td class="text-right">${delta(mod.dscr, base.dscr)}</td></tr>
+    <tr><td>5-Year Equity</td><td class="text-right">${fmtC(base.equity5)}</td><td class="text-right">${fmtC(mod.equity5)}</td><td class="text-right">${delta(mod.equity5, base.equity5)}</td></tr>
+  </tbody></table></div>`;
+}
+
+/* ================================================================
+   INITIALIZATION
+   ================================================================ */
+renderGuidedGrid();
+renderTimedGrid();
+renderSandboxGrid();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
