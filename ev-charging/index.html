@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EV Charging ROI Calculator — IntelliTC Solutions</title>
+<meta name="description" content="Analyze EV charging station investment — hardware costs, tax credits, revenue projections, and payback analysis for Home, Business, RV Park, and Airbnb scenarios.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="EV Charging ROI Calculator — IntelliTC Solutions">
+<meta property="og:description" content="Analyze EV charging station investment — hardware costs, tax credits, revenue projections, and payback analysis for Home, Business, RV Park, and Airbnb scenarios.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/ev-charging">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EV Charging ROI Calculator — IntelliTC Solutions">
+<meta name="twitter:description" content="Analyze EV charging station investment — hardware costs, tax credits, revenue projections, and payback analysis for Home, Business, RV Park, and Airbnb scenarios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>
+/* ---- Surprise Banner ---- */
+.surprise-banner{
+  display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-lg);margin-bottom:var(--space-4);
+  background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.08));
+  border:1px solid var(--color-primary);
+}
+.surprise-banner svg{flex-shrink:0;color:var(--color-primary);}
+.surprise-banner-text{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+.surprise-banner-text strong{color:var(--color-primary);font-weight:600;}
+/* ---- Scenario Tabs ---- */
+.scenario-tabs{display:flex;gap:var(--space-2);margin-bottom:var(--space-5);flex-wrap:wrap;}
+.scenario-tab{
+  flex:1;min-width:120px;padding:var(--space-3) var(--space-4);
+  border:2px solid var(--color-divider);border-radius:var(--radius-lg);
+  background:var(--color-bg);color:var(--color-text-muted);
+  font-size:var(--text-sm);font-weight:600;text-align:center;
+  cursor:pointer;transition:all .2s ease;display:flex;flex-direction:column;align-items:center;gap:var(--space-1);
+}
+.scenario-tab:hover{border-color:var(--color-primary);color:var(--color-text);}
+.scenario-tab.active{border-color:var(--color-primary);background:var(--color-primary-surface);color:var(--color-primary);}
+.scenario-tab .tab-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface);color:var(--color-text-muted);transition:all .2s ease;}
+.scenario-tab.active .tab-icon{background:var(--color-primary);color:#fff;}
+.scenario-tab .tab-label{font-size:var(--text-xs);font-weight:500;}
+.scenario-fields{display:none;}
+.scenario-fields.active{display:block;}
+/* ---- Suitability Cards ---- */
+.ev-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);margin-top:var(--space-4);}
+.ev-info-card{background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;gap:var(--space-3);}
+.ev-info-card .ev-icon{flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);background:var(--color-primary-surface);color:var(--color-primary);}
+.ev-info-card h4{font-size:var(--text-sm);font-weight:600;color:var(--color-text);margin-bottom:2px;}
+.ev-info-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+@media(max-width:640px){
+  .scenario-tabs{gap:var(--space-1);}
+  .scenario-tab{min-width:0;padding:var(--space-2) var(--space-3);}
+  .scenario-tab .tab-icon{width:24px;height:24px;}
+  .scenario-tab .tab-icon svg{width:14px;height:14px;}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EV Charging ROI Calculator",
+  "description": "Analyze EV charging station investment — hardware costs, tax credits, revenue projections, and payback analysis for Home, Business, RV Park, and Airbnb scenarios.",
+  "url": "https://intellitcsolutions.com/ev-charging/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <!-- Surprise Banner -->
+      <div class="surprise-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <span class="surprise-banner-text"><strong>You found it.</strong> This hidden tool is exclusively for EV enthusiasts and investors exploring charging infrastructure opportunities.</span>
+      </div>
+      <h1 class="panel-title">EV Charging ROI Calculator</h1>
+      <p class="panel-subtitle">Analyze EV charging station investment — hardware costs, federal 30C tax credit, revenue projections, and payback period for Home, Business, RV Park, and Airbnb scenarios.</p>
+      <div class="divider"></div>
+
+      <!-- Scenario Selector -->
+      <h3 class="param-group-title" style="margin-bottom:var(--space-3)">Choose Your Scenario</h3>
+      <div class="scenario-tabs" id="scenarioTabs">
+        <button class="scenario-tab active" data-scenario="home" onclick="switchScenario('home')">
+          <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+          <span class="tab-label">Home</span>
+        </button>
+        <button class="scenario-tab" data-scenario="business" onclick="switchScenario('business')">
+          <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span class="tab-label">Business</span>
+        </button>
+        <button class="scenario-tab" data-scenario="rvpark" onclick="switchScenario('rvpark')">
+          <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <span class="tab-label">RV Park</span>
+        </button>
+        <button class="scenario-tab" data-scenario="airbnb" onclick="switchScenario('airbnb')">
+          <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.97 0-9-2.24-9-5v-4c0-2.76 4.03-5 9-5s9 2.24 9 5v4c0 2.76-4.03 5-9 5z"/><path d="M12 8V2"/><path d="M4.93 10.93l2.83-2.83"/><path d="M16.24 8.1l2.83-2.83"/></svg></span>
+          <span class="tab-label">Airbnb</span>
+        </button>
+      </div>
+
+      <div class="params-grid">
+<!-- ====== CHARGER SETUP (All Scenarios) ====== -->
+<div class="param-group">
+<h3 class="param-group-title">Charger Setup</h3>
+<div class="field">
+  <label for="chargerType" title="Level 2 (240V) or DC Fast Charging">Charger Type</label>
+  <select id="chargerType" onchange="onChargerTypeChange()">
+    <option value="l2" selected>Level 2 (240V, 7-19 kW)</option>
+    <option value="dcfc">DC Fast Charger (50-350 kW)</option>
+  </select>
+</div>
+<div class="field">
+  <label for="numPorts" title="Total number of charging connectors">Number of Ports</label>
+  <div class="input-with-unit"><input type="text" id="numPorts" value="2" inputmode="decimal"><span class="unit">ports</span></div>
+</div>
+<div class="field">
+  <label for="hardwareCost" title="Equipment cost per charging port">Hardware Cost per Port</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="hardwareCost" value="1,500" inputmode="numeric" data-currency></div>
+  <div class="benchmarks" id="bmHardware"><span class="bm-tag" onclick="document.getElementById('hardwareCost').value='900';document.getElementById('hardwareCost').dispatchEvent(new Event('input',{bubbles:true}))">$900 Basic</span> <span class="bm-tag" onclick="document.getElementById('hardwareCost').value='1500';document.getElementById('hardwareCost').dispatchEvent(new Event('input',{bubbles:true}))">$1,500 Smart</span> <span class="bm-tag" onclick="document.getElementById('hardwareCost').value='2500';document.getElementById('hardwareCost').dispatchEvent(new Event('input',{bubbles:true}))">$2,500 Premium</span></div>
+</div>
+<div class="field">
+  <label for="installCost" title="Electrical work and labor per port">Installation Cost per Port</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="installCost" value="1,200" inputmode="numeric" data-currency></div>
+  <div class="benchmarks" id="bmInstall"><span class="bm-tag" onclick="document.getElementById('installCost').value='800';document.getElementById('installCost').dispatchEvent(new Event('input',{bubbles:true}))">$800 Simple</span> <span class="bm-tag" onclick="document.getElementById('installCost').value='1200';document.getElementById('installCost').dispatchEvent(new Event('input',{bubbles:true}))">$1,200 Avg</span> <span class="bm-tag" onclick="document.getElementById('installCost').value='2500';document.getElementById('installCost').dispatchEvent(new Event('input',{bubbles:true}))">$2,500 Complex</span></div>
+</div>
+</div>
+
+<!-- ====== OPERATING COSTS (All Scenarios) ====== -->
+<div class="param-group">
+<h3 class="param-group-title">Operating Costs</h3>
+<div class="field">
+  <label for="electricityRate" title="Your cost per kilowatt-hour for electricity">Electricity Rate</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="electricityRate" value="0.17" inputmode="numeric" data-currency><span class="unit">/kWh</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.12';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.12</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.17';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.17 Avg</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.25';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.25 CA</span> <span class="bm-tag" onclick="document.getElementById('electricityRate').value='0.33';document.getElementById('electricityRate').dispatchEvent(new Event('input',{bubbles:true}))">$0.33 HI</span></div>
+</div>
+<div class="field">
+  <label for="rateEscalation" title="Expected annual increase in electricity costs">Annual Rate Escalation</label>
+  <div class="input-with-unit"><input type="text" id="rateEscalation" value="3" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rateEscalation').value='2';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">2%</span> <span class="bm-tag" onclick="document.getElementById('rateEscalation').value='3';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">3% Avg</span> <span class="bm-tag" onclick="document.getElementById('rateEscalation').value='5';document.getElementById('rateEscalation').dispatchEvent(new Event('input',{bubbles:true}))">5%</span></div>
+</div>
+<div class="field" id="fieldSoftwareFee">
+  <label for="softwareFee" title="Monthly cloud/network subscription per port">Software / Network Fee</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="softwareFee" value="20" inputmode="numeric" data-currency><span class="unit">/mo/port</span></div>
+</div>
+<div class="field">
+  <label for="maintenancePct" title="Annual maintenance as percentage of hardware">Annual Maintenance</label>
+  <div class="input-with-unit"><input type="text" id="maintenancePct" value="1" inputmode="decimal"><span class="unit">% of hardware</span></div>
+</div>
+<div class="field">
+  <label for="analysisPeriod" title="Number of years for the financial projection">Analysis Period</label>
+  <div class="input-with-unit"><input type="text" id="analysisPeriod" value="10" inputmode="decimal"><span class="unit">yrs</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('analysisPeriod').value='5';document.getElementById('analysisPeriod').dispatchEvent(new Event('input',{bubbles:true}))">5 yrs</span> <span class="bm-tag" onclick="document.getElementById('analysisPeriod').value='10';document.getElementById('analysisPeriod').dispatchEvent(new Event('input',{bubbles:true}))">10 yrs</span> <span class="bm-tag" onclick="document.getElementById('analysisPeriod').value='15';document.getElementById('analysisPeriod').dispatchEvent(new Event('input',{bubbles:true}))">15 yrs</span></div>
+</div>
+</div>
+
+<!-- ====== INCENTIVES (All Scenarios) ====== -->
+<div class="param-group">
+<h3 class="param-group-title">Incentives</h3>
+<div class="field">
+  <label for="taxCredit30C" title="Federal Alternative Fuel Vehicle Refueling Property Credit (Section 30C) — 30% of cost">Federal 30C Tax Credit</label>
+  <select id="taxCredit30C">
+    <option value="yes" selected>Yes (30% of cost)</option>
+    <option value="no">No / Not Eligible</option>
+  </select>
+  <div class="benchmarks"><span class="bm-tag" style="cursor:default;border-color:var(--color-text-muted);color:var(--color-text-muted)">Cap: $1K residential / $100K commercial</span></div>
+</div>
+<div class="field">
+  <label for="stateRebate" title="State, local, or utility rebates for EV charger installation">State / Local Rebate</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="stateRebate" value="0" inputmode="numeric" data-currency></div>
+</div>
+<div class="field">
+  <label for="utilityIncentive" title="Additional utility company incentive or demand-response credit">Utility Incentive</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="utilityIncentive" value="0" inputmode="numeric" data-currency></div>
+</div>
+</div>
+
+<!-- ====== HOME SCENARIO FIELDS ====== -->
+<div class="scenario-fields active" id="fieldsHome">
+<div class="param-group">
+<h3 class="param-group-title">Home Charging Details</h3>
+<div class="field">
+  <label for="monthlyMiles" title="Average miles driven per month">Monthly Driving Miles</label>
+  <div class="input-with-unit"><input type="text" id="monthlyMiles" value="1,000" inputmode="numeric" data-currency><span class="unit">mi</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('monthlyMiles').value='750';document.getElementById('monthlyMiles').dispatchEvent(new Event('input',{bubbles:true}))">750</span> <span class="bm-tag" onclick="document.getElementById('monthlyMiles').value='1000';document.getElementById('monthlyMiles').dispatchEvent(new Event('input',{bubbles:true}))">1,000 Avg</span> <span class="bm-tag" onclick="document.getElementById('monthlyMiles').value='1500';document.getElementById('monthlyMiles').dispatchEvent(new Event('input',{bubbles:true}))">1,500</span></div>
+</div>
+<div class="field">
+  <label for="evEfficiency" title="Miles per kWh for your EV">Vehicle Efficiency</label>
+  <div class="input-with-unit"><input type="text" id="evEfficiency" value="3.5" inputmode="decimal"><span class="unit">mi/kWh</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('evEfficiency').value='3.0';document.getElementById('evEfficiency').dispatchEvent(new Event('input',{bubbles:true}))">3.0 Truck/SUV</span> <span class="bm-tag" onclick="document.getElementById('evEfficiency').value='3.5';document.getElementById('evEfficiency').dispatchEvent(new Event('input',{bubbles:true}))">3.5 Avg</span> <span class="bm-tag" onclick="document.getElementById('evEfficiency').value='4.2';document.getElementById('evEfficiency').dispatchEvent(new Event('input',{bubbles:true}))">4.2 Efficient</span></div>
+</div>
+<div class="field">
+  <label for="gasPrice" title="Current gas price for comparison">Current Gas Price</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="gasPrice" value="3.50" inputmode="numeric" data-currency><span class="unit">/gal</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('gasPrice').value='3.00';document.getElementById('gasPrice').dispatchEvent(new Event('input',{bubbles:true}))">$3.00</span> <span class="bm-tag" onclick="document.getElementById('gasPrice').value='3.50';document.getElementById('gasPrice').dispatchEvent(new Event('input',{bubbles:true}))">$3.50 Avg</span> <span class="bm-tag" onclick="document.getElementById('gasPrice').value='4.50';document.getElementById('gasPrice').dispatchEvent(new Event('input',{bubbles:true}))">$4.50 CA</span></div>
+</div>
+<div class="field">
+  <label for="gasMPG" title="MPG of the gas vehicle being replaced">Replaced Vehicle MPG</label>
+  <div class="input-with-unit"><input type="text" id="gasMPG" value="28" inputmode="decimal"><span class="unit">mpg</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('gasMPG').value='22';document.getElementById('gasMPG').dispatchEvent(new Event('input',{bubbles:true}))">22 Truck</span> <span class="bm-tag" onclick="document.getElementById('gasMPG').value='28';document.getElementById('gasMPG').dispatchEvent(new Event('input',{bubbles:true}))">28 Avg</span> <span class="bm-tag" onclick="document.getElementById('gasMPG').value='35';document.getElementById('gasMPG').dispatchEvent(new Event('input',{bubbles:true}))">35 Hybrid</span></div>
+</div>
+<div class="field">
+  <label for="gasEscalation" title="Expected annual increase in gas prices">Annual Gas Price Escalation</label>
+  <div class="input-with-unit"><input type="text" id="gasEscalation" value="3" inputmode="decimal"><span class="unit">%</span></div>
+</div>
+</div>
+</div>
+
+<!-- ====== BUSINESS SCENARIO FIELDS ====== -->
+<div class="scenario-fields" id="fieldsBusiness">
+<div class="param-group">
+<h3 class="param-group-title">Business Charging Details</h3>
+<div class="field">
+  <label for="dailySessions" title="Average charging sessions per port per day">Daily Sessions per Port</label>
+  <div class="input-with-unit"><input type="text" id="dailySessions" value="4" inputmode="decimal"><span class="unit">sessions</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('dailySessions').value='2';document.getElementById('dailySessions').dispatchEvent(new Event('input',{bubbles:true}))">2 Low</span> <span class="bm-tag" onclick="document.getElementById('dailySessions').value='4';document.getElementById('dailySessions').dispatchEvent(new Event('input',{bubbles:true}))">4 Avg</span> <span class="bm-tag" onclick="document.getElementById('dailySessions').value='8';document.getElementById('dailySessions').dispatchEvent(new Event('input',{bubbles:true}))">8 High-Traffic</span></div>
+</div>
+<div class="field">
+  <label for="avgSessionKwh" title="Average energy delivered per session">Avg kWh per Session</label>
+  <div class="input-with-unit"><input type="text" id="avgSessionKwh" value="20" inputmode="decimal"><span class="unit">kWh</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('avgSessionKwh').value='10';document.getElementById('avgSessionKwh').dispatchEvent(new Event('input',{bubbles:true}))">10 Quick</span> <span class="bm-tag" onclick="document.getElementById('avgSessionKwh').value='20';document.getElementById('avgSessionKwh').dispatchEvent(new Event('input',{bubbles:true}))">20 L2 Avg</span> <span class="bm-tag" onclick="document.getElementById('avgSessionKwh').value='40';document.getElementById('avgSessionKwh').dispatchEvent(new Event('input',{bubbles:true}))">40 DCFC</span></div>
+</div>
+<div class="field">
+  <label for="chargingPrice" title="Price you charge customers per kWh">Charging Price to Customer</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="chargingPrice" value="0.35" inputmode="numeric" data-currency><span class="unit">/kWh</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('chargingPrice').value='0.25';document.getElementById('chargingPrice').dispatchEvent(new Event('input',{bubbles:true}))">$0.25 L2</span> <span class="bm-tag" onclick="document.getElementById('chargingPrice').value='0.35';document.getElementById('chargingPrice').dispatchEvent(new Event('input',{bubbles:true}))">$0.35 Avg</span> <span class="bm-tag" onclick="document.getElementById('chargingPrice').value='0.50';document.getElementById('chargingPrice').dispatchEvent(new Event('input',{bubbles:true}))">$0.50 DCFC</span></div>
+</div>
+<div class="field">
+  <label for="operatingDays" title="Days per year the chargers operate">Operating Days per Year</label>
+  <div class="input-with-unit"><input type="text" id="operatingDays" value="365" inputmode="decimal"><span class="unit">days</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('operatingDays').value='260';document.getElementById('operatingDays').dispatchEvent(new Event('input',{bubbles:true}))">260 Weekdays</span> <span class="bm-tag" onclick="document.getElementById('operatingDays').value='365';document.getElementById('operatingDays').dispatchEvent(new Event('input',{bubbles:true}))">365 24/7</span></div>
+</div>
+<div class="field">
+  <label for="demandCharges" title="Additional monthly utility demand charges for commercial service">Monthly Demand Charges</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="demandCharges" value="0" inputmode="numeric" data-currency><span class="unit">/mo</span></div>
+</div>
+</div>
+</div>
+
+<!-- ====== RV PARK SCENARIO FIELDS ====== -->
+<div class="scenario-fields" id="fieldsRvpark">
+<div class="param-group">
+<h3 class="param-group-title">RV Park Charging Details</h3>
+<div class="field">
+  <label for="rvTotalSites" title="Total number of RV sites at your park">Total RV Sites</label>
+  <div class="input-with-unit"><input type="text" id="rvTotalSites" value="30" inputmode="decimal"><span class="unit">sites</span></div>
+</div>
+<div class="field">
+  <label for="rvEvSurcharge" title="Additional nightly fee for guests using EV charging">Nightly EV Surcharge</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="rvEvSurcharge" value="15" inputmode="numeric" data-currency><span class="unit">/night</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rvEvSurcharge').value='10';document.getElementById('rvEvSurcharge').dispatchEvent(new Event('input',{bubbles:true}))">$10</span> <span class="bm-tag" onclick="document.getElementById('rvEvSurcharge').value='15';document.getElementById('rvEvSurcharge').dispatchEvent(new Event('input',{bubbles:true}))">$15 Avg</span> <span class="bm-tag" onclick="document.getElementById('rvEvSurcharge').value='25';document.getElementById('rvEvSurcharge').dispatchEvent(new Event('input',{bubbles:true}))">$25 Premium</span></div>
+</div>
+<div class="field">
+  <label for="rvOccupancy" title="Average percentage of sites occupied">Average Occupancy Rate</label>
+  <div class="input-with-unit"><input type="text" id="rvOccupancy" value="60" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rvOccupancy').value='40';document.getElementById('rvOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">40%</span> <span class="bm-tag" onclick="document.getElementById('rvOccupancy').value='60';document.getElementById('rvOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">60% Avg</span> <span class="bm-tag" onclick="document.getElementById('rvOccupancy').value='80';document.getElementById('rvOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">80% Peak</span></div>
+</div>
+<div class="field">
+  <label for="rvEvAdoption" title="Percentage of guests expected to use EV charging">Guest EV Adoption Rate</label>
+  <div class="input-with-unit"><input type="text" id="rvEvAdoption" value="15" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rvEvAdoption').value='10';document.getElementById('rvEvAdoption').dispatchEvent(new Event('input',{bubbles:true}))">10% 2024</span> <span class="bm-tag" onclick="document.getElementById('rvEvAdoption').value='15';document.getElementById('rvEvAdoption').dispatchEvent(new Event('input',{bubbles:true}))">15% 2025</span> <span class="bm-tag" onclick="document.getElementById('rvEvAdoption').value='25';document.getElementById('rvEvAdoption').dispatchEvent(new Event('input',{bubbles:true}))">25% 2028</span></div>
+</div>
+<div class="field">
+  <label for="rvSeasonMonths" title="Months per year the park operates">Seasonal Operating Months</label>
+  <div class="input-with-unit"><input type="text" id="rvSeasonMonths" value="12" inputmode="decimal"><span class="unit">months</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('rvSeasonMonths').value='6';document.getElementById('rvSeasonMonths').dispatchEvent(new Event('input',{bubbles:true}))">6 Seasonal</span> <span class="bm-tag" onclick="document.getElementById('rvSeasonMonths').value='9';document.getElementById('rvSeasonMonths').dispatchEvent(new Event('input',{bubbles:true}))">9 Extended</span> <span class="bm-tag" onclick="document.getElementById('rvSeasonMonths').value='12';document.getElementById('rvSeasonMonths').dispatchEvent(new Event('input',{bubbles:true}))">12 Year-Round</span></div>
+</div>
+<div class="field">
+  <label for="rvAvgKwhNight" title="Average kWh consumed per EV guest per night">Avg kWh per Guest per Night</label>
+  <div class="input-with-unit"><input type="text" id="rvAvgKwhNight" value="20" inputmode="decimal"><span class="unit">kWh</span></div>
+</div>
+</div>
+</div>
+
+<!-- ====== AIRBNB SCENARIO FIELDS ====== -->
+<div class="scenario-fields" id="fieldsAirbnb">
+<div class="param-group">
+<h3 class="param-group-title">Airbnb Charging Details</h3>
+<div class="field">
+  <label for="abnbProperties" title="Number of short-term rental properties with chargers">Number of Properties</label>
+  <div class="input-with-unit"><input type="text" id="abnbProperties" value="1" inputmode="decimal"><span class="unit">properties</span></div>
+</div>
+<div class="field">
+  <label for="abnbNightlyPremium" title="Additional nightly rate guests pay for EV charging access">Nightly Rate Premium</label>
+  <div class="input-with-unit"><span class="unit">$</span><input type="text" id="abnbNightlyPremium" value="20" inputmode="numeric" data-currency><span class="unit">/night</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('abnbNightlyPremium').value='10';document.getElementById('abnbNightlyPremium').dispatchEvent(new Event('input',{bubbles:true}))">$10</span> <span class="bm-tag" onclick="document.getElementById('abnbNightlyPremium').value='20';document.getElementById('abnbNightlyPremium').dispatchEvent(new Event('input',{bubbles:true}))">$20 Avg</span> <span class="bm-tag" onclick="document.getElementById('abnbNightlyPremium').value='35';document.getElementById('abnbNightlyPremium').dispatchEvent(new Event('input',{bubbles:true}))">$35 Premium</span></div>
+</div>
+<div class="field">
+  <label for="abnbOccupancy" title="Average percentage of nights booked">Average Occupancy Rate</label>
+  <div class="input-with-unit"><input type="text" id="abnbOccupancy" value="65" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('abnbOccupancy').value='50';document.getElementById('abnbOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">50%</span> <span class="bm-tag" onclick="document.getElementById('abnbOccupancy').value='65';document.getElementById('abnbOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">65% Avg</span> <span class="bm-tag" onclick="document.getElementById('abnbOccupancy').value='80';document.getElementById('abnbOccupancy').dispatchEvent(new Event('input',{bubbles:true}))">80% Hot Market</span></div>
+</div>
+<div class="field">
+  <label for="abnbEvGuestPct" title="Percentage of guests who will use the EV charger">Guest EV Usage Rate</label>
+  <div class="input-with-unit"><input type="text" id="abnbEvGuestPct" value="20" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('abnbEvGuestPct').value='15';document.getElementById('abnbEvGuestPct').dispatchEvent(new Event('input',{bubbles:true}))">15%</span> <span class="bm-tag" onclick="document.getElementById('abnbEvGuestPct').value='20';document.getElementById('abnbEvGuestPct').dispatchEvent(new Event('input',{bubbles:true}))">20% Avg</span> <span class="bm-tag" onclick="document.getElementById('abnbEvGuestPct').value='30';document.getElementById('abnbEvGuestPct').dispatchEvent(new Event('input',{bubbles:true}))">30% Urban</span></div>
+</div>
+<div class="field">
+  <label for="abnbAvgKwh" title="Average kWh consumed per guest stay">Avg kWh per Guest Stay</label>
+  <div class="input-with-unit"><input type="text" id="abnbAvgKwh" value="15" inputmode="decimal"><span class="unit">kWh</span></div>
+</div>
+<div class="field">
+  <label for="abnbBookingBoost" title="Estimated percentage increase in bookings due to EV amenity">Booking Visibility Boost</label>
+  <div class="input-with-unit"><input type="text" id="abnbBookingBoost" value="5" inputmode="decimal"><span class="unit">%</span></div>
+  <div class="benchmarks"><span class="bm-tag" onclick="document.getElementById('abnbBookingBoost').value='3';document.getElementById('abnbBookingBoost').dispatchEvent(new Event('input',{bubbles:true}))">3% Conservative</span> <span class="bm-tag" onclick="document.getElementById('abnbBookingBoost').value='5';document.getElementById('abnbBookingBoost').dispatchEvent(new Event('input',{bubbles:true}))">5% Avg</span> <span class="bm-tag" onclick="document.getElementById('abnbBookingBoost').value='10';document.getElementById('abnbBookingBoost').dispatchEvent(new Event('input',{bubbles:true}))">10% EV Hub</span></div>
+</div>
+</div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
+    </section>
+
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Results</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div id="scenarioBadge" style="display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);border-radius:var(--radius-full);background:var(--color-primary-surface);color:var(--color-primary);font-size:var(--text-xs);font-weight:600;margin-bottom:var(--space-4);"></div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Total Investment</span>
+          <span class="kpi-value" id="kpiInvestment">--</span>
+          <span class="kpi-delta" id="kpiInvestmentDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label" id="kpiRevenueLabel">Annual Savings</span>
+          <span class="kpi-value" id="kpiRevenue">--</span>
+          <span class="kpi-delta" id="kpiRevenueDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Payback Period</span>
+          <span class="kpi-value" id="kpiPayback">--</span>
+          <span class="kpi-delta" id="kpiPaybackDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label" id="kpiROILabel">10-Year ROI</span>
+          <span class="kpi-value" id="kpiROI">--</span>
+          <span class="kpi-delta" id="kpiROIDetail"></span>
+        </div>
+</div>
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Cumulative Cash Flow</h3>
+          <p class="chart-subtitle">Investment recovery and net position over time</p>
+          <div class="chart-container">
+            <canvas id="chartCashFlow"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title" id="chartAnnualTitle">Annual Savings</h3>
+          <p class="chart-subtitle" id="chartAnnualSub">Year-over-year financial impact</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartAnnual"></canvas>
+          </div>
+        </div>
+</div>
+
+      <!-- EV Market Insights -->
+      <div class="chart-card" style="margin-bottom:var(--space-6)">
+        <h3 class="chart-title">EV Market Insights</h3>
+        <p class="chart-subtitle">Key factors shaping EV charging investment returns</p>
+        <div class="ev-info-grid">
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><h4>30C Federal Tax Credit</h4><p>The Alternative Fuel Vehicle Refueling Property Credit covers 30% of charger costs — up to $1,000 for residential and $100,000 for commercial installations. Scheduled through June 30, 2026.</p></div>
+          </div>
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h4>15-30% Commercial ROI</h4><p>Well-located commercial EV chargers generate 15-30% annual ROI with payback periods of 3-5 years, driven by the spread between electricity cost and charging price.</p></div>
+          </div>
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div><h4>Property Value Uplift</h4><p>Properties with EV charging typically see a 3-5% value premium. For Airbnb hosts, ChargePoint data shows up to 36% savings on charger hardware through partnership programs.</p></div>
+          </div>
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><h4>EV Adoption Accelerating</h4><p>EV sales represent over 9% of new car sales in the US and growing. RV parks and vacation rentals with charging see increased bookings as EV travelers prioritize charging access.</p></div>
+          </div>
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h4>L2 vs DC Fast Economics</h4><p>Level 2 chargers ($900-$2,500 per port) offer lower upfront costs and reliable returns. DC Fast Chargers ($50,000-$250,000+) serve high-traffic locations with premium pricing ($0.35-$0.55/kWh).</p></div>
+          </div>
+          <div class="ev-info-card">
+            <div class="ev-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+            <div><h4>Network Effects</h4><p>Networked chargers with software platforms (~$20/month/port) enable payment processing, usage tracking, and load management — essential for commercial, RV, and Airbnb deployments.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Year</th><th class="text-right" id="annualColHeader">Annual Savings</th><th class="text-right">Cumulative</th></tr></thead><tbody id="yearBody"></tbody></table></div>
+
+      <div class="table-wrap" style="margin-top:var(--space-6)"><table class="results-table"><thead><tr><th>Item</th><th class="text-right">Value</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {},
+  "examples": [],
+  "whyThisMatters": {
+    "title": "Why Calculate EV Charging ROI?",
+    "purpose": "EV charging infrastructure is both an environmental commitment and a financial opportunity. Whether you are installing a home charger to cut fuel costs, adding commercial stations to generate revenue, upgrading an RV park, or differentiating your Airbnb listing, this calculator quantifies the true investment return so you can make a data-driven decision.",
+    "whenToUse": [
+      "When considering installing a home EV charger to replace gas fueling costs",
+      "When evaluating commercial charging stations as a revenue-generating investment",
+      "When an RV park or campground wants to attract EV travelers with charging amenities",
+      "When an Airbnb or vacation rental host wants to increase bookings and nightly rates",
+      "To compare Level 2 vs DC Fast Charger economics for your specific scenario",
+      "To understand how the federal 30C tax credit impacts your net investment"
+    ],
+    "keyInsight": "Home EV charging typically saves $800-$1,500 per year vs gas, with charger payback in 2-4 years. Commercial stations generate 15-30% ROI with 3-5 year payback through the spread between electricity cost ($0.12-$0.17/kWh) and charging price ($0.25-$0.55/kWh). The federal 30C tax credit covers 30% of costs (up to $1,000 residential / $100,000 commercial) through June 2026. RV parks report $10-$25/night surcharge revenue, and Airbnb hosts see measurable booking increases by listing EV charging as an amenity."
+  },
+  "kpiExplains": {},
+  "coupled": [
+    {
+      "name": "Solar ROI",
+      "folder": "solar-roi",
+      "reason": "Pair solar panels with EV charging to offset electricity costs and maximize ROI"
+    },
+    {
+      "name": "True Cost of Ownership",
+      "folder": "true-cost-ownership",
+      "reason": "See how EV charging fits into your total property cost picture"
+    },
+    {
+      "name": "Cash Flow",
+      "folder": "cashflow",
+      "reason": "For rental properties: EV charging as an amenity that boosts cash flow"
+    }
+  ]
+};</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>
