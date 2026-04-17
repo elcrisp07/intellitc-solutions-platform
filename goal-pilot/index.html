@@ -534,6 +534,73 @@
       margin: 0;
     }
 
+    /* ---- Individual Tool Results Grid ------------------- */
+    .gp-tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    @media (max-width: 860px) {
+      .gp-tool-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .gp-tool-grid { grid-template-columns: 1fr; }
+    }
+
+    .gp-tool-single {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      transition: border-color var(--transition-interactive), box-shadow var(--transition-interactive), transform var(--transition-interactive);
+    }
+
+    .gp-tool-single:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .gp-tool-cat {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: var(--color-primary-surface);
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-full);
+      padding: 1px var(--space-2);
+      margin-bottom: var(--space-3);
+      align-self: flex-start;
+    }
+
+    .gp-tool-single h3 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+      line-height: 1.3;
+    }
+
+    .gp-tool-single p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      max-width: none;
+      flex: 1;
+    }
+
+    .gp-tool-single .gp-go-link {
+      margin-top: var(--space-3);
+    }
+
     /* ---- Mobile tweaks --------------------------------- */
     @media (max-width: 640px) {
       .gp-hero { padding: var(--space-12) var(--space-4) var(--space-10); }
@@ -806,6 +873,78 @@
     }
   ];
 
+  /* -------------------------------------------------------
+     60-TOOL CATALOG — Individual tool matching
+  ------------------------------------------------------- */
+  var TOOL_CATALOG = [
+    { name:'1031 Exchange Calculator', desc:'Calculate tax deferral, boot amounts, and replacement property requirements for a like-kind exchange.', href:'../1031-exchange/index.html', cat:'tax', keywords:['1031 exchange','like kind exchange','tax deferred sale','defer capital gains','replacement property','boot calculation','exchange deadline','1031 rules','sell investment property no tax','avoid taxes on sale','real estate exchange','qualified intermediary','1031 timeline','deferred gain','exchange boot'] },
+    { name:'Affordability Calculator', desc:'Calculate how much house you can afford with conservative, moderate, and aggressive payment scenarios.', href:'../affordability/index.html', cat:'mortgage', keywords:['how much can I afford','home affordability','what price house can I buy','maximum purchase price','buying power','afford a home','budget for house','income to buy a house','monthly payment budget','qualify for mortgage','first time buyer budget','affordability calculator','salary to buy house','down payment affordability','mortgage affordability'] },
+    { name:'Market Agility Index', desc:'Score a real estate market on speed, scarcity, and competition to generate a composite 0-100 agility rating.', href:'../agility-index/index.html', cat:'market', keywords:['market speed','how fast are homes selling','days on market','competitive market score','seller market buyer market','market scarcity','market competition','housing market rating','market agility','real estate market score','inventory levels','absorption rate','market type classification','hot market cold market','housing market conditions'] },
+    { name:'BRRRR Strategy Calculator', desc:'Analyze the Buy-Rehab-Rent-Refinance-Repeat cycle to find cash left in deal, cash flow, and infinite return potential.', href:'../brrrr/index.html', cat:'investment', keywords:['BRRRR','buy rehab rent refinance repeat','brrrr strategy','cash out refinance rental','infinite return','forced appreciation','cash left in deal','BRRRR calculator','rehab and rent','refinance rental property','cash out refi','pull equity out','BRRRR deal analysis','buy fix rent refi','equity recapture'] },
+    { name:'Budget vs. Actual Variance Calculator', desc:'Compare projected budget against actual property performance to identify overruns and savings.', href:'../budget-variance/index.html', cat:'property-mgmt', keywords:['budget vs actual','property budget tracking','expense overrun','variance analysis','actual vs projected','income vs budget','property management budget','rental property expenses tracking','operating budget','budget performance','expense variance','NOI variance','budget shortfall','property cash flow tracking','financial performance review'] },
+    { name:'Buffett Indicator', desc:'Compare total housing market value to GDP to assess whether housing is overvalued, undervalued, or fairly priced.', href:'../buffett-indicator/index.html', cat:'market', keywords:['is housing overvalued','housing bubble','real estate market valuation','buffett indicator','GDP to housing','macro market signal','housing market crash','is real estate overpriced','market cycle','housing market timing','warren buffett indicator','macro analysis','market health','housing vs economy','real estate valuation signal'] },
+    { name:'Burial & Cemetery Tax Exemption', desc:'Analyze potential property tax savings from burial or cemetery use exemptions with payback period and 10-year benefit.', href:'../burial-cemetery-tax/index.html', cat:'niche', keywords:['cemetery property tax','burial ground tax exemption','cemetery land tax savings','cemetery investment','burial property exemption','religious property tax','non-profit cemetery','property tax savings cemetery','cemetery land use','tax exempt burial','cemetery acquisition','burial ground investment','cemetery tax analysis','religious land exemption','cemetery operating costs'] },
+    { name:'Buy Before You Sell Calculator', desc:'Model bridge financing and double-carry costs for move-up or move-down buyers buying before their home sells.', href:'../buy-before-you-sell/index.html', cat:'mortgage', keywords:['buy before you sell','bridge loan','buying next home before selling','double mortgage','carry two mortgages','bridge financing','contingent offer','move up buyer','move down buyer','home transition','sell and buy simultaneously','gap financing','swing loan','housing bridge','carry costs two homes'] },
+    { name:'Capital Gains Tax Impact Analyzer', desc:'Calculate federal capital gains tax, NIIT, Medicare IRMAA surcharges, Social Security impact, and state taxes before selling.', href:'../capital-gains/index.html', cat:'tax', keywords:['capital gains tax','selling property tax','how much tax on home sale','capital gains calculator','NIIT','net investment income tax','Medicare surcharge','IRMAA','Social Security tax on home sale','state capital gains','long term capital gains','tax on investment sale','minimize capital gains','capital gains rate','taxable gain on sale'] },
+    { name:'Cap Rate Calculator', desc:'Compare capitalization rates across up to 5 investment properties side by side for quick deal screening.', href:'../caprate/index.html', cat:'investment', keywords:['cap rate','capitalization rate','NOI to price','property yield','cap rate calculator','compare investment properties','rental property cap rate','good cap rate','investment return','cap rate comparison','net operating income','income property value','real estate yield','property ROI','cap rate analysis'] },
+    { name:'RE Cash-on-Cash Breakdown', desc:'Analyze all 5 profit centers of real estate: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.', href:'../cash-on-cash-breakdown/index.html', cat:'investment', keywords:['cash on cash return','real estate returns','5 profit centers','total return real estate','appreciation return','principal paydown','leverage return','tax benefit return','wealth building real estate','real estate income streams','ROI breakdown','investment return analysis','total ROI calculator','real estate wealth','equity return'] },
+    { name:'Cash-to-Close Calculator', desc:'Calculate the exact cash needed at closing including down payment, prepaids, and all closing costs.', href:'../cash-to-close/index.html', cat:'mortgage', keywords:['cash to close','closing costs','how much to bring to closing','down payment plus closing costs','total cash needed to buy','closing day costs','prepaid expenses','escrow at closing','title fees','lender fees','closing cost estimate','cash needed to purchase','settlement costs','funds to close','closing cost breakdown'] },
+    { name:'Cash Flow Calculator', desc:'Analyze monthly and annual rental property cash flow with a complete income and expense P&L breakdown.', href:'../cashflow/index.html', cat:'investment', keywords:['rental cash flow','monthly cash flow','rental income expenses','cash flow calculator','rental property profit','does this rental make money','NOI calculation','rental P&L','positive cash flow','negative cash flow','rental property analysis','income minus expenses','rental profit','monthly rental income','cash flow rental'] },
+    { name:'Comp Analysis / CMA Calculator', desc:'Determine property value using comparable sales with line-item adjustments and confidence indicators.', href:'../cma/index.html', cat:'market', keywords:['CMA','comparative market analysis','comp analysis','property value estimate','comparable sales','home value calculator','adjust comps','subject property value','what is my home worth','comps adjustment','sale price estimate','ARV','after repair value','market value estimate','appraisal comps'] },
+    { name:'Commission Calculator', desc:'Estimate real estate agent commission with team splits, broker splits, fees, and annual income projection.', href:'../commission/index.html', cat:'market', keywords:['real estate commission','agent commission','broker split','team split','commission calculator','how much commission','agent income','real estate income','GCI','gross commission income','annual agent income','commission after split','agent fees','real estate agent earnings','commission structure'] },
+    { name:'Deal Grading Calculator', desc:'Score and rank up to 5 investment deals using weighted criteria to prioritize your acquisition pipeline.', href:'../deal-grading/index.html', cat:'investment', keywords:['deal scoring','rank deals','compare deals','deal grading','best deal','prioritize deals','deal pipeline','investment deal comparison','weighted criteria','deal score','rate deals','which deal is better','deal ranking','acquisition criteria','deal evaluation'] },
+    { name:'Distressed Asset Calculator', desc:'Analyze foreclosure and REO acquisition opportunities with risk assessment and profit potential.', href:'../distressed-asset/index.html', cat:'investment', keywords:['distressed property','foreclosure investment','REO','bank owned property','foreclosure analysis','distressed asset','pre-foreclosure','short sale','foreclosure profit','buy foreclosure','distressed real estate','auction property','bank owned','foreclosure ROI','distressed deal analysis'] },
+    { name:'DSCR Loan Calculator', desc:'Determine if your investment property qualifies for a DSCR loan by analyzing debt service coverage ratio and maximum loan amount.', href:'../dscr-loan/index.html', cat:'mortgage', keywords:['DSCR loan','debt service coverage ratio','investor loan','no income verification loan','DSCR mortgage','rental property loan','does my rental qualify','DSCR ratio','investment property loan','rental income qualify','no DTI loan','DSCR lender','DSCR minimum','rental loan qualification','income based loan'] },
+    { name:'DTI & Payment Shock Stress Test', desc:'Stress-test how rate changes affect your payment and whether you can truly afford the property at various rate scenarios.', href:'../dti-stress-test/index.html', cat:'mortgage', keywords:['DTI stress test','payment shock','rate change impact','debt to income ratio','DTI ratio','can I afford if rates rise','payment affordability stress','rate risk','mortgage stress test','DTI calculator','what if rates go up','payment sensitivity','rate shock','housing payment stress','DTI limits'] },
+    { name:'Fix & Flip Calculator', desc:'Model full project timeline with rehab costs, holding costs, financing, and net profit for a fix and flip deal.', href:'../fixflip/index.html', cat:'investment', keywords:['fix and flip','flip calculator','house flip','rehab profit','fix flip profit','after repair value','ARV calculator','holding costs','rehab costs','flip timeline','hard money flip','flip ROI','renovation profit','buy fix sell','flip deal analysis','flip net profit','house flipping'] },
+    { name:'Government Loan Comparison', desc:'Compare FHA, VA, USDA, and Conventional loan programs side by side on rates, fees, mortgage insurance, and DTI limits.', href:'../government-loans/index.html', cat:'mortgage', keywords:['FHA loan','VA loan','USDA loan','government loan comparison','FHA vs conventional','VA vs FHA','loan program comparison','FHA MIP','VA funding fee','USDA guarantee fee','first time buyer loan','low down payment loan','government backed loan','FHA vs VA vs USDA','loan type comparison'] },
+    { name:'HELOC Optimizer', desc:'Compare velocity banking and HELOC chunking strategies to accelerate mortgage payoff against standard payments.', href:'../heloc-optimizer/index.html', cat:'mortgage', keywords:['HELOC payoff','velocity banking','mortgage payoff acceleration','HELOC chunking','pay off mortgage early','HELOC strategy','use HELOC to pay mortgage','mortgage acceleration','pay off home faster','HELOC optimizer','chunking strategy','home equity line payoff','debt acceleration','mortgage payoff hack','interest savings HELOC'] },
+    { name:'Home Equity Calculator', desc:'Calculate your current equity position and compare HELOC vs. Home Equity Loan options.', href:'../home-equity/index.html', cat:'mortgage', keywords:['home equity','HELOC vs home equity loan','how much equity do I have','equity calculator','tap home equity','cash out equity','home equity line of credit','second mortgage','equity position','LTV equity','borrow against home','home equity options','access equity','equity value','HELOC comparison'] },
+    { name:'HomyShare Co-Living Calculator', desc:'Analyze co-living and shared housing investments with room-by-room revenue, house-hacking savings, and occupancy sensitivity.', href:'../homyshare-coliving/index.html', cat:'niche', keywords:['co-living','house hacking','shared housing','rent by room','house hack','coliving investment','room rental income','shared housing return','live for free','room by room rent','house hacking calculator','tenant per room','co-living analysis','shared house income','house hack profit'] },
+    { name:'Housing Code Compliance Estimator', desc:'Estimate violation remediation costs, risk score, and repair priority for housing code compliance issues.', href:'../housing-code-compliance/index.html', cat:'property-mgmt', keywords:['housing code violation','code compliance','violation remediation','code inspection cost','housing violation repair','property code issues','rental code compliance','housing inspection','violation cost estimate','code violation priority','property compliance','municipal code violation','habitability issues','code remediation','rental property violations'] },
+    { name:'Investment Analysis Calculator', desc:'Analyze investment property ROI, cap rate, cash flow, and accelerated depreciation using cost segregation modeling.', href:'../investment-analysis/index.html', cat:'investment', keywords:['investment analysis','cost segregation','accelerated depreciation','investment ROI','property analysis','rental ROI','investment property returns','cost seg','bonus depreciation','tax strategy investment','real estate investment analysis','cap rate analysis','cash flow analysis','depreciation tax benefit','investment property calculator'] },
+    { name:'IUL + Real Estate Portfolio Analyzer', desc:'Model combined long-term wealth growth from Indexed Universal Life insurance paired with real estate investments.', href:'../iul-portfolio/index.html', cat:'portfolio', keywords:['IUL','indexed universal life','IUL real estate','life insurance investment','IUL strategy','insurance and real estate','wealth building insurance','IUL returns','combine IUL and real estate','life insurance as investment','IUL cash value','real estate plus insurance','wealth accumulation','IUL portfolio','financial planning real estate'] },
+    { name:'Land Development Calculator', desc:'Analyze raw land and development project feasibility including costs, entitlements, and profit projections.', href:'../land-development/index.html', cat:'investment', keywords:['land development','raw land','development feasibility','subdivision','entitlement costs','land improvement','build on land','development profit','land project analysis','development costs','subdivide land','land investment analysis','horizontal development','land development ROI','ground up development'] },
+    { name:'Vacant Land Flip Analyzer', desc:'Analyze vacant land flip deals with due diligence scoring, exit strategy comparison, and full profit projections.', href:'../land-flip/index.html', cat:'investment', keywords:['land flip','vacant land investment','flip land','land deal analysis','land profit','sell land','owner financing land','land cash sale','land exit strategy','land due diligence','land ROI','rural land flip','land investing','land acquisition profit','land flip calculator'] },
+    { name:'Lease Expiration Schedule', desc:'Visualize lease rollover risk across your property portfolio — track tenant expirations, vacancy exposure, and renewal planning.', href:'../lease-expiration/index.html', cat:'property-mgmt', keywords:['lease expiration','lease rollover','tenant lease schedule','when do leases expire','lease renewal','vacancy risk','lease tracker','tenant expiration','lease management','rollover risk','commercial lease schedule','rental lease dates','lease planning','lease concentration risk','tenant renewal schedule'] },
+    { name:'Lease-Option Calculator', desc:'Model rent-to-own and lease purchase scenarios including option fees, rent credits, equity buildup, and exercise decisions.', href:'../lease-option/index.html', cat:'creative', keywords:['lease option','rent to own','lease purchase','option to buy','rent credit','option fee','lease with option','sandwich lease','lease option profit','rent to own calculator','buy on lease option','lease option strategy','option exercise','rent to own analysis','lease purchase terms'] },
+    { name:'Multi-Family Investment Calculator', desc:'Underwrite 5+ unit apartment buildings with unit mix analysis, DSCR, and a 10-year pro forma projection.', href:'../multifamily/index.html', cat:'investment', keywords:['multifamily','apartment building','multi family','5 unit','10 unit','apartment complex','multifamily analysis','apartment underwriting','unit mix','multifamily DSCR','apartment NOI','multifamily pro forma','apartment investment','multifamily cap rate','multifamily cash flow','apartment deal analysis'] },
+    { name:'Net Effective Rent Calculator', desc:'Calculate the true cost of a lease after free rent periods, tenant improvements, and concessions — beyond the face rent.', href:'../net-effective-rent/index.html', cat:'property-mgmt', keywords:['net effective rent','true rent cost','free rent period','tenant improvement allowance','lease concessions','NER calculator','face rent vs net rent','commercial lease true cost','TI allowance','rent abatement','lease economics','gross rent vs net rent','lease incentives','effective rent analysis','commercial lease comparison'] },
+    { name:'Payment Reverse Engineering', desc:'Back-calculate the maximum purchase price and loan terms from a target monthly payment amount.', href:'../payment-reverse-engineering/index.html', cat:'mortgage', keywords:['reverse engineer payment','back into purchase price','target payment','max loan from payment','what price for this payment','payment to price','monthly payment target','max purchase from payment','mortgage back solve','loan back calculation','payment constraint','max price calculator','payment goal','affordability reverse','payment reverse'] },
+    { name:'Portfolio Manager', desc:'Track and analyze up to 6 properties across your real estate portfolio for total performance visibility.', href:'../portfolio-manager/index.html', cat:'portfolio', keywords:['portfolio manager','track properties','multi property','portfolio performance','property tracking','real estate portfolio','portfolio analysis','multiple properties','portfolio dashboard','portfolio ROI','property portfolio','track rental portfolio','portfolio equity','portfolio cash flow','manage multiple rentals'] },
+    { name:'Private Money Lending Calculator', desc:'Structure private or hard money loan terms and analyze returns from both lender and borrower perspectives.', href:'../private-money/index.html', cat:'creative', keywords:['private money','hard money','private lending','private money loan','hard money loan','lend private money','private lender','hard money terms','private money ROI','lender yield','hard money points','private note','bridge loan terms','private mortgage','lend to investor'] },
+    { name:'Qualification Analysis', desc:'Calculate front-end and back-end DTI ratios, identify qualifying loan programs, and back-solve maximum purchase price.', href:'../qualification-analysis/index.html', cat:'mortgage', keywords:['mortgage qualification','do I qualify','DTI ratio','debt to income','loan qualification','can I get a mortgage','front end DTI','back end DTI','qualifying income','max loan amount','qualification calculator','loan programs qualify','mortgage approval','income qualifying','qualify for home loan'] },
+    { name:'Rate Buydown Calculator', desc:'Analyze permanent and temporary rate buydowns (2-1, 3-2-1) including payment timelines, costs, and break-even.', href:'../rate-buydown/index.html', cat:'mortgage', keywords:['rate buydown','2-1 buydown','3-2-1 buydown','temporary buydown','permanent buydown','buy down rate','buydown cost','lower rate upfront','seller paid buydown','buydown break even','mortgage points','discount points','rate reduction','buydown analysis','interest rate buydown'] },
+    { name:'RE Investment Analyzer', desc:'Quickly screen and evaluate investment properties for rapid deal qualification.', href:'../re-investment-analyzer/index.html', cat:'investment', keywords:['quick deal screen','rapid property evaluation','investment screening','deal qualifier','quick analysis','property screen','fast deal analysis','investment property quick check','deal filter','quick ROI check','property evaluation','investment quick scan','deal screening tool','quick investment analysis','property qualifier'] },
+    { name:'Real Estate Investment Analyzer', desc:'Comprehensively analyze a deal across 5 wealth-building dimensions: Cash Flow, Appreciation, Principal Paydown, Tax Benefits, and Leverage.', href:'../real-estate-investment-analyzer/index.html', cat:'investment', keywords:['real estate investment analyzer','comprehensive deal analysis','5 dimensions','investment property analysis','total return analysis','wealth building analysis','cash flow appreciation','principal paydown','tax benefits','leverage analysis','full investment analysis','property deal analysis','real estate ROI','investment analyzer','complete deal analysis'] },
+    { name:'Refinance Analyzer', desc:'Analyze whether refinancing saves money with break-even timeline, cumulative savings, and balance comparison.', href:'../refinance/index.html', cat:'mortgage', keywords:['refinance','should I refinance','refinance savings','refi break even','cash out refinance','rate and term refi','refinance calculator','lower rate refinance','refinance cost','refi analysis','mortgage refinance','refinance payback period','refi savings','when to refinance','refinance worth it'] },
+    { name:'Rent vs. Buy Calculator', desc:'Compare the true financial impact of renting versus buying over time — including opportunity cost, equity, tax benefits, and break-even.', href:'../rent-vs-buy/index.html', cat:'mortgage', keywords:['rent vs buy','should I rent or buy','renting vs buying','rent or buy comparison','is it better to rent','buy vs rent calculator','rent or own','financial comparison rent buy','opportunity cost of buying','equity vs renting','rent buy break even','renting decision','home ownership vs renting','buy vs lease home','financial case for buying'] },
+    { name:'Rental Analysis Calculator', desc:'Project 30-year long-term rental property performance including rent growth, appreciation, and equity buildup.', href:'../rental-analysis/index.html', cat:'investment', keywords:['rental analysis','long term rental','rental property performance','30 year rental','rental projection','rental appreciation','rent growth','long term hold','rental equity','buy and hold rental','rental property forecast','landlord analysis','long term investment rental','rental wealth','rental property 10 year'] },
+    { name:'RV Park Investment Analyzer', desc:'Analyze RV park acquisitions with revenue projections, NOI, cap rate, cash-on-cash return, and occupancy sensitivity.', href:'../rv-park-investment/index.html', cat:'niche', keywords:['RV park','RV park investment','mobile home park','campground investment','RV park analysis','RV park NOI','RV park cap rate','RV park cash flow','RV park acquisition','campground ROI','RV resort investment','RV park occupancy','mobile park analysis','recreational vehicle park','RV park revenue'] },
+    { name:'Self-Storage Investment Analyzer', desc:'Analyze self-storage facility acquisitions with multi-unit revenue modeling, NOI, cap rate, and occupancy sensitivity.', href:'../self-storage/index.html', cat:'niche', keywords:['self storage','storage unit investment','storage facility','self storage analysis','storage NOI','storage cap rate','self storage acquisition','storage unit revenue','storage occupancy','self storage ROI','mini storage','storage cash flow','self storage investment','storage facility analysis','storage units per type'] },
+    { name:'Seller Financing Calculator', desc:'Structure seller-carry notes and creative financing offers including terms, balloon payments, and yield.', href:'../seller-financing/index.html', cat:'creative', keywords:['seller financing','owner financing','seller carry','seller carryback','carry a note','owner carry mortgage','seller financed deal','creative seller financing','no bank mortgage','seller note','carry back financing','installment sale','seller carry terms','owner finance calculator','seller finance structure'] },
+    { name:'Seller Net Sheet Calculator', desc:'Estimate net proceeds after selling your property — see exactly what you will walk away with after all costs.', href:'../seller-net-sheet/index.html', cat:'market', keywords:['seller net sheet','net proceeds','how much will I get from selling','seller closing costs','net from sale','what will I walk away with','home sale proceeds','seller profit','home sale net','closing cost seller','real estate net sheet','seller after costs','home sale calculation','proceeds from sale','seller bottom line'] },
+    { name:"Senior's Corner", desc:'Analyze gift tax exposure from deed transfers and HELOC interest deductibility rules for senior homeowners.', href:'../seniors-corner/index.html', cat:'tax', keywords:['gift tax deed transfer','HELOC interest deduction','senior homeowner tax','deed transfer tax','gift tax real estate','gifting property','deductible HELOC interest','senior tax tools','estate planning deed','property gift tax','HELOC deductibility','senior real estate tax','transfer to family','gift deed tax exposure','homeowner tax awareness'] },
+    { name:'Investment Sensitivity Grid', desc:'Model how an investment performs across multiple variable combinations simultaneously using a color-coded what-if grid.', href:'../sensitivity-grid/index.html', cat:'investment', keywords:['sensitivity analysis','what if analysis','scenario grid','investment sensitivity','variable analysis','what if grid','range of outcomes','best case worst case','cap rate grid','price sensitivity','rate sensitivity','sensitivity matrix','variable combinations','investment scenarios','color coded grid'] },
+    { name:'Short-Term Rental Calculator', desc:'Model Airbnb and VRBO revenue and expenses with occupancy analysis and STR vs. long-term rental comparison.', href:'../short-term-rental/index.html', cat:'investment', keywords:['Airbnb','VRBO','short term rental','STR','vacation rental','Airbnb analysis','Airbnb profit','short term rental income','STR vs LTR','vacation rental ROI','short term rental calculator','Airbnb revenue','occupancy rate STR','vacation rental cash flow','Airbnb investment'] },
+    { name:'Solar Farm Leasing Calculator', desc:'Estimate solar farm lease income for landowners with annual revenue, lifetime value, and development timeline projections.', href:'../solar-farm-leasing/index.html', cat:'niche', keywords:['solar farm lease','solar lease income','landowner solar','solar lease revenue','rent land for solar','solar farm income','solar lease calculator','solar energy lease','ground mount solar lease','solar farm per acre','solar lease rate','solar development timeline','solar lease lifetime value','lease land solar','solar farm ROI'] },
+    { name:'Solar ROI Calculator', desc:'Analyze residential solar panel investment with incentives, 25-year degradation model, payback year, and cumulative savings.', href:'../solar-roi/index.html', cat:'niche', keywords:['solar panels','solar ROI','solar payback','solar investment','solar savings','residential solar','solar panel cost','solar break even','solar ITC','solar tax credit','solar 25 year','solar degradation','net metering','solar system payback','solar energy savings'] },
+    { name:'Sources & Uses Calculator', desc:'Map exactly where acquisition capital comes from and where it goes — the foundation of any real estate closing.', href:'../sources-uses/index.html', cat:'investment', keywords:['sources and uses','sources uses calculator','capital stack','where does money come from','acquisition capital','funding breakdown','equity and debt stack','closing capital map','deal funding sources','down payment sources','capital structure','deal capital breakdown','funding the deal','acquisition costs','sources of funds'] },
+    { name:'Strategic Market Valuation', desc:'Score any real estate market using 8 normalized indicators to generate a composite heat score for investment targeting.', href:'../strategic-market-valuation/index.html', cat:'market', keywords:['market scoring','best markets to invest','market heat score','real estate market ranking','market indicators','composite market score','market analysis','which city to invest','market fundamentals','population growth market','job growth market','housing demand','market valuation score','top real estate markets','market comparison'] },
+    { name:'Subject-To Calculator', desc:'Analyze taking over existing mortgage payments in a subject-to deal including spread, cash flow, and terms.', href:'../subject-to/index.html', cat:'creative', keywords:['subject to','subject-to mortgage','take over mortgage payments','existing loan takeover','sub2','subject to deal','assume existing mortgage','existing financing','mortgage takeover','sub to deal','seller leave loan','creative acquisition','subject to analysis','existing mortgage deal','take over loan'] },
+    { name:'Subject-To Risk Dashboard', desc:'Analyze due-on-sale trigger risk, land trust structures, and refinance exit planning for subject-to deals.', href:'../subject-to-risk-dashboard/index.html', cat:'creative', keywords:['subject to risk','due on sale','due on sale clause','land trust','subject-to risk','sub2 risk','due on sale trigger','subject to exit strategy','refinance exit plan','subject to protection','land trust structure','mortgage takeover risk','subject to compliance','due on sale risk','sub to risk management'] },
+    { name:'Tenant Turnover Cost Calculator', desc:'Calculate the true cost of losing a tenant including vacancy loss, make-ready expenses, leasing costs, and new lease break-even.', href:'../tenant-turnover/index.html', cat:'property-mgmt', keywords:['tenant turnover','tenant turnover cost','cost of losing tenant','vacancy cost','make ready cost','tenant replacement','leasing cost','turnover expenses','unit make ready','tenant retention','true cost of vacancy','turnover calculator','rental vacancy cost','tenant turnover analysis','eviction cost'] },
+    { name:'True Cost of Homeownership', desc:'Calculate the real total monthly cost of owning a home beyond the mortgage — including taxes, insurance, maintenance, and HOA.', href:'../true-cost-ownership/index.html', cat:'mortgage', keywords:['true cost of homeownership','real cost of owning','total monthly housing cost','beyond mortgage payment','property tax insurance','home maintenance cost','HOA fees','PITI','actual home cost','full housing cost','hidden costs homeownership','ownership cost calculator','total home expenses','home affordability real cost','monthly home cost breakdown'] },
+    { name:'Deal Underwriting Worksheet', desc:'Complete a structured pre-offer investment analysis covering NOI, DSCR, Cap Rate, Cash-on-Cash, risk flags, and max offer price.', href:'../underwriting/index.html', cat:'investment', keywords:['deal underwriting','underwriting worksheet','pre offer analysis','max offer price','NOI calculation','DSCR underwriting','cap rate underwriting','cash on cash underwriting','risk flags','underwrite a deal','investment underwriting','deal analysis worksheet','max price calculator','underwriting checklist','full deal underwriting'] },
+    { name:'Wrap Mortgage Calculator', desc:'Analyze wrap-around mortgage deals where the seller retains the existing loan and creates a larger new note to the buyer.', href:'../wrap-calculator/index.html', cat:'creative', keywords:['wrap mortgage','wraparound mortgage','wrap around loan','all inclusive trust deed','AITD','seller wrap','wrap deal analysis','wrap note','underlying mortgage','wrap spread','seller keeps existing loan','wrap financing','creative wrap deal','all inclusive mortgage','wrap around deed of trust'] }
+  ];
+
+  var CAT_LABELS = {
+    'tax':'Tax Strategy','mortgage':'Mortgage & Home Buying','market':'Market Analysis',
+    'investment':'Investment Analysis','property-mgmt':'Property Management',
+    'creative':'Creative Financing','niche':'Niche & Specialty','portfolio':'Portfolio & Wealth'
+  };
+
   /* Popular fallback paths: flip, rental, buyvrent, brrrr */
   var FALLBACK_IDS = ['flip', 'rental', 'buyvrent', 'brrrr'];
 
@@ -842,6 +981,52 @@
     }
 
     return bestScore > 0 ? best : null;
+  }
+
+  /* -------------------------------------------------------
+     INDIVIDUAL TOOL MATCHING (60-tool fallback)
+  ------------------------------------------------------- */
+  function findTools(query) {
+    var q = query.toLowerCase().trim();
+    if (!q) return null;
+    var words = q.split(/\s+/);
+    var scored = [];
+
+    for (var i = 0; i < TOOL_CATALOG.length; i++) {
+      var tool = TOOL_CATALOG[i];
+      var score = 0;
+      for (var k = 0; k < tool.keywords.length; k++) {
+        var kw = tool.keywords[k].toLowerCase();
+        // Full keyword found in query
+        if (q.indexOf(kw) !== -1) {
+          score += kw.length * 2;
+        } else {
+          // Partial: check if any query word appears in keyword or vice-versa
+          for (var w = 0; w < words.length; w++) {
+            if (words[w].length >= 3 && kw.indexOf(words[w]) !== -1) {
+              score += words[w].length;
+            } else if (words[w].length >= 3 && words[w].indexOf(kw.split(' ')[0]) !== -1) {
+              score += 2;
+            }
+          }
+        }
+      }
+      // Also match tool name
+      var nameLower = tool.name.toLowerCase();
+      for (var w2 = 0; w2 < words.length; w2++) {
+        if (words[w2].length >= 3 && nameLower.indexOf(words[w2]) !== -1) {
+          score += words[w2].length * 3;
+        }
+      }
+      if (score > 0) {
+        scored.push({ tool: tool, score: score });
+      }
+    }
+
+    scored.sort(function(a, b) { return b.score - a.score; });
+    // Return top 6 if enough matches, minimum 3
+    var top = scored.slice(0, 6);
+    return top.length >= 1 ? top.map(function(s) { return s.tool; }) : null;
   }
 
   /* -------------------------------------------------------
@@ -885,6 +1070,39 @@
       '</div>' +
       '<div class="gp-chain" role="list" aria-label="Tool chain steps">' +
         chain +
+      '</div>' +
+      resetButton()
+    );
+  }
+
+  function renderTools(tools) {
+    var cards = '';
+    for (var i = 0; i < tools.length; i++) {
+      var t = tools[i];
+      var catLabel = CAT_LABELS[t.cat] || t.cat;
+      cards += (
+        '<div class="gp-tool-single">' +
+          '<span class="gp-tool-cat">' + escHtml(catLabel) + '</span>' +
+          '<h3>' + escHtml(t.name) + '</h3>' +
+          '<p>' + escHtml(t.desc) + '</p>' +
+          '<a class="gp-go-link" href="' + t.href + '">' +
+            'Go to Tool' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
+          '</a>' +
+        '</div>'
+      );
+    }
+
+    return (
+      '<div class="gp-result-header">' +
+        '<div class="gp-result-icon" aria-hidden="true">&#x1F3AF;</div>' +
+        '<div class="gp-result-title-wrap">' +
+          '<h2>Best tools for your goal</h2>' +
+          '<p>We matched your description to ' + tools.length + ' relevant tool' + (tools.length > 1 ? 's' : '') + ' from our library of 60.</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="gp-tool-grid">' +
+        cards +
       '</div>' +
       resetButton()
     );
@@ -1018,15 +1236,32 @@
       return;
     }
 
+    // Tier 1: try curated path match
     var match = findPath(query);
-    var html = match ? renderPath(match) : renderFallback();
+    var html;
+    var matchType;
+    if (match) {
+      html = renderPath(match);
+      matchType = match.id;
+    } else {
+      // Tier 2: try individual tool matching across 60 tools
+      var tools = findTools(query);
+      if (tools) {
+        html = renderTools(tools);
+        matchType = 'tools_' + tools.length;
+      } else {
+        // Tier 3: fallback popular paths
+        html = renderFallback();
+        matchType = 'fallback';
+      }
+    }
     showResults(html);
 
     // GA4 event
     if (typeof gtag === 'function') {
       gtag('event', 'goal_pilot_search', {
         query: query.substring(0, 100),
-        matched_path: match ? match.id : 'fallback'
+        matched_path: matchType
       });
     }
   }
