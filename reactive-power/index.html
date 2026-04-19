@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactive Power Estimator — IntelliTC Solutions</title>
+<meta name="description" content="Understand how reactive power, power factor, and inductive loads affect your home's electrical efficiency.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Reactive Power Estimator — IntelliTC Solutions">
+<meta property="og:description" content="Understand how reactive power, power factor, and inductive loads affect your home's electrical efficiency.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+.surprise-banner{
+  display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-lg);margin-bottom:var(--space-4);
+  background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.08));
+  border:1px solid var(--color-primary);
+}
+.surprise-banner svg{flex-shrink:0;color:var(--color-primary);}
+.surprise-banner-text{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+.surprise-banner-text strong{color:var(--color-primary);font-weight:600;}
+/* Power Triangle Visual */
+.power-triangle{display:flex;align-items:center;justify-content:center;gap:var(--space-6);padding:var(--space-5);background:var(--color-surface);border-radius:var(--radius-lg);border:1px solid var(--color-divider);margin-bottom:var(--space-4);}
+.power-triangle svg{max-width:100%;height:auto;}
+.triangle-legend{display:flex;flex-direction:column;gap:var(--space-3);}
+.triangle-item{display:flex;align-items:center;gap:var(--space-2);}
+.triangle-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.triangle-label{font-size:var(--text-sm);color:var(--color-text);font-weight:500;}
+.triangle-val{font-family:'JetBrains Mono',monospace;font-size:var(--text-sm);color:var(--color-text-muted);margin-left:auto;padding-left:var(--space-3);}
+@media(max-width:640px){.power-triangle{flex-direction:column;gap:var(--space-3);}.triangle-legend{flex-direction:row;flex-wrap:wrap;gap:var(--space-2);}}
+/* Myth/Fact Callout */
+.fact-callout{background:var(--color-surface);border-left:4px solid var(--color-primary);border-radius:var(--radius-md);padding:var(--space-4);margin:var(--space-4) 0;}
+.fact-callout h4{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;color:var(--color-primary);}
+.fact-callout p{margin:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+/* Appliance Grid */
+.appliance-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);}
+@media(max-width:480px){.appliance-grid{grid-template-columns:1fr;}}
+.appliance-item{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);background:var(--color-surface);border:1px solid var(--color-divider);cursor:pointer;transition:border-color .2s,background .2s;user-select:none;}
+.appliance-item:hover{border-color:var(--color-primary);}
+.appliance-item.active{border-color:var(--color-primary);background:var(--color-primary-surface);}
+.appliance-item input[type="checkbox"]{accent-color:var(--color-primary);margin:0;width:16px;height:16px;}
+.appliance-name{font-size:var(--text-sm);color:var(--color-text);font-weight:500;flex:1;}
+.appliance-pf{font-family:'JetBrains Mono',monospace;font-size:var(--text-xs);color:var(--color-text-muted);}
+</style>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <button data-theme-toggle aria-label="Switch to dark mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+      <!-- Surprise Banner -->
+      <div class="surprise-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <span class="surprise-banner-text"><strong>You found it.</strong> This hidden educational tool explores the physics of reactive power and how inductive loads affect your home's electrical efficiency.</span>
+      </div>
+      <h1 class="panel-title">Reactive Power Estimator</h1>
+      <p class="panel-subtitle">Explore how motors, compressors, and transformers in your home create reactive power — the invisible energy that flows but does no work.</p>
+      <div class="divider"></div>
+      <div class="params-grid">
+<div class="param-group">
+<h3 class="param-group-title">Your Electric Bill</h3>
+<div class="field">
+            <label for="monthlyBill">Monthly Electric Bill</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="monthlyBill" value="200" inputmode="numeric" data-currency></div>
+          </div>
+<div class="field">
+            <label for="elecRate">Electricity Rate</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="elecRate" value="0.16" inputmode="decimal"><span class="unit">/kWh</span></div>
+          </div>
+<div class="field">
+            <label for="meterType">Meter Type</label>
+            <select id="meterType"><option value="smart">Digital Smart Meter</option><option value="analog">Analog (Spinning Disk)</option></select>
+          </div>
+</div>
+<div class="param-group" style="grid-column:span 2">
+<h3 class="param-group-title">Inductive Appliances in Your Home</h3>
+<p style="font-size:var(--text-xs);color:var(--color-text-muted);margin:0 0 var(--space-3);">Select every motor-driven appliance you use regularly. Each creates reactive power.</p>
+<div class="appliance-grid" id="applianceGrid">
+  <label class="appliance-item active"><input type="checkbox" name="app" value="ac" data-pf="0.65" data-watts="3500" checked><span class="appliance-name">Central A/C</span><span class="appliance-pf">PF 0.65</span></label>
+  <label class="appliance-item active"><input type="checkbox" name="app" value="fridge" data-pf="0.70" data-watts="150" checked><span class="appliance-name">Refrigerator</span><span class="appliance-pf">PF 0.70</span></label>
+  <label class="appliance-item active"><input type="checkbox" name="app" value="washer" data-pf="0.68" data-watts="500" checked><span class="appliance-name">Washing Machine</span><span class="appliance-pf">PF 0.68</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="dishwasher" data-pf="0.72" data-watts="1800"><span class="appliance-name">Dishwasher</span><span class="appliance-pf">PF 0.72</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="microwave" data-pf="0.60" data-watts="1200"><span class="appliance-name">Microwave</span><span class="appliance-pf">PF 0.60</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="dryer" data-pf="0.74" data-watts="2400"><span class="appliance-name">Electric Dryer</span><span class="appliance-pf">PF 0.74</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="pool" data-pf="0.62" data-watts="1500"><span class="appliance-name">Pool Pump</span><span class="appliance-pf">PF 0.62</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="fans" data-pf="0.75" data-watts="75"><span class="appliance-name">Ceiling Fans</span><span class="appliance-pf">PF 0.75</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="furnace" data-pf="0.67" data-watts="800"><span class="appliance-name">Furnace Blower</span><span class="appliance-pf">PF 0.67</span></label>
+  <label class="appliance-item"><input type="checkbox" name="app" value="garage" data-pf="0.70" data-watts="550"><span class="appliance-name">Garage Door Opener</span><span class="appliance-pf">PF 0.70</span></label>
+</div>
+</div>
+</div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Analyze</button>
+    </section>
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">Power Factor Analysis</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+      <div class="kpi-row" id="kpiRow">
+<div class="kpi-card">
+          <span class="kpi-label">Estimated Power Factor</span>
+          <span class="kpi-value" id="kpiPF">--</span>
+          <span class="kpi-delta" id="kpiPFDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Reactive Power</span>
+          <span class="kpi-value" id="kpiReactive">--</span>
+          <span class="kpi-delta" id="kpiReactiveDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Phase Angle</span>
+          <span class="kpi-value" id="kpiPhase">--</span>
+          <span class="kpi-delta" id="kpiPhaseDetail"></span>
+        </div>
+<div class="kpi-card">
+          <span class="kpi-label">Corrected Power Factor</span>
+          <span class="kpi-value" id="kpiCorrected">--</span>
+          <span class="kpi-delta" id="kpiCorrectedDetail"></span>
+        </div>
+</div>
+
+      <!-- Power Triangle Visual -->
+      <div class="power-triangle" id="powerTriangle">
+        <canvas id="chartTriangle" style="max-height:260px;"></canvas>
+        <div class="triangle-legend" id="triangleLegend"></div>
+      </div>
+
+      <div class="chart-grid">
+<div class="chart-card">
+          <h3 class="chart-title">Power Breakdown</h3>
+          <p class="chart-subtitle">Real power (useful work) vs. reactive power (oscillation)</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartBreakdown"></canvas>
+          </div>
+        </div>
+<div class="chart-card">
+          <h3 class="chart-title">Appliance Reactive Contribution</h3>
+          <p class="chart-subtitle">Which appliances create the most reactive power</p>
+          <div class="chart-container chart-container-bar">
+            <canvas id="chartAppliances"></canvas>
+          </div>
+        </div>
+</div>
+
+      <!-- Fact Callout -->
+      <div class="fact-callout">
+        <h4>Important Context: Residential Billing</h4>
+        <p>Residential electric meters in North America bill by kilowatt-hour (kWh) — which measures real power, not apparent power. According to the National Institute of Standards and Technology (NIST), power factor correction devices reduce current but do not reduce the kWh registered by a residential meter. The physics of reactive power is real and well-established since Charles Steinmetz's work in 1893, but bill savings from plug-in correction devices apply primarily to commercial and industrial customers who face power factor penalties. This tool is designed to educate — not to promise savings.</p>
+      </div>
+
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "monthlyBill": {"term":"Monthly Electric Bill","definition":"Your total electricity cost for one month, found on your utility statement. This includes all charges — generation, transmission, distribution, and taxes."},
+    "elecRate": {"term":"Electricity Rate","definition":"The cost per kilowatt-hour (kWh) charged by your utility. The US average is approximately $0.16/kWh. Check your bill under 'Energy Charge' or 'Rate per kWh'."},
+    "meterType": {"term":"Meter Type","definition":"Analog meters use a spinning aluminum disk. Digital smart meters use solid-state electronics and can measure more granular data. Most US homes now have smart meters."}
+  },
+  "examples": [
+    {"label":"Average US Home","values":{"monthlyBill":"200","elecRate":"0.16","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave"]},
+    {"label":"Minimal Appliances","values":{"monthlyBill":"90","elecRate":"0.14","meterType":"analog"},"checks":["fridge","fans"]},
+    {"label":"Heavy Load Home","values":{"monthlyBill":"400","elecRate":"0.18","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave","dryer","pool","fans","furnace","garage"]}
+  ],
+  "whyThisMatters": {
+    "title": "Why Learn About Reactive Power?",
+    "purpose": "Every motor-driven appliance in your home creates a hidden energy exchange called reactive power. Understanding this physics — formalized by Charles Steinmetz in 1893 — helps you make informed decisions about your home's electrical efficiency and evaluate energy-saving claims critically.",
+    "whenToUse": [
+      "When you want to understand why motors draw more current than they consume",
+      "When evaluating 'power saver' devices marketed to homeowners",
+      "When learning about power factor, a key concept in electrical engineering",
+      "When curious about the difference between your actual energy use and what your meter registers"
+    ],
+    "keyInsight": "Reactive power is real physics — motors genuinely need it to operate. But residential meters in North America bill by kWh (real power), so plug-in correction devices do not reduce your bill. Power factor correction IS valuable for commercial and industrial facilities that face kVA-based billing or power factor penalties."
+  },
+  "kpiExplains": {
+    "kpiPF": {"term":"Power Factor","definition":"The ratio of real power (useful work) to apparent power (total draw). Ranges from 0 to 1.0. A power factor of 1.0 means all drawn power is doing work. A typical home with multiple motors operates around 0.7-0.85."},
+    "kpiReactive": {"term":"Reactive Power (kVAR)","definition":"The oscillating energy that builds and collapses magnetic fields in motors and transformers. Measured in kilovolt-amperes reactive (kVAR). This energy flows back and forth 60 times per second but performs no useful work."},
+    "kpiPhase": {"term":"Phase Angle","definition":"The angular displacement between voltage and current waves, measured in degrees. A phase angle of 0 degrees means perfect alignment (resistive load). Inductive loads like motors push this angle higher, increasing reactive power."},
+    "kpiCorrected": {"term":"Corrected Power Factor","definition":"The theoretical power factor if a properly sized capacitor were installed to offset the reactive power from inductive loads. A target of 0.95 is the standard engineering benchmark used in commercial power factor correction."}
+  },
+  "coupled": [
+    {
+      "name": "Housing Code Compliance",
+      "folder": "housing-code-compliance",
+      "reason": "Electrical violations are often linked to power quality issues"
+    },
+    {
+      "name": "True Cost of Ownership",
+      "folder": "true-cost",
+      "reason": "Understand the full cost of running a home"
+    },
+    {
+      "name": "Solar ROI",
+      "folder": "solar-roi",
+      "reason": "Solar panels change how your home interacts with the grid"
+    }
+  ]
+};</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>
