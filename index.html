@@ -1060,6 +1060,36 @@
   .teaser-grid { grid-template-columns: 1fr; }
 }
 
+/* ═══════ HIDDEN GEM CARD ═══════ */
+.hidden-gem-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; text-decoration: none;
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--color-primary);
+  background: linear-gradient(135deg, rgba(1,105,111,.04), rgba(209,153,0,.04));
+  cursor: pointer; transition: border-color .2s, background .2s, transform .15s;
+}
+.hidden-gem-card:hover {
+  border-style: solid; background: linear-gradient(135deg, rgba(1,105,111,.10), rgba(209,153,0,.08));
+  transform: translateY(-2px);
+}
+.hidden-gem-card .gem-icon {
+  font-size: 1.75rem; margin-bottom: var(--space-2);
+  animation: gemPulse 2s ease-in-out infinite;
+}
+@keyframes gemPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+.hidden-gem-card .gem-label {
+  font-size: var(--text-sm); font-weight: 700; color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+.hidden-gem-card .gem-sub {
+  font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.4;
+}
+
 /* ═══════ NO RESULTS ═══════ */
 .no-results {
   text-align: center;
@@ -1669,6 +1699,11 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
           <h4>Comp Analysis / CMA</h4>
           <p>Determine property value using comparable sales with line-item adjustments and confidence scoring.</p>
           <div class="card-meta"><span class="card-arrow">Open →</span><div class="card-badges"><span class="badge badge-new">New</span><span class="badge badge-intermediate">Intermediate</span></div></div>
+        </a>
+        <a href="./inflation-hedge/index.html" class="hidden-gem-card" data-roles="investor agent lender homeowner" data-level="intermediate" data-search="">
+          <div class="gem-icon">&#x1F48E;</div>
+          <div class="gem-label">Hidden Gem to Consider</div>
+          <div class="gem-sub">Is real estate truly a safe hedge against inflation?</div>
         </a>
       </div>
       <!-- Underwriting Portal Banner -->

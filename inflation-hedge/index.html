@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflation Hedge Analyzer &mdash; IntelliTC Solutions</title>
+<meta name="description" content="Analyze whether real estate serves as a safe hedge against inflation using three quantifiable mechanisms: rent growth, property appreciation, and debt devaluation.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Inflation Hedge Analyzer &mdash; IntelliTC Solutions">
+<meta property="og:description" content="Analyze whether real estate serves as a safe hedge against inflation.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+.surprise-banner{
+  display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-lg);margin-bottom:var(--space-4);
+  background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.08));
+  border:1px solid var(--color-primary);
+}
+.surprise-banner svg{flex-shrink:0;color:var(--color-primary);}
+.surprise-banner-text{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+.surprise-banner-text strong{color:var(--color-primary);font-weight:600;}
+/* Scenario Selector */
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);margin-top:var(--space-2);}
+@media(max-width:480px){.scenario-grid{grid-template-columns:1fr;}}
+.scenario-card{
+  padding:var(--space-3);border-radius:var(--radius-md);
+  border:2px solid var(--color-divider);background:var(--color-surface);
+  cursor:pointer;transition:border-color .2s,background .2s;text-align:center;
+}
+.scenario-card:hover{border-color:var(--color-primary);}
+.scenario-card.active{border-color:var(--color-primary);background:var(--color-primary-surface);}
+.scenario-card h5{margin:0 0 var(--space-1);font-size:var(--text-sm);font-weight:600;color:var(--color-text);}
+.scenario-card p{margin:0;font-size:11px;color:var(--color-text-muted);line-height:1.3;}
+.scenario-card .scenario-icon{font-size:1.5rem;margin-bottom:var(--space-1);}
+/* Mechanism Cards */
+.mechanism-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin:var(--space-4) 0;}
+@media(max-width:640px){.mechanism-grid{grid-template-columns:1fr;}}
+.mechanism-card{
+  padding:var(--space-4);border-radius:var(--radius-md);
+  border:1px solid var(--color-divider);background:var(--color-surface);
+}
+.mechanism-card h5{margin:0 0 var(--space-1);font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.04em;}
+.mechanism-card .mech-value{font-family:'JetBrains Mono',monospace;font-size:var(--text-lg);font-weight:700;color:var(--color-text);margin:var(--space-1) 0;}
+.mechanism-card .mech-label{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+/* Projection Table */
+.projection-table{width:100%;border-collapse:collapse;font-size:var(--text-xs);margin:var(--space-4) 0;}
+.projection-table th{text-align:left;font-weight:600;padding:var(--space-2) var(--space-3);border-bottom:2px solid var(--color-primary);color:var(--color-text);white-space:nowrap;}
+.projection-table td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-divider);color:var(--color-text-muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
+.projection-table tr:last-child td{border-bottom:none;font-weight:600;color:var(--color-text);}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+/* Scenario Comparison */
+.scenario-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin:var(--space-4) 0;}
+@media(max-width:640px){.scenario-compare{grid-template-columns:1fr;}}
+.sc-card{padding:var(--space-4);border-radius:var(--radius-md);border:1px solid var(--color-divider);background:var(--color-surface);}
+.sc-card.sc-active{border-color:var(--color-primary);border-width:2px;}
+.sc-card h5{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;}
+.sc-card .sc-verdict{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:var(--radius-full);margin-bottom:var(--space-2);}
+.sc-card .sc-verdict-strong{background:rgba(67,122,34,.12);color:#437A22;}
+.sc-card .sc-verdict-mixed{background:rgba(209,153,0,.12);color:#B38600;}
+.sc-card .sc-verdict-weak{background:rgba(168,75,47,.10);color:#A84B2F;}
+.sc-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;margin:0;}
+.sc-card .sc-row{display:flex;justify-content:space-between;padding:var(--space-1) 0;font-size:var(--text-xs);color:var(--color-text-muted);}
+.sc-card .sc-row span:last-child{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--color-text);}
+/* Fact callout */
+.fact-callout{background:var(--color-surface);border-left:4px solid var(--color-primary);border-radius:var(--radius-md);padding:var(--space-4);margin:var(--space-4) 0;}
+.fact-callout h4{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;color:var(--color-primary);}
+.fact-callout p{margin:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+/* Intro text styling */
+.hedge-intro{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6;margin-bottom:var(--space-4);}
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+</head>
+<body>
+  <header class="header">
+    <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="IntelliTC" height="32"> IntelliTC</a>
+    <nav class="nav-actions">
+      <a href="../index.html" class="nav-home" title="Home"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-4 0v-6h4v6"/></svg> Home</a>
+      <button class="nav-btn mindmap-toggle" id="mindmapToggle" title="Mind Map"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M19.07 4.93l-2.83 2.83M7.76 16.24l-2.83 2.83"/></svg> Mind Map</button>
+      <button class="nav-btn learn-toggle" id="learnToggle" title="Learn Mode"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Learn</button>
+      <button class="nav-btn theme-toggle" id="themeToggle" title="Toggle dark mode"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+    </nav>
+  </header>
+
+  <main class="container" style="max-width:960px;margin:auto;padding:var(--space-6) var(--space-4);">
+
+    <!-- Input Section -->
+    <section id="inputSection">
+      <div class="surprise-banner">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <div class="surprise-banner-text"><strong>You found it.</strong> This hidden educational tool analyzes whether real estate truly protects against inflation &mdash; and when that protection breaks down.</div>
+      </div>
+
+      <h1>Hedge: a Safe Haven or Not!</h1>
+      <p class="hedge-intro">A Ventura Highway-Experience: The best direction depends on Due Diligence. <strong>IntelliTC</strong> provides the <em>Diligence</em>. Building your knowledge is Over<strong><em>Due</em></strong>! Your journey will reveal opportunities!</p>
+      <hr style="border:none;border-top:1px solid var(--color-divider);margin-bottom:var(--space-5);">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);">
+        <div>
+          <h3 style="font-size:var(--text-sm);margin-bottom:var(--space-3);">Property Details</h3>
+          <div class="field">
+            <label for="purchasePrice">Purchase Price</label>
+            <div class="input-with-unit"><span class="unit-prefix">$</span><input type="text" id="purchasePrice" value="350,000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="downPayment">Down Payment (%)</label>
+            <div class="input-with-unit"><input type="number" id="downPayment" value="20" min="0" max="100" step="1"><span class="unit-suffix">%</span></div>
+          </div>
+          <div class="field">
+            <label for="mortgageRate">Fixed Mortgage Rate</label>
+            <div class="input-with-unit"><input type="number" id="mortgageRate" value="6.75" min="0" max="15" step="0.125"><span class="unit-suffix">%</span></div>
+          </div>
+          <div class="field">
+            <label for="mortgageTerm">Mortgage Term</label>
+            <div class="input-with-unit"><input type="number" id="mortgageTerm" value="30" min="5" max="40" step="1"><span class="unit-suffix">yrs</span></div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:var(--text-sm);margin-bottom:var(--space-3);">Income &amp; Inflation</h3>
+          <div class="field">
+            <label for="monthlyRent">Monthly Rental Income</label>
+            <div class="input-with-unit"><span class="unit-prefix">$</span><input type="text" id="monthlyRent" value="2,200" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="inflationRate">Annual Inflation Rate</label>
+            <div class="input-with-unit"><input type="number" id="inflationRate" value="4.0" min="0" max="20" step="0.1"><span class="unit-suffix">%</span></div>
+          </div>
+          <div class="field">
+            <label for="holdingPeriod">Holding Period</label>
+            <div class="input-with-unit"><input type="number" id="holdingPeriod" value="10" min="1" max="40" step="1"><span class="unit-suffix">yrs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:var(--text-sm);margin:var(--space-4) 0 var(--space-2);">Inflation Scenario</h3>
+      <div class="scenario-grid">
+        <div class="scenario-card active" data-scenario="demand-pull" onclick="selectScenario(this)">
+          <div class="scenario-icon">&#x1F4C8;</div>
+          <h5>Demand-Pull</h5>
+          <p>Strong economy, rising wages, high demand. Real estate thrives.</p>
+        </div>
+        <div class="scenario-card" data-scenario="cost-push" onclick="selectScenario(this)">
+          <div class="scenario-icon">&#x1F6E2;</div>
+          <h5>Cost-Push</h5>
+          <p>Rising input costs (energy, materials). Mixed results for property.</p>
+        </div>
+        <div class="scenario-card" data-scenario="stagflation" onclick="selectScenario(this)">
+          <div class="scenario-icon">&#x26A0;</div>
+          <h5>Stagflation</h5>
+          <p>High inflation + stagnant growth + rising unemployment. Protection weakens.</p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="margin-top:var(--space-5);width:100%;" onclick="analyze()">Analyze Hedge Effectiveness</button>
+    </section>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="results-section" style="display:none;">
+      <h2>Inflation Hedge Analysis</h2>
+      <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-4);flex-wrap:wrap;">
+        <button class="btn btn-outline btn-sm export-csv" onclick="exportCSV()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV</button>
+        <button class="btn btn-outline btn-sm export-pdf" onclick="exportPDF()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> PDF</button>
+        <button class="btn btn-outline btn-sm share-btn" onclick="shareResults()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button>
+        <button class="btn btn-outline btn-sm" onclick="modifyInputs()" style="margin-left:auto;">Modify Inputs</button>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);margin-bottom:var(--space-4);">
+        <div class="kpi-card" id="kpiHedge"><div class="kpi-label">HEDGE EFFECTIVENESS</div><div class="kpi-value" id="kpiHedgeVal">&mdash;</div><div class="kpi-sub" id="kpiHedgeSub"></div></div>
+        <div class="kpi-card" id="kpiRent"><div class="kpi-label">RENT GROWTH</div><div class="kpi-value" id="kpiRentVal">&mdash;</div><div class="kpi-sub" id="kpiRentSub"></div></div>
+        <div class="kpi-card" id="kpiEquity"><div class="kpi-label">REAL EQUITY GAIN</div><div class="kpi-value" id="kpiEquityVal">&mdash;</div><div class="kpi-sub" id="kpiEquitySub"></div></div>
+        <div class="kpi-card" id="kpiDebt"><div class="kpi-label">DEBT DEVALUATION</div><div class="kpi-value" id="kpiDebtVal">&mdash;</div><div class="kpi-sub" id="kpiDebtSub"></div></div>
+      </div>
+
+      <!-- Three Mechanisms -->
+      <h3 style="font-size:var(--text-sm);margin-bottom:var(--space-2);">The Three Mechanisms</h3>
+      <div class="mechanism-grid" id="mechanismGrid"></div>
+
+      <!-- Charts -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:var(--space-4) 0;">
+        <div style="background:var(--color-surface);border-radius:var(--radius-lg);border:1px solid var(--color-divider);padding:var(--space-4);">
+          <h4 style="font-size:var(--text-xs);font-weight:700;margin:0 0 var(--space-3);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.04em;">Rent vs. Inflation Over Time</h4>
+          <canvas id="rentChart" height="240"></canvas>
+        </div>
+        <div style="background:var(--color-surface);border-radius:var(--radius-lg);border:1px solid var(--color-divider);padding:var(--space-4);">
+          <h4 style="font-size:var(--text-xs);font-weight:700;margin:0 0 var(--space-3);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.04em;">Real Value of Mortgage Payment</h4>
+          <canvas id="debtChart" height="240"></canvas>
+        </div>
+      </div>
+
+      <!-- Scenario Comparison -->
+      <h3 style="font-size:var(--text-sm);margin-bottom:var(--space-2);">How Each Scenario Affects Your Property</h3>
+      <div class="scenario-compare" id="scenarioCompare"></div>
+
+      <!-- Year-by-Year Projection -->
+      <h3 style="font-size:var(--text-sm);margin:var(--space-4) 0 var(--space-2);">Year-by-Year Projection</h3>
+      <div class="table-scroll"><table class="projection-table" id="projectionTable"></table></div>
+
+      <!-- Educational Callout -->
+      <div class="fact-callout">
+        <h4>Historical Context</h4>
+        <p>From 1970 to 1982 &mdash; a period that included severe stagflation &mdash; the median American home appreciated by 159%, exactly matching CPI inflation. Combined with the leverage benefit of a fixed-rate mortgage, homeowners preserved purchasing power. However, real (inflation-adjusted) gains were minimal during stagflation, and mortgage rates exceeding 16% crushed affordability and sales volume. The type of inflation matters as much as the rate.</p>
+      </div>
+
+    </section>
+
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p>&copy; 2025 IntelliTC Solutions &mdash; Powered by Infinite Workz Ventures LLC</p>
+  </footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "purchasePrice": "<strong>Purchase Price</strong> &mdash; The total acquisition cost of the property. Used as the baseline for calculating appreciation and equity gains over the holding period.",
+    "downPayment": "<strong>Down Payment</strong> &mdash; The percentage of the purchase price paid in cash at closing. A higher down payment means a smaller mortgage and less debt devaluation benefit.",
+    "mortgageRate": "<strong>Fixed Mortgage Rate</strong> &mdash; The annual interest rate locked for the life of the loan. Fixed rates are key to the inflation hedge &mdash; your payment stays the same while inflation erodes its real cost.",
+    "mortgageTerm": "<strong>Mortgage Term</strong> &mdash; The length of the loan in years. A longer term means more years of debt devaluation but also more total interest paid.",
+    "monthlyRent": "<strong>Monthly Rental Income</strong> &mdash; The gross rent collected each month. Rent tends to rise with inflation (approximately 40% of CPI), making it one of the three core hedge mechanisms.",
+    "inflationRate": "<strong>Annual Inflation Rate</strong> &mdash; The expected average rate of price increases per year. Higher inflation amplifies both the hedge benefits and the scenario-dependent risks.",
+    "holdingPeriod": "<strong>Holding Period</strong> &mdash; The number of years you plan to hold the property. Longer periods amplify the compounding effects of all three hedge mechanisms."
+  },
+  "examples": [
+    {"name":"Moderate Inflation","desc":"$350K home, 4% inflation, demand-pull economy, 10-year hold","values":{"purchasePrice":"350,000","downPayment":"20","mortgageRate":"6.75","mortgageTerm":"30","monthlyRent":"2,200","inflationRate":"4.0","holdingPeriod":"10"},"scenario":"demand-pull"},
+    {"name":"High Inflation Era","desc":"$400K home, 8% inflation, cost-push environment, 7-year hold","values":{"purchasePrice":"400,000","downPayment":"25","mortgageRate":"7.5","mortgageTerm":"30","monthlyRent":"2,600","inflationRate":"8.0","holdingPeriod":"7"},"scenario":"cost-push"},
+    {"name":"Stagflation Stress Test","desc":"$300K home, 6% inflation, stagflation conditions, 15-year hold","values":{"purchasePrice":"300,000","downPayment":"20","mortgageRate":"8.0","mortgageTerm":"30","monthlyRent":"1,800","inflationRate":"6.0","holdingPeriod":"15"},"scenario":"stagflation"}
+  ],
+  "whyThisMatters": {
+    "title": "Why Analyze the Inflation Hedge?",
+    "purpose": "Real estate is widely considered an inflation hedge, but the reality depends on the type of inflation, your financing structure, and your holding period. This tool quantifies the three mechanisms that drive inflation protection &mdash; rent growth, property appreciation, and debt devaluation &mdash; and shows how each performs under different economic scenarios.",
+    "whenToUse": [
+      "When evaluating whether to buy rental property during rising inflation",
+      "When comparing real estate against other inflation hedges (stocks, bonds, gold)",
+      "When stress-testing a deal under different economic scenarios",
+      "When explaining to clients why fixed-rate financing matters in inflationary periods"
+    ],
+    "keyInsight": "The strongest inflation hedge comes from combining all three mechanisms: rents that rise with prices, property values that track CPI, and fixed-rate debt that gets cheaper in real terms. But during stagflation, rent growth stalls, vacancies rise, and only the debt devaluation mechanism reliably holds."
+  },
+  "kpiExplains": {
+    "kpiHedge": "<strong>Hedge Effectiveness</strong> &mdash; A composite score (0&ndash;100) measuring how well the property preserves purchasing power against inflation. Scores above 70 indicate a strong hedge; below 40 signals vulnerability. Combines rent growth strength, real equity gain, and debt devaluation benefit.",
+    "kpiRent": "<strong>Rent Growth</strong> &mdash; How much your monthly rental income increases over the holding period, expressed as a multiplier. A value of 1.5x means rent grew 50%. Rent accounts for roughly 40% of CPI, so it naturally tracks inflation in healthy economies.",
+    "kpiEquity": "<strong>Real Equity Gain</strong> &mdash; The inflation-adjusted increase in your equity position. This subtracts cumulative inflation from nominal appreciation to reveal the true gain in purchasing power. Positive = you beat inflation; negative = inflation outpaced your property.",
+    "kpiDebt": "<strong>Debt Devaluation Benefit</strong> &mdash; The cumulative savings from paying a fixed mortgage with increasingly cheaper dollars. As inflation rises, each monthly payment represents less real purchasing power, effectively discounting your debt over time."
+  },
+  "coupled": [
+    {"name":"Investment Analysis","folder":"investment-analysis","reason":"Full ROI analysis with cap rate, cash flow, and cost segregation"},
+    {"name":"Cash Flow Calculator","folder":"cashflow","reason":"Detailed monthly and annual cash flow projections"},
+    {"name":"Rental Analysis","folder":"rental-analysis","reason":"30-year rental property projection with equity buildup"}
+  ]
+};</script>
+<script>
+/* Patch example cards to also select inflation scenario */
+(function(){
+  var data = window.LEARN_DATA;
+  if (!data || !data.examples) return;
+  function patch(){
+    document.querySelectorAll('.learn-example-card').forEach(function(card){
+      card.addEventListener('click', function(){
+        var idx = parseInt(card.dataset.example);
+        var ex = data.examples[idx];
+        if (!ex || !ex.scenario) return;
+        document.querySelectorAll('.scenario-card').forEach(function(sc){
+          sc.classList.toggle('active', sc.dataset.scenario === ex.scenario);
+        });
+      });
+    });
+  }
+  setTimeout(patch, 100);
+})();
+</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>
