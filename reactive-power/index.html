@@ -52,6 +52,27 @@
 .fact-callout{background:var(--color-surface);border-left:4px solid var(--color-primary);border-radius:var(--radius-md);padding:var(--space-4);margin:var(--space-4) 0;}
 .fact-callout h4{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;color:var(--color-primary);}
 .fact-callout p{margin:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+/* Industrial vs Residential Explainer (Learn Mode only) */
+.ivr-explainer{display:none;margin:var(--space-6) 0;padding:var(--space-6);background:var(--color-surface-2);border:1px solid var(--color-primary);border-radius:var(--radius-lg);animation:learnFadeIn 300ms ease-out;}
+.learn-active .ivr-explainer{display:block;}
+.ivr-title{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-4);}
+.ivr-title svg{flex-shrink:0;}
+.ivr-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4);}
+@media(max-width:640px){.ivr-grid{grid-template-columns:1fr;}}
+.ivr-card{padding:var(--space-4);background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-divider);}
+.ivr-card h4{font-size:var(--text-sm);font-weight:700;margin:0 0 var(--space-1);}
+.ivr-card .ivr-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:var(--radius-full);margin-bottom:var(--space-2);}
+.ivr-card .ivr-tag-saves{background:rgba(67,122,34,.12);color:#437A22;}
+.ivr-card .ivr-tag-none{background:rgba(168,75,47,.10);color:#A84B2F;}
+.ivr-card p,.ivr-card li{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;margin:0;}
+.ivr-card ul{list-style:none;padding:0;margin:var(--space-2) 0 0;}
+.ivr-card li{padding:var(--space-1) 0;padding-left:var(--space-4);position:relative;}
+.ivr-card li::before{content:'\2192';position:absolute;left:0;color:var(--color-primary);font-weight:600;}
+.ivr-table{width:100%;border-collapse:collapse;font-size:var(--text-xs);margin-bottom:var(--space-4);}
+.ivr-table th{text-align:left;font-weight:600;color:var(--color-text);padding:var(--space-2) var(--space-3);border-bottom:2px solid var(--color-primary);}
+.ivr-table td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-divider);color:var(--color-text-muted);}
+.ivr-table tr:last-child td{border-bottom:none;}
+.ivr-source{font-size:11px;color:var(--color-text-muted);line-height:1.5;margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--color-divider);}
 /* Appliance Grid */
 .appliance-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);}
 @media(max-width:480px){.appliance-grid{grid-template-columns:1fr;}}
@@ -185,6 +206,90 @@
       <div class="fact-callout">
         <h4>Important Context: Residential Billing</h4>
         <p>Residential electric meters in North America bill by kilowatt-hour (kWh) — which measures real power, not apparent power. According to the National Institute of Standards and Technology (NIST), power factor correction devices reduce current but do not reduce the kWh registered by a residential meter. The physics of reactive power is real and well-established since Charles Steinmetz's work in 1893, but bill savings from plug-in correction devices apply primarily to commercial and industrial customers who face power factor penalties. This tool is designed to educate — not to promise savings.</p>
+      </div>
+
+      <!-- Industrial vs Residential Explainer (Learn Mode only) -->
+      <div class="ivr-explainer">
+        <div class="ivr-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><path d="M9 20v-4h6v4"/><rect x="9" y="10" width="2" height="2"/><rect x="13" y="10" width="2" height="2"/></svg>
+          Industrial vs. Residential: Why the Same Physics Produces Different Results
+        </div>
+
+        <div class="ivr-grid">
+          <div class="ivr-card">
+            <h4>Commercial / Industrial</h4>
+            <span class="ivr-tag ivr-tag-saves">PFC saves money</span>
+            <p>Large facilities are billed on <strong>demand (kVA)</strong> or face explicit <strong>power factor penalties</strong> when PF drops below 0.85&ndash;0.90. A factory running heavy motors at PF 0.70 pays a surcharge because the utility must supply more current than the meter's kWh reading reflects.</p>
+            <ul>
+              <li>Billed by kVA demand &mdash; apparent power matters</li>
+              <li>Power factor penalties (typically below 0.85 PF)</li>
+              <li>Capacitor banks sized by engineers, installed at the panel</li>
+              <li>ROI measured in months, savings verified by utility billing</li>
+              <li>Standard practice since the 1920s &mdash; billions saved industry-wide</li>
+            </ul>
+          </div>
+          <div class="ivr-card">
+            <h4>Residential</h4>
+            <span class="ivr-tag ivr-tag-none">No bill savings</span>
+            <p>Homes are billed by <strong>kWh (kilowatt-hours)</strong> &mdash; a measure of <strong>real power only</strong>. Your meter ignores reactive power entirely. A capacitor reduces current drawn from the line, but your meter measures watts &times; hours, which stays the same.</p>
+            <ul>
+              <li>Billed by kWh &mdash; only real power is metered</li>
+              <li>No power factor penalty on residential tariffs</li>
+              <li>Plug-in devices reduce current, not kWh</li>
+              <li>NIST confirmed: bill "remains the same &mdash; with or without the device"</li>
+              <li>ENERGY STAR does not certify any residential PFC device</li>
+            </ul>
+          </div>
+        </div>
+
+        <table class="ivr-table">
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Industrial / Commercial</th>
+              <th>Residential</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Billing unit</td>
+              <td>kVA demand + kWh</td>
+              <td>kWh only</td>
+            </tr>
+            <tr>
+              <td>PF penalty?</td>
+              <td>Yes (below 0.85&ndash;0.90)</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Meter type</td>
+              <td>Demand meter (tracks kVA peak)</td>
+              <td>Energy meter (tracks kWh consumed)</td>
+            </tr>
+            <tr>
+              <td>Correction method</td>
+              <td>Engineered capacitor banks at service panel</td>
+              <td>N/A &mdash; no financial benefit</td>
+            </tr>
+            <tr>
+              <td>Typical ROI</td>
+              <td>3&ndash;18 months</td>
+              <td>$0 saved (per NIST)</td>
+            </tr>
+            <tr>
+              <td>Why it works / doesn't</td>
+              <td>Lower kVA demand = lower demand charges + avoided penalties</td>
+              <td>Lower current does not change kWh reading</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="fact-callout" style="margin:0;">
+          <h4>The Key Distinction</h4>
+          <p>When a capacitor corrects power factor, it reduces the current flowing from the utility. For an industrial customer billed on kVA demand, less current = lower bill. For a homeowner billed on kWh, the math is different: kWh = Volts &times; Amps &times; Power Factor &times; Hours. The capacitor lowers Amps but raises Power Factor by the same proportion &mdash; the product stays identical, and so does your bill.</p>
+        </div>
+
+        <p class="ivr-source">Sources: NIST, "Demystifying Power Factor Correction Devices" (2009) &mdash; M. Misakian, T. Nelson, W. Yarbrough. ENERGY STAR statement on PFC devices. FTC "Notice of Penalty Offenses Concerning Energy Saving Claims" (1979).</p>
       </div>
 
     </section>
