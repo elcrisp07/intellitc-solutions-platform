@@ -331,17 +331,19 @@ window.analyze = function() {
   });
 
   /* Show results */
-  document.getElementById('inputSection').style.display = 'none';
-  document.getElementById('resultsSection').style.display = 'block';
+  document.getElementById('inputPanel').classList.add('hidden');
+  document.getElementById('resultsPanel').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-/* ---------- Modify Inputs ---------- */
-window.modifyInputs = function() {
-  document.getElementById('resultsSection').style.display = 'none';
-  document.getElementById('inputSection').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+/* ---------- Modify Inputs (data-back) ---------- */
+document.addEventListener('click', function(e) {
+  if (e.target.closest('[data-back]')) {
+    document.getElementById('resultsPanel').classList.add('hidden');
+    document.getElementById('inputPanel').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
 
 /* ---------- Export CSV ---------- */
 window.exportCSV = function() {
