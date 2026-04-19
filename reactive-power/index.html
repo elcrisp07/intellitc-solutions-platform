@@ -196,14 +196,14 @@
   <script src="./app.js"></script>
 <script>window.LEARN_DATA = {
   "tooltips": {
-    "monthlyBill": {"term":"Monthly Electric Bill","definition":"Your total electricity cost for one month, found on your utility statement. This includes all charges — generation, transmission, distribution, and taxes."},
-    "elecRate": {"term":"Electricity Rate","definition":"The cost per kilowatt-hour (kWh) charged by your utility. The US average is approximately $0.16/kWh. Check your bill under 'Energy Charge' or 'Rate per kWh'."},
-    "meterType": {"term":"Meter Type","definition":"Analog meters use a spinning aluminum disk. Digital smart meters use solid-state electronics and can measure more granular data. Most US homes now have smart meters."}
+    "monthlyBill": "<strong>Monthly Electric Bill</strong> &mdash; Your total electricity cost for one month, found on your utility statement. This includes all charges: generation, transmission, distribution, and taxes.",
+    "elecRate": "<strong>Electricity Rate</strong> &mdash; The cost per kilowatt-hour (kWh) charged by your utility. The US average is approximately $0.16/kWh. Check your bill under 'Energy Charge' or 'Rate per kWh'.",
+    "meterType": "<strong>Meter Type</strong> &mdash; Analog meters use a spinning aluminum disk driven by eddy currents. Digital smart meters use solid-state electronics and can measure more granular data. Most US homes now have smart meters."
   },
   "examples": [
-    {"label":"Average US Home","values":{"monthlyBill":"200","elecRate":"0.16","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave"]},
-    {"label":"Minimal Appliances","values":{"monthlyBill":"90","elecRate":"0.14","meterType":"analog"},"checks":["fridge","fans"]},
-    {"label":"Heavy Load Home","values":{"monthlyBill":"400","elecRate":"0.18","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave","dryer","pool","fans","furnace","garage"]}
+    {"name":"Average US Home","desc":"$200/month bill with A/C, fridge, washer, dishwasher, and microwave","values":{"monthlyBill":"200","elecRate":"0.16","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave"]},
+    {"name":"Minimal Appliances","desc":"$90/month bill with only a fridge and ceiling fans","values":{"monthlyBill":"90","elecRate":"0.14","meterType":"analog"},"checks":["fridge","fans"]},
+    {"name":"Heavy Load Home","desc":"$400/month bill with every motor-driven appliance running","values":{"monthlyBill":"400","elecRate":"0.18","meterType":"smart"},"checks":["ac","fridge","washer","dishwasher","microwave","dryer","pool","fans","furnace","garage"]}
   ],
   "whyThisMatters": {
     "title": "Why Learn About Reactive Power?",
@@ -217,10 +217,10 @@
     "keyInsight": "Reactive power is real physics — motors genuinely need it to operate. But residential meters in North America bill by kWh (real power), so plug-in correction devices do not reduce your bill. Power factor correction IS valuable for commercial and industrial facilities that face kVA-based billing or power factor penalties."
   },
   "kpiExplains": {
-    "kpiPF": {"term":"Power Factor","definition":"The ratio of real power (useful work) to apparent power (total draw). Ranges from 0 to 1.0. A power factor of 1.0 means all drawn power is doing work. A typical home with multiple motors operates around 0.7-0.85."},
-    "kpiReactive": {"term":"Reactive Power (kVAR)","definition":"The oscillating energy that builds and collapses magnetic fields in motors and transformers. Measured in kilovolt-amperes reactive (kVAR). This energy flows back and forth 60 times per second but performs no useful work."},
-    "kpiPhase": {"term":"Phase Angle","definition":"The angular displacement between voltage and current waves, measured in degrees. A phase angle of 0 degrees means perfect alignment (resistive load). Inductive loads like motors push this angle higher, increasing reactive power."},
-    "kpiCorrected": {"term":"Corrected Power Factor","definition":"The theoretical power factor if a properly sized capacitor were installed to offset the reactive power from inductive loads. A target of 0.95 is the standard engineering benchmark used in commercial power factor correction."}
+    "kpiPF": "<strong>Power Factor</strong> &mdash; The ratio of real power (useful work) to apparent power (total draw). Ranges from 0 to 1.0. A power factor of 1.0 means all drawn power is doing work. A typical home with multiple motors operates around 0.7&ndash;0.85.",
+    "kpiReactive": "<strong>Reactive Power (kVAR)</strong> &mdash; The oscillating energy that builds and collapses magnetic fields in motors and transformers. Measured in kilovolt-amperes reactive (kVAR). This energy flows back and forth 60 times per second but performs no useful work.",
+    "kpiPhase": "<strong>Phase Angle</strong> &mdash; The angular displacement between voltage and current waves, measured in degrees. A phase angle of 0&deg; means perfect alignment (resistive load). Inductive loads like motors push this angle higher, increasing reactive power.",
+    "kpiCorrected": "<strong>Corrected Power Factor</strong> &mdash; The theoretical power factor if a properly sized capacitor were installed to offset reactive power from inductive loads. A target of 0.95 is the standard engineering benchmark used in commercial power factor correction."
   },
   "coupled": [
     {
@@ -243,6 +243,34 @@
 <script src="mindmap-data.js"></script>
 <script src="../shared/mindmap.js"></script>
 <script src="../shared/learn-mode.js"></script>
+<script>
+/* Patch example cards to also toggle appliance checkboxes */
+(function(){
+  var data = window.LEARN_DATA;
+  if (!data || !data.examples) return;
+  function patch(){
+    document.querySelectorAll('.learn-example-card').forEach(function(card){
+      card.addEventListener('click', function(){
+        var idx = parseInt(card.dataset.example);
+        var ex = data.examples[idx];
+        if (!ex || !ex.checks) return;
+        /* Uncheck all first */
+        document.querySelectorAll('.appliance-item input[type="checkbox"]').forEach(function(cb){
+          cb.checked = false;
+          cb.closest('.appliance-item').classList.remove('active');
+        });
+        /* Check only the ones in the example */
+        ex.checks.forEach(function(val){
+          var cb = document.querySelector('.appliance-item input[value="'+val+'"]');
+          if (cb) { cb.checked = true; cb.closest('.appliance-item').classList.add('active'); }
+        });
+      });
+    });
+  }
+  /* Cards are injected by learn-mode.js on DOMContentLoaded, so run after a tick */
+  setTimeout(patch, 100);
+})();
+</script>
 <script src="../shared/export.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
