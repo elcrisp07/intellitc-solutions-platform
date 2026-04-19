@@ -1089,6 +1089,14 @@
 .hidden-gem-card .gem-sub {
   font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.4;
 }
+[data-theme="dark"] .hidden-gem-card {
+  background: linear-gradient(135deg, rgba(1,105,111,.28), rgba(209,153,0,.22));
+  border-color: rgba(1,105,111,.6);
+}
+[data-theme="dark"] .hidden-gem-card:hover {
+  background: linear-gradient(135deg, rgba(1,105,111,.38), rgba(209,153,0,.32));
+  border-color: var(--color-primary);
+}
 
 /* ═══════ NO RESULTS ═══════ */
 .no-results {
