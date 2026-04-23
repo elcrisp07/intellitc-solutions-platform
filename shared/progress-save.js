@@ -199,12 +199,18 @@
         '<div class="email-capture-status" role="status" aria-live="polite"></div>' +
       '</div>';
 
-    // Insert after save caption (or at top of panel)
+    // Insert at the top of the input panel (above first child, below any caption injected there)
     var caption = document.getElementById('progressSaveCaption');
-    if (caption && caption.parentNode) {
-      caption.parentNode.insertBefore(card, caption.nextSibling);
-    } else {
-      panel.insertBefore(card, panel.firstChild);
+    try {
+      if (caption && caption.parentNode && caption.parentNode.contains(caption)) {
+        caption.parentNode.insertBefore(card, caption.nextSibling);
+      } else {
+        panel.insertBefore(card, panel.firstChild);
+      }
+    } catch (e) {
+      // Fallback: just prepend to the panel
+      if (panel.firstChild) panel.insertBefore(card, panel.firstChild);
+      else panel.appendChild(card);
     }
 
     var input = card.querySelector('.email-capture-input');
