@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "IntelliTC Solutions — real estate education & analysis platform",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "echo 'Static site — no build step needed'"
+  },
   "dependencies": {
     "@vercel/kv": "^3.0.0"
   }
