@@ -137,6 +137,122 @@
     }
   }
 
+  /* ---- Email Capture (Resume Learning Nudges) ----
+     Shows a dismissible card offering email reminders. User can:
+       1. Enter email → we POST to /api/capture-email
+       2. Dismiss → we set a flag in localStorage so we don't ask again
+     If user has previously captured, we silently ping /api/track-activity.
+  ---- */
+  var EMAIL_KEY = 'intellitc_email';
+  var EMAIL_DISMISS_KEY = 'intellitc_email_dismiss';
+  var EMAIL_RX = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function calcLabel() {
+    var h1 = document.querySelector('.header-inner .logo-text, h1');
+    var panelTitle = document.querySelector('.panel-title');
+    if (panelTitle && panelTitle.textContent) return panelTitle.textContent.trim().slice(0, 80);
+    if (document.title) return document.title.split('|')[0].trim().slice(0, 80);
+    return calcId;
+  }
+
+  function pingActivity() {
+    var savedEmail;
+    try { savedEmail = store.getItem(EMAIL_KEY); } catch(e) {}
+    if (!savedEmail) return;
+    try {
+      fetch('/api/track-activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: savedEmail, calcId: calcId, calcName: calcLabel() }),
+        keepalive: true
+      }).catch(function() {});
+    } catch(e) {}
+  }
+
+  function shouldShowEmailCard() {
+    try {
+      if (store.getItem(EMAIL_KEY)) return false;
+      if (store.getItem(EMAIL_DISMISS_KEY)) return false;
+    } catch(e) { return false; }
+    return true;
+  }
+
+  function showEmailCard() {
+    if (!shouldShowEmailCard()) return;
+    var panel = document.getElementById('inputPanel');
+    if (!panel) return;
+    if (document.getElementById('emailCaptureCard')) return;
+
+    var card = document.createElement('div');
+    card.id = 'emailCaptureCard';
+    card.className = 'email-capture-card';
+    card.innerHTML = '' +
+      '<button class="email-capture-close" aria-label="Dismiss">&times;</button>' +
+      '<div class="email-capture-icon">\u2709</div>' +
+      '<div class="email-capture-body">' +
+        '<div class="email-capture-title">Want a reminder to finish this?</div>' +
+        '<div class="email-capture-desc">Optional. We\'ll email you one link to pick up where you left off. No marketing, no account required.</div>' +
+        '<form class="email-capture-form" novalidate>' +
+          '<input type="email" class="email-capture-input" placeholder="your@email.com" autocomplete="email" required>' +
+          '<button type="submit" class="email-capture-submit">Send me a reminder</button>' +
+        '</form>' +
+        '<div class="email-capture-status" role="status" aria-live="polite"></div>' +
+      '</div>';
+
+    // Insert after save caption (or at top of panel)
+    var caption = document.getElementById('progressSaveCaption');
+    if (caption && caption.parentNode) {
+      caption.parentNode.insertBefore(card, caption.nextSibling);
+    } else {
+      panel.insertBefore(card, panel.firstChild);
+    }
+
+    var input = card.querySelector('.email-capture-input');
+    var submit = card.querySelector('.email-capture-submit');
+    var status = card.querySelector('.email-capture-status');
+    var form = card.querySelector('.email-capture-form');
+
+    card.querySelector('.email-capture-close').addEventListener('click', function() {
+      try { store.setItem(EMAIL_DISMISS_KEY, String(Date.now())); } catch(e) {}
+      card.classList.add('dismissed');
+      setTimeout(function() { card.remove(); }, 260);
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = (input.value || '').trim().toLowerCase();
+      if (!EMAIL_RX.test(email)) {
+        status.textContent = 'Please enter a valid email address.';
+        status.className = 'email-capture-status err';
+        input.focus();
+        return;
+      }
+      submit.disabled = true;
+      status.textContent = 'Saving\u2026';
+      status.className = 'email-capture-status';
+
+      fetch('/api/capture-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, calcId: calcId, calcName: calcLabel() })
+      }).then(function(r) {
+        if (!r.ok) throw new Error('bad response');
+        try { store.setItem(EMAIL_KEY, email); } catch(e) {}
+        status.textContent = '\u2713 You\'re set. We\'ll send one reminder if you don\'t come back.';
+        status.className = 'email-capture-status ok';
+        submit.disabled = true;
+        setTimeout(function() {
+          card.classList.add('dismissed');
+          setTimeout(function() { if (card.parentNode) card.remove(); }, 260);
+        }, 2400);
+      }).catch(function() {
+        status.textContent = 'Could not save right now. Try again later.';
+        status.className = 'email-capture-status err';
+        submit.disabled = false;
+      });
+    });
+  }
+
   /* ---- Debounced save on input ---- */
   var saveTimer;
   function debouncedSave() {
@@ -164,6 +280,11 @@
 
     // Clear draft on successful calculation
     clearOnCalculate();
+
+    // Ping activity (silent) + offer email capture
+    pingActivity();
+    // Delay slightly so the card isn't the first thing users see
+    setTimeout(showEmailCard, 1800);
   }
 
   if (document.readyState === 'loading') {

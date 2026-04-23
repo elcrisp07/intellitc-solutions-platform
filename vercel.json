@@ -10,5 +10,11 @@
         }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/resume-trigger",
+      "schedule": "0 14 * * *"
+    }
   ]
 }
