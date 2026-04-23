@@ -432,125 +432,38 @@
   line-height: 1.5;
 }
 
-/* ═══════ CHOOSE YOUR PATH (FIRST MILE FORK) ═══════ */
-.path-fork {
+/* ═══════ ROLE ENTRY CARDS ═══════ */
+.role-entry {
   max-width: 1100px;
   margin: 0 auto var(--space-10);
-  padding: var(--space-8) var(--space-6) var(--space-4);
-  text-align: center;
+  padding: var(--space-6) var(--space-6) 0;
 }
-.path-fork-heading {
+.role-entry-heading {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+.role-entry-heading .eyebrow {
   font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+  display: block;
   margin-bottom: var(--space-2);
 }
-.path-fork-subhead {
+.role-entry-heading h2 {
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.2;
-  margin-bottom: var(--space-6);
+  margin: 0;
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
 }
-.path-fork-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
-  text-align: left;
-}
-.path-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  background: var(--color-surface);
-  border: 2px solid var(--color-divider);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6);
-  text-decoration: none;
-  color: inherit;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  position: relative;
-  overflow: hidden;
-}
-.path-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: var(--accent, var(--color-primary));
-  opacity: 0.9;
-}
-.path-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(1,105,111,0.15);
-  border-color: var(--accent, var(--color-primary));
-}
-.path-card--beginner { --accent: #01696f; }
-.path-card--expert   { --accent: #D19900; }
-.path-card--senior   { --accent: #7b3f8a; }
-.path-card-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent, var(--color-primary));
-  background: color-mix(in srgb, var(--accent, var(--color-primary)) 10%, transparent);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  align-self: flex-start;
-}
-.path-card-title {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--color-text);
-  margin: 0;
-  line-height: 1.2;
-}
-.path-card-desc {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-  line-height: 1.55;
-  flex-grow: 1;
-}
-.path-card-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--accent, var(--color-primary));
-  margin-top: var(--space-2);
-}
-.path-card-cta::after {
-  content: '→';
-  transition: transform .18s ease;
-}
-.path-card:hover .path-card-cta::after {
-  transform: translateX(4px);
-}
-@media(max-width: 900px) {
-  .path-fork-grid { grid-template-columns: 1fr; gap: var(--space-4); }
-  .path-fork { padding: var(--space-6) var(--space-5) var(--space-2); }
-}
-
-/* ═══════ ROLE ENTRY CARDS ═══════ */
-.role-entry {
-  max-width: 1000px;
-  margin: 0 auto var(--space-12);
-  padding: 0 var(--space-6);
-}
 .role-entry-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
 }
 .role-card {
@@ -585,10 +498,14 @@
 .role-card-icon.investor { background: #e8f5e9; color: #2e7d32; }
 .role-card-icon.agent { background: #e3f2fd; color: #1565c0; }
 .role-card-icon.lender { background: #fce4ec; color: #c62828; }
+.role-card-icon.goal { background: #fff4d6; color: #8a6300; }
+.role-card-icon.senior { background: #f1e6f5; color: #6a2878; }
 [data-theme="dark"] .role-card-icon.new { background: #004d40; color: #80cbc4; }
 [data-theme="dark"] .role-card-icon.investor { background: #1b5e20; color: #a5d6a7; }
 [data-theme="dark"] .role-card-icon.agent { background: #0d47a1; color: #90caf9; }
 [data-theme="dark"] .role-card-icon.lender { background: #b71c1c; color: #ef9a9a; }
+[data-theme="dark"] .role-card-icon.goal { background: #6b4f00; color: #ffd97a; }
+[data-theme="dark"] .role-card-icon.senior { background: #4a1e55; color: #dbb6e5; }
 
 .role-card h3 {
   font-size: var(--text-base);
@@ -608,7 +525,7 @@
   color: var(--color-primary);
   margin-top: auto;
 }
-@media(max-width: 800px) {
+@media(max-width: 900px) {
   .role-entry-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media(max-width: 480px) {
@@ -1501,48 +1418,12 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
   </div>
 </div>
 
-<!-- ═══════ CHOOSE YOUR PATH (FIRST MILE FORK) ═══════ -->
-<section class="path-fork" aria-labelledby="pathForkHeading">
-  <div class="path-fork-heading" id="pathForkHeading">Choose Your Path</div>
-  <h2 class="path-fork-subhead">Where are you on your real estate journey?</h2>
-  <div class="path-fork-grid">
-    <a href="./zero-experience/index.html" class="path-card path-card--beginner">
-      <span class="path-card-badge">New to this</span>
-      <h3 class="path-card-title">I'm just getting started</h3>
-      <p class="path-card-desc">Plain-language guidance, no jargon. Walk through core concepts, then pick your first tool with confidence.</p>
-      <span class="path-card-cta">Start from scratch</span>
-    </a>
-    <a href="./goal-pilot/index.html" class="path-card path-card--expert">
-      <span class="path-card-badge">Know what I need</span>
-      <h3 class="path-card-title">I know what I'm doing</h3>
-      <p class="path-card-desc">Pick your goal and get a direct, ranked tool chain. Skip the onboarding — jump straight to the analysis.</p>
-      <span class="path-card-cta">Open Goal Pilot</span>
-    </a>
-    <a href="./seniors-corner/index.html" class="path-card path-card--senior">
-      <span class="path-card-badge">55+ planning</span>
-      <h3 class="path-card-title">I'm planning for retirement</h3>
-      <p class="path-card-desc">Retirement income strategies, downsizing decisions, estate planning, and senior-focused calculators.</p>
-      <span class="path-card-cta">Open Senior's Corner</span>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════ CONSIDER THIS ═══════ -->
-<div style="max-width:900px;margin:0 auto;padding:0 var(--space-5) var(--space-4)">
-  <a href="./consider-this/index.html" class="consider-this-banner">
-    <div class="consider-this-left">
-      <div class="consider-this-icon">🔑</div>
-      <div class="consider-this-text">
-        <span class="consider-this-title">Consider This</span>
-        <span class="consider-this-subtitle">Before you run the numbers — understand the system</span>
-      </div>
-    </div>
-    <span class="consider-this-cta">Explore →</span>
-  </a>
-</div>
-
-<!-- ═══════ ROLE-BASED ENTRY POINTS ═══════ -->
+<!-- ═══════ ROLE-BASED ENTRY POINTS (UNIFIED 6-CARD GRID) ═══════ -->
 <div class="role-entry">
+  <div class="role-entry-heading">
+    <span class="eyebrow">Choose Your Path</span>
+    <h2>Where are you on your real estate journey?</h2>
+  </div>
   <div class="role-entry-grid">
     <a href="./zero-experience/index.html" class="role-card">
       <div class="role-card-icon new">
@@ -1576,7 +1457,37 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <p>DSCR analysis, qualification tools, loan comparison, and market valuation signals.</p>
       <span class="card-cta">Evaluate loans →</span>
     </a>
+    <a href="./goal-pilot/index.html" class="role-card">
+      <div class="role-card-icon goal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
+      <h3>I Know What I'm Doing</h3>
+      <p>Pick your goal and get a direct, ranked tool chain. Skip onboarding — jump to the analysis.</p>
+      <span class="card-cta">Open Goal Pilot →</span>
+    </a>
+    <a href="./seniors-corner/index.html" class="role-card">
+      <div class="role-card-icon senior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <h3>I'm Planning for Retirement</h3>
+      <p>Retirement income strategies, downsizing decisions, estate planning, and senior-focused calculators.</p>
+      <span class="card-cta">Open Senior's Corner →</span>
+    </a>
   </div>
+</div>
+
+<!-- ═══════ CONSIDER THIS ═══════ -->
+<div style="max-width:1100px;margin:0 auto var(--space-10);padding:0 var(--space-6)">
+  <a href="./consider-this/index.html" class="consider-this-banner">
+    <div class="consider-this-left">
+      <div class="consider-this-icon">🔑</div>
+      <div class="consider-this-text">
+        <span class="consider-this-title">Consider This</span>
+        <span class="consider-this-subtitle">Before you run the numbers — understand the system</span>
+      </div>
+    </div>
+    <span class="consider-this-cta">Explore →</span>
+  </a>
 </div>
 
 <!-- ═══════ PLATFORM CAPABILITIES ═══════ -->
