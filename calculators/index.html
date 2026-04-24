@@ -179,8 +179,8 @@
   transition: box-shadow .2s, border-color .2s;
 }
 .category-accordion:hover {
-  box-shadow: 0 4px 18px rgba(0,0,0,.06);
-  border-color: rgba(1,105,111,.35);
+  box-shadow: 0 8px 22px rgba(29, 78, 216, .22);
+  border-color: #1d4ed8;
 }
 .category-toggle {
   width: 100%;
@@ -189,9 +189,32 @@
   cursor: pointer; background: none; border: none;
   font-family: inherit; text-align: left;
   gap: var(--space-5);
-  transition: background .15s;
+  transition: background .2s ease, color .2s ease;
 }
-.category-toggle:hover { background: var(--color-surface-offset); }
+/* Blue hover on the tool-set button — only when the accordion is closed.
+   Once opened, we leave it alone so the visible cards stay readable. */
+.category-accordion:not(.open) .category-toggle:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+}
+.category-accordion:not(.open) .category-toggle:hover .cat-info h3,
+.category-accordion:not(.open) .category-toggle:hover .cat-info p,
+.category-accordion:not(.open) .category-toggle:hover .cat-chevron {
+  color: #ffffff;
+}
+.category-accordion:not(.open) .category-toggle:hover .cat-icon {
+  background: rgba(255,255,255,0.18);
+  color: #ffffff;
+}
+.category-accordion:not(.open) .category-toggle:hover .cat-count {
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+}
+.cat-info h3,
+.cat-info p,
+.cat-chevron,
+.cat-icon,
+.cat-count { transition: background .2s ease, color .2s ease; }
 .cat-left {
   display: flex; align-items: flex-start; gap: var(--space-5);
   flex: 1; min-width: 0;
