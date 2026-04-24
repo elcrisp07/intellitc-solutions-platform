@@ -83,7 +83,8 @@
     Object.entries(DATA.tooltips).forEach(([fieldId, text]) => {
       const input = document.getElementById(fieldId);
       if (!input) return;
-      const field = input.closest('.field');
+      // Support both legacy (.field) and standard (.form-group) field wrappers
+      const field = input.closest('.field') || input.closest('.form-group');
       if (!field) return;
       // Don't duplicate
       if (field.querySelector('.learn-tooltip')) return;
@@ -97,8 +98,18 @@
   /* ---- Example Scenarios ---- */
   function injectExamples() {
     if (!DATA.examples || DATA.examples.length === 0) return;
-    const divider = document.querySelector('.divider');
-    if (!divider) return;
+    // Insertion anchor: .divider (legacy) OR first .calc-container .calc-desc (standard) OR top of first .calc-panel
+    let anchor = document.querySelector('.divider');
+    let insertMode = 'after';
+    if (!anchor) {
+      const desc = document.querySelector('.calc-container .calc-desc');
+      if (desc) { anchor = desc; insertMode = 'after'; }
+    }
+    if (!anchor) {
+      const container = document.querySelector('.calc-container');
+      if (container) { anchor = container; insertMode = 'prepend'; }
+    }
+    if (!anchor) return;
     // Don't duplicate
     if (document.querySelector('.learn-examples')) return;
 
@@ -120,7 +131,11 @@
         `).join('')}
       </div>
     `;
-    divider.parentNode.insertBefore(section, divider.nextSibling);
+    if (insertMode === 'prepend') {
+      anchor.insertBefore(section, anchor.firstChild);
+    } else {
+      anchor.parentNode.insertBefore(section, anchor.nextSibling);
+    }
 
     // Bind click handlers
     section.querySelectorAll('.learn-example-card').forEach(card => {
@@ -155,9 +170,15 @@
   }
 
   /* ---- Why This Matters Panel ---- */
+  function getResultsTarget() {
+    return document.getElementById('resultsPanel')
+      || document.querySelector('.calc-container')
+      || document.querySelector('.input-panel')
+      || document.body;
+  }
   function injectWhyPanel() {
     if (!DATA.whyThisMatters) return;
-    const resultsPanel = document.getElementById('resultsPanel');
+    const resultsPanel = getResultsTarget();
     if (!resultsPanel) return;
     if (resultsPanel.querySelector('.learn-why-panel')) return;
 
@@ -214,7 +235,7 @@
   /* ---- Coupled Calculator Suggestions (always visible after results) ---- */
   function injectCoupled() {
     if (!DATA.coupled || DATA.coupled.length === 0) return;
-    const resultsPanel = document.getElementById('resultsPanel');
+    const resultsPanel = getResultsTarget();
     if (!resultsPanel) return;
     if (resultsPanel.querySelector('.learn-coupled')) return;
 

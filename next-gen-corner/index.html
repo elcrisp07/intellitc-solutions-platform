@@ -133,6 +133,65 @@
   font-size:var(--text-xs); font-weight:600;
 }
 
+/* ── Classroom Challenges Button + Drawer ── */
+.ng-classroom-btn {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  margin-top:var(--space-4);
+  padding:var(--space-3) var(--space-5);
+  border-radius:var(--radius-lg); border:none;
+  background:var(--color-primary); color:#fff;
+  font-size:var(--text-sm); font-weight:600; font-family:var(--font-body);
+  cursor:pointer; transition:background var(--transition-interactive), transform 0.15s;
+}
+.ng-classroom-btn:hover { background:var(--color-primary-hover); transform:translateY(-1px); }
+.ng-classroom-btn .chev { transition:transform 0.25s; display:inline-block; }
+.ng-classroom-btn.open .chev { transform:rotate(180deg); }
+
+.ng-challenges {
+  display:none;
+  max-width:var(--content-default); margin:var(--space-5) auto 0;
+  padding:0 var(--space-6);
+}
+.ng-challenges.open { display:block; }
+.ng-challenges-header {
+  background:var(--color-surface-offset); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5) var(--space-6);
+  margin-bottom:var(--space-5);
+}
+.ng-challenges-header h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.ng-challenges-header p { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.65; margin:0; }
+.ng-challenges-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:var(--space-4);
+}
+.ng-challenge {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5);
+  display:flex; flex-direction:column;
+  transition:border-color var(--transition-interactive), box-shadow var(--transition-interactive), transform 0.15s;
+}
+.ng-challenge:hover { border-color:#7dd3fc; box-shadow:0 6px 18px rgba(14,165,233,.12); transform:translateY(-2px); }
+[data-theme="dark"] .ng-challenge:hover { border-color:#1d4ed8; box-shadow:0 6px 18px rgba(14,165,233,.18); }
+.ng-challenge-num {
+  font-size:var(--text-xs); font-weight:700; color:var(--color-primary);
+  font-family:var(--font-mono); margin-bottom:var(--space-2);
+}
+.ng-challenge h4 { font-size:var(--text-sm); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); line-height:1.35; }
+.ng-challenge .ng-challenge-def { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.6; margin:0 0 var(--space-3); }
+.ng-challenge .ng-challenge-drill { font-size:var(--text-sm); color:var(--color-text); line-height:1.6; margin:0 0 var(--space-4); flex:1; }
+.ng-challenge .ng-challenge-drill strong { color:var(--color-text); }
+.ng-challenge-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  align-self:flex-start;
+  padding:var(--space-2) var(--space-4); border-radius:var(--radius-md);
+  font-size:var(--text-xs); font-weight:600; font-family:var(--font-body);
+  background:var(--color-surface-2); color:var(--color-primary);
+  border:1px solid var(--color-border); cursor:pointer;
+  text-decoration:none;
+  transition:all var(--transition-interactive);
+}
+.ng-challenge-btn:hover { background:var(--color-primary); color:#fff; border-color:var(--color-primary); }
+
 /* ── Calculator Panel (shared pattern) ── */
 .calc-panel {
   display:none; max-width:var(--content-default); margin:0 auto;
@@ -280,7 +339,7 @@
 </section>
 
 <!-- ── For Teachers ── -->
-<section class="ng-teachers">
+<section class="ng-teachers" id="ngHomeTeachers">
   <div class="ng-teachers-inner">
     <div class="ng-teachers-icon">🧑‍🏫</div>
     <div>
@@ -293,8 +352,21 @@
         <span class="ng-teachers-chip">Shareable Result Links</span>
         <span class="ng-teachers-chip">Free Forever</span>
       </div>
+      <button class="ng-classroom-btn" id="ngClassroomToggle" type="button" aria-expanded="false" aria-controls="ngChallenges">
+        See 20 Classroom Challenges
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
     </div>
   </div>
+</section>
+
+<!-- ── Classroom Challenges Drawer ── -->
+<section class="ng-challenges" id="ngChallenges" aria-hidden="true">
+  <div class="ng-challenges-header">
+    <h3>20 Classroom Challenges</h3>
+    <p>Each challenge pairs a short definition of a real-world concept with a drill students can run in a single class period. All drills use the three scenarios above — no new tools to learn. Click any challenge to jump into the matching scenario.</p>
+  </div>
+  <div class="ng-challenges-grid" id="ngChallengesGrid"></div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -608,6 +680,7 @@ function showCalc(type) {
   document.getElementById('ngHome').style.display = 'none';
   document.getElementById('ngToolCards').style.display = 'none';
   document.querySelector('.ng-teachers').style.display = 'none';
+  const drawer = document.getElementById('ngChallenges'); if (drawer) drawer.style.display = 'none';
   document.getElementById('roommatePanel').classList.remove('active');
   document.getElementById('starterPanel').classList.remove('active');
   document.getElementById('househackPanel').classList.remove('active');
@@ -620,11 +693,113 @@ function showHome() {
   document.getElementById('ngHome').style.display = '';
   document.getElementById('ngToolCards').style.display = '';
   document.querySelector('.ng-teachers').style.display = '';
+  const drawer = document.getElementById('ngChallenges'); if (drawer) drawer.style.display = '';
   document.getElementById('roommatePanel').classList.remove('active');
   document.getElementById('starterPanel').classList.remove('active');
   document.getElementById('househackPanel').classList.remove('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+/* ── Classroom Challenges Data ── */
+const NG_CHALLENGES = [
+  { n:1, title:"Opportunity Cost", def:"The value of the next-best alternative you give up when choosing one option over another.",
+    drill:"Run <strong>Scenario A</strong> with <strong>2 roommates</strong>, then again with <strong>4 roommates</strong>. Calculate the extra savings. That's the opportunity cost of living solo.",
+    target:"roommate" },
+  { n:2, title:"Compound Interest", def:"Interest earned on both the original amount and on previously-earned interest — the engine of long-term wealth.",
+    drill:"In <strong>Scenario A</strong>, invest monthly savings at <strong>5% vs. 10%</strong>. Report how much more one student saves over 5 years.",
+    target:"roommate" },
+  { n:3, title:"Debt-to-Income Ratio (DTI)", def:"Monthly debt payments divided by gross monthly income. Lenders use this to decide how much you can borrow.",
+    drill:"In <strong>Scenario B</strong> add <strong>$300/mo student loan</strong> and <strong>$250/mo car payment</strong>. Show how max home price drops.",
+    target:"starter" },
+  { n:4, title:"PITI (Principal, Interest, Taxes, Insurance)", def:"The four parts of a true monthly mortgage payment — not just loan principal and interest.",
+    drill:"In <strong>Scenario B</strong>, compare the “base mortgage” payment to the “all-in PITI” figure. Name the two items renters don't see on a listing site.",
+    target:"starter" },
+  { n:5, title:"Down Payment vs. PMI", def:"Private Mortgage Insurance is an extra monthly fee you pay when your down payment is under 20%.",
+    drill:"Run <strong>Scenario B</strong> at <strong>5% down</strong>, then <strong>10%</strong>, then <strong>20%</strong>. Report how PMI changes each total monthly cost.",
+    target:"starter" },
+  { n:6, title:"Amortization", def:"How each mortgage payment splits between interest (goes to the bank) and principal (builds your equity).",
+    drill:"In <strong>Scenario C</strong>, note the <strong>5-year equity</strong> figure. Explain what created that equity without adding extra payments.",
+    target:"househack" },
+  { n:7, title:"House-Hacking", def:"Buying a home and renting out part of it (a room, basement, or unit) to offset your mortgage.",
+    drill:"Run <strong>Scenario C</strong> with <strong>$0 room rent</strong>, then <strong>$700/mo</strong>, then <strong>$1,000/mo</strong>. Show the tipping point where ownership beats renting solo.",
+    target:"househack" },
+  { n:8, title:"Fixed vs. Variable Costs", def:"Fixed costs stay the same each month; variable costs shift with usage or decisions.",
+    drill:"In <strong>Scenario A</strong>, list which inputs are fixed (rent) and which are variable (utilities, roommates). Explain why splitting rent is powerful.",
+    target:"roommate" },
+  { n:9, title:"Break-Even Analysis", def:"The point where two options cost exactly the same. Below it, one wins; above it, the other wins.",
+    drill:"In <strong>Scenario C</strong>, find the <strong>room-rent amount</strong> that makes house-hacking equal renting solo. Everyone reports their number.",
+    target:"househack" },
+  { n:10, title:"Gross vs. Net Income", def:"Gross is before taxes and deductions. Net (take-home) is what lands in your bank account.",
+    drill:"In <strong>Scenario B</strong>, use <strong>gross $58K</strong>, then reduce by <strong>25% for taxes</strong>. Show how true affordability changes when using net.",
+    target:"starter" },
+  { n:11, title:"Time Value of Money", def:"A dollar today is worth more than a dollar later because today's dollar can be invested and grow.",
+    drill:"In <strong>Scenario A</strong>, compare saving <strong>$300/mo at age 18</strong> vs. <strong>starting at age 28</strong>. Report the 10-year gap.",
+    target:"roommate" },
+  { n:12, title:"Sticker Price vs. Total Cost", def:"The number on the listing isn't what you actually pay per month to own a home.",
+    drill:"In <strong>Scenario B</strong>, compare the <strong>home price</strong> to the <strong>all-in monthly cost</strong>. Identify the hidden expenses listing sites hide.",
+    target:"starter" },
+  { n:13, title:"Savings Rate", def:"The percentage of your income you save each month — the single biggest predictor of financial independence.",
+    drill:"In <strong>Scenario A</strong>, each student calculates <strong>their monthly savings ÷ total income</strong>. Who's above 20%? Who's above 40%?",
+    target:"roommate" },
+  { n:14, title:"Rent Inflation", def:"Rent typically rises 3–5% per year, independent of your income.",
+    drill:"Run <strong>Scenario A</strong>, then increase rent by <strong>15% (3 years at 5%)</strong>. Show the long-term penalty of renting solo.",
+    target:"roommate" },
+  { n:15, title:"Equity", def:"The portion of your home's value that you actually own — home value minus mortgage balance.",
+    drill:"In <strong>Scenario C</strong>, compare <strong>5-year equity for the owner</strong> to the <strong>renter's $0 equity</strong>. Frame the gap as a 'forced savings account.'",
+    target:"househack" },
+  { n:16, title:"Housing-Cost Ratio (28% Rule)", def:"Lenders usually cap housing costs at ~28% of gross monthly income.",
+    drill:"In <strong>Scenario B</strong>, calculate <strong>gross income × 0.28</strong>. Show how it matches (or limits) the affordable monthly payment.",
+    target:"starter" },
+  { n:17, title:"Interest Rate Sensitivity", def:"Small changes in mortgage rate produce large changes in monthly payment and lifetime interest.",
+    drill:"Run <strong>Scenario B</strong> at <strong>6.5%</strong>, <strong>7.5%</strong>, and <strong>8.5%</strong>. Plot the three monthly payments. Discuss why rates matter more than price.",
+    target:"starter" },
+  { n:18, title:"Cost of Convenience", def:"Solo living, delivery services, and single-purchase housing are premium convenience products.",
+    drill:"In <strong>Scenario A</strong>, report the <strong>monthly premium</strong> for living alone. Discuss what could be bought instead (car, travel, tuition).",
+    target:"roommate" },
+  { n:19, title:"Cash Flow", def:"Money in minus money out, each month. The number that decides whether a plan actually works.",
+    drill:"In <strong>Scenario C</strong>, write the <strong>monthly cash flow</strong> for owner (with roommate) and for solo renter. Which is negative? Which is positive?",
+    target:"househack" },
+  { n:20, title:"Decision Framework", def:"A repeatable way to compare options on the same criteria so emotion doesn't override math.",
+    drill:"Students run <strong>all three scenarios</strong> with their own numbers, then rank them by <strong>(1) monthly cost</strong>, <strong>(2) 5-year wealth</strong>, and <strong>(3) lifestyle fit</strong>. Each pair presents a final pick.",
+    target:"househack" }
+];
+
+/* ── Classroom Challenges Renderer ── */
+function renderChallenges() {
+  const grid = document.getElementById('ngChallengesGrid');
+  if (!grid || grid.dataset.rendered === '1') return;
+  grid.innerHTML = NG_CHALLENGES.map(c => `
+    <div class="ng-challenge">
+      <div class="ng-challenge-num">Challenge #${String(c.n).padStart(2,'0')}</div>
+      <h4>${c.title}</h4>
+      <p class="ng-challenge-def">${c.def}</p>
+      <p class="ng-challenge-drill">→ ${c.drill}</p>
+      <button class="ng-challenge-btn" type="button" data-target="${c.target}">Open Scenario</button>
+    </div>
+  `).join('');
+  grid.dataset.rendered = '1';
+  grid.querySelectorAll('.ng-challenge-btn').forEach(btn => {
+    btn.addEventListener('click', () => showCalc(btn.dataset.target));
+  });
+}
+
+/* ── Classroom Challenges Toggle ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('ngClassroomToggle');
+  const drawer = document.getElementById('ngChallenges');
+  if (!btn || !drawer) return;
+  btn.addEventListener('click', () => {
+    const isOpen = drawer.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    btn.firstChild.textContent = isOpen ? 'Hide Classroom Challenges ' : 'See 20 Classroom Challenges ';
+    if (isOpen) {
+      renderChallenges();
+      setTimeout(() => drawer.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+    }
+  });
+});
 
 /* ── Format helpers ── */
 function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
