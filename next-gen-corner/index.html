@@ -353,7 +353,7 @@
         <span class="ng-teachers-chip">Free Forever</span>
       </div>
       <button class="ng-classroom-btn" id="ngClassroomToggle" type="button" aria-expanded="false" aria-controls="ngChallenges">
-        See 20 Classroom Challenges
+        See 60 Classroom Challenges
         <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
@@ -363,8 +363,8 @@
 <!-- ── Classroom Challenges Drawer ── -->
 <section class="ng-challenges" id="ngChallenges" aria-hidden="true">
   <div class="ng-challenges-header">
-    <h3>20 Classroom Challenges</h3>
-    <p>Each challenge pairs a short definition of a real-world concept with a drill students can run in a single class period. All drills use the three scenarios above — no new tools to learn. Click any challenge to jump into the matching scenario.</p>
+    <h3>60 Classroom Challenges</h3>
+    <p>Each challenge pairs a short definition of a real-world concept with a drill students can run in a single class period. All drills use the three scenarios above — no new tools to learn. Work through them in order, or pick any concept you want to teach. Click any challenge to jump into the matching scenario.</p>
   </div>
   <div class="ng-challenges-grid" id="ngChallengesGrid"></div>
 </section>
@@ -761,6 +761,126 @@ const NG_CHALLENGES = [
     target:"househack" },
   { n:20, title:"Decision Framework", def:"A repeatable way to compare options on the same criteria so emotion doesn't override math.",
     drill:"Students run <strong>all three scenarios</strong> with their own numbers, then rank them by <strong>(1) monthly cost</strong>, <strong>(2) 5-year wealth</strong>, and <strong>(3) lifestyle fit</strong>. Each pair presents a final pick.",
+    target:"househack" },
+  { n:21, title:"Emergency Fund", def:"3–6 months of essential expenses held in cash for unexpected setbacks (job loss, car repair, medical).",
+    drill:"In <strong>Scenario A</strong>, calculate <strong>shared monthly cost × 3</strong> and <strong>× 6</strong>. How many months of savings at the current rate to fully fund each?",
+    target:"roommate" },
+  { n:22, title:"Loan-to-Value Ratio (LTV)", def:"Loan amount divided by home value. A 10% down payment = 90% LTV. Higher LTV = more risk to the lender.",
+    drill:"In <strong>Scenario B</strong>, calculate LTV for <strong>5%</strong>, <strong>10%</strong>, and <strong>20%</strong> down. Explain why lenders charge higher rates for higher LTV.",
+    target:"starter" },
+  { n:23, title:"Front-End vs. Back-End Ratios", def:"Front-end = housing ÷ income. Back-end = (housing + all debts) ÷ income. Most lenders want front-end <28% and back-end <36%.",
+    drill:"In <strong>Scenario B</strong>, compute both ratios. Add a <strong>$400/mo</strong> car loan and recompute. Which ratio breaks first?",
+    target:"starter" },
+  { n:24, title:"Closing Costs", def:"One-time fees (title, appraisal, origination, taxes) paid at purchase — typically 2–5% of home price.",
+    drill:"In <strong>Scenario B</strong>, calculate <strong>3% of home price</strong>. Add it to the down payment. Show students the real cash-to-close figure.",
+    target:"starter" },
+  { n:25, title:"Property Taxes", def:"An annual tax, paid monthly through escrow, based on your home's assessed value and the local mill rate.",
+    drill:"In <strong>Scenario B</strong>, compare taxes at <strong>1.0%</strong>, <strong>1.5%</strong>, and <strong>2.5%</strong> of home value. Identify which states have which tiers.",
+    target:"starter" },
+  { n:26, title:"Home Insurance & HOI", def:"Homeowner's insurance protects the structure and belongings. Required by every mortgage lender.",
+    drill:"In <strong>Scenario B</strong>, adjust home insurance from <strong>$1,200/yr</strong> to <strong>$2,400/yr</strong>. Report the monthly payment difference.",
+    target:"starter" },
+  { n:27, title:"Maintenance 1% Rule", def:"Budget roughly 1% of home value per year for maintenance (roof, HVAC, appliances, paint).",
+    drill:"In <strong>Scenario B</strong>, calculate <strong>1% of home price</strong> as an annual figure, then divide by 12. Compare it to rent (where you pay $0 maintenance).",
+    target:"starter" },
+  { n:28, title:"Rent vs. Own: True Break-Even", def:"The point where owning costs the same as renting for the same living situation.",
+    drill:"Run <strong>Scenario C</strong> with <strong>no roommate</strong>. Find the home price at which ownership monthly cost equals the solo rent figure.",
+    target:"househack" },
+  { n:29, title:"Inflation Basics", def:"A general rise in prices over time, measured by CPI. Erodes the purchasing power of cash.",
+    drill:"In <strong>Scenario A</strong>, inflate solo rent by <strong>8%/yr for 3 years</strong>. Show how much of a raise someone needs just to stay even.",
+    target:"roommate" },
+  { n:30, title:"Real Estate as Inflation Hedge", def:"Property values and rents historically track inflation (0.94 correlation with CPI), meaning owners' wealth tends to keep pace.",
+    drill:"In <strong>Scenario C</strong>, inflate home value <strong>4%/yr</strong> and rent <strong>4%/yr</strong>. Compare the owner's appreciation + rising room-rent to the solo renter's rising rent bill.",
+    target:"househack" },
+  { n:31, title:"Fixed-Rate Debt Devaluation", def:"When inflation rises, your fixed mortgage payment stays the same — meaning you repay the loan with “cheaper dollars”.",
+    drill:"In <strong>Scenario B</strong>, inflate income <strong>4%/yr for 5 years</strong>. The mortgage payment stays flat — calculate how much smaller it is as a share of income.",
+    target:"starter" },
+  { n:32, title:"Demand-Pull Inflation", def:"Prices rise because demand outpaces supply. Real estate tends to thrive — more buyers bidding up prices.",
+    drill:"In <strong>Scenario C</strong>, raise home value by <strong>12% in 1 year</strong>. Recalculate 5-year equity. Discuss why owners benefit more than renters here.",
+    target:"househack" },
+  { n:33, title:"Cost-Push Inflation", def:"Prices rise because input costs (materials, wages, energy) rise. Real estate results are mixed — maintenance and property tax costs rise too.",
+    drill:"In <strong>Scenario B</strong>, raise <strong>property tax by 15%</strong> and <strong>maintenance by 20%</strong>. Show how monthly cost creeps up even with a fixed mortgage.",
+    target:"starter" },
+  { n:34, title:"Stagflation", def:"High inflation + stagnant economy + rising unemployment. Real estate often underperforms — higher vacancies, weaker prices.",
+    drill:"In <strong>Scenario C</strong>, drop room-rent by <strong>25%</strong> (simulated vacancy) and freeze home-value growth. Compare the owner's position to a renter's.",
+    target:"househack" },
+  { n:35, title:"Rent as CPI Buffer", def:"Rent accounts for roughly 40% of CPI — meaning rental income typically rises with inflation.",
+    drill:"In <strong>Scenario C</strong>, raise room-rent by <strong>CPI ≈ 5%</strong>. Show how the owner's effective housing cost drops each year, even with flat mortgage.",
+    target:"househack" },
+  { n:36, title:"Purchasing Power Over Time", def:"The amount of goods a dollar can buy shrinks each year by the inflation rate.",
+    drill:"In <strong>Scenario A</strong>, show what <strong>$1,000 today</strong> is worth after <strong>10 years at 3% inflation</strong> vs. <strong>6%</strong>. Discuss why holding cash loses.",
+    target:"roommate" },
+  { n:37, title:"Wage Growth vs. Rent Growth", def:"Wages rise ~3–4%/yr, but rents in hot markets often rise 5–8%. Gap compounds into a housing-affordability crisis.",
+    drill:"In <strong>Scenario A</strong>, grow income <strong>3%/yr</strong> and rent <strong>6%/yr for 5 years</strong>. Show the gap in absolute dollars.",
+    target:"roommate" },
+  { n:38, title:"Interest Rate vs. Inflation", def:"Real interest rate = nominal rate − inflation. A 7% mortgage during 5% inflation has a real cost of only 2%.",
+    drill:"In <strong>Scenario B</strong>, calculate <strong>real rate</strong> if mortgage is 6.5% and inflation is 3% vs. 6%. Which environment is actually cheaper debt?",
+    target:"starter" },
+  { n:39, title:"Buying Power of a Down Payment", def:"Saved cash loses value each year it isn't deployed. Delaying a home purchase costs more than just higher prices.",
+    drill:"In <strong>Scenario A</strong>, save for <strong>3 years</strong>. Then apply the saved amount in <strong>Scenario B</strong> — but inflate home price by <strong>10% total</strong>. Show the real net gain/loss.",
+    target:"starter" },
+  { n:40, title:"The Rule of 72", def:"Divide 72 by your annual return to estimate how many years it takes money to double.",
+    drill:"In <strong>Scenario A</strong>, use 72 to estimate doubling time at <strong>5%, 7%, and 10%</strong> returns. Compare results to the tool's actual output.",
+    target:"roommate" },
+  { n:41, title:"Compounding vs. Linear Savings", def:"Money that earns returns on returns grows exponentially; money in a zero-interest account grows in a straight line.",
+    drill:"In <strong>Scenario A</strong>, toggle savings rate between <strong>0%</strong> and <strong>7%</strong>. Plot the two 10-year totals. Explain the gap.",
+    target:"roommate" },
+  { n:42, title:"Dollar-Cost Averaging", def:"Investing the same amount on a regular schedule, regardless of price, to smooth out volatility.",
+    drill:"Frame the <strong>monthly savings in Scenario A</strong> as a dollar-cost-averaging plan into an index fund. How many months of “auto-deposit” compounds into their down payment?",
+    target:"roommate" },
+  { n:43, title:"Marginal Cost Thinking", def:"The cost of one more unit of something — one more roommate, one more dollar of mortgage, one more mile of commute.",
+    drill:"In <strong>Scenario A</strong>, add one roommate at a time from 2 to 5. Calculate the <strong>marginal savings per added roommate</strong>. Where does it plateau?",
+    target:"roommate" },
+  { n:44, title:"Sunk Cost Fallacy", def:"Money already spent shouldn't influence future decisions — but emotionally, it does.",
+    drill:"Debate: If a student paid <strong>$2,000 in non-refundable deposits</strong> on a solo apartment but then discovers the math in Scenario A, should they move to the shared unit anyway?",
+    target:"roommate" },
+  { n:45, title:"FOMO and Lifestyle Creep", def:"As income rises, so do expenses. Without awareness, larger paychecks never feel “enough.”",
+    drill:"In <strong>Scenario B</strong>, assume income rises <strong>$500/mo</strong>. Option A: upgrade housing. Option B: invest it at 7%. Project both after 10 years.",
+    target:"starter" },
+  { n:46, title:"Risk vs. Return Tradeoff", def:"Higher potential returns come with higher potential losses. Safer choices return less.",
+    drill:"In <strong>Scenario A</strong>, compare <strong>4% HYSA</strong> vs. <strong>10% index fund (with risk)</strong>. Discuss when each makes sense based on your time horizon.",
+    target:"roommate" },
+  { n:47, title:"Liquidity", def:"How quickly an asset can become cash without losing value. Stocks = liquid. Homes = illiquid (weeks to months).",
+    drill:"In <strong>Scenario C</strong>, imagine needing cash in 60 days. Rank the owner's and renter's options by speed-to-cash. Discuss lock-in risk.",
+    target:"househack" },
+  { n:48, title:"Appreciation vs. Cash Flow", def:"Appreciation = property gains value. Cash flow = rent income exceeds expenses. Good investments often provide both.",
+    drill:"In <strong>Scenario C</strong>, separately report <strong>5-year appreciation</strong> and <strong>monthly cash flow</strong>. Rank which matters more to a young buyer.",
+    target:"househack" },
+  { n:49, title:"Forced Savings via Mortgage", def:"Each mortgage payment is partly principal — a forced deposit into your own home equity.",
+    drill:"In <strong>Scenario C</strong>, compute <strong>principal paid over 5 years</strong>. Compare it to what the solo renter would've had to save voluntarily.",
+    target:"househack" },
+  { n:50, title:"Refinance Math", def:"Replacing an existing mortgage with a new one (lower rate, different term) to save interest.",
+    drill:"In <strong>Scenario B</strong>, assume the rate drops from <strong>6.5% to 5%</strong> in year 3. Refinance the same balance. Show lifetime interest savings.",
+    target:"starter" },
+  { n:51, title:"Amortization Front-Loading", def:"Early mortgage payments go mostly to interest; later payments go mostly to principal.",
+    drill:"In <strong>Scenario B</strong>, identify what % of <strong>month-1 payment</strong> is interest vs. principal. Compare to <strong>year-15 payment</strong>.",
+    target:"starter" },
+  { n:52, title:"House Hack Scaling", def:"A house hack can scale from one roommate to multi-unit properties (duplex, triplex, ADU).",
+    drill:"In <strong>Scenario C</strong>, model <strong>two roommates</strong> at $750/mo each. Then brainstorm how a duplex would compare to this single-family setup.",
+    target:"househack" },
+  { n:53, title:"FHA Loan", def:"Federal Housing Administration loan allowing down payments as low as 3.5% — designed for first-time buyers.",
+    drill:"In <strong>Scenario B</strong>, compare a conventional <strong>10% down</strong> vs. FHA <strong>3.5% down</strong>. Factor in FHA's MIP (mortgage insurance premium).",
+    target:"starter" },
+  { n:54, title:"VA Loan", def:"A zero-down mortgage for U.S. veterans and active-duty service members with no PMI.",
+    drill:"In <strong>Scenario B</strong>, run <strong>0% down VA</strong>. Compare monthly cost and cash-to-close vs. 10% conventional. Discuss why this is a generational advantage.",
+    target:"starter" },
+  { n:55, title:"Tenant Vetting", def:"Choosing a reliable tenant (or roommate) is 80% of landlord success. Credit check, references, written agreement.",
+    drill:"In <strong>Scenario C</strong>, simulate a <strong>2-month vacancy</strong> (roommate leaves mid-year). Show the impact on annual cash flow.",
+    target:"househack" },
+  { n:56, title:"Tax Deductions for Homeowners", def:"Mortgage interest, property tax, and (for house-hacks) a portion of depreciation are tax-deductible.",
+    drill:"In <strong>Scenario B</strong>, estimate <strong>year-1 mortgage interest</strong>. At a 22% tax bracket, estimate the tax savings. Compare to a renter's zero deductions.",
+    target:"starter" },
+  { n:57, title:"Capital Gains Exclusion (121)", def:"Sell your primary home after 2+ years and exclude up to $250K (single) / $500K (married) of capital gains from taxes.",
+    drill:"In <strong>Scenario C</strong>, imagine <strong>$60K appreciation over 5 years</strong>. Compare the 0% tax outcome vs. a 15% capital gains rate. Who wins?",
+    target:"househack" },
+  { n:58, title:"Credit Score Impact", def:"Your 3-digit credit score largely determines your mortgage rate. A 40-point swing can cost/save tens of thousands.",
+    drill:"In <strong>Scenario B</strong>, compare <strong>6.5%</strong> (720 FICO) to <strong>8%</strong> (640 FICO) on the same loan. Show the lifetime cost of a weak credit score.",
+    target:"starter" },
+  { n:59, title:"Renter vs. Owner Wealth Gap", def:"Census data shows homeowner net worth is ~40× higher than renter net worth — housing equity is the #1 driver.",
+    drill:"In <strong>Scenario C</strong>, project <strong>5 years</strong>. Compare the owner's equity + appreciation vs. the solo renter's $0. Discuss structural wealth-gap sources.",
+    target:"househack" },
+  { n:60, title:"Build Your Own Financial Plan", def:"A one-page plan covering income, housing, savings, and a 5-year goal — written in your own language.",
+    drill:"Using all three scenarios, each student drafts a <strong>1-page plan</strong>: (1) post-grad housing choice, (2) monthly savings target, (3) 5-year home-purchase readiness date, (4) one risk they'll monitor.",
     target:"househack" }
 ];
 
@@ -793,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.toggle('open', isOpen);
     btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-    btn.firstChild.textContent = isOpen ? 'Hide Classroom Challenges ' : 'See 20 Classroom Challenges ';
+    btn.firstChild.textContent = isOpen ? 'Hide Classroom Challenges ' : 'See 60 Classroom Challenges ';
     if (isOpen) {
       renderChallenges();
       setTimeout(() => drawer.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
