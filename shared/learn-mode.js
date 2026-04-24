@@ -29,7 +29,8 @@
 
   /* ---- Build Toggle ---- */
   function buildToggle() {
-    const header = document.querySelector('.header-inner');
+    // Support both legacy single-row header (.header-inner) and new 2-tier header (.header-top-right)
+    const header = document.querySelector('.header-inner') || document.querySelector('.header-top-right');
     if (!header) return;
 
     const wrap = document.createElement('div');

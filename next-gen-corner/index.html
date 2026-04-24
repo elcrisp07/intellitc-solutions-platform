@@ -24,6 +24,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/base.css">
 <link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
 <link rel="stylesheet" href="../shared/feedback.css">
 <link rel="stylesheet" href="../shared/share-link.css">
 <script type="application/ld+json">
@@ -506,6 +508,99 @@
   Feedback
 </button>
 
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "rSoloRent": "<strong>Solo Apartment Rent</strong> — The total monthly rent you'd pay living alone. Studios and 1-bedrooms in most U.S. cities run $1,100–$1,800. The number here becomes your baseline.",
+    "rSoloUtilities": "<strong>Solo Utilities</strong> — Electric, internet, water, gas. Budget $150–$220/mo when paying alone. Internet alone is ~$60–$80/mo.",
+    "rSharedRent": "<strong>Shared Total Rent</strong> — The total rent for the entire shared unit (2BR, 3BR, house). You'll split this among all roommates. A 2BR often costs only ~20% more than a 1BR but houses twice the people.",
+    "rRoommates": "<strong>Number of Roommates</strong> — Total people splitting the rent, INCLUDING you. So you + 1 friend = 2, you + 2 friends = 3.",
+    "rSharedUtilities": "<strong>Shared Utilities</strong> — Total utilities for the whole shared unit, also split evenly. Larger units cost more, but per-person is much lower.",
+    "rSavingsRate": "<strong>Savings Return Rate</strong> — What your saved money earns per year. High-yield savings accounts currently pay 4–5%. Long-term stock index funds average ~7–8%. Compounding is what turns small monthly savings into real wealth.",
+    "sIncome": "<strong>Annual Gross Income</strong> — Your expected yearly pay before taxes. First jobs out of high school typically range $32K–$60K depending on industry and location. Lenders use gross, not take-home.",
+    "sDownPayment": "<strong>Down Payment Saved</strong> — Cash you'll have ready at closing. FHA allows as low as 3.5%, but 20%+ avoids PMI. Most first-time buyers put down 3.5–10%.",
+    "sInterestRate": "<strong>Mortgage Rate</strong> — The rate the lender charges on your loan. A 0.5% rate change equals ~$10K over 30 years on a $200K home. Lock in your rate once you're ready.",
+    "sMonthlyDebts": "<strong>Other Monthly Debts</strong> — Minimum payments on student loans, car, credit cards. Lenders add these to your housing cost when calculating the 36% back-end DTI ratio.",
+    "sPurchasePrice": "<strong>Target Purchase Price</strong> — What the home costs. Starter homes in most U.S. markets are $175K–$275K. The 28% rule tells you if this price fits your income.",
+    "hhPrice": "<strong>Purchase Price</strong> — Same concept as Scenario B, but for a house with an extra bedroom you can rent. Small 2BR or 3BR homes make the best house-hack candidates.",
+    "hhDown": "<strong>Down Payment</strong> — FHA loans allow 3.5% down, which is why this scenario is realistic for young buyers. Lower down = more PMI but less cash needed upfront.",
+    "hhRate": "<strong>Mortgage Rate</strong> — Same as Scenario B. Owner-occupied mortgages get the lowest rates — a huge advantage of living in the property you rent.",
+    "hhRoomRent": "<strong>Rent From Roommate</strong> — What you'll charge for the spare bedroom. Research room rentals in your target zip code on Craigslist, Facebook Marketplace, and Roomies.com.",
+    "hhSoloRent": "<strong>Solo Rent Comparison</strong> — The alternative: renting a 1BR alone. The house-hack's real power shows when you compare total cost AND equity built vs. paying rent forever."
+  },
+  "examples": [
+    {
+      "name": "Minimum Wage + One Roommate",
+      "desc": "Working 40 hrs at $12/hr, splitting a 2BR with a friend — realistic first-year-out scenario",
+      "values": {
+        "rSoloRent": 1100, "rSoloUtilities": 160, "rSharedRent": 1500, "rRoommates": 2, "rSharedUtilities": 200, "rSavingsRate": 5
+      }
+    },
+    {
+      "name": "Three Friends, College-Town House",
+      "desc": "Three recent grads splitting a 3BR rental house — maximum roommate savings",
+      "values": {
+        "rSoloRent": 1400, "rSoloUtilities": 180, "rSharedRent": 2100, "rRoommates": 3, "rSharedUtilities": 240, "rSavingsRate": 5
+      }
+    },
+    {
+      "name": "Entry-Level Salary, First Home",
+      "desc": "$48K salary, $12K saved, first-time buyer looking at starter homes",
+      "values": {
+        "sIncome": 48000, "sDownPayment": 12000, "sInterestRate": 6.5, "sMonthlyDebts": 200, "sPurchasePrice": 185000
+      }
+    },
+    {
+      "name": "House-Hack: FHA 3.5%",
+      "desc": "Small 2BR home with FHA loan, renting a spare bedroom to offset mortgage",
+      "values": {
+        "hhPrice": 220000, "hhDown": 11000, "hhRate": 6.5, "hhRoomRent": 850, "hhSoloRent": 1400
+      }
+    }
+  ],
+  "whyThisMatters": {
+    "title": "Why These Three Scenarios Matter Right Now",
+    "purpose": "The housing decision you make in the 12–24 months after graduation shapes your financial trajectory for the next decade. These three scenarios — solo vs. roommates, renting vs. buying, and the house-hack — are the exact choices every young adult faces.",
+    "whenToUse": [
+      "Before signing your first lease — run Scenario A to see the real cost of a solo apartment",
+      "When your parents say 'just buy a house' — run Scenario B to see what it actually costs monthly",
+      "When you wonder how young investors get started — run Scenario C to understand house-hacking",
+      "In a high school economics, business, or personal finance class — these are built for classroom use"
+    ],
+    "keyInsight": "The math in these scenarios is not hypothetical — it's exactly what banks, lenders, and real estate investors use. The difference between someone who figures this out at 18 vs. 28 is typically six figures in lifetime wealth.",
+    "proTip": "Run the same scenario three times with different numbers. The power of these tools isn't in one answer — it's in seeing how rent, income, and down payment move the result. That's when the math becomes intuition."
+  },
+  "kpiExplains": {
+    "rMonthlySave": "The monthly gap between solo and shared housing. This dollar amount — not the absolute rent — is what matters for your financial future. Every dollar here can be saved, invested, or redirected to debt payoff.",
+    "rYear5": "After 5 years of saving the monthly gap at your chosen return rate, this is what you'd have. Compare this to rent — which builds nothing.",
+    "sTotalMonthly": "The real total monthly cost of ownership — not just mortgage. Listing sites show only P&I; this number shows what actually hits your bank account each month.",
+    "sAffordable": "Based on the 28% front-end DTI rule lenders actually use. 'Affordable' means a bank would approve this loan; 'Stretches' means you're at or above the lender's cap.",
+    "hhNetCost": "Your out-of-pocket housing cost AFTER a roommate's rent is applied. This is the headline number of the house-hack — often less than solo rent.",
+    "hhAdvantage": "The monthly dollar gap between house-hacking and renting solo. Positive = house-hacking is cheaper. But even if zero, you still build equity.",
+    "hhEquity": "Roughly how much equity you'd own in 5 years — principal paydown plus 3% annual appreciation. Renters build zero equity. This is the real wealth-building mechanism."
+  },
+  "coupled": [
+    {
+      "name": "Rent vs. Buy Calculator",
+      "folder": "rent-vs-buy",
+      "reason": "Model the break-even point between renting and buying over time"
+    },
+    {
+      "name": "Affordability Calculator",
+      "folder": "affordability",
+      "reason": "See the maximum home price your income qualifies for using real lender DTI ratios"
+    },
+    {
+      "name": "Cash on Cash Breakdown",
+      "folder": "cash-on-cash-breakdown",
+      "reason": "Understand how house-hacking math extends to full-scale investment properties"
+    },
+    {
+      "name": "Mortgage Affordability",
+      "folder": "affordability",
+      "reason": "Stress-test your purchase scenarios against interest rate changes"
+    }
+  ]
+};</script>
 <script src="../shared/feedback.js"></script>
 <script>
 /* ── Navigation ── */
@@ -738,6 +833,9 @@ function calcHouseHack() {
 }
 </script>
 <script src="../shared/recent-tracker.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
 <script>
 /* Theme toggle */
 document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
