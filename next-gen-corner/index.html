@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/next-gen-corner">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Gen Corner — IntelliTC Solutions</title>
+<meta name="description" content="Practical real estate and housing literacy for 11th & 12th graders. Three interactive scenarios — Roommate Reality, Starter Home, and House-Hack — to help students understand what the next 12–24 months after graduation really cost.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="Next Gen Corner — IntelliTC Solutions">
+<meta property="og:description" content="Practical housing literacy for juniors & seniors. Model your first-year-out-of-high-school housing decisions — solo rent, shared housing, starter home, and the house-hack.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/next-gen-corner">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Next Gen Corner — IntelliTC Solutions">
+<meta name="twitter:description" content="Practical housing literacy for 11th & 12th graders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Next Gen Corner",
+  "description": "Interactive housing-literacy scenarios for 11th & 12th graders: Roommate Reality, Starter Home, and House-Hack.",
+  "url": "https://intellitcsolutions.com/next-gen-corner/",
+  "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IntelliTC Solutions",
+    "url": "https://intellitcsolutions.com"
+  }
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+<style>
+/* ── Next Gen Corner Layout (mirrors seniors-corner with fresh palette) ── */
+.ng-hero { max-width:var(--content-default); margin:0 auto; padding:var(--space-10) var(--space-6) var(--space-6); text-align:center; }
+.ng-badge { display:inline-block; font-size:var(--text-xs); font-weight:600; padding:4px 14px; border-radius:var(--radius-full); background:#e0f2fe; color:#0369a1; margin-bottom:var(--space-4); letter-spacing:0.04em; text-transform:uppercase; }
+[data-theme="dark"] .ng-badge { background:#0c2a4a; color:#93c5fd; }
+.ng-title { font-size:var(--text-xl); font-weight:700; color:var(--color-text); margin:0 0 var(--space-3); line-height:1.2; }
+.ng-callout { font-size:var(--text-lg); font-weight:600; color:var(--color-primary); margin:var(--space-5) auto var(--space-3); max-width:720px; line-height:1.45; }
+.ng-subtitle { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.7; max-width:720px; margin:0 auto var(--space-2); }
+
+.ng-why {
+  max-width:820px; margin:var(--space-6) auto var(--space-2);
+  background:linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%);
+  border:1px solid #bae6fd;
+  border-radius:var(--radius-xl);
+  padding:var(--space-6) var(--space-7);
+  text-align:left;
+}
+[data-theme="dark"] .ng-why { background:linear-gradient(135deg, #0c2a4a 0%, #2a1e52 100%); border-color:#1e3a8a; }
+.ng-why h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0 0 var(--space-3); }
+.ng-why p { font-size:var(--text-sm); color:var(--color-text); line-height:1.75; margin:0 0 var(--space-3); }
+.ng-why p:last-child { margin-bottom:0; }
+.ng-why strong { color:var(--color-primary); }
+[data-theme="dark"] .ng-why strong { color:#93c5fd; }
+
+/* ── Scenario Cards ── */
+.ng-tools { max-width:var(--content-default); margin:0 auto; padding:var(--space-6) var(--space-6) var(--space-4); }
+.ng-tools-heading { text-align:center; font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.ng-tools-sub { text-align:center; font-size:var(--text-sm); color:var(--color-text-muted); margin:0 auto var(--space-7); max-width:600px; }
+.ng-tools-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-5); }
+@media(max-width:900px) { .ng-tools-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:600px) { .ng-tools-grid { grid-template-columns:1fr; } }
+
+.ng-tool-card {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-6);
+  display:flex; flex-direction:column;
+  transition:transform .15s, box-shadow .15s, border-color .15s;
+}
+.ng-tool-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(14,165,233,.14); border-color:#7dd3fc; }
+[data-theme="dark"] .ng-tool-card:hover { box-shadow:0 10px 28px rgba(14,165,233,.2); border-color:#1d4ed8; }
+.ng-tool-icon { width:52px; height:52px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4); font-size:1.7rem; }
+.ng-tool-icon.roommate { background:#dbeafe; color:#1d4ed8; }
+.ng-tool-icon.starter { background:#dcfce7; color:#15803d; }
+.ng-tool-icon.househack { background:#fef3c7; color:#a16207; }
+[data-theme="dark"] .ng-tool-icon.roommate { background:#1e3a8a; color:#bfdbfe; }
+[data-theme="dark"] .ng-tool-icon.starter { background:#14532d; color:#bbf7d0; }
+[data-theme="dark"] .ng-tool-icon.househack { background:#713f12; color:#fde68a; }
+.ng-tool-card h3 { font-size:var(--text-base); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.ng-tool-card .ng-scenario-label { font-size:var(--text-xs); font-weight:600; color:var(--color-text-muted); margin:0 0 var(--space-1); text-transform:uppercase; letter-spacing:0.05em; }
+.ng-tool-card p { font-size:var(--text-sm); color:var(--color-text-muted); line-height:1.65; margin:0 0 var(--space-5); flex:1; }
+.ng-tool-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  padding:var(--space-3) var(--space-5); border-radius:var(--radius-lg);
+  font-size:var(--text-sm); font-weight:600; text-decoration:none;
+  cursor:pointer; border:none; font-family:var(--font-body);
+  background:var(--color-primary); color:#fff;
+  transition:background var(--transition-interactive), transform 0.15s;
+}
+.ng-tool-btn:hover { background:var(--color-primary-hover); transform:translateY(-1px); }
+
+/* ── For Teachers Callout ── */
+.ng-teachers {
+  max-width:var(--content-default); margin:var(--space-8) auto 0;
+  padding:0 var(--space-6) var(--space-10);
+}
+.ng-teachers-inner {
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);
+  padding:var(--space-7) var(--space-7);
+  display:grid; grid-template-columns:80px 1fr; gap:var(--space-5); align-items:start;
+}
+@media(max-width:600px) { .ng-teachers-inner { grid-template-columns:1fr; text-align:center; } }
+.ng-teachers-icon { font-size:3rem; line-height:1; }
+.ng-teachers h2 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.ng-teachers p { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:0 0 var(--space-3); }
+.ng-teachers-chips { display:flex; flex-wrap:wrap; gap:var(--space-2); }
+.ng-teachers-chip {
+  background:var(--color-primary-surface); color:var(--color-primary);
+  padding:4px 12px; border-radius:var(--radius-full);
+  font-size:var(--text-xs); font-weight:600;
+}
+
+/* ── Calculator Panel (shared pattern) ── */
+.calc-panel {
+  display:none; max-width:var(--content-default); margin:0 auto;
+  padding:0 var(--space-6) var(--space-10);
+}
+.calc-panel.active { display:block; }
+.calc-back { display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); font-weight:600; color:var(--color-primary); cursor:pointer; background:none; border:none; margin-bottom:var(--space-5); font-family:var(--font-body); }
+.calc-back:hover { text-decoration:underline; }
+
+.calc-container {
+  background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-xl); padding:var(--space-8);
+}
+.calc-container h2 { font-size:var(--text-lg); font-weight:700; color:var(--color-text); margin:0 0 var(--space-2); }
+.calc-container .calc-desc { font-size:var(--text-sm); color:var(--color-text-muted); margin:0 0 var(--space-6); line-height:1.6; }
+
+.form-group { margin-bottom:var(--space-5); }
+.form-group label { display:block; font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin-bottom:var(--space-2); }
+.form-group input, .form-group select {
+  width:100%; padding:var(--space-3) var(--space-4);
+  border:1px solid var(--color-border); border-radius:var(--radius-md);
+  font-size:var(--text-base); background:var(--color-bg);
+  color:var(--color-text); font-family:var(--font-body);
+}
+.form-group input:focus, .form-group select:focus {
+  outline:none; border-color:var(--color-primary);
+  box-shadow:0 0 0 3px var(--color-primary-surface);
+}
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); }
+@media(max-width:560px) { .form-row { grid-template-columns:1fr; } }
+
+.form-hint { font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1); }
+
+.calc-submit {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  padding:var(--space-3) var(--space-6); border-radius:var(--radius-lg);
+  font-size:var(--text-sm); font-weight:600; background:var(--color-primary); color:#fff;
+  cursor:pointer; border:none; font-family:var(--font-body); margin-top:var(--space-2);
+  transition:background var(--transition-interactive);
+}
+.calc-submit:hover { background:var(--color-primary-hover); }
+
+/* Results */
+.calc-results { margin-top:var(--space-6); display:none; }
+.calc-results.show { display:block; }
+.result-card {
+  background:var(--color-surface-2); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-5); margin-bottom:var(--space-4);
+}
+.result-card h4 { font-size:var(--text-sm); font-weight:600; color:var(--color-text); margin:0 0 var(--space-3); }
+.result-row { display:flex; justify-content:space-between; align-items:center; padding:var(--space-2) 0; border-bottom:1px solid var(--color-divider); gap:var(--space-4); }
+.result-row:last-child { border-bottom:none; }
+.result-label { font-size:var(--text-sm); color:var(--color-text-muted); }
+.result-value { font-size:var(--text-sm); font-weight:600; color:var(--color-text); font-family:var(--font-mono); text-align:right; }
+.result-value.alert { color:var(--color-error); }
+.result-value.safe { color:var(--color-success); }
+.result-value.big { font-size:var(--text-base); }
+
+.result-explanation {
+  background:var(--color-primary-surface); border-radius:var(--radius-lg);
+  padding:var(--space-5); margin-top:var(--space-4);
+}
+.result-explanation h4 { font-size:var(--text-sm); font-weight:600; color:var(--color-primary); margin:0 0 var(--space-2); }
+.result-explanation p { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:0; }
+.result-explanation ul { font-size:var(--text-sm); color:var(--color-text); line-height:1.7; margin:var(--space-2) 0 0; padding-left:var(--space-5); }
+.result-explanation li { margin-bottom:var(--space-1); }
+
+.disclaimer-box {
+  background:var(--color-surface-offset); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); padding:var(--space-4); margin-top:var(--space-5);
+}
+.disclaimer-box p { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.6; margin:0; }
+</style>
+</head>
+<body>
+
+<header class="header two-tier-header">
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" class="hdr-primary-link">Start Here</a>
+      <a href="../goal-pilot/index.html" class="hdr-primary-link">Goal Pilot</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html" class="">Your Role?</a>
+    <a href="../workflows/index.html" class="">Workflows</a>
+    <a href="../learning-paths/index.html" class="">Learn</a>
+    <a href="../scenario-lab/index.html" class="">Scenario Lab</a>
+    <a href="../seniors-corner/index.html" class="">Senior's Corner</a>
+    <a href="../next-gen-corner/index.html" class="active">Next Gen Corner</a>
+    <a href="../certification/index.html" class="">Certificate</a>
+    <a href="../guides/index.html" class="">Guides</a>
+    <a href="../calculators/index.html" class="">All Calculators</a>
+  </nav>
+</header>
+
+<!-- ── Hero Section ── -->
+<section class="ng-hero" id="ngHome">
+  <span class="ng-badge">Next Gen Corner · 11th & 12th Graders</span>
+  <h1 class="ng-title">Your Next 12–24 Months, Solved With Numbers</h1>
+  <p class="ng-callout">The decisions you make about where you live after graduation will shape your finances for the next decade. Start modeling them now — while the stakes are still hypothetical.</p>
+
+  <div class="ng-why">
+    <h3>Why This Matters Right Now</h3>
+    <p>By the time you walk across that graduation stage, you'll have somewhere between <strong>12 and 24 months</strong> before a major housing decision lands on your plate — whether that's your first apartment, a dorm, a move back home, or buying somewhere with a partner or friends. The difference between a <strong>$1,400/mo solo apartment</strong> and a <strong>$700/mo shared room</strong> compounds into roughly <strong>$8,400 saved per year</strong>. Over four years, that's a down payment on your first home.</p>
+    <p>This isn't abstract textbook finance or "start investing immediately." This is <strong>the real math of the next apartment, the next lease, and the first home</strong>. Run the scenarios below with different numbers, share the results with classmates, and walk into graduation knowing what things actually cost.</p>
+  </div>
+</section>
+
+<!-- ── Scenario Cards ── -->
+<section class="ng-tools" id="ngToolCards">
+  <h2 class="ng-tools-heading">Three Scenarios to Model Right Now</h2>
+  <p class="ng-tools-sub">No sign-up. No accounts. Just open a scenario, plug in your numbers, and see what the math says.</p>
+  <div class="ng-tools-grid">
+    <div class="ng-tool-card">
+      <div class="ng-tool-icon roommate">🚪</div>
+      <p class="ng-scenario-label">Scenario A</p>
+      <h3>The Roommate Reality</h3>
+      <p>Compare a solo apartment with shared housing. See how much you'd save every month, how much you'd have after one year, and how fast those savings could become a down payment on a starter home.</p>
+      <button class="ng-tool-btn" onclick="showCalc('roommate')">Run Scenario A →</button>
+    </div>
+    <div class="ng-tool-card">
+      <div class="ng-tool-icon starter">🏡</div>
+      <p class="ng-scenario-label">Scenario B</p>
+      <h3>The Starter Home</h3>
+      <p>Model what you could actually afford on an entry-level salary. See the full monthly cost — mortgage, taxes, insurance, maintenance — and understand the hidden side of homeownership that listing sites never show.</p>
+      <button class="ng-tool-btn" onclick="showCalc('starter')">Run Scenario B →</button>
+    </div>
+    <div class="ng-tool-card">
+      <div class="ng-tool-icon househack">🔑</div>
+      <p class="ng-scenario-label">Scenario C</p>
+      <h3>The House-Hack</h3>
+      <p>What if your first home came with a built-in paycheck? Model buying a small property and renting out a room to a roommate. See how it could cut your effective housing cost to a fraction of what renting would be.</p>
+      <button class="ng-tool-btn" onclick="showCalc('househack')">Run Scenario C →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── For Teachers ── -->
+<section class="ng-teachers">
+  <div class="ng-teachers-inner">
+    <div class="ng-teachers-icon">🧑‍🏫</div>
+    <div>
+      <h2>For Teachers & Classroom Use</h2>
+      <p>These scenarios are designed for collaborative classroom exercises. Because IntelliTC requires no sign-ups, no accounts, and no admin approvals, teachers can run a live scenario in the next class period. Pair students up, assign different cities or income levels, and have them present their results.</p>
+      <div class="ng-teachers-chips">
+        <span class="ng-teachers-chip">No Sign-Up</span>
+        <span class="ng-teachers-chip">No Student Accounts</span>
+        <span class="ng-teachers-chip">Works on Any Device</span>
+        <span class="ng-teachers-chip">Shareable Result Links</span>
+        <span class="ng-teachers-chip">Free Forever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCENARIO A: The Roommate Reality
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="roommatePanel">
+  <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
+  <div class="calc-container">
+    <h2>Scenario A · The Roommate Reality</h2>
+    <p class="calc-desc">Compare the financial impact of living solo versus splitting housing with roommates. The savings don't just sit in a bank account — they compound into a real down payment surprisingly fast.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="rSoloRent">Solo Apartment Rent ($/month)</label>
+        <input type="number" id="rSoloRent" placeholder="e.g. 1400" min="0" step="25" value="1400">
+        <p class="form-hint">Total monthly rent if you lived alone</p>
+      </div>
+      <div class="form-group">
+        <label for="rSoloUtilities">Solo Utilities ($/month)</label>
+        <input type="number" id="rSoloUtilities" placeholder="e.g. 180" min="0" step="10" value="180">
+        <p class="form-hint">Electric, internet, water, etc.</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="rSharedRent">Shared Apartment — Total Rent ($/month)</label>
+        <input type="number" id="rSharedRent" placeholder="e.g. 2100" min="0" step="25" value="2100">
+        <p class="form-hint">Total rent for the whole shared unit</p>
+      </div>
+      <div class="form-group">
+        <label for="rRoommates">Number of Roommates (including you)</label>
+        <input type="number" id="rRoommates" min="2" max="6" step="1" value="3">
+        <p class="form-hint">How many people split the rent</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="rSharedUtilities">Shared Total Utilities ($/month)</label>
+        <input type="number" id="rSharedUtilities" placeholder="e.g. 240" min="0" step="10" value="240">
+        <p class="form-hint">Split evenly among roommates</p>
+      </div>
+      <div class="form-group">
+        <label for="rSavingsRate">Invest Savings At (% annual return)</label>
+        <input type="number" id="rSavingsRate" min="0" max="15" step="0.5" value="5">
+        <p class="form-hint">High-yield savings ≈ 4–5%, index fund ≈ 7%</p>
+      </div>
+    </div>
+
+    <button class="calc-submit" onclick="calcRoommate()">Run the Numbers</button>
+
+    <div class="calc-results" id="roommateResults">
+      <div class="result-card">
+        <h4>Monthly Cost Comparison</h4>
+        <div class="result-row"><span class="result-label">Solo — Total Monthly Cost</span><span class="result-value" id="rSoloTotal">—</span></div>
+        <div class="result-row"><span class="result-label">Shared — Your Monthly Cost</span><span class="result-value" id="rSharedTotal">—</span></div>
+        <div class="result-row"><span class="result-label">You Save Every Month</span><span class="result-value safe big" id="rMonthlySave">—</span></div>
+      </div>
+      <div class="result-card">
+        <h4>Savings Over Time</h4>
+        <div class="result-row"><span class="result-label">Saved After 1 Year (no interest)</span><span class="result-value" id="rYear1">—</span></div>
+        <div class="result-row"><span class="result-label">Saved After 3 Years (with interest)</span><span class="result-value" id="rYear3">—</span></div>
+        <div class="result-row"><span class="result-label">Saved After 5 Years (with interest)</span><span class="result-value safe" id="rYear5">—</span></div>
+      </div>
+      <div class="result-explanation" id="roommateExplanation"></div>
+      <div class="disclaimer-box">
+        <p><strong>Educational purposes only.</strong> Rent, utilities, and savings returns vary by location and market conditions. This tool is designed for classroom learning and personal planning, not financial advice.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCENARIO B: The Starter Home
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="starterPanel">
+  <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
+  <div class="calc-container">
+    <h2>Scenario B · The Starter Home</h2>
+    <p class="calc-desc">What does it actually take to buy a first home? This models the <em>full</em> cost of ownership — not just mortgage — so you see the taxes, insurance, and maintenance that never show up on listing sites. Uses the industry-standard 28% front-end DTI rule.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sIncome">Annual Gross Income ($)</label>
+        <input type="number" id="sIncome" placeholder="e.g. 58000" min="0" step="1000" value="58000">
+        <p class="form-hint">Entry-level salary after graduation</p>
+      </div>
+      <div class="form-group">
+        <label for="sDownPayment">Down Payment Saved ($)</label>
+        <input type="number" id="sDownPayment" placeholder="e.g. 15000" min="0" step="500" value="15000">
+        <p class="form-hint">Cash available at closing</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sInterestRate">Mortgage Rate (%)</label>
+        <input type="number" id="sInterestRate" min="0" max="15" step="0.1" value="6.5">
+        <p class="form-hint">30-year fixed rate, typical first-time buyer</p>
+      </div>
+      <div class="form-group">
+        <label for="sMonthlyDebts">Other Monthly Debts ($)</label>
+        <input type="number" id="sMonthlyDebts" placeholder="e.g. 250" min="0" step="25" value="250">
+        <p class="form-hint">Student loans, car payment, credit cards</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="sPurchasePrice">Target Purchase Price ($)</label>
+      <input type="number" id="sPurchasePrice" placeholder="e.g. 215000" min="0" step="5000" value="215000">
+      <p class="form-hint">What you want to buy — starter home in most markets is $200K–$275K</p>
+    </div>
+
+    <button class="calc-submit" onclick="calcStarter()">Calculate Full Cost</button>
+
+    <div class="calc-results" id="starterResults">
+      <div class="result-card">
+        <h4>Affordability Check (28% Rule)</h4>
+        <div class="result-row"><span class="result-label">Max Housing Payment (28% of income)</span><span class="result-value" id="sMaxPayment">—</span></div>
+        <div class="result-row"><span class="result-label">Your Estimated Total Monthly Cost</span><span class="result-value" id="sTotalMonthly">—</span></div>
+        <div class="result-row"><span class="result-label">Affordable at This Price?</span><span class="result-value big" id="sAffordable">—</span></div>
+      </div>
+      <div class="result-card">
+        <h4>The Real Monthly Cost — What Listing Sites Don't Show</h4>
+        <div class="result-row"><span class="result-label">Principal + Interest</span><span class="result-value" id="sPI">—</span></div>
+        <div class="result-row"><span class="result-label">Property Taxes (est. 1.1%/yr)</span><span class="result-value" id="sTaxes">—</span></div>
+        <div class="result-row"><span class="result-label">Home Insurance (est. 0.4%/yr)</span><span class="result-value" id="sInsurance">—</span></div>
+        <div class="result-row"><span class="result-label">Maintenance Reserve (1%/yr)</span><span class="result-value" id="sMaintenance">—</span></div>
+        <div class="result-row"><span class="result-label">PMI (if &lt;20% down)</span><span class="result-value" id="sPMI">—</span></div>
+      </div>
+      <div class="result-explanation" id="starterExplanation"></div>
+      <div class="disclaimer-box">
+        <p><strong>Educational purposes only.</strong> Property tax, insurance, and maintenance costs vary significantly by state and property. PMI, closing costs, and HOA fees are not fully captured. Use this as a starting framework, not a financing decision.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCENARIO C: The House-Hack
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="househackPanel">
+  <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
+  <div class="calc-container">
+    <h2>Scenario C · The House-Hack</h2>
+    <p class="calc-desc">House-hacking means buying a property and renting out part of it — a spare bedroom, a basement, a garage apartment — to cover a big chunk of your mortgage. This is one of the most powerful wealth-building moves available to someone in their early 20s. Let's see the math.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="hhPrice">Purchase Price ($)</label>
+        <input type="number" id="hhPrice" placeholder="e.g. 220000" min="0" step="5000" value="220000">
+        <p class="form-hint">A small home with an extra bedroom</p>
+      </div>
+      <div class="form-group">
+        <label for="hhDown">Down Payment ($)</label>
+        <input type="number" id="hhDown" placeholder="e.g. 11000" min="0" step="500" value="11000">
+        <p class="form-hint">FHA allows as low as 3.5% for first-time buyers</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="hhRate">Mortgage Rate (%)</label>
+        <input type="number" id="hhRate" min="0" max="15" step="0.1" value="6.5">
+        <p class="form-hint">30-year fixed</p>
+      </div>
+      <div class="form-group">
+        <label for="hhRoomRent">Rent You'd Charge Roommate ($/month)</label>
+        <input type="number" id="hhRoomRent" placeholder="e.g. 850" min="0" step="25" value="850">
+        <p class="form-hint">What a room in your area rents for</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="hhSoloRent">Compare Against: Solo Rent You'd Otherwise Pay ($/month)</label>
+      <input type="number" id="hhSoloRent" placeholder="e.g. 1400" min="0" step="25" value="1400">
+      <p class="form-hint">The solo apartment alternative from Scenario A</p>
+    </div>
+
+    <button class="calc-submit" onclick="calcHouseHack()">See the Hack</button>
+
+    <div class="calc-results" id="househackResults">
+      <div class="result-card">
+        <h4>Your Real Monthly Cost — After Roommate Rent</h4>
+        <div class="result-row"><span class="result-label">Full Monthly Housing Cost (PITI + Maint.)</span><span class="result-value" id="hhTotalCost">—</span></div>
+        <div class="result-row"><span class="result-label">− Rent From Roommate</span><span class="result-value safe" id="hhRoomIncome">—</span></div>
+        <div class="result-row"><span class="result-label">Your Effective Out-of-Pocket</span><span class="result-value big" id="hhNetCost">—</span></div>
+      </div>
+      <div class="result-card">
+        <h4>Versus Renting Solo</h4>
+        <div class="result-row"><span class="result-label">Solo Rent Alternative</span><span class="result-value" id="hhSoloComp">—</span></div>
+        <div class="result-row"><span class="result-label">Monthly Advantage of House-Hack</span><span class="result-value safe big" id="hhAdvantage">—</span></div>
+        <div class="result-row"><span class="result-label">Plus: Equity You Build in 5 Years</span><span class="result-value safe" id="hhEquity">—</span></div>
+      </div>
+      <div class="result-explanation" id="househackExplanation"></div>
+      <div class="disclaimer-box">
+        <p><strong>Educational purposes only.</strong> House-hacking carries real responsibilities: tenant management, local rental regulations, tax reporting, and property maintenance. This tool illustrates the financial concept — talk to a CPA and lender before executing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>These tools are for educational purposes only and do not constitute financial, legal, or tax advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+
+<button class="itc-feedback-btn" onclick="document.getElementById('feedbackModal').classList.add('active')">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Feedback
+</button>
+
+<script src="../shared/feedback.js"></script>
+<script>
+/* ── Navigation ── */
+function showCalc(type) {
+  document.getElementById('ngHome').style.display = 'none';
+  document.getElementById('ngToolCards').style.display = 'none';
+  document.querySelector('.ng-teachers').style.display = 'none';
+  document.getElementById('roommatePanel').classList.remove('active');
+  document.getElementById('starterPanel').classList.remove('active');
+  document.getElementById('househackPanel').classList.remove('active');
+  if (type === 'roommate') document.getElementById('roommatePanel').classList.add('active');
+  if (type === 'starter') document.getElementById('starterPanel').classList.add('active');
+  if (type === 'househack') document.getElementById('househackPanel').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showHome() {
+  document.getElementById('ngHome').style.display = '';
+  document.getElementById('ngToolCards').style.display = '';
+  document.querySelector('.ng-teachers').style.display = '';
+  document.getElementById('roommatePanel').classList.remove('active');
+  document.getElementById('starterPanel').classList.remove('active');
+  document.getElementById('househackPanel').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Format helpers ── */
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function fmt0(n) { return Math.round(n).toLocaleString('en-US'); }
+
+/* ══════════════════════════════════════════════════════════════
+   SCENARIO A: ROOMMATE REALITY
+   ══════════════════════════════════════════════════════════════ */
+function calcRoommate() {
+  const soloRent = parseFloat(document.getElementById('rSoloRent').value) || 0;
+  const soloUtil = parseFloat(document.getElementById('rSoloUtilities').value) || 0;
+  const sharedRent = parseFloat(document.getElementById('rSharedRent').value) || 0;
+  const roommates = Math.max(2, parseInt(document.getElementById('rRoommates').value) || 2);
+  const sharedUtil = parseFloat(document.getElementById('rSharedUtilities').value) || 0;
+  const rate = (parseFloat(document.getElementById('rSavingsRate').value) || 0) / 100;
+
+  if (soloRent <= 0 || sharedRent <= 0) { alert('Please enter both solo and shared rent amounts.'); return; }
+
+  const soloTotal = soloRent + soloUtil;
+  const sharedTotal = (sharedRent / roommates) + (sharedUtil / roommates);
+  const monthlySave = soloTotal - sharedTotal;
+  const year1 = monthlySave * 12;
+
+  // Future value of monthly savings invested at annual rate (compounded monthly)
+  const monthlyRate = rate / 12;
+  function fv(months) {
+    if (monthlyRate === 0) return monthlySave * months;
+    return monthlySave * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+  }
+  const year3 = fv(36);
+  const year5 = fv(60);
+
+  document.getElementById('rSoloTotal').textContent = fmt(soloTotal) + '/mo';
+  document.getElementById('rSharedTotal').textContent = fmt(sharedTotal) + '/mo';
+  document.getElementById('rMonthlySave').textContent = fmt(monthlySave) + '/mo';
+  document.getElementById('rYear1').textContent = fmt(year1);
+  document.getElementById('rYear3').textContent = fmt(year3);
+  document.getElementById('rYear5').textContent = fmt(year5);
+
+  const exp = document.getElementById('roommateExplanation');
+  if (monthlySave > 0) {
+    const dpTarget = 20000;
+    const monthsToDownPayment = monthlySave > 0 ? Math.ceil(dpTarget / monthlySave) : 0;
+    exp.innerHTML = `
+      <h4>What the Math Says</h4>
+      <p>By choosing shared housing with ${roommates - 1} roommate${roommates > 2 ? 's' : ''}, you save <strong>${fmt(monthlySave)} every single month</strong> — that's <strong>${fmt(year1)} in the first year alone</strong>.</p>
+      <p style="margin-top:var(--space-2)">If you invest those savings at ${(rate*100).toFixed(1)}% annually, they grow to <strong>${fmt(year5)} after 5 years</strong>. A typical first-home down payment of $20,000 is within reach in roughly <strong>${monthsToDownPayment} months</strong> of consistent saving.</p>
+      <p style="margin-top:var(--space-2)"><strong>What this means for you:</strong> The "roommate phase" of your early 20s is not a lifestyle downgrade — it's the single most powerful financial move you can make right out of high school. Roommates pay for your future.</p>
+    `;
+  } else {
+    exp.innerHTML = `
+      <h4>Interesting Result</h4>
+      <p>In your scenario, the shared option doesn't save money — likely because the shared rent per person is higher than the solo option. Try adjusting the numbers. In most real markets, splitting a 2–3 bedroom apartment among roommates cuts individual costs by 40–60%.</p>
+    `;
+  }
+  document.getElementById('roommateResults').classList.add('show');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCENARIO B: STARTER HOME
+   ══════════════════════════════════════════════════════════════ */
+function calcStarter() {
+  const income = parseFloat(document.getElementById('sIncome').value) || 0;
+  const down = parseFloat(document.getElementById('sDownPayment').value) || 0;
+  const rate = (parseFloat(document.getElementById('sInterestRate').value) || 0) / 100;
+  const debts = parseFloat(document.getElementById('sMonthlyDebts').value) || 0;
+  const price = parseFloat(document.getElementById('sPurchasePrice').value) || 0;
+
+  if (income <= 0 || price <= 0) { alert('Please enter your annual income and target purchase price.'); return; }
+
+  const monthlyIncome = income / 12;
+  const maxPayment = monthlyIncome * 0.28;
+
+  const loanAmount = Math.max(0, price - down);
+  const monthlyRate = rate / 12;
+  const n = 360;
+  const PI = monthlyRate > 0
+    ? loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1)
+    : loanAmount / n;
+  const taxes = (price * 0.011) / 12;
+  const insurance = (price * 0.004) / 12;
+  const maintenance = (price * 0.01) / 12;
+  const downPct = down / price;
+  const pmi = downPct < 0.20 ? (loanAmount * 0.006) / 12 : 0;
+  const totalMonthly = PI + taxes + insurance + maintenance + pmi;
+
+  const affordable = totalMonthly <= maxPayment && (totalMonthly + debts) <= (monthlyIncome * 0.36);
+
+  document.getElementById('sMaxPayment').textContent = fmt(maxPayment) + '/mo';
+  document.getElementById('sTotalMonthly').textContent = fmt(totalMonthly) + '/mo';
+  const aEl = document.getElementById('sAffordable');
+  if (affordable) {
+    aEl.textContent = 'YES — Within budget';
+    aEl.className = 'result-value safe big';
+  } else {
+    aEl.textContent = 'NO — Stretches budget';
+    aEl.className = 'result-value alert big';
+  }
+  document.getElementById('sPI').textContent = fmt(PI);
+  document.getElementById('sTaxes').textContent = fmt(taxes);
+  document.getElementById('sInsurance').textContent = fmt(insurance);
+  document.getElementById('sMaintenance').textContent = fmt(maintenance);
+  document.getElementById('sPMI').textContent = pmi > 0 ? fmt(pmi) : 'Not needed (≥20% down)';
+
+  const hiddenCosts = taxes + insurance + maintenance + pmi;
+  const hiddenPct = (hiddenCosts / PI) * 100;
+
+  const exp = document.getElementById('starterExplanation');
+  if (affordable) {
+    exp.innerHTML = `
+      <h4>Good News — And the Hidden Truth</h4>
+      <p>At ${fmt(price)} with ${fmt(down)} down (${(downPct*100).toFixed(1)}%), your estimated total monthly cost is <strong>${fmt(totalMonthly)}</strong> — within the 28% rule for your income.</p>
+      <p style="margin-top:var(--space-2)"><strong>Here's what most people miss:</strong> The mortgage (principal + interest) is only <strong>${fmt(PI)}</strong>. The other <strong>${fmt(hiddenCosts)}</strong> — about ${hiddenPct.toFixed(0)}% more — is taxes, insurance, and maintenance. Listing sites only show the $${fmt0(PI)} number. Real owners pay the full $${fmt0(totalMonthly)}.</p>
+    `;
+  } else {
+    const affordablePrice = Math.round((maxPayment * 0.6) / (rate / 12) * 1000) / 1000; // rough
+    exp.innerHTML = `
+      <h4>This Home Stretches Your Budget</h4>
+      <p>At ${fmt(price)}, your total monthly housing cost comes to <strong>${fmt(totalMonthly)}</strong>, which exceeds the 28% rule (${fmt(maxPayment)}) for your income. Lenders will also check the <strong>back-end ratio</strong> — housing plus all other debts — which should stay under 36% of income.</p>
+      <p style="margin-top:var(--space-2)"><strong>Your options:</strong></p>
+      <ul>
+        <li>Look at homes priced closer to ${fmt(price * 0.8)}</li>
+        <li>Save more for a down payment to reduce PMI and loan size</li>
+        <li>Pay off existing debts to free up your debt-to-income ratio</li>
+        <li>Consider Scenario C (the House-Hack) — rent income changes everything</li>
+      </ul>
+    `;
+  }
+
+  document.getElementById('starterResults').classList.add('show');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCENARIO C: HOUSE-HACK
+   ══════════════════════════════════════════════════════════════ */
+function calcHouseHack() {
+  const price = parseFloat(document.getElementById('hhPrice').value) || 0;
+  const down = parseFloat(document.getElementById('hhDown').value) || 0;
+  const rate = (parseFloat(document.getElementById('hhRate').value) || 0) / 100;
+  const roomRent = parseFloat(document.getElementById('hhRoomRent').value) || 0;
+  const soloRent = parseFloat(document.getElementById('hhSoloRent').value) || 0;
+
+  if (price <= 0 || roomRent <= 0) { alert('Please enter a purchase price and expected roommate rent.'); return; }
+
+  const loan = Math.max(0, price - down);
+  const monthlyRate = rate / 12;
+  const n = 360;
+  const PI = monthlyRate > 0
+    ? loan * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1)
+    : loan / n;
+  const taxes = (price * 0.011) / 12;
+  const insurance = (price * 0.004) / 12;
+  const maintenance = (price * 0.01) / 12;
+  const downPct = down / price;
+  const pmi = downPct < 0.20 ? (loan * 0.006) / 12 : 0;
+  const totalCost = PI + taxes + insurance + maintenance + pmi;
+
+  const netCost = totalCost - roomRent;
+  const advantage = soloRent - netCost;
+
+  // Approx equity build in 5 years: principal paydown + 3% appreciation
+  let balance = loan;
+  let principalPaid = 0;
+  for (let i = 0; i < 60; i++) {
+    const interest = balance * monthlyRate;
+    const principal = PI - interest;
+    principalPaid += principal;
+    balance -= principal;
+  }
+  const appreciation = price * (Math.pow(1.03, 5) - 1);
+  const equity5 = principalPaid + appreciation;
+
+  document.getElementById('hhTotalCost').textContent = fmt(totalCost) + '/mo';
+  document.getElementById('hhRoomIncome').textContent = '-' + fmt(roomRent) + '/mo';
+  const netEl = document.getElementById('hhNetCost');
+  netEl.textContent = fmt(netCost) + '/mo';
+  netEl.className = netCost < soloRent ? 'result-value safe big' : 'result-value big';
+  document.getElementById('hhSoloComp').textContent = fmt(soloRent) + '/mo';
+  const advEl = document.getElementById('hhAdvantage');
+  if (advantage > 0) {
+    advEl.textContent = fmt(advantage) + '/mo saved';
+    advEl.className = 'result-value safe big';
+  } else {
+    advEl.textContent = fmt(Math.abs(advantage)) + '/mo more';
+    advEl.className = 'result-value alert big';
+  }
+  document.getElementById('hhEquity').textContent = '~' + fmt(equity5);
+
+  const exp = document.getElementById('househackExplanation');
+  if (advantage > 0) {
+    exp.innerHTML = `
+      <h4>The Hack in Plain Numbers</h4>
+      <p>By buying and renting a room to a roommate, your effective housing cost drops to <strong>${fmt(netCost)}/month</strong> — <strong>${fmt(advantage)}/month less</strong> than the solo rent alternative of ${fmt(soloRent)}.</p>
+      <p style="margin-top:var(--space-2)"><strong>But the monthly savings aren't even the main event.</strong> Over 5 years, you build roughly <strong>${fmt(equity5)} in equity</strong> through loan paydown plus 3% annual appreciation. A renter in the same period builds zero equity — every rent dollar is gone forever.</p>
+      <p style="margin-top:var(--space-2)"><strong>The real lesson:</strong> House-hacking is not about being a landlord — it's about using a roommate's rent to quietly build a five- or six-figure asset while you live your life. This is how many real estate investors start.</p>
+    `;
+  } else {
+    exp.innerHTML = `
+      <h4>The Numbers Aren't Quite There</h4>
+      <p>In your scenario, the house-hack costs <strong>${fmt(Math.abs(advantage))}/mo more</strong> than renting solo. But consider the equity side: over 5 years you still build roughly <strong>${fmt(equity5)}</strong> — vs. zero from renting.</p>
+      <p style="margin-top:var(--space-2)">Try adjusting: a lower purchase price, a higher room rent (two roommates?), or a smaller down payment to reduce your out-of-pocket savings needed. Small changes flip the math quickly.</p>
+    `;
+  }
+
+  document.getElementById('househackResults').classList.add('show');
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script>
+/* Theme toggle */
+document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+});
+(function() {
+  var saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+</body>
+</html>

@@ -630,12 +630,14 @@
 .role-card-icon.lender { background: #fce4ec; color: #c62828; }
 .role-card-icon.goal { background: #fff4d6; color: #8a6300; }
 .role-card-icon.senior { background: #f1e6f5; color: #6a2878; }
+.role-card-icon.nextgen { background: #dbeafe; color: #1d4ed8; }
 [data-theme="dark"] .role-card-icon.new { background: #004d40; color: #80cbc4; }
 [data-theme="dark"] .role-card-icon.investor { background: #1b5e20; color: #a5d6a7; }
 [data-theme="dark"] .role-card-icon.agent { background: #0d47a1; color: #90caf9; }
 [data-theme="dark"] .role-card-icon.lender { background: #b71c1c; color: #ef9a9a; }
 [data-theme="dark"] .role-card-icon.goal { background: #6b4f00; color: #ffd97a; }
 [data-theme="dark"] .role-card-icon.senior { background: #4a1e55; color: #dbb6e5; }
+[data-theme="dark"] .role-card-icon.nextgen { background: #1e3a8a; color: #bfdbfe; }
 
 .role-card h3 {
   font-size: var(--text-base);
@@ -1483,6 +1485,7 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
     <a href="./learning-paths/index.html">Learn</a>
     <a href="./scenario-lab/index.html">Scenario Lab</a>
     <a href="./seniors-corner/index.html">Senior's Corner</a>
+    <a href="./next-gen-corner/index.html">Next Gen Corner</a>
     <a href="./certification/index.html">Certificate</a>
     <a href="./guides/index.html">Guides</a>
     <a href="./calculators/index.html">All Calculators</a>
@@ -1583,6 +1586,14 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
       <h3>I'm Planning for Retirement</h3>
       <p>Retirement income strategies, downsizing decisions, estate planning, and senior-focused calculators.</p>
       <span class="card-cta">Open Senior's Corner →</span>
+    </a>
+    <a href="./next-gen-corner/index.html" class="role-card">
+      <div class="role-card-icon nextgen">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <h3>I'm an 11th or 12th Grader</h3>
+      <p>Practical housing literacy for the next 12–24 months. Roommate math, starter home reality, and the house-hack.</p>
+      <span class="card-cta">Open Next Gen Corner →</span>
     </a>
   </div>
 </div>
@@ -1816,6 +1827,7 @@ document.addEventListener('keydown', function(e) {
     { name:'Payment Reverse Engineering', url:'./payment-reverse-engineering/index.html', cat:'Property Strategy', desc:'Back-calculate max price from target payment', kw:'payment reverse engineer max price target monthly' },
     /* Senior’s Corner */
     { name:"Senior's Corner", url:'./seniors-corner/index.html', cat:"Senior's Corner", desc:'Retirement income, downsizing, estate tools', kw:'senior retirement downsizing estate income' },
+    { name:"Next Gen Corner", url:'./next-gen-corner/index.html', cat:"Next Gen Corner", desc:'Housing literacy for 11th & 12th graders', kw:'student high school teen junior senior graduate housing roommate starter home house hack' },
     /* Land Flip */
     { name:'Land Flip Analyzer', url:'./land-flip/index.html', cat:'Land Flip', desc:'Vacant land flip profit and exit analysis', kw:'land flip vacant lot profit exit rehab' },
   ];
