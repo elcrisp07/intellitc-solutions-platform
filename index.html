@@ -1408,20 +1408,156 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "IntelliTC Solutions",
-  "description": "54 professional real estate calculators for investors, agents, homebuyers, and lenders.",
-  "url": "https://intellitcsolutions.com",
-  "creator": {
-    "@type": "Organization",
-    "name": "IntelliTC Solutions",
-    "url": "https://intellitcsolutions.com"
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://intellitcsolutions.com/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://intellitcsolutions.com/#website",
+      "name": "IntelliTC Solutions",
+      "url": "https://intellitcsolutions.com",
+      "description": "54 professional real estate calculators for investors, agents, homebuyers, lenders, students, and retirees.",
+      "publisher": { "@id": "https://intellitcsolutions.com/#org" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://intellitcsolutions.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://intellitcsolutions.com/#org",
+      "name": "IntelliTC Solutions",
+      "alternateName": "IntelliTC",
+      "url": "https://intellitcsolutions.com",
+      "logo": "https://intellitcsolutions.com/assets/logo.jpg",
+      "description": "A real estate education ecosystem combining 54 professional calculators, six guided learning paths, 85 scenario labs, and the ICREA certification program.",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Infinite Workz Ventures LLC",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Virginia Beach",
+          "addressRegion": "VA",
+          "addressCountry": "US"
+        }
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Eric L. Crisp",
+        "jobTitle": "Founder, IntelliTC Solutions"
+      },
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "IntelliTC Real Estate Analyst (ICREA)",
+        "credentialCategory": "Certificate",
+        "description": "Three-tier real estate analyst credential \u2014 Associate, Professional, Master \u2014 verified through scenario-lab competency."
+      },
+      "sameAs": ["https://intellitcsolutions.com/about"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://intellitcsolutions.com/#app",
+      "name": "IntelliTC Solutions Real Estate Calculator Platform",
+      "applicationCategory": "FinanceApplication",
+      "applicationSubCategory": "Real Estate Analysis",
+      "operatingSystem": "Web",
+      "url": "https://intellitcsolutions.com",
+      "description": "54 professional real estate calculators with Learn Mode, scenario labs, and the ICREA certification program. Built for first-time buyers, agents, investors, lenders, students, and retirees.",
+      "featureList": [
+        "54 professional real estate calculators",
+        "Goal Pilot wizard (guided tool chains)",
+        "6 guided learning paths",
+        "85 scenario labs",
+        "ICREA three-tier certification",
+        "Senior\u2019s Corner & Next Gen Corner tracks",
+        "Learn Mode on every calculator",
+        "Embeddable widgets for partners"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free during open beta."
+      },
+      "creator": { "@id": "https://intellitcsolutions.com/#org" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://intellitcsolutions.com/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://intellitcsolutions.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is IntelliTC Solutions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IntelliTC Solutions is a real estate education platform built around 54 professional calculators, six guided learning paths, 85 scenario labs, and the ICREA certification program. It is designed to give first-time buyers, agents, investors, lenders, students, and retirees the same honest math, with framing matched to their experience level."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is IntelliTC for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anyone making a real estate decision. The platform serves first-time homebuyers, real estate agents, residential and commercial investors, lenders, financial advisors, retirees evaluating their housing equity, and high-school or early-career students learning the fundamentals through Next Gen Corner."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is IntelliTC free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The full calculator suite, learning paths, and scenario labs are free to use during open beta. Premium features will be introduced as the platform exits beta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the ICREA certificate program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ICREA stands for IntelliTC Real Estate Analyst. It is a three-tier credential \u2014 Associate, Professional, and Master \u2014 that verifies analytical competence through the platform\u2019s scenario labs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need real estate experience to start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The Start Here path is built for people with zero prior experience, and Learn Mode on every calculator translates inputs into plain language. The Goal Pilot wizard can build a tool chain for whatever you are trying to accomplish."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate are the calculators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every calculator shows its inputs, the math, and the assumptions behind the result. Outputs are educational and should be validated against your specific lender, accountant, or attorney before any final decision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can my school or institution license IntelliTC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. IntelliTC is licensed to high schools, community colleges, real estate schools, and continuing-education providers, with seat-based pricing, instructor dashboards, and CE-equivalency mapping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who built IntelliTC, and where is it based?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IntelliTC Solutions is operated by Infinite Workz Ventures LLC, a Virginia limited liability company headquartered in Virginia Beach, Virginia. It was founded by Eric L. Crisp, a lifelong merchant mariner currently serving as a U.S. Navy Supply Officer."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 <!-- Google Analytics 4 -->
@@ -1457,6 +1593,132 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 .email-capture-form button:hover { background: #e8af34; }
 .email-capture .ec-note { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 12px; }
 .email-capture .ec-success { color: #D19900; font-weight: 600; display: none; margin-top: 12px; }
+
+/* ── Problem Statement Strip ── */
+.problem-strip {
+  max-width: var(--content-wide);
+  margin: var(--space-10) auto var(--space-4);
+  padding: 0 var(--space-6);
+  text-align: center;
+}
+.problem-strip .ps-eyebrow {
+  display: inline-block;
+  background: oklch(from var(--color-primary) l c h / 0.1);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+.problem-strip h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin: 0 auto var(--space-4);
+  max-width: 880px;
+  line-height: 1.25;
+}
+.problem-strip h2 em { color: var(--color-primary); font-style: normal; }
+.problem-strip .ps-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  max-width: 1080px;
+  margin-left: auto; margin-right: auto;
+}
+.ps-stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-align: left;
+}
+.ps-stat .ps-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  background: oklch(from var(--color-primary) l c h / 0.12);
+  color: var(--color-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: var(--space-3);
+}
+.ps-stat h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 6px;
+}
+.ps-stat p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── FAQ ── */
+.faq-section {
+  max-width: 880px;
+  margin: var(--space-12) auto var(--space-10);
+  padding: 0 var(--space-6);
+}
+.faq-section h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 var(--space-2);
+}
+.faq-section .faq-sub {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-7);
+}
+.faq-list { display: grid; gap: var(--space-3); }
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.faq-item[open] { border-color: var(--color-primary); }
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--space-4) var(--space-5);
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after { content: '−'; }
+.faq-item .faq-body {
+  padding: 0 var(--space-5) var(--space-5);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+.faq-item .faq-body p { margin: 0 0 var(--space-2); }
+.faq-item .faq-body a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
+.faq-item .faq-body a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -1531,6 +1793,35 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
     </video>
   </div>
 </div>
+
+<!-- ═══════ PROBLEM STATEMENT ═══════ -->
+<section class="problem-strip" aria-labelledby="ps-heading">
+  <span class="ps-eyebrow">Why this exists</span>
+  <h2 id="ps-heading">Real estate is the largest financial decision most people will ever make &mdash; and most of those decisions still get made on <em>gut and back‑of‑the‑napkin math</em>.</h2>
+  <p style="max-width:720px;margin:0 auto;color:var(--color-text-muted);font-size:var(--text-base);line-height:1.6">IntelliTC closes that gap with professional‑grade analysis, plain‑language guidance, and structured learning &mdash; designed to serve every age group and every experience level on the same platform.</p>
+  <div class="ps-row">
+    <div class="ps-stat">
+      <span class="ps-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l3-6 3 3 4-8 5 9 3-2"/></svg></span>
+      <h3>Decisions on guesswork</h3>
+      <p>Most buyers, sellers, and even agents reach for a calculator with hidden assumptions or a spreadsheet they can't read.</p>
+    </div>
+    <div class="ps-stat">
+      <span class="ps-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></span>
+      <h3>Tools that talk down</h3>
+      <p>Generic real estate calculators dumb down the math for engagement. The result is confidence without competence.</p>
+    </div>
+    <div class="ps-stat">
+      <span class="ps-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+      <h3>No on‑ramp by experience</h3>
+      <p>A first‑time buyer and a seasoned investor need different framing &mdash; not different platforms. IntelliTC layers both.</p>
+    </div>
+    <div class="ps-stat">
+      <span class="ps-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg></span>
+      <h3>Credentials without proof</h3>
+      <p>Most real estate certifications credit seat time, not skill. ICREA verifies competence through the platform's own labs.</p>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════ ROLE-BASED ENTRY POINTS (UNIFIED 6-CARD GRID) ═══════ -->
 <div class="role-entry">
@@ -1680,6 +1971,58 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
   <span class="embed-banner-cta">Get Embed Code &rarr;</span>
 </a>
 
+<!-- ═══════ FAQ ═══════ -->
+<section class="faq-section" aria-labelledby="faq-heading">
+  <h2 id="faq-heading">Common questions</h2>
+  <p class="faq-sub">A quick orientation to what IntelliTC Solutions is, who it's for, and how to use it.</p>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>What is IntelliTC Solutions?</summary>
+      <div class="faq-body"><p>IntelliTC Solutions is a real estate education platform built around 54 professional calculators, six guided learning paths, eighty-five scenario labs, and the ICREA certification program. It's designed to give first-time buyers, agents, investors, lenders, students, and retirees the same honest math — with framing matched to their experience level. Read the full story on the <a href="./about/index.html">About page</a>.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Who is IntelliTC for?</summary>
+      <div class="faq-body"><p>Anyone making a real estate decision. The platform serves first-time homebuyers, real estate agents, residential and commercial investors, lenders, financial advisors, retirees evaluating their housing equity, and high-school or early-career students learning the fundamentals through Next Gen Corner. The same calculators serve all of them — only the framing and on-ramp change.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is IntelliTC free to use?</summary>
+      <div class="faq-body"><p>The full calculator suite, learning paths, and scenario labs are free to use during our beta. Premium features — saved analyses, portfolio tracking, AI-powered deal scoring, and the full ICREA certification program — will be introduced as we exit beta. <a href="#emailCapture">Join the waitlist</a> to be notified when those features go live.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is the ICREA certificate program?</summary>
+      <div class="faq-body"><p>ICREA stands for IntelliTC Real Estate Analyst. It's a three-tier credential — Associate, Professional, and Master — that verifies analytical competence through the platform's scenario labs. Unlike most real estate certifications that credit seat time, ICREA credits demonstrated skill: passing scored scenarios using the actual calculators. Learn more on the <a href="./certification/index.html">Certificate page</a>.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need real estate experience to start?</summary>
+      <div class="faq-body"><p>No. The <a href="./zero-experience/index.html">Start Here</a> path is built for people with zero prior experience, and Learn Mode on every calculator translates the inputs into plain language. If you want, you can let the <a href="./goal-pilot/index.html">Goal Pilot</a> wizard build a tool chain for whatever you're trying to accomplish.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How accurate are the calculators?</summary>
+      <div class="faq-body"><p>Every calculator on the platform shows its inputs, the math, and the assumptions behind the result. The same engines power the beginner and professional views — only the surrounding guidance changes. Outputs are educational and should be validated against your specific lender, accountant, or attorney before any final decision.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can my school or institution license IntelliTC for classroom use?</summary>
+      <div class="faq-body"><p>Yes. We license the platform to high schools, community colleges, real estate schools, and continuing-education providers — with seat-based pricing, instructor dashboards, and CE-equivalency mapping. See the <a href="./schools/index.html">For Schools &amp; Institutions</a> page or email <a href="mailto:schools@intellitcsolutions.com">schools@intellitcsolutions.com</a>.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Who built IntelliTC, and where is it based?</summary>
+      <div class="faq-body"><p>IntelliTC Solutions is operated by <strong>Infinite Workz Ventures LLC</strong>, a Virginia limited liability company headquartered in Virginia Beach, Virginia. It was founded by Eric L. Crisp, a lifelong merchant mariner currently serving as a U.S. Navy Supply Officer. Read his story on the <a href="./about/index.html">About page</a>.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I get in touch?</summary>
+      <div class="faq-body"><p>The fastest way is the <a href="./contact/index.html">Contact page</a>, which routes your message to the right inbox based on the topic you choose. You can also email <a href="mailto:hello@intellitcsolutions.com">hello@intellitcsolutions.com</a> directly.</p></div>
+    </details>
+  </div>
+</section>
+
 <!-- Email Capture -->
 <div class="email-capture" id="emailCapture">
   <h2>Stay in the Loop</h2>
@@ -1694,7 +2037,7 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 
 <footer class="footer">
   <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
-  <p><img src="./assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="./terms/index.html">Terms of Service</a> &bull; <a href="./privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+  <p><img src="./assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="./about/index.html">About</a> &bull; <a href="./contact/index.html">Contact</a> &bull; <a href="./terms/index.html">Terms of Service</a> &bull; <a href="./privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
   <p style="margin-top:6px;font-size:var(--text-xs)"><a href="./schools/index.html" style="color:var(--color-text-muted)">For Schools &amp; Institutions</a> &bull; <a href="./verify/index.html" style="color:var(--color-text-muted)">Verify a Certificate</a> &bull; <a href="./ce-equivalency/index.html" style="color:var(--color-text-muted)">CE Equivalency</a></p>
 </footer>
 

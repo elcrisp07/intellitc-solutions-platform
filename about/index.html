@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<link rel="canonical" href="https://intellitcsolutions.com/about">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About IntelliTC Solutions — Our Mission & Platform</title>
+<meta name="description" content="IntelliTC Solutions is a real estate education ecosystem — 54 professional calculators, six guided learning paths, scenario labs, and the ICREA certification — built to help every age group and experience level make smarter real estate decisions.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="About IntelliTC Solutions — Our Mission & Platform">
+<meta property="og:description" content="A real estate education ecosystem built for every age group and experience level — from first-time buyers to seasoned investors.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intellitcsolutions.com/about">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About IntelliTC Solutions">
+<meta name="twitter:description" content="A real estate education ecosystem for every age group and experience level.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+
+<style>
+/* ── About page layout ── */
+.about-hero {
+  text-align: center;
+  padding: var(--space-16) var(--space-6) var(--space-8);
+  max-width: var(--content-wide);
+  margin: 0 auto;
+}
+.about-hero .about-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+.about-hero h1 {
+  font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.02em;
+}
+.about-hero .lede {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.about-content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-12);
+}
+
+.about-content section {
+  margin-bottom: var(--space-10);
+}
+.about-content h2 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+}
+.about-content h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--space-5) 0 var(--space-2);
+}
+.about-content p {
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-3);
+}
+.about-content p strong { color: var(--color-text); font-weight: 600; }
+
+/* Pillar grid */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+.pillar-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.pillar-card .pillar-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  background: oklch(from var(--color-primary) l c h / 0.12);
+  color: var(--color-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: var(--space-3);
+}
+.pillar-card h4 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+}
+.pillar-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Founder block */
+.founder-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-7);
+  margin-top: var(--space-4);
+}
+@media (min-width: 720px) {
+  .founder-block { grid-template-columns: 220px 1fr; }
+}
+.founder-portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 220px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, oklch(from var(--color-primary) l c h / 0.18), oklch(from var(--color-primary) l c h / 0.04));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+.founder-portrait svg { width: 84px; height: 84px; }
+.founder-name {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+.founder-role {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  margin: 2px 0 var(--space-3);
+}
+.founder-meta {
+  display: flex; flex-wrap: wrap; gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.founder-meta span {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Numbered list */
+.what-we-built {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+}
+.what-we-built li {
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+.what-we-built li strong { color: var(--color-text); display: block; margin-bottom: 2px; font-size: var(--text-base); }
+
+/* Partner row */
+.partner-row {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-top: var(--space-4);
+}
+.partner-row p { margin: 0; }
+
+/* CTA strip */
+.about-cta {
+  background: linear-gradient(135deg, var(--color-primary), oklch(from var(--color-primary) calc(l - 0.08) c h));
+  color: #fff;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  text-align: center;
+  margin: var(--space-10) auto 0;
+  max-width: 880px;
+}
+.about-cta h2 {
+  color: #fff;
+  border: none;
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-2xl);
+  display: block;
+}
+.about-cta p { color: rgba(255,255,255,0.9); margin: 0 0 var(--space-5); }
+.about-cta-buttons { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+.about-cta-buttons a {
+  background: #fff;
+  color: var(--color-primary);
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+.about-cta-buttons a.secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+.about-cta-buttons a:hover { transform: translateY(-1px); }
+
+/* Nav hover */
+.header-inner nav a:hover { color: var(--color-primary) !important; }
+</style>
+
+<!-- ── JSON-LD: AboutPage + Person + Organization ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "https://intellitcsolutions.com/about#aboutpage",
+      "url": "https://intellitcsolutions.com/about",
+      "name": "About IntelliTC Solutions",
+      "description": "The mission, platform, and operating principles behind IntelliTC Solutions — a real estate education ecosystem.",
+      "isPartOf": { "@id": "https://intellitcsolutions.com/#website" }
+    },
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://intellitcsolutions.com/#org",
+      "name": "IntelliTC Solutions",
+      "alternateName": "IntelliTC",
+      "url": "https://intellitcsolutions.com",
+      "logo": "https://intellitcsolutions.com/assets/logo.jpg",
+      "description": "A real estate education ecosystem combining 54 professional calculators, structured learning paths, scenario labs, and the ICREA certification program.",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Infinite Workz Ventures LLC",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Virginia Beach",
+          "addressRegion": "VA",
+          "addressCountry": "US"
+        }
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Eric L. Crisp",
+        "jobTitle": "Founder, IntelliTC Solutions"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://intellitcsolutions.com/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://intellitcsolutions.com/about" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+<header class="header two-tier-header">
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" class="hdr-primary-link">Start Here</a>
+      <a href="../goal-pilot/index.html" class="hdr-primary-link">Goal Pilot</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html">Your Role?</a>
+    <a href="../workflows/index.html">Workflows</a>
+    <a href="../learning-paths/index.html">Learn</a>
+    <a href="../scenario-lab/index.html">Scenario Lab</a>
+    <a href="../seniors-corner/index.html">Senior's Corner</a>
+    <a href="../next-gen-corner/index.html">Next Gen Corner</a>
+    <a href="../certification/index.html">Certificate</a>
+    <a href="../guides/index.html">Guides</a>
+    <a href="../calculators/index.html">All Calculators</a>
+  </nav>
+</header>
+
+<div class="about-hero">
+  <span class="about-badge">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    About
+  </span>
+  <h1>One platform. Every age group. Every experience level.</h1>
+  <p class="lede">IntelliTC Solutions is a real estate education ecosystem — 54 professional calculators, six guided learning paths, eighty‑five scenario labs, and a three‑tier certification program — built to help anyone, from a first‑time buyer to a seasoned investor, make smarter real estate decisions.</p>
+</div>
+
+<div class="about-content">
+
+  <!-- ── Mission ── -->
+  <section id="mission">
+    <h2>Our mission</h2>
+    <p>Real estate is the largest financial decision most people will ever make, and most of those decisions are still made on gut instinct and back‑of‑the‑napkin math. <strong>Our mission is to put professional‑grade analysis tools — and the education to use them well — into the hands of anyone who needs them, regardless of age, role, or starting experience.</strong></p>
+    <p>That means a first‑time buyer figuring out what they can really afford. A retiree weighing whether to downsize or stay put. A new agent trying to look like a pro on their next listing presentation. A seasoned investor stress‑testing a rental against rate shocks. The same platform serves all of them, because the math underneath is the same — only the framing changes.</p>
+  </section>
+
+  <!-- ── Vision ── -->
+  <section id="vision">
+    <h2>Our vision</h2>
+    <p>We see a generation of real estate decision‑makers — buyers, sellers, agents, investors, lenders, and educators — who never have to choose between a slick‑looking calculator that hides its assumptions and a dense spreadsheet that nobody can read. <strong>IntelliTC Solutions is building the connective tissue between practical tools and structured learning</strong>, with credentialing built in for those who want to prove they have the chops.</p>
+  </section>
+
+  <!-- ── Pillars ── -->
+  <section id="pillars">
+    <h2>What the platform stands for</h2>
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <span class="pillar-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2l3-9 6 18 3-9h6"/></svg></span>
+        <h4>Transparent math</h4>
+        <p>Every calculator shows the assumptions behind the numbers — no hidden fees, no rounded‑off inputs, no marketing pretending to be analysis.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+        <h4>Layered for experience</h4>
+        <p>Beginners get plain‑language guidance and Learn Mode. Advanced users get sensitivity analysis, hedge testing, and exportable scenarios. One platform, two reading levels.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span>
+        <h4>Credentials that mean something</h4>
+        <p>The ICREA program (IntelliTC Real Estate Analyst) credentials competence, not seat time. Three tiers — Associate, Professional, Master — each verified through the platform's labs.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2V9z"/></svg></span>
+        <h4>Built for every age group</h4>
+        <p>Senior's Corner. Next Gen Corner. Zero‑Experience track. The platform meets users where they are — high‑schoolers and retirees included.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What we built ── -->
+  <section id="what-we-built">
+    <h2>What's inside the platform</h2>
+    <p>IntelliTC Solutions is one connected ecosystem, not a bag of separate tools. The pieces are designed to hand off to each other — a calculator drops you into a scenario lab, the scenario lab drops you into a learning path, the learning path drops you into the certification program.</p>
+    <ul class="what-we-built">
+      <li><strong>54 professional calculators</strong>Cash flow, BRRRR, rent vs. buy, 1031 exchange, capital gains, creative finance, DSCR, sensitivity, and more.</li>
+      <li><strong>6 guided learning paths</strong>From buying your first home to mastering BRRRR investing — built around hands‑on calculator exercises.</li>
+      <li><strong>85 scenario labs</strong>Guided challenges, timed drills, and open sandboxes where you analyze, answer, and check your work.</li>
+      <li><strong>ICREA certification</strong>Three tiers — Associate, Professional, Master — verified through the platform's own scenario labs.</li>
+      <li><strong>Senior's Corner &amp; Next Gen Corner</strong>Dedicated tracks for retirees and for high‑school / early‑career learners.</li>
+      <li><strong>Goal Pilot wizard</strong>Tell it what you're trying to do; it builds the tool chain for you.</li>
+    </ul>
+  </section>
+
+  <!-- ── How we operate ── -->
+  <section id="how-we-operate">
+    <h2>How we operate</h2>
+    <p>IntelliTC Solutions is operated by <strong>Infinite Workz Ventures LLC</strong>, a Virginia limited liability company headquartered in Virginia Beach, VA, and was founded by Eric L. Crisp. The platform is built and maintained directly — no white‑labeled affiliate stack, no rented calculators, no scraped third‑party content. Every tool, scenario, and learning module on the site was written and tested in‑house.</p>
+    <div class="partner-row">
+      <p>The educational platform is independent — it does not sell, recommend, or earn a commission on any insurance or investment product. For long‑term capital structure, the parent company works with specialists in policy‑driven financing to keep its balance sheet resilient through cycles, but those arrangements are kept entirely separate from what users see on the site.</p>
+    </div>
+  </section>
+
+  <!-- ── Why we exist ── -->
+  <section id="why">
+    <h2>Why this matters</h2>
+    <p>Most personal financial mistakes are quiet ones. A mortgage someone shouldn't have signed. A 1031 exchange that didn't actually defer the gain. A rental that cash‑flows on paper and bleeds in real life. A retiree downsizing into a higher monthly payment than they thought.</p>
+    <p>None of those decisions get fixed by another flashy tool. They get fixed by <strong>a person, in front of an honest calculator, with a clear explanation of what the numbers mean.</strong> That's what we build — for first‑time buyers, agents, investors, lenders, students, retirees, and everyone in between.</p>
+  </section>
+
+  <!-- ── CTA ── -->
+  <div class="about-cta">
+    <h2>Ready to dig in?</h2>
+    <p>Pick the door that fits where you are right now.</p>
+    <div class="about-cta-buttons">
+      <a href="../zero-experience/index.html">Start Here</a>
+      <a href="../goal-pilot/index.html" class="secondary">Goal Pilot</a>
+      <a href="../calculators/index.html" class="secondary">Browse all 54 calculators</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>This content is for educational purposes only and does not constitute financial, legal, or investment advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../about/index.html">About</a> &bull; <a href="../contact/index.html">Contact</a> &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+  <p style="margin-top:6px;font-size:var(--text-xs)"><a href="../schools/index.html" style="color:var(--color-text-muted)">For Schools &amp; Institutions</a> &bull; <a href="../verify/index.html" style="color:var(--color-text-muted)">Verify a Certificate</a> &bull; <a href="../ce-equivalency/index.html" style="color:var(--color-text-muted)">CE Equivalency</a></p>
+</footer>
+
+<script>
+/* Dark mode toggle */
+(function(){
+  const toggles=document.querySelectorAll('[data-theme-toggle]');
+  const html=document.documentElement;
+  const stored=localStorage.getItem('intellitc-theme')||null;
+  if(stored){html.setAttribute('data-theme',stored);}
+  else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){html.setAttribute('data-theme','dark');}
+  function updateToggleIcons(){
+    const d=html.getAttribute('data-theme');
+    const icon=d==='dark'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    toggles.forEach(function(t){t.innerHTML=icon;});
+  }
+  updateToggleIcons();
+  toggles.forEach(function(t){
+    t.addEventListener('click',function(){
+      const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+      html.setAttribute('data-theme',next);
+      localStorage.setItem('intellitc-theme',next);
+      updateToggleIcons();
+    });
+  });
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>
