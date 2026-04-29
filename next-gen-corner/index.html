@@ -76,6 +76,49 @@
 .ng-badge { display:inline-block; font-size:var(--text-xs); font-weight:600; padding:4px 14px; border-radius:var(--radius-full); background:#e0f2fe; color:#0369a1; margin-bottom:var(--space-4); letter-spacing:0.04em; text-transform:uppercase; }
 [data-theme="dark"] .ng-badge { background:#0c2a4a; color:#93c5fd; }
 .ng-title { font-size:var(--text-xl); font-weight:700; color:var(--color-text); margin:0 0 var(--space-3); line-height:1.2; }
+
+/* ── Hero Mega-Button (combined badge + title in one BIG blue button) ── */
+.ng-hero-megabtn {
+  display:block; width:100%; max-width:920px; margin:0 auto var(--space-5);
+  background:linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #0ea5e9 100%);
+  color:#fff; text-align:center;
+  border:none; border-radius:var(--radius-xl);
+  padding:var(--space-8) var(--space-7);
+  box-shadow:0 12px 32px rgba(29,78,216,.28), 0 4px 12px rgba(14,165,233,.18);
+  cursor:default;
+  font-family:var(--font-body);
+}
+.ng-hero-megabtn .mb-eyebrow {
+  display:inline-block; font-size:var(--text-sm); font-weight:600;
+  letter-spacing:0.08em; text-transform:uppercase;
+  background:rgba(255,255,255,.18); color:#f0f9ff;
+  padding:6px 16px; border-radius:var(--radius-full);
+  margin-bottom:var(--space-4);
+}
+.ng-hero-megabtn .mb-headline {
+  font-size:clamp(1.75rem, 4.5vw, 2.5rem);
+  font-weight:800; line-height:1.15; letter-spacing:-0.02em;
+  color:#fff; margin:0;
+}
+[data-theme="dark"] .ng-hero-megabtn { box-shadow:0 12px 32px rgba(29,78,216,.4), 0 4px 12px rgba(14,165,233,.28); }
+
+/* ── Why This Matters: italic header + reveal button ── */
+.ng-why-toggle {
+  display:inline-flex; align-items:center; gap:var(--space-2);
+  margin:var(--space-5) auto 0;
+  padding:var(--space-3) var(--space-5);
+  border-radius:var(--radius-lg); border:1px solid #93c5fd;
+  background:var(--color-surface); color:#1d4ed8;
+  font-size:var(--text-sm); font-weight:600; font-family:var(--font-body);
+  cursor:pointer; transition:background var(--transition-interactive), transform 0.15s, color var(--transition-interactive);
+}
+.ng-why-toggle:hover { background:#1d4ed8; color:#fff; transform:translateY(-1px); }
+[data-theme="dark"] .ng-why-toggle { background:transparent; color:#93c5fd; border-color:#1d4ed8; }
+[data-theme="dark"] .ng-why-toggle:hover { background:#1d4ed8; color:#fff; }
+.ng-why-toggle .chev { transition:transform 0.25s; display:inline-block; }
+.ng-why-toggle.open .chev { transform:rotate(180deg); }
+.ng-why-italic { font-style:italic; font-size:var(--text-base); font-weight:600; color:var(--color-text); margin:0 0 var(--space-3); }
+[data-theme="dark"] .ng-why-italic { color:var(--color-text); }
 .ng-callout { font-size:var(--text-lg); font-weight:600; color:var(--color-primary); margin:var(--space-5) auto var(--space-3); max-width:720px; line-height:1.45; }
 .ng-subtitle { font-size:var(--text-base); color:var(--color-text-muted); line-height:1.7; max-width:720px; margin:0 auto var(--space-2); }
 
@@ -318,13 +361,21 @@
 
 <!-- ── Hero Section ── -->
 <section class="ng-hero" id="ngHome">
-  <span class="ng-badge">Next Gen Corner · 11th & 12th Graders</span>
-  <h1 class="ng-title">Your Next 12–24 Months, Solved With Numbers</h1>
+  <div class="ng-hero-megabtn" role="banner">
+    <span class="mb-eyebrow">Next Gen Corner · 11th &amp; 12th Graders</span>
+    <h1 class="mb-headline">Your Next 12–24 Months, Solved With Numbers</h1>
+  </div>
   <p class="ng-callout">The decisions you make about where you live after graduation will shape your finances for the next decade. Start modeling them now — while the stakes are still hypothetical.</p>
 
-  <div class="ng-why">
-    <h3>Why This Matters Right Now</h3>
-    <p>By the time you walk across that graduation stage, you'll have somewhere between <strong>12 and 24 months</strong> before a major housing decision lands on your plate — whether that's your first apartment, a dorm, a move back home, or buying somewhere with a partner or friends. The difference between a <strong>$1,400/mo solo apartment</strong> and a <strong>$700/mo shared room</strong> compounds into roughly <strong>$8,400 saved per year</strong>. Over four years, that's a down payment on your first home.</p>
+  <p class="ng-why-italic">Why This Matters Right Now</p>
+  <button class="ng-why-toggle" id="ngWhyToggle" type="button" aria-expanded="false" aria-controls="ngWhyPanel" onclick="toggleNgWhy()">
+    <span class="label">Read the intro</span>
+    <span class="chev" aria-hidden="true">▼</span>
+  </button>
+
+  <div class="ng-why" id="ngWhyPanel" hidden>
+    <p>By the time you walk across that graduation stage, you'll have somewhere between <strong>12 and 24 months</strong> before a major housing decision lands on your plate — whether that's your first apartment, a dorm, a move back home, or buying somewhere with a partner or friends.</p>
+    <p>The difference between a <strong>$1,400/mo solo apartment</strong> and a <strong>$700/mo shared room</strong> compounds into roughly <strong>$8,400 saved per year</strong>. Over four years, that's a down payment on your first home.</p>
     <p>This isn't abstract textbook finance or "start investing immediately." This is <strong>the real math of the next apartment, the next lease, and the first home</strong>. Run the scenarios below with different numbers, share the results with classmates, and walk into graduation knowing what things actually cost.</p>
   </div>
 </section>
@@ -695,6 +746,25 @@
 };</script>
 <script src="../shared/feedback.js"></script>
 <script>
+/* ── Why This Matters reveal toggle ── */
+function toggleNgWhy() {
+  const btn = document.getElementById('ngWhyToggle');
+  const panel = document.getElementById('ngWhyPanel');
+  const label = btn.querySelector('.label');
+  const isOpen = !panel.hasAttribute('hidden');
+  if (isOpen) {
+    panel.setAttribute('hidden', '');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    label.textContent = 'Read the intro';
+  } else {
+    panel.removeAttribute('hidden');
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    label.textContent = 'Hide the intro';
+  }
+}
+
 /* ── Navigation ── */
 function showCalc(type) {
   document.getElementById('ngHome').style.display = 'none';
