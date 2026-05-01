@@ -154,9 +154,11 @@
 .ng-tool-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(14,165,233,.14); border-color:#7dd3fc; }
 [data-theme="dark"] .ng-tool-card:hover { box-shadow:0 10px 28px rgba(14,165,233,.2); border-color:#1d4ed8; }
 .ng-tool-icon { width:52px; height:52px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4); font-size:1.7rem; }
+.ng-tool-icon.citylife { background:#ede9fe; color:#6d28d9; }
 .ng-tool-icon.roommate { background:#dbeafe; color:#1d4ed8; }
 .ng-tool-icon.starter { background:#dcfce7; color:#15803d; }
 .ng-tool-icon.househack { background:#fef3c7; color:#a16207; }
+[data-theme="dark"] .ng-tool-icon.citylife { background:#4c1d95; color:#ddd6fe; }
 [data-theme="dark"] .ng-tool-icon.roommate { background:#1e3a8a; color:#bfdbfe; }
 [data-theme="dark"] .ng-tool-icon.starter { background:#14532d; color:#bbf7d0; }
 [data-theme="dark"] .ng-tool-icon.househack { background:#713f12; color:#fde68a; }
@@ -312,6 +314,22 @@
 .result-value.alert { color:var(--color-error); }
 .result-value.safe { color:var(--color-success); }
 .result-value.big { font-size:var(--text-base); }
+.result-row.total { border-top:2px solid var(--color-border); border-bottom:none; padding-top:var(--space-3); margin-top:var(--space-2); }
+
+/* City Life specific */
+.cl-step-title { font-size:var(--text-base); font-weight:700; color:var(--color-primary); margin:var(--space-6) 0 var(--space-2); padding-bottom:var(--space-2); border-bottom:1px solid var(--color-divider); }
+.cl-step-sub { font-size:var(--text-sm); color:var(--color-text-muted); margin:0 0 var(--space-3); }
+.cl-pill { display:inline-flex; align-items:center; justify-content:center; min-width:80px; padding:var(--space-2) var(--space-4); background:var(--color-primary-surface); color:var(--color-primary); border-radius:999px; font-weight:700; font-family:var(--font-mono); font-size:var(--text-base); }
+.cl-tip { display:inline-block; width:16px; height:16px; line-height:16px; text-align:center; border-radius:50%; background:var(--color-surface-offset); color:var(--color-text-muted); font-size:11px; cursor:help; vertical-align:middle; margin-left:4px; }
+.cl-verdict { margin-top:var(--space-4); padding:var(--space-4) var(--space-5); border-radius:var(--radius-lg); font-weight:600; font-size:var(--text-sm); line-height:1.5; border:1px solid transparent; }
+.cl-verdict.success { background:#dcfce7; color:#14532d; border-color:#86efac; }
+.cl-verdict.workable { background:#cffafe; color:#155e75; border-color:#67e8f9; }
+.cl-verdict.warning { background:#fef3c7; color:#78350f; border-color:#fcd34d; }
+.cl-verdict.danger { background:#fee2e2; color:#7f1d1d; border-color:#fca5a5; }
+[data-theme="dark"] .cl-verdict.success { background:#14532d; color:#bbf7d0; border-color:#166534; }
+[data-theme="dark"] .cl-verdict.workable { background:#164e63; color:#a5f3fc; border-color:#155e75; }
+[data-theme="dark"] .cl-verdict.warning { background:#78350f; color:#fde68a; border-color:#92400e; }
+[data-theme="dark"] .cl-verdict.danger { background:#7f1d1d; color:#fecaca; border-color:#991b1b; }
 
 .result-explanation {
   background:var(--color-primary-surface); border-radius:var(--radius-lg);
@@ -382,29 +400,36 @@
 
 <!-- ── Scenario Cards ── -->
 <section class="ng-tools" id="ngToolCards">
-  <h2 class="ng-tools-heading">Three Scenarios to Model Right Now</h2>
+  <h2 class="ng-tools-heading">Four Scenarios to Model Right Now</h2>
   <p class="ng-tools-sub">No sign-up. No accounts. Just open a scenario, plug in your numbers, and see what the math says.</p>
   <div class="ng-tools-grid">
     <div class="ng-tool-card">
-      <div class="ng-tool-icon roommate">🚪</div>
+      <div class="ng-tool-icon citylife">🌆</div>
       <p class="ng-scenario-label">Scenario A</p>
+      <h3>City Life — Can I Afford to Move There?</h3>
+      <p>Pick a city. Pick an occupation. See what your take-home pay looks like, what rent eats first, and whether the budget actually balances at the end of the month. Built around the classic "choose a city, build a budget" classroom assignment.</p>
+      <button class="ng-tool-btn" onclick="showCalc('citylife')">Run Scenario A →</button>
+    </div>
+    <div class="ng-tool-card">
+      <div class="ng-tool-icon roommate">🚪</div>
+      <p class="ng-scenario-label">Scenario B</p>
       <h3>The Roommate Reality</h3>
       <p>Compare a solo apartment with shared housing. See how much you'd save every month, how much you'd have after one year, and how fast those savings could become a down payment on a starter home.</p>
-      <button class="ng-tool-btn" onclick="showCalc('roommate')">Run Scenario A →</button>
+      <button class="ng-tool-btn" onclick="showCalc('roommate')">Run Scenario B →</button>
     </div>
     <div class="ng-tool-card">
       <div class="ng-tool-icon starter">🏡</div>
-      <p class="ng-scenario-label">Scenario B</p>
+      <p class="ng-scenario-label">Scenario C</p>
       <h3>The Starter Home</h3>
       <p>Model what you could actually afford on an entry-level salary. See the full monthly cost — mortgage, taxes, insurance, maintenance — and understand the hidden side of homeownership that listing sites never show.</p>
-      <button class="ng-tool-btn" onclick="showCalc('starter')">Run Scenario B →</button>
+      <button class="ng-tool-btn" onclick="showCalc('starter')">Run Scenario C →</button>
     </div>
     <div class="ng-tool-card">
       <div class="ng-tool-icon househack">🔑</div>
-      <p class="ng-scenario-label">Scenario C</p>
+      <p class="ng-scenario-label">Scenario D</p>
       <h3>The House-Hack</h3>
       <p>What if your first home came with a built-in paycheck? Model buying a small property and renting out a room to a roommate. See how it could cut your effective housing cost to a fraction of what renting would be.</p>
-      <button class="ng-tool-btn" onclick="showCalc('househack')">Run Scenario C →</button>
+      <button class="ng-tool-btn" onclick="showCalc('househack')">Run Scenario D →</button>
     </div>
   </div>
 </section>
@@ -423,10 +448,13 @@
         <span class="ng-teachers-chip">Shareable Result Links</span>
         <span class="ng-teachers-chip">Free Forever</span>
       </div>
-      <button class="ng-classroom-btn" id="ngClassroomToggle" type="button" aria-expanded="false" aria-controls="ngChallenges">
-        See 60 Classroom Challenges
-        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+      <div style="display:flex; gap:var(--space-3); flex-wrap:wrap; align-items:center;">
+        <button class="ng-classroom-btn" id="ngClassroomToggle" type="button" aria-expanded="false" aria-controls="ngChallenges">
+          See 60 Classroom Challenges
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <a href="../for-teachers/index.html" class="ng-teachers-chip" style="text-decoration:none; padding:var(--space-2) var(--space-4); font-weight:700; border:1px solid var(--color-primary); color:var(--color-primary);">Free Lesson Plan + Rubric →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -441,12 +469,138 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
-     SCENARIO A: The Roommate Reality
+     SCENARIO A: City Life — Can I Afford to Move There?
+     ══════════════════════════════════════════════════════════════ -->
+<div class="calc-panel" id="citylifePanel">
+  <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
+  <div class="calc-container">
+    <h2>Scenario A · City Life — Can I Afford to Move There?</h2>
+    <p class="calc-desc">The classic graduation budget exercise: pick a city, pick a job, and see whether the math actually works. The cost-of-living numbers come pre-loaded for 100 U.S. metros. Take-home pay is estimated using federal + state + FICA — you can override anything.</p>
+
+    <h3 class="cl-step-title">Step 1 · Pick your city</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clCity">City / Metro Area</label>
+        <select id="clCity"></select>
+        <p class="form-hint" id="clCityHint">Median rent, utilities, groceries, and transit auto-fill below — you can override any field.</p>
+      </div>
+      <div class="form-group">
+        <label>Cost-of-Living Index <span class="cl-tip" title="100 = U.S. average. Above 100 = more expensive than average.">ⓘ</span></label>
+        <div class="cl-pill" id="clColPill">—</div>
+      </div>
+    </div>
+
+    <h3 class="cl-step-title">Step 2 · Pick your apartment</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clRent">Monthly Rent ($)</label>
+        <input type="number" id="clRent" min="0" step="25" value="1400">
+        <p class="form-hint">Pre-filled with the city's median 1BR rent. Replace with a real listing if you've got one.</p>
+      </div>
+      <div class="form-group">
+        <label for="clRoommates">Number of Roommates Sharing Rent</label>
+        <input type="number" id="clRoommates" min="1" max="6" step="1" value="1">
+        <p class="form-hint">1 = solo apartment. 2 = you + a roommate. Etc.</p>
+      </div>
+    </div>
+
+    <h3 class="cl-step-title">Step 3 · Pick your job and income</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clJob">Occupation</label>
+        <select id="clJob"></select>
+        <p class="form-hint">Median entry-level wage auto-fills. Override below if you have an offer letter.</p>
+      </div>
+      <div class="form-group">
+        <label for="clSalary">Annual Gross Salary ($)</label>
+        <input type="number" id="clSalary" min="0" step="500" value="42000">
+        <p class="form-hint">Before taxes. We estimate take-home below.</p>
+      </div>
+    </div>
+
+    <h3 class="cl-step-title">Step 4 · Build the rest of your budget</h3>
+    <p class="cl-step-sub">All values pre-fill from city data. Edit any line that doesn't match your reality.</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clUtilities">Utilities ($/mo)</label>
+        <input type="number" id="clUtilities" min="0" step="5" value="165">
+        <p class="form-hint">Electric, water, heat — split with roommates if shared</p>
+      </div>
+      <div class="form-group">
+        <label for="clInternet">Internet / Cell ($/mo)</label>
+        <input type="number" id="clInternet" min="0" step="5" value="75">
+        <p class="form-hint">Home broadband + your share of phone</p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clGroceries">Groceries ($/mo)</label>
+        <input type="number" id="clGroceries" min="0" step="10" value="380">
+        <p class="form-hint">Food at home, single adult typical</p>
+      </div>
+      <div class="form-group">
+        <label for="clTransport">Transportation ($/mo)</label>
+        <input type="number" id="clTransport" min="0" step="10" value="95">
+        <p class="form-hint">Transit pass OR equivalent of gas + insurance + parking</p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="clHealthcare">Health Insurance ($/mo)</label>
+        <input type="number" id="clHealthcare" min="0" step="5" value="285">
+        <p class="form-hint">Marketplace silver plan estimate — lower if employer-covered</p>
+      </div>
+      <div class="form-group">
+        <label for="clOther">Other Fixed ($/mo)</label>
+        <input type="number" id="clOther" min="0" step="10" value="125">
+        <p class="form-hint">Subscriptions, gym, student loan minimums, etc.</p>
+      </div>
+    </div>
+
+    <button class="calc-submit" onclick="calcCityLife()">Run the Numbers</button>
+
+    <div class="calc-results" id="citylifeResults">
+      <div class="result-card">
+        <h4>Step 5 · The Verdict</h4>
+        <div class="result-row"><span class="result-label">Annual Gross Salary</span><span class="result-value" id="clOutGross">—</span></div>
+        <div class="result-row"><span class="result-label">Estimated Take-Home (federal + state + FICA)</span><span class="result-value" id="clOutNet">—</span></div>
+        <div class="result-row"><span class="result-label">Monthly Take-Home</span><span class="result-value" id="clOutMonthlyNet">—</span></div>
+      </div>
+
+      <div class="result-card">
+        <h4>Where the money goes — monthly</h4>
+        <div class="result-row"><span class="result-label">Your share of rent</span><span class="result-value" id="clOutRentShare">—</span></div>
+        <div class="result-row"><span class="result-label">Utilities + Internet</span><span class="result-value" id="clOutUtil">—</span></div>
+        <div class="result-row"><span class="result-label">Groceries</span><span class="result-value" id="clOutGroc">—</span></div>
+        <div class="result-row"><span class="result-label">Transportation</span><span class="result-value" id="clOutTrans">—</span></div>
+        <div class="result-row"><span class="result-label">Health Insurance</span><span class="result-value" id="clOutHealth">—</span></div>
+        <div class="result-row"><span class="result-label">Other Fixed</span><span class="result-value" id="clOutOther">—</span></div>
+        <div class="result-row total"><span class="result-label"><strong>Total Monthly Expenses</strong></span><span class="result-value big" id="clOutExpenses">—</span></div>
+      </div>
+
+      <div class="result-card" id="clVerdictCard">
+        <h4>Does the budget balance?</h4>
+        <div class="result-row"><span class="result-label">Take-Home minus Expenses</span><span class="result-value big" id="clOutLeftover">—</span></div>
+        <div class="result-row"><span class="result-label">Housing as % of Take-Home <span class="cl-tip" title="Standard rule: housing should be ≤ 30% of take-home pay.">ⓘ</span></span><span class="result-value" id="clOutHousingPct">—</span></div>
+        <div class="result-row"><span class="result-label">Savings Rate (% of net)</span><span class="result-value" id="clOutSavingsRate">—</span></div>
+        <div class="cl-verdict" id="clVerdictBanner"></div>
+      </div>
+
+      <div class="result-explanation" id="citylifeExplanation"></div>
+      <div class="disclaimer-box">
+        <p><strong>Educational purposes only.</strong> Cost-of-living numbers are 2025–2026 estimates that vary by neighborhood, lifestyle, and employer benefits. Tax estimate uses simplified federal brackets + state flat rate + 7.65% FICA — not a substitute for a real paycheck calculator or tax professional.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCENARIO B: The Roommate Reality
      ══════════════════════════════════════════════════════════════ -->
 <div class="calc-panel" id="roommatePanel">
   <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
   <div class="calc-container">
-    <h2>Scenario A · The Roommate Reality</h2>
+    <h2>Scenario B · The Roommate Reality</h2>
     <p class="calc-desc">Compare the financial impact of living solo versus splitting housing with roommates. The savings don't just sit in a bank account — they compound into a real down payment surprisingly fast.</p>
 
     <div class="form-row">
@@ -517,7 +671,7 @@
 <div class="calc-panel" id="starterPanel">
   <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
   <div class="calc-container">
-    <h2>Scenario B · The Starter Home</h2>
+    <h2>Scenario C · The Starter Home</h2>
     <p class="calc-desc">What does it actually take to buy a first home? This models the <em>full</em> cost of ownership — not just mortgage — so you see the taxes, insurance, and maintenance that never show up on listing sites. Uses the industry-standard 28% front-end DTI rule.</p>
 
     <div class="form-row">
@@ -583,7 +737,7 @@
 <div class="calc-panel" id="househackPanel">
   <button class="calc-back" onclick="showHome()">← Back to Next Gen Corner</button>
   <div class="calc-container">
-    <h2>Scenario C · The House-Hack</h2>
+    <h2>Scenario D · The House-Hack</h2>
     <p class="calc-desc">House-hacking means buying a property and renting out part of it — a spare bedroom, a basement, a garage apartment — to cover a big chunk of your mortgage. This is one of the most powerful wealth-building moves available to someone in their early 20s. Let's see the math.</p>
 
     <div class="form-row">
@@ -615,7 +769,7 @@
     <div class="form-group">
       <label for="hhSoloRent">Compare Against: Solo Rent You'd Otherwise Pay ($/month)</label>
       <input type="number" id="hhSoloRent" placeholder="e.g. 1400" min="0" step="25" value="1400">
-      <p class="form-hint">The solo apartment alternative from Scenario A</p>
+      <p class="form-hint">The solo apartment alternative from Scenario B</p>
     </div>
 
     <button class="calc-submit" onclick="calcHouseHack()">See the Hack</button>
@@ -664,9 +818,9 @@
     "sInterestRate": "<strong>Mortgage Rate</strong> — The rate the lender charges on your loan. A 0.5% rate change equals ~$10K over 30 years on a $200K home. Lock in your rate once you're ready.",
     "sMonthlyDebts": "<strong>Other Monthly Debts</strong> — Minimum payments on student loans, car, credit cards. Lenders add these to your housing cost when calculating the 36% back-end DTI ratio.",
     "sPurchasePrice": "<strong>Target Purchase Price</strong> — What the home costs. Starter homes in most U.S. markets are $175K–$275K. The 28% rule tells you if this price fits your income.",
-    "hhPrice": "<strong>Purchase Price</strong> — Same concept as Scenario B, but for a house with an extra bedroom you can rent. Small 2BR or 3BR homes make the best house-hack candidates.",
+    "hhPrice": "<strong>Purchase Price</strong> — Same concept as Scenario C, but for a house with an extra bedroom you can rent. Small 2BR or 3BR homes make the best house-hack candidates.",
     "hhDown": "<strong>Down Payment</strong> — FHA loans allow 3.5% down, which is why this scenario is realistic for young buyers. Lower down = more PMI but less cash needed upfront.",
-    "hhRate": "<strong>Mortgage Rate</strong> — Same as Scenario B. Owner-occupied mortgages get the lowest rates — a huge advantage of living in the property you rent.",
+    "hhRate": "<strong>Mortgage Rate</strong> — Same as Scenario C. Owner-occupied mortgages get the lowest rates — a huge advantage of living in the property you rent.",
     "hhRoomRent": "<strong>Rent From Roommate</strong> — What you'll charge for the spare bedroom. Research room rentals in your target zip code on Craigslist, Facebook Marketplace, and Roomies.com.",
     "hhSoloRent": "<strong>Solo Rent Comparison</strong> — The alternative: renting a 1BR alone. The house-hack's real power shows when you compare total cost AND equity built vs. paying rent forever."
   },
@@ -704,9 +858,9 @@
     "title": "Why These Three Scenarios Matter Right Now",
     "purpose": "The housing decision you make in the 12–24 months after graduation shapes your financial trajectory for the next decade. These three scenarios — solo vs. roommates, renting vs. buying, and the house-hack — are the exact choices every young adult faces.",
     "whenToUse": [
-      "Before signing your first lease — run Scenario A to see the real cost of a solo apartment",
-      "When your parents say 'just buy a house' — run Scenario B to see what it actually costs monthly",
-      "When you wonder how young investors get started — run Scenario C to understand house-hacking",
+      "Before signing your first lease — run Scenario B to see the real cost of a solo apartment",
+      "When your parents say 'just buy a house' — run Scenario C to see what it actually costs monthly",
+      "When you wonder how young investors get started — run Scenario D to understand house-hacking",
       "In a high school economics, business, or personal finance class — these are built for classroom use"
     ],
     "keyInsight": "The math in these scenarios is not hypothetical — it's exactly what banks, lenders, and real estate investors use. The difference between someone who figures this out at 18 vs. 28 is typically six figures in lifetime wealth.",
@@ -744,6 +898,7 @@
     }
   ]
 };</script>
+<script src="./city-life-data.js"></script>
 <script src="../shared/feedback.js"></script>
 <script>
 /* ── Why This Matters reveal toggle ── */
@@ -771,11 +926,13 @@ function showCalc(type) {
   document.getElementById('ngToolCards').style.display = 'none';
   document.querySelector('.ng-teachers').style.display = 'none';
   const drawer = document.getElementById('ngChallenges'); if (drawer) drawer.style.display = 'none';
+  document.getElementById('citylifePanel').classList.remove('active');
   document.getElementById('roommatePanel').classList.remove('active');
   document.getElementById('starterPanel').classList.remove('active');
   document.getElementById('househackPanel').classList.remove('active');
-  if (type === 'roommate') document.getElementById('roommatePanel').classList.add('active');
-  if (type === 'starter') document.getElementById('starterPanel').classList.add('active');
+  if (type === 'citylife')  document.getElementById('citylifePanel').classList.add('active');
+  if (type === 'roommate')  document.getElementById('roommatePanel').classList.add('active');
+  if (type === 'starter')   document.getElementById('starterPanel').classList.add('active');
   if (type === 'househack') document.getElementById('househackPanel').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -784,6 +941,7 @@ function showHome() {
   document.getElementById('ngToolCards').style.display = '';
   document.querySelector('.ng-teachers').style.display = '';
   const drawer = document.getElementById('ngChallenges'); if (drawer) drawer.style.display = '';
+  document.getElementById('citylifePanel').classList.remove('active');
   document.getElementById('roommatePanel').classList.remove('active');
   document.getElementById('starterPanel').classList.remove('active');
   document.getElementById('househackPanel').classList.remove('active');
@@ -793,181 +951,181 @@ function showHome() {
 /* ── Classroom Challenges Data ── */
 const NG_CHALLENGES = [
   { n:1, title:"Opportunity Cost", def:"The value of the next-best alternative you give up when choosing one option over another.",
-    drill:"Run <strong>Scenario A</strong> with <strong>2 roommates</strong>, then again with <strong>4 roommates</strong>. Calculate the extra savings. That's the opportunity cost of living solo.",
+    drill:"Run <strong>Scenario B</strong> with <strong>2 roommates</strong>, then again with <strong>4 roommates</strong>. Calculate the extra savings. That's the opportunity cost of living solo.",
     target:"roommate" },
   { n:2, title:"Compound Interest", def:"Interest earned on both the original amount and on previously-earned interest — the engine of long-term wealth.",
-    drill:"In <strong>Scenario A</strong>, invest monthly savings at <strong>5% vs. 10%</strong>. Report how much more one student saves over 5 years.",
+    drill:"In <strong>Scenario B</strong>, invest monthly savings at <strong>5% vs. 10%</strong>. Report how much more one student saves over 5 years.",
     target:"roommate" },
   { n:3, title:"Debt-to-Income Ratio (DTI)", def:"Monthly debt payments divided by gross monthly income. Lenders use this to decide how much you can borrow.",
-    drill:"In <strong>Scenario B</strong> add <strong>$300/mo student loan</strong> and <strong>$250/mo car payment</strong>. Show how max home price drops.",
+    drill:"In <strong>Scenario C</strong> add <strong>$300/mo student loan</strong> and <strong>$250/mo car payment</strong>. Show how max home price drops.",
     target:"starter" },
   { n:4, title:"PITI (Principal, Interest, Taxes, Insurance)", def:"The four parts of a true monthly mortgage payment — not just loan principal and interest.",
-    drill:"In <strong>Scenario B</strong>, compare the “base mortgage” payment to the “all-in PITI” figure. Name the two items renters don't see on a listing site.",
+    drill:"In <strong>Scenario C</strong>, compare the “base mortgage” payment to the “all-in PITI” figure. Name the two items renters don't see on a listing site.",
     target:"starter" },
   { n:5, title:"Down Payment vs. PMI", def:"Private Mortgage Insurance is an extra monthly fee you pay when your down payment is under 20%.",
-    drill:"Run <strong>Scenario B</strong> at <strong>5% down</strong>, then <strong>10%</strong>, then <strong>20%</strong>. Report how PMI changes each total monthly cost.",
+    drill:"Run <strong>Scenario C</strong> at <strong>5% down</strong>, then <strong>10%</strong>, then <strong>20%</strong>. Report how PMI changes each total monthly cost.",
     target:"starter" },
   { n:6, title:"Amortization", def:"How each mortgage payment splits between interest (goes to the bank) and principal (builds your equity).",
-    drill:"In <strong>Scenario C</strong>, note the <strong>5-year equity</strong> figure. Explain what created that equity without adding extra payments.",
+    drill:"In <strong>Scenario D</strong>, note the <strong>5-year equity</strong> figure. Explain what created that equity without adding extra payments.",
     target:"househack" },
   { n:7, title:"House-Hacking", def:"Buying a home and renting out part of it (a room, basement, or unit) to offset your mortgage.",
-    drill:"Run <strong>Scenario C</strong> with <strong>$0 room rent</strong>, then <strong>$700/mo</strong>, then <strong>$1,000/mo</strong>. Show the tipping point where ownership beats renting solo.",
+    drill:"Run <strong>Scenario D</strong> with <strong>$0 room rent</strong>, then <strong>$700/mo</strong>, then <strong>$1,000/mo</strong>. Show the tipping point where ownership beats renting solo.",
     target:"househack" },
   { n:8, title:"Fixed vs. Variable Costs", def:"Fixed costs stay the same each month; variable costs shift with usage or decisions.",
-    drill:"In <strong>Scenario A</strong>, list which inputs are fixed (rent) and which are variable (utilities, roommates). Explain why splitting rent is powerful.",
+    drill:"In <strong>Scenario B</strong>, list which inputs are fixed (rent) and which are variable (utilities, roommates). Explain why splitting rent is powerful.",
     target:"roommate" },
   { n:9, title:"Break-Even Analysis", def:"The point where two options cost exactly the same. Below it, one wins; above it, the other wins.",
-    drill:"In <strong>Scenario C</strong>, find the <strong>room-rent amount</strong> that makes house-hacking equal renting solo. Everyone reports their number.",
+    drill:"In <strong>Scenario D</strong>, find the <strong>room-rent amount</strong> that makes house-hacking equal renting solo. Everyone reports their number.",
     target:"househack" },
   { n:10, title:"Gross vs. Net Income", def:"Gross is before taxes and deductions. Net (take-home) is what lands in your bank account.",
-    drill:"In <strong>Scenario B</strong>, use <strong>gross $58K</strong>, then reduce by <strong>25% for taxes</strong>. Show how true affordability changes when using net.",
+    drill:"In <strong>Scenario C</strong>, use <strong>gross $58K</strong>, then reduce by <strong>25% for taxes</strong>. Show how true affordability changes when using net.",
     target:"starter" },
   { n:11, title:"Time Value of Money", def:"A dollar today is worth more than a dollar later because today's dollar can be invested and grow.",
-    drill:"In <strong>Scenario A</strong>, compare saving <strong>$300/mo at age 18</strong> vs. <strong>starting at age 28</strong>. Report the 10-year gap.",
+    drill:"In <strong>Scenario B</strong>, compare saving <strong>$300/mo at age 18</strong> vs. <strong>starting at age 28</strong>. Report the 10-year gap.",
     target:"roommate" },
   { n:12, title:"Sticker Price vs. Total Cost", def:"The number on the listing isn't what you actually pay per month to own a home.",
-    drill:"In <strong>Scenario B</strong>, compare the <strong>home price</strong> to the <strong>all-in monthly cost</strong>. Identify the hidden expenses listing sites hide.",
+    drill:"In <strong>Scenario C</strong>, compare the <strong>home price</strong> to the <strong>all-in monthly cost</strong>. Identify the hidden expenses listing sites hide.",
     target:"starter" },
   { n:13, title:"Savings Rate", def:"The percentage of your income you save each month — the single biggest predictor of financial independence.",
-    drill:"In <strong>Scenario A</strong>, each student calculates <strong>their monthly savings ÷ total income</strong>. Who's above 20%? Who's above 40%?",
+    drill:"In <strong>Scenario B</strong>, each student calculates <strong>their monthly savings ÷ total income</strong>. Who's above 20%? Who's above 40%?",
     target:"roommate" },
   { n:14, title:"Rent Inflation", def:"Rent typically rises 3–5% per year, independent of your income.",
-    drill:"Run <strong>Scenario A</strong>, then increase rent by <strong>15% (3 years at 5%)</strong>. Show the long-term penalty of renting solo.",
+    drill:"Run <strong>Scenario B</strong>, then increase rent by <strong>15% (3 years at 5%)</strong>. Show the long-term penalty of renting solo.",
     target:"roommate" },
   { n:15, title:"Equity", def:"The portion of your home's value that you actually own — home value minus mortgage balance.",
-    drill:"In <strong>Scenario C</strong>, compare <strong>5-year equity for the owner</strong> to the <strong>renter's $0 equity</strong>. Frame the gap as a 'forced savings account.'",
+    drill:"In <strong>Scenario D</strong>, compare <strong>5-year equity for the owner</strong> to the <strong>renter's $0 equity</strong>. Frame the gap as a 'forced savings account.'",
     target:"househack" },
   { n:16, title:"Housing-Cost Ratio (28% Rule)", def:"Lenders usually cap housing costs at ~28% of gross monthly income.",
-    drill:"In <strong>Scenario B</strong>, calculate <strong>gross income × 0.28</strong>. Show how it matches (or limits) the affordable monthly payment.",
+    drill:"In <strong>Scenario C</strong>, calculate <strong>gross income × 0.28</strong>. Show how it matches (or limits) the affordable monthly payment.",
     target:"starter" },
   { n:17, title:"Interest Rate Sensitivity", def:"Small changes in mortgage rate produce large changes in monthly payment and lifetime interest.",
-    drill:"Run <strong>Scenario B</strong> at <strong>6.5%</strong>, <strong>7.5%</strong>, and <strong>8.5%</strong>. Plot the three monthly payments. Discuss why rates matter more than price.",
+    drill:"Run <strong>Scenario C</strong> at <strong>6.5%</strong>, <strong>7.5%</strong>, and <strong>8.5%</strong>. Plot the three monthly payments. Discuss why rates matter more than price.",
     target:"starter" },
   { n:18, title:"Cost of Convenience", def:"Solo living, delivery services, and single-purchase housing are premium convenience products.",
-    drill:"In <strong>Scenario A</strong>, report the <strong>monthly premium</strong> for living alone. Discuss what could be bought instead (car, travel, tuition).",
+    drill:"In <strong>Scenario B</strong>, report the <strong>monthly premium</strong> for living alone. Discuss what could be bought instead (car, travel, tuition).",
     target:"roommate" },
   { n:19, title:"Cash Flow", def:"Money in minus money out, each month. The number that decides whether a plan actually works.",
-    drill:"In <strong>Scenario C</strong>, write the <strong>monthly cash flow</strong> for owner (with roommate) and for solo renter. Which is negative? Which is positive?",
+    drill:"In <strong>Scenario D</strong>, write the <strong>monthly cash flow</strong> for owner (with roommate) and for solo renter. Which is negative? Which is positive?",
     target:"househack" },
   { n:20, title:"Decision Framework", def:"A repeatable way to compare options on the same criteria so emotion doesn't override math.",
     drill:"Students run <strong>all three scenarios</strong> with their own numbers, then rank them by <strong>(1) monthly cost</strong>, <strong>(2) 5-year wealth</strong>, and <strong>(3) lifestyle fit</strong>. Each pair presents a final pick.",
     target:"househack" },
   { n:21, title:"Emergency Fund", def:"3–6 months of essential expenses held in cash for unexpected setbacks (job loss, car repair, medical).",
-    drill:"In <strong>Scenario A</strong>, calculate <strong>shared monthly cost × 3</strong> and <strong>× 6</strong>. How many months of savings at the current rate to fully fund each?",
+    drill:"In <strong>Scenario B</strong>, calculate <strong>shared monthly cost × 3</strong> and <strong>× 6</strong>. How many months of savings at the current rate to fully fund each?",
     target:"roommate" },
   { n:22, title:"Loan-to-Value Ratio (LTV)", def:"Loan amount divided by home value. A 10% down payment = 90% LTV. Higher LTV = more risk to the lender.",
-    drill:"In <strong>Scenario B</strong>, calculate LTV for <strong>5%</strong>, <strong>10%</strong>, and <strong>20%</strong> down. Explain why lenders charge higher rates for higher LTV.",
+    drill:"In <strong>Scenario C</strong>, calculate LTV for <strong>5%</strong>, <strong>10%</strong>, and <strong>20%</strong> down. Explain why lenders charge higher rates for higher LTV.",
     target:"starter" },
   { n:23, title:"Front-End vs. Back-End Ratios", def:"Front-end = housing ÷ income. Back-end = (housing + all debts) ÷ income. Most lenders want front-end <28% and back-end <36%.",
-    drill:"In <strong>Scenario B</strong>, compute both ratios. Add a <strong>$400/mo</strong> car loan and recompute. Which ratio breaks first?",
+    drill:"In <strong>Scenario C</strong>, compute both ratios. Add a <strong>$400/mo</strong> car loan and recompute. Which ratio breaks first?",
     target:"starter" },
   { n:24, title:"Closing Costs", def:"One-time fees (title, appraisal, origination, taxes) paid at purchase — typically 2–5% of home price.",
-    drill:"In <strong>Scenario B</strong>, calculate <strong>3% of home price</strong>. Add it to the down payment. Show students the real cash-to-close figure.",
+    drill:"In <strong>Scenario C</strong>, calculate <strong>3% of home price</strong>. Add it to the down payment. Show students the real cash-to-close figure.",
     target:"starter" },
   { n:25, title:"Property Taxes", def:"An annual tax, paid monthly through escrow, based on your home's assessed value and the local mill rate.",
-    drill:"In <strong>Scenario B</strong>, compare taxes at <strong>1.0%</strong>, <strong>1.5%</strong>, and <strong>2.5%</strong> of home value. Identify which states have which tiers.",
+    drill:"In <strong>Scenario C</strong>, compare taxes at <strong>1.0%</strong>, <strong>1.5%</strong>, and <strong>2.5%</strong> of home value. Identify which states have which tiers.",
     target:"starter" },
   { n:26, title:"Home Insurance & HOI", def:"Homeowner's insurance protects the structure and belongings. Required by every mortgage lender.",
-    drill:"In <strong>Scenario B</strong>, adjust home insurance from <strong>$1,200/yr</strong> to <strong>$2,400/yr</strong>. Report the monthly payment difference.",
+    drill:"In <strong>Scenario C</strong>, adjust home insurance from <strong>$1,200/yr</strong> to <strong>$2,400/yr</strong>. Report the monthly payment difference.",
     target:"starter" },
   { n:27, title:"Maintenance 1% Rule", def:"Budget roughly 1% of home value per year for maintenance (roof, HVAC, appliances, paint).",
-    drill:"In <strong>Scenario B</strong>, calculate <strong>1% of home price</strong> as an annual figure, then divide by 12. Compare it to rent (where you pay $0 maintenance).",
+    drill:"In <strong>Scenario C</strong>, calculate <strong>1% of home price</strong> as an annual figure, then divide by 12. Compare it to rent (where you pay $0 maintenance).",
     target:"starter" },
   { n:28, title:"Rent vs. Own: True Break-Even", def:"The point where owning costs the same as renting for the same living situation.",
-    drill:"Run <strong>Scenario C</strong> with <strong>no roommate</strong>. Find the home price at which ownership monthly cost equals the solo rent figure.",
+    drill:"Run <strong>Scenario D</strong> with <strong>no roommate</strong>. Find the home price at which ownership monthly cost equals the solo rent figure.",
     target:"househack" },
   { n:29, title:"Inflation Basics", def:"A general rise in prices over time, measured by CPI. Erodes the purchasing power of cash.",
-    drill:"In <strong>Scenario A</strong>, inflate solo rent by <strong>8%/yr for 3 years</strong>. Show how much of a raise someone needs just to stay even.",
+    drill:"In <strong>Scenario B</strong>, inflate solo rent by <strong>8%/yr for 3 years</strong>. Show how much of a raise someone needs just to stay even.",
     target:"roommate" },
   { n:30, title:"Real Estate as Inflation Hedge", def:"Property values and rents historically track inflation (0.94 correlation with CPI), meaning owners' wealth tends to keep pace.",
-    drill:"In <strong>Scenario C</strong>, inflate home value <strong>4%/yr</strong> and rent <strong>4%/yr</strong>. Compare the owner's appreciation + rising room-rent to the solo renter's rising rent bill.",
+    drill:"In <strong>Scenario D</strong>, inflate home value <strong>4%/yr</strong> and rent <strong>4%/yr</strong>. Compare the owner's appreciation + rising room-rent to the solo renter's rising rent bill.",
     target:"househack" },
   { n:31, title:"Fixed-Rate Debt Devaluation", def:"When inflation rises, your fixed mortgage payment stays the same — meaning you repay the loan with “cheaper dollars”.",
-    drill:"In <strong>Scenario B</strong>, inflate income <strong>4%/yr for 5 years</strong>. The mortgage payment stays flat — calculate how much smaller it is as a share of income.",
+    drill:"In <strong>Scenario C</strong>, inflate income <strong>4%/yr for 5 years</strong>. The mortgage payment stays flat — calculate how much smaller it is as a share of income.",
     target:"starter" },
   { n:32, title:"Demand-Pull Inflation", def:"Prices rise because demand outpaces supply. Real estate tends to thrive — more buyers bidding up prices.",
-    drill:"In <strong>Scenario C</strong>, raise home value by <strong>12% in 1 year</strong>. Recalculate 5-year equity. Discuss why owners benefit more than renters here.",
+    drill:"In <strong>Scenario D</strong>, raise home value by <strong>12% in 1 year</strong>. Recalculate 5-year equity. Discuss why owners benefit more than renters here.",
     target:"househack" },
   { n:33, title:"Cost-Push Inflation", def:"Prices rise because input costs (materials, wages, energy) rise. Real estate results are mixed — maintenance and property tax costs rise too.",
-    drill:"In <strong>Scenario B</strong>, raise <strong>property tax by 15%</strong> and <strong>maintenance by 20%</strong>. Show how monthly cost creeps up even with a fixed mortgage.",
+    drill:"In <strong>Scenario C</strong>, raise <strong>property tax by 15%</strong> and <strong>maintenance by 20%</strong>. Show how monthly cost creeps up even with a fixed mortgage.",
     target:"starter" },
   { n:34, title:"Stagflation", def:"High inflation + stagnant economy + rising unemployment. Real estate often underperforms — higher vacancies, weaker prices.",
-    drill:"In <strong>Scenario C</strong>, drop room-rent by <strong>25%</strong> (simulated vacancy) and freeze home-value growth. Compare the owner's position to a renter's.",
+    drill:"In <strong>Scenario D</strong>, drop room-rent by <strong>25%</strong> (simulated vacancy) and freeze home-value growth. Compare the owner's position to a renter's.",
     target:"househack" },
   { n:35, title:"Rent as CPI Buffer", def:"Rent accounts for roughly 40% of CPI — meaning rental income typically rises with inflation.",
-    drill:"In <strong>Scenario C</strong>, raise room-rent by <strong>CPI ≈ 5%</strong>. Show how the owner's effective housing cost drops each year, even with flat mortgage.",
+    drill:"In <strong>Scenario D</strong>, raise room-rent by <strong>CPI ≈ 5%</strong>. Show how the owner's effective housing cost drops each year, even with flat mortgage.",
     target:"househack" },
   { n:36, title:"Purchasing Power Over Time", def:"The amount of goods a dollar can buy shrinks each year by the inflation rate.",
-    drill:"In <strong>Scenario A</strong>, show what <strong>$1,000 today</strong> is worth after <strong>10 years at 3% inflation</strong> vs. <strong>6%</strong>. Discuss why holding cash loses.",
+    drill:"In <strong>Scenario B</strong>, show what <strong>$1,000 today</strong> is worth after <strong>10 years at 3% inflation</strong> vs. <strong>6%</strong>. Discuss why holding cash loses.",
     target:"roommate" },
   { n:37, title:"Wage Growth vs. Rent Growth", def:"Wages rise ~3–4%/yr, but rents in hot markets often rise 5–8%. Gap compounds into a housing-affordability crisis.",
-    drill:"In <strong>Scenario A</strong>, grow income <strong>3%/yr</strong> and rent <strong>6%/yr for 5 years</strong>. Show the gap in absolute dollars.",
+    drill:"In <strong>Scenario B</strong>, grow income <strong>3%/yr</strong> and rent <strong>6%/yr for 5 years</strong>. Show the gap in absolute dollars.",
     target:"roommate" },
   { n:38, title:"Interest Rate vs. Inflation", def:"Real interest rate = nominal rate − inflation. A 7% mortgage during 5% inflation has a real cost of only 2%.",
-    drill:"In <strong>Scenario B</strong>, calculate <strong>real rate</strong> if mortgage is 6.5% and inflation is 3% vs. 6%. Which environment is actually cheaper debt?",
+    drill:"In <strong>Scenario C</strong>, calculate <strong>real rate</strong> if mortgage is 6.5% and inflation is 3% vs. 6%. Which environment is actually cheaper debt?",
     target:"starter" },
   { n:39, title:"Buying Power of a Down Payment", def:"Saved cash loses value each year it isn't deployed. Delaying a home purchase costs more than just higher prices.",
-    drill:"In <strong>Scenario A</strong>, save for <strong>3 years</strong>. Then apply the saved amount in <strong>Scenario B</strong> — but inflate home price by <strong>10% total</strong>. Show the real net gain/loss.",
+    drill:"In <strong>Scenario B</strong>, save for <strong>3 years</strong>. Then apply the saved amount in <strong>Scenario C</strong> — but inflate home price by <strong>10% total</strong>. Show the real net gain/loss.",
     target:"starter" },
   { n:40, title:"The Rule of 72", def:"Divide 72 by your annual return to estimate how many years it takes money to double.",
-    drill:"In <strong>Scenario A</strong>, use 72 to estimate doubling time at <strong>5%, 7%, and 10%</strong> returns. Compare results to the tool's actual output.",
+    drill:"In <strong>Scenario B</strong>, use 72 to estimate doubling time at <strong>5%, 7%, and 10%</strong> returns. Compare results to the tool's actual output.",
     target:"roommate" },
   { n:41, title:"Compounding vs. Linear Savings", def:"Money that earns returns on returns grows exponentially; money in a zero-interest account grows in a straight line.",
-    drill:"In <strong>Scenario A</strong>, toggle savings rate between <strong>0%</strong> and <strong>7%</strong>. Plot the two 10-year totals. Explain the gap.",
+    drill:"In <strong>Scenario B</strong>, toggle savings rate between <strong>0%</strong> and <strong>7%</strong>. Plot the two 10-year totals. Explain the gap.",
     target:"roommate" },
   { n:42, title:"Dollar-Cost Averaging", def:"Investing the same amount on a regular schedule, regardless of price, to smooth out volatility.",
-    drill:"Frame the <strong>monthly savings in Scenario A</strong> as a dollar-cost-averaging plan into an index fund. How many months of “auto-deposit” compounds into their down payment?",
+    drill:"Frame the <strong>monthly savings in Scenario B</strong> as a dollar-cost-averaging plan into an index fund. How many months of “auto-deposit” compounds into their down payment?",
     target:"roommate" },
   { n:43, title:"Marginal Cost Thinking", def:"The cost of one more unit of something — one more roommate, one more dollar of mortgage, one more mile of commute.",
-    drill:"In <strong>Scenario A</strong>, add one roommate at a time from 2 to 5. Calculate the <strong>marginal savings per added roommate</strong>. Where does it plateau?",
+    drill:"In <strong>Scenario B</strong>, add one roommate at a time from 2 to 5. Calculate the <strong>marginal savings per added roommate</strong>. Where does it plateau?",
     target:"roommate" },
   { n:44, title:"Sunk Cost Fallacy", def:"Money already spent shouldn't influence future decisions — but emotionally, it does.",
-    drill:"Debate: If a student paid <strong>$2,000 in non-refundable deposits</strong> on a solo apartment but then discovers the math in Scenario A, should they move to the shared unit anyway?",
+    drill:"Debate: If a student paid <strong>$2,000 in non-refundable deposits</strong> on a solo apartment but then discovers the math in Scenario B, should they move to the shared unit anyway?",
     target:"roommate" },
   { n:45, title:"FOMO and Lifestyle Creep", def:"As income rises, so do expenses. Without awareness, larger paychecks never feel “enough.”",
-    drill:"In <strong>Scenario B</strong>, assume income rises <strong>$500/mo</strong>. Option A: upgrade housing. Option B: invest it at 7%. Project both after 10 years.",
+    drill:"In <strong>Scenario C</strong>, assume income rises <strong>$500/mo</strong>. Option A: upgrade housing. Option B: invest it at 7%. Project both after 10 years.",
     target:"starter" },
   { n:46, title:"Risk vs. Return Tradeoff", def:"Higher potential returns come with higher potential losses. Safer choices return less.",
-    drill:"In <strong>Scenario A</strong>, compare <strong>4% HYSA</strong> vs. <strong>10% index fund (with risk)</strong>. Discuss when each makes sense based on your time horizon.",
+    drill:"In <strong>Scenario B</strong>, compare <strong>4% HYSA</strong> vs. <strong>10% index fund (with risk)</strong>. Discuss when each makes sense based on your time horizon.",
     target:"roommate" },
   { n:47, title:"Liquidity", def:"How quickly an asset can become cash without losing value. Stocks = liquid. Homes = illiquid (weeks to months).",
-    drill:"In <strong>Scenario C</strong>, imagine needing cash in 60 days. Rank the owner's and renter's options by speed-to-cash. Discuss lock-in risk.",
+    drill:"In <strong>Scenario D</strong>, imagine needing cash in 60 days. Rank the owner's and renter's options by speed-to-cash. Discuss lock-in risk.",
     target:"househack" },
   { n:48, title:"Appreciation vs. Cash Flow", def:"Appreciation = property gains value. Cash flow = rent income exceeds expenses. Good investments often provide both.",
-    drill:"In <strong>Scenario C</strong>, separately report <strong>5-year appreciation</strong> and <strong>monthly cash flow</strong>. Rank which matters more to a young buyer.",
+    drill:"In <strong>Scenario D</strong>, separately report <strong>5-year appreciation</strong> and <strong>monthly cash flow</strong>. Rank which matters more to a young buyer.",
     target:"househack" },
   { n:49, title:"Forced Savings via Mortgage", def:"Each mortgage payment is partly principal — a forced deposit into your own home equity.",
-    drill:"In <strong>Scenario C</strong>, compute <strong>principal paid over 5 years</strong>. Compare it to what the solo renter would've had to save voluntarily.",
+    drill:"In <strong>Scenario D</strong>, compute <strong>principal paid over 5 years</strong>. Compare it to what the solo renter would've had to save voluntarily.",
     target:"househack" },
   { n:50, title:"Refinance Math", def:"Replacing an existing mortgage with a new one (lower rate, different term) to save interest.",
-    drill:"In <strong>Scenario B</strong>, assume the rate drops from <strong>6.5% to 5%</strong> in year 3. Refinance the same balance. Show lifetime interest savings.",
+    drill:"In <strong>Scenario C</strong>, assume the rate drops from <strong>6.5% to 5%</strong> in year 3. Refinance the same balance. Show lifetime interest savings.",
     target:"starter" },
   { n:51, title:"Amortization Front-Loading", def:"Early mortgage payments go mostly to interest; later payments go mostly to principal.",
-    drill:"In <strong>Scenario B</strong>, identify what % of <strong>month-1 payment</strong> is interest vs. principal. Compare to <strong>year-15 payment</strong>.",
+    drill:"In <strong>Scenario C</strong>, identify what % of <strong>month-1 payment</strong> is interest vs. principal. Compare to <strong>year-15 payment</strong>.",
     target:"starter" },
   { n:52, title:"House Hack Scaling", def:"A house hack can scale from one roommate to multi-unit properties (duplex, triplex, ADU).",
-    drill:"In <strong>Scenario C</strong>, model <strong>two roommates</strong> at $750/mo each. Then brainstorm how a duplex would compare to this single-family setup.",
+    drill:"In <strong>Scenario D</strong>, model <strong>two roommates</strong> at $750/mo each. Then brainstorm how a duplex would compare to this single-family setup.",
     target:"househack" },
   { n:53, title:"FHA Loan", def:"Federal Housing Administration loan allowing down payments as low as 3.5% — designed for first-time buyers.",
-    drill:"In <strong>Scenario B</strong>, compare a conventional <strong>10% down</strong> vs. FHA <strong>3.5% down</strong>. Factor in FHA's MIP (mortgage insurance premium).",
+    drill:"In <strong>Scenario C</strong>, compare a conventional <strong>10% down</strong> vs. FHA <strong>3.5% down</strong>. Factor in FHA's MIP (mortgage insurance premium).",
     target:"starter" },
   { n:54, title:"VA Loan", def:"A zero-down mortgage for U.S. veterans and active-duty service members with no PMI.",
-    drill:"In <strong>Scenario B</strong>, run <strong>0% down VA</strong>. Compare monthly cost and cash-to-close vs. 10% conventional. Discuss why this is a generational advantage.",
+    drill:"In <strong>Scenario C</strong>, run <strong>0% down VA</strong>. Compare monthly cost and cash-to-close vs. 10% conventional. Discuss why this is a generational advantage.",
     target:"starter" },
   { n:55, title:"Tenant Vetting", def:"Choosing a reliable tenant (or roommate) is 80% of landlord success. Credit check, references, written agreement.",
-    drill:"In <strong>Scenario C</strong>, simulate a <strong>2-month vacancy</strong> (roommate leaves mid-year). Show the impact on annual cash flow.",
+    drill:"In <strong>Scenario D</strong>, simulate a <strong>2-month vacancy</strong> (roommate leaves mid-year). Show the impact on annual cash flow.",
     target:"househack" },
   { n:56, title:"Tax Deductions for Homeowners", def:"Mortgage interest, property tax, and (for house-hacks) a portion of depreciation are tax-deductible.",
-    drill:"In <strong>Scenario B</strong>, estimate <strong>year-1 mortgage interest</strong>. At a 22% tax bracket, estimate the tax savings. Compare to a renter's zero deductions.",
+    drill:"In <strong>Scenario C</strong>, estimate <strong>year-1 mortgage interest</strong>. At a 22% tax bracket, estimate the tax savings. Compare to a renter's zero deductions.",
     target:"starter" },
   { n:57, title:"Capital Gains Exclusion (121)", def:"Sell your primary home after 2+ years and exclude up to $250K (single) / $500K (married) of capital gains from taxes.",
-    drill:"In <strong>Scenario C</strong>, imagine <strong>$60K appreciation over 5 years</strong>. Compare the 0% tax outcome vs. a 15% capital gains rate. Who wins?",
+    drill:"In <strong>Scenario D</strong>, imagine <strong>$60K appreciation over 5 years</strong>. Compare the 0% tax outcome vs. a 15% capital gains rate. Who wins?",
     target:"househack" },
   { n:58, title:"Credit Score Impact", def:"Your 3-digit credit score largely determines your mortgage rate. A 40-point swing can cost/save tens of thousands.",
-    drill:"In <strong>Scenario B</strong>, compare <strong>6.5%</strong> (720 FICO) to <strong>8%</strong> (640 FICO) on the same loan. Show the lifetime cost of a weak credit score.",
+    drill:"In <strong>Scenario C</strong>, compare <strong>6.5%</strong> (720 FICO) to <strong>8%</strong> (640 FICO) on the same loan. Show the lifetime cost of a weak credit score.",
     target:"starter" },
   { n:59, title:"Renter vs. Owner Wealth Gap", def:"Census data shows homeowner net worth is ~40× higher than renter net worth — housing equity is the #1 driver.",
-    drill:"In <strong>Scenario C</strong>, project <strong>5 years</strong>. Compare the owner's equity + appreciation vs. the solo renter's $0. Discuss structural wealth-gap sources.",
+    drill:"In <strong>Scenario D</strong>, project <strong>5 years</strong>. Compare the owner's equity + appreciation vs. the solo renter's $0. Discuss structural wealth-gap sources.",
     target:"househack" },
   { n:60, title:"Build Your Own Financial Plan", def:"A one-page plan covering income, housing, savings, and a 5-year goal — written in your own language.",
     drill:"Using all three scenarios, each student drafts a <strong>1-page plan</strong>: (1) post-grad housing choice, (2) monthly savings target, (3) 5-year home-purchase readiness date, (4) one risk they'll monitor.",
@@ -995,6 +1153,7 @@ function renderChallenges() {
 
 /* ── Classroom Challenges Toggle ── */
 document.addEventListener('DOMContentLoaded', () => {
+  populateCityLifeDropdowns();
   const btn = document.getElementById('ngClassroomToggle');
   const drawer = document.getElementById('ngChallenges');
   if (!btn || !drawer) return;
@@ -1016,7 +1175,201 @@ function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
 function fmt0(n) { return Math.round(n).toLocaleString('en-US'); }
 
 /* ══════════════════════════════════════════════════════════════
-   SCENARIO A: ROOMMATE REALITY
+   SCENARIO A: CITY LIFE — Can I Afford to Move There?
+   ══════════════════════════════════════════════════════════════ */
+
+/* 2024/2025 federal income tax — single filer, simplified.
+   Standard deduction $14,600 already subtracted from taxable income.
+   Source: IRS Rev. Proc. 2024-40. Educational estimate only. */
+function estimateFederalTax(grossSalary) {
+  const STD_DEDUCTION = 14600;
+  const taxable = Math.max(0, grossSalary - STD_DEDUCTION);
+  const brackets = [
+    [11600,    0.10],
+    [47150,    0.12],
+    [100525,   0.22],
+    [191950,   0.24],
+    [243725,   0.32],
+    [609350,   0.35],
+    [Infinity, 0.37]
+  ];
+  let tax = 0, prev = 0;
+  for (const [cap, rate] of brackets) {
+    if (taxable <= cap) { tax += (taxable - prev) * rate; break; }
+    tax += (cap - prev) * rate;
+    prev = cap;
+  }
+  return Math.max(0, tax);
+}
+
+function populateCityLifeDropdowns() {
+  const citySel = document.getElementById('clCity');
+  const jobSel  = document.getElementById('clJob');
+  if (!citySel || !jobSel || !window.NGC_CITY_DATA) return;
+  if (citySel.dataset.populated === '1') return;
+
+  // Sort metros alphabetically by city name then state for findability
+  const cities = [...window.NGC_CITY_DATA].sort((a,b) => {
+    const ca = a.city.localeCompare(b.city);
+    return ca !== 0 ? ca : a.state.localeCompare(b.state);
+  });
+  citySel.innerHTML = cities.map(c =>
+    `<option value="${c.id}">${c.city}, ${c.state}</option>`
+  ).join('');
+
+  // Group occupations by education tier
+  const eduOrder = { HS:1, AA:2, BA:3, MIL:4 };
+  const eduLabel = { HS:"High School / No Degree", AA:"Trade / Associate's / Certificate",
+                     BA:"Bachelor's Preferred", MIL:"Military Path" };
+  const groups = {};
+  for (const j of window.NGC_OCCUPATIONS) {
+    (groups[j.edu] = groups[j.edu] || []).push(j);
+  }
+  jobSel.innerHTML = Object.keys(groups)
+    .sort((a,b) => eduOrder[a] - eduOrder[b])
+    .map(edu => {
+      const opts = groups[edu]
+        .sort((a,b) => a.title.localeCompare(b.title))
+        .map(j => `<option value="${j.id}">${j.title} — $${j.entryWage.toLocaleString()}</option>`)
+        .join('');
+      return `<optgroup label="${eduLabel[edu]}">${opts}</optgroup>`;
+    }).join('');
+
+  citySel.addEventListener('change', applyCityDefaults);
+  jobSel.addEventListener('change', applyJobDefaults);
+
+  // Default to Richmond, VA + Elementary Teacher when present, else first entries
+  const defaultCity = cities.find(c => c.id === 'richmond') || cities[0];
+  const defaultJob = window.NGC_OCCUPATIONS.find(j => j.id === 'teacher-elem')
+                  || window.NGC_OCCUPATIONS[0];
+  citySel.value = defaultCity.id;
+  jobSel.value = defaultJob.id;
+  applyCityDefaults();
+  applyJobDefaults();
+  citySel.dataset.populated = '1';
+}
+
+function applyCityDefaults() {
+  const id = document.getElementById('clCity').value;
+  const c = window.NGC_CITY_DATA.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('clRent').value       = c.medianRent;
+  document.getElementById('clUtilities').value  = c.utilities;
+  document.getElementById('clInternet').value   = c.internet;
+  document.getElementById('clGroceries').value  = c.groceries;
+  document.getElementById('clTransport').value  = c.transport;
+  document.getElementById('clHealthcare').value = c.healthcare;
+  const pill = document.getElementById('clColPill');
+  if (pill) {
+    pill.textContent = c.colIndex;
+    pill.title = c.colIndex >= 130 ? 'Much higher than U.S. average'
+               : c.colIndex >= 110 ? 'Higher than U.S. average'
+               : c.colIndex >= 95  ? 'Near U.S. average'
+               : 'Lower than U.S. average';
+  }
+}
+
+function applyJobDefaults() {
+  const id = document.getElementById('clJob').value;
+  const j = window.NGC_OCCUPATIONS.find(x => x.id === id);
+  if (!j) return;
+  document.getElementById('clSalary').value = j.entryWage;
+}
+
+function calcCityLife() {
+  const cityId = document.getElementById('clCity').value;
+  const city = window.NGC_CITY_DATA.find(c => c.id === cityId);
+  const stateRate = city ? (window.NGC_STATE_TAX[city.state] || 0) : 0;
+
+  const gross      = parseFloat(document.getElementById('clSalary').value) || 0;
+  const rent       = parseFloat(document.getElementById('clRent').value) || 0;
+  const roommates  = Math.max(1, parseInt(document.getElementById('clRoommates').value) || 1);
+  const utilities  = parseFloat(document.getElementById('clUtilities').value) || 0;
+  const internet   = parseFloat(document.getElementById('clInternet').value) || 0;
+  const groceries  = parseFloat(document.getElementById('clGroceries').value) || 0;
+  const transport  = parseFloat(document.getElementById('clTransport').value) || 0;
+  const healthcare = parseFloat(document.getElementById('clHealthcare').value) || 0;
+  const other      = parseFloat(document.getElementById('clOther').value) || 0;
+
+  if (gross <= 0) { alert('Please enter an annual salary above zero.'); return; }
+
+  // Take-home: federal + state flat + FICA 7.65%
+  const fed = estimateFederalTax(gross);
+  const state = gross * stateRate;
+  const fica = gross * 0.0765;
+  const net = Math.max(0, gross - fed - state - fica);
+  const monthlyNet = net / 12;
+
+  // Expenses
+  const rentShare   = rent / roommates;
+  const utilShare   = (utilities + internet) / Math.max(1, roommates);
+  const monthlyExp  = rentShare + utilShare + groceries + transport + healthcare + other;
+  const leftover    = monthlyNet - monthlyExp;
+  const housingPct  = monthlyNet > 0 ? (rentShare / monthlyNet) * 100 : 0;
+  const savingsRate = monthlyNet > 0 ? (leftover / monthlyNet) * 100 : 0;
+
+  // Output values
+  document.getElementById('clOutGross').textContent      = fmt(gross);
+  document.getElementById('clOutNet').textContent        = fmt(net);
+  document.getElementById('clOutMonthlyNet').textContent = fmt(monthlyNet) + '/mo';
+  document.getElementById('clOutRentShare').textContent  = fmt(rentShare);
+  document.getElementById('clOutUtil').textContent       = fmt(utilShare);
+  document.getElementById('clOutGroc').textContent       = fmt(groceries);
+  document.getElementById('clOutTrans').textContent      = fmt(transport);
+  document.getElementById('clOutHealth').textContent     = fmt(healthcare);
+  document.getElementById('clOutOther').textContent      = fmt(other);
+  document.getElementById('clOutExpenses').textContent   = fmt(monthlyExp) + '/mo';
+
+  const leftoverEl = document.getElementById('clOutLeftover');
+  leftoverEl.textContent = (leftover < 0 ? '-' : '') + fmt(Math.abs(leftover)) + '/mo';
+  leftoverEl.className = 'result-value big ' + (leftover < 0 ? 'alert' : leftover >= monthlyNet * 0.20 ? 'safe' : '');
+
+  document.getElementById('clOutHousingPct').textContent  = housingPct.toFixed(1) + '%';
+  document.getElementById('clOutSavingsRate').textContent = (savingsRate >= 0 ? savingsRate.toFixed(1) : '−' + Math.abs(savingsRate).toFixed(1)) + '%';
+
+  // Verdict banner
+  const banner = document.getElementById('clVerdictBanner');
+  let verdictClass, verdictHTML;
+  if (leftover < 0) {
+    verdictClass = 'danger';
+    verdictHTML = `<strong>The budget doesn't balance.</strong> You're <strong>${fmt(Math.abs(leftover))}/month short</strong> in ${city ? city.city : 'this city'}. Options to consider: a less expensive city, a roommate (or one more roommate), a higher-paying entry role, or a lower-rent apartment.`;
+  } else if (savingsRate < 5) {
+    verdictClass = 'warning';
+    verdictHTML = `<strong>Razor thin.</strong> You'll cover the bills with about <strong>${fmt(leftover)}/month</strong> left over (${savingsRate.toFixed(1)}% of take-home) — but that's not enough cushion for a car repair, a gap between jobs, or building real savings. Aim for at least 10–20%.`;
+  } else if (savingsRate < 20) {
+    verdictClass = 'workable';
+    verdictHTML = `<strong>Tight but workable.</strong> You're keeping <strong>${fmt(leftover)}/month</strong> (${savingsRate.toFixed(1)}% savings rate). This works — but you'll want to push toward 20% to build an emergency fund and a real down payment on the side.`;
+  } else {
+    verdictClass = 'success';
+    verdictHTML = `<strong>Strong cushion.</strong> You're banking <strong>${fmt(leftover)}/month</strong> (${savingsRate.toFixed(1)}% savings rate). At this pace you can build a 3-month emergency fund, start investing, and still save toward a first home.`;
+  }
+  banner.className = 'cl-verdict ' + verdictClass;
+  banner.innerHTML = verdictHTML;
+
+  // Long-form explanation
+  const exp = document.getElementById('citylifeExplanation');
+  const housingNote = housingPct <= 30
+    ? `Your housing share is <strong>${housingPct.toFixed(1)}% of take-home</strong> — within the standard ≤30% rule. That keeps room in the budget for everything else.`
+    : `Your housing share is <strong>${housingPct.toFixed(1)}% of take-home</strong> — above the standard 30% threshold lenders and financial planners use. Anything above 30% means rent is squeezing every other line in your budget.`;
+  const colNote = city && city.colIndex >= 130
+    ? `${city.city} has a cost-of-living index of <strong>${city.colIndex}</strong> — about ${Math.round((city.colIndex - 100))}% above the U.S. average. The big-city paycheck has to be big enough to overcome that.`
+    : city && city.colIndex <= 90
+    ? `${city.city} has a cost-of-living index of <strong>${city.colIndex}</strong> — well below the U.S. average. Smaller-market salaries often go further than coastal salaries do.`
+    : city ? `${city.city}'s cost-of-living index is <strong>${city.colIndex}</strong> — close to the U.S. average.` : '';
+
+  exp.innerHTML = `
+    <h4>What the math actually says</h4>
+    <p>${city ? `In <strong>${city.city}, ${city.state}</strong>, your <strong>${fmt(gross)}</strong> gross salary translates to about <strong>${fmt(net)}/year</strong> (~<strong>${fmt(monthlyNet)}/month</strong>) after federal, state, and FICA taxes — roughly a ${(((gross-net)/gross)*100).toFixed(0)}% overall tax bite.` : ''}</p>
+    <p style="margin-top:var(--space-2)">${housingNote}</p>
+    ${colNote ? `<p style="margin-top:var(--space-2)">${colNote}</p>` : ''}
+    <p style="margin-top:var(--space-2)"><strong>Try the variable that matters most:</strong> change the number of roommates, swap in a different city, or pick a different entry-level role. Watch how the verdict shifts. The point isn't one perfect answer — it's seeing which levers move the math the most.</p>
+  `;
+
+  document.getElementById('citylifeResults').classList.add('show');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCENARIO B: ROOMMATE REALITY
    ══════════════════════════════════════════════════════════════ */
 function calcRoommate() {
   const soloRent = parseFloat(document.getElementById('rSoloRent').value) || 0;
@@ -1069,7 +1422,7 @@ function calcRoommate() {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   SCENARIO B: STARTER HOME
+   SCENARIO C: STARTER HOME
    ══════════════════════════════════════════════════════════════ */
 function calcStarter() {
   const income = parseFloat(document.getElementById('sIncome').value) || 0;
@@ -1134,7 +1487,7 @@ function calcStarter() {
         <li>Look at homes priced closer to ${fmt(price * 0.8)}</li>
         <li>Save more for a down payment to reduce PMI and loan size</li>
         <li>Pay off existing debts to free up your debt-to-income ratio</li>
-        <li>Consider Scenario C (the House-Hack) — rent income changes everything</li>
+        <li>Consider Scenario D (the House-Hack) — rent income changes everything</li>
       </ul>
     `;
   }
@@ -1143,7 +1496,7 @@ function calcStarter() {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   SCENARIO C: HOUSE-HACK
+   SCENARIO D: HOUSE-HACK
    ══════════════════════════════════════════════════════════════ */
 function calcHouseHack() {
   const price = parseFloat(document.getElementById('hhPrice').value) || 0;
