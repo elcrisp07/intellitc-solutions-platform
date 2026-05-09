@@ -44,11 +44,21 @@ window.MINDMAP_DATA = {
         ]
       },
       {
-        name: "Alternatives",
-        desc: "Home equity isn't the only path. Compare cost, speed, and risk before pulling the trigger.",
+        name: "Home Equity Agreement (HEA)",
+        desc: "A third path: receive cash today in exchange for a share of your home's future value. No monthly payment, no interest rate. Best fit when credit, DTI, or cash flow blocks a traditional HEL or HELOC.",
+        children: [
+          { name: "How It Works", desc: "You take a lump-sum advance now (up to roughly $500,000 depending on provider). The HEA provider becomes a 'silent partner' in your equity. Settlement happens at sale or end of the 10\u201330 year term \u2014 you repay the original advance plus a predetermined share of the appreciation." },
+          { name: "Risk / Reward Sharing", desc: "If your home appreciates significantly, the provider profits. If it depreciates, most providers share the loss \u2014 you may owe less than the original advance. The trade-off you accept is giving up a slice of upside in exchange for downside protection and zero monthly payment." },
+          { name: "Eligibility & Requirements", desc: "Primary residence with 20\u201330% equity built up. Credit floor often as low as 500 FICO. Active bankruptcies or recent foreclosures are common hard blocks. DTI is largely ignored \u2014 the property carries the underwriting weight." },
+          { name: "4-Step Process", desc: "(1) Eligibility check; (2) Soft-credit-pull preliminary estimate online; (3) Third-party appraisal and basic inspection; (4) Independent counselor or attorney review, then funds wire within days." },
+          { name: "Investor Use Case", desc: "Real estate analysts often see HEAs used as rescue financing for 'house-rich, cash-poor' homeowners who fail DTI screens. Useful signal when underwriting a deal: a seller with an HEA owes shared appreciation at closing." }
+        ]
+      },
+      {
+        name: "Other Alternatives",
+        desc: "Beyond HEL/HELOC/HEA, three more paths to weigh on cost, speed, and risk.",
         children: [
           { name: "Cash-Out Refinance", desc: "Replaces your existing mortgage with a larger one and pays the difference in cash. Makes sense if today's first-mortgage rate is at or below your current rate." },
-          { name: "Home Equity Agreement (HEA)", desc: "Investor pays you a lump sum for a share of future home appreciation \u2014 no monthly payments. Trade-off: you give up upside." },
           { name: "Home Equity Credit Card", desc: "Secured revolving credit that funds quickly and prices below unsecured cards, but with a smaller universe of issuers." },
           { name: "Personal Loan", desc: "Unsecured, fast funding, no collateral risk to the home \u2014 but rates run materially higher and amounts are typically smaller." }
         ]

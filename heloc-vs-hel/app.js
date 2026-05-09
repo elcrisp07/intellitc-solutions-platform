@@ -74,6 +74,7 @@ function runDecision(){
   const stability = $('incomeStability').value;
   const ratePref = $('ratePref').value;
   const term = num('termYears');
+  const payCap = $('paymentCapacity').value;
 
   if(homeValue <= 0 || borrow <= 0 || term <= 0){
     alert('Please fill in home value, borrow amount, and term.');
@@ -82,6 +83,8 @@ function runDecision(){
 
   const newCombinedDebt = mortBal + borrow;
   const newCltvPct = (newCombinedDebt / homeValue) * 100;
+  const equityPct = ((homeValue - mortBal) / homeValue) * 100;
+
   $('cltvOut').textContent = fmtPct(newCltvPct) + ' (max ' + lenderCltv + '%)';
   $('cltvFill').style.width = Math.min(100, newCltvPct) + '%';
 
@@ -89,7 +92,7 @@ function runDecision(){
   cltvStat.classList.remove('ok','warn','danger');
   if(newCltvPct <= lenderCltv - 5){
     cltvStat.classList.add('ok');
-    cltvStat.textContent = 'You\u2019re within the lender\u2019s CLTV cap with room to spare.';
+    cltvStat.textContent = '\u200b' + 'You\u2019re within the lender\u2019s CLTV cap with room to spare.';
   } else if(newCltvPct <= lenderCltv){
     cltvStat.classList.add('warn');
     cltvStat.textContent = 'Tight \u2014 you\u2019re right at the lender\u2019s CLTV ceiling. Expect closer scrutiny.';
@@ -98,6 +101,7 @@ function runDecision(){
     cltvStat.textContent = 'You exceed the lender\u2019s max CLTV by ' + (newCltvPct - lenderCltv).toFixed(1) + ' pts. You\u2019ll need to borrow less, raise the home value, or find a higher-CLTV lender.';
   }
 
+  // ---- HEL + HELOC math ----
   const helRate = rateForScore(credit, false);
   const helocRate = rateForScore(credit, true);
 
@@ -121,25 +125,89 @@ function runDecision(){
   $('helocPmtAmort').textContent = fmt$(helocAmortPmt) + '/mo';
   $('helocTotal').textContent = fmt$(helocTotalPaid) + ' (full draw)';
 
-  let helocScore = 0, helScore = 0;
+  // ---- HEA math ----
+  // Provider's appreciation share modeled as 2.5x advance pct, capped at 45%.
+  const heaTermYears = Math.min(30, Math.max(10, term));
+  const advancePct = borrow / homeValue;
+  const providerShare = Math.min(0.45, 2.5 * advancePct);
+  function heaPayback(annualApprPct){
+    const futureVal = homeValue * Math.pow(1 + annualApprPct/100, heaTermYears);
+    const apprDollars = Math.max(0, futureVal - homeValue);
+    return { future: futureVal, payback: borrow + providerShare * apprDollars };
+  }
+  const heaFlat = heaPayback(0);
+  const hea3 = heaPayback(3);
+  const hea6 = heaPayback(6);
+
+  $('heaTerm').textContent = heaTermYears + 'yr or at sale';
+  $('heaPayback3').textContent = fmt$(hea3.payback);
+
+  const heaRows = [
+    { name: 'Flat (0% appr.)', s: heaFlat },
+    { name: '3% annual appr.', s: hea3 },
+    { name: '6% annual appr.', s: hea6 }
+  ];
+  $('heaScenarioRows').innerHTML = heaRows.map(function(r){
+    const diff = r.s.payback - helTotalPaid;
+    const diffStr = diff > 0
+      ? '+' + fmt$(diff) + ' more than HEL'
+      : fmt$(Math.abs(diff)) + ' less than HEL';
+    return '<tr><td>' + r.name + '</td><td>' + fmt$(r.s.future) + '</td><td>' + fmt$(r.s.payback) + '</td><td>' + diffStr + '</td></tr>';
+  }).join('');
+  $('heaTermInline').textContent = heaTermYears + '-year';
+
+  // ---- 3-way scoring ----
+  let helocScore = 0, helScore = 0, heaScore = 0;
+
   if(['ongoing','emergency','unknown','education'].includes(useCase)) helocScore += 3;
   if(['renovation','debt-consol','business'].includes(useCase)) helScore += 3;
+  if(['emergency','unknown'].includes(useCase)) heaScore += 1;
+
   if(stability === 'stable') helScore += 2;
-  else helocScore += 2;
+  else { helocScore += 2; heaScore += 2; }
+
   if(ratePref === 'fixed') helScore += 2;
   else if(ratePref === 'variable') helocScore += 2;
+
   if(helTotalPaid < helocTotalPaid) helScore += 1;
   else helocScore += 1;
 
+  if(credit < 640) heaScore += 5;
+  else if(credit < 680) heaScore += 3;
+
+  if(payCap === 'no') heaScore += 6;
+  else if(payCap === 'tight') heaScore += 3;
+
+  if(equityPct < 20) heaScore -= 4;
+
+  const cltvBlocked = newCltvPct > lenderCltv;
+  if(cltvBlocked && equityPct >= 20) heaScore += 4;
+
+  const heaViable = heaScore >= 4 && equityPct >= 20;
+
+  // ---- Render verdict ----
   let banner, bannerClass;
   $('hetRec').classList.add('hidden');
   $('helocRec').classList.add('hidden');
+  $('heaRec').classList.add('hidden');
   $('hetCard').classList.remove('recommended');
   $('helocCard').classList.remove('recommended');
+  $('heaCard').classList.remove('recommended');
+  $('heaCard').classList.toggle('hidden', !heaViable);
+  $('heaScenarioBlock').classList.toggle('hidden', !heaViable);
 
-  if(newCltvPct > lenderCltv){
-    banner = '<strong>Neither path works at this borrow amount.</strong> Your post-loan CLTV of ' + newCltvPct.toFixed(1) + '% exceeds the ' + lenderCltv + '% lender cap. Reduce the borrow amount to about ' + fmt$(homeValue * (lenderCltv/100) - mortBal) + ' or shop for a higher-CLTV lender.';
+  const grid = $('compareGrid');
+  if(heaViable){ grid.classList.remove('two-col'); }
+  else { grid.classList.add('two-col'); }
+
+  if(cltvBlocked && !heaViable){
+    banner = '<strong>Neither loan path works at this borrow amount.</strong> Your post-loan CLTV of ' + newCltvPct.toFixed(1) + '% exceeds the ' + lenderCltv + '% lender cap. Reduce the borrow amount to about ' + fmt$(homeValue * (lenderCltv/100) - mortBal) + ' or shop for a higher-CLTV lender.';
     bannerClass = 'verdict-tie';
+  } else if(heaScore > helScore && heaScore > helocScore){
+    banner = 'Based on your inputs, a <strong>Home Equity Agreement (HEA)</strong> is the better fit. You get cash today, no monthly payment, no interest \u2014 the provider settles at sale or end of the ' + heaTermYears + '-year term. At 3% annual appreciation, your estimated payback is ' + fmt$(hea3.payback) + ' (you give up roughly ' + (providerShare*100).toFixed(0) + '% of future appreciation).';
+    bannerClass = 'verdict-hea';
+    $('heaRec').classList.remove('hidden');
+    $('heaCard').classList.add('recommended');
   } else if(helScore > helocScore){
     banner = 'Based on your inputs, a <strong>Home Equity Loan</strong> is the better fit. You know exactly how much you need, your income is stable, and a fixed rate gives you a predictable payoff. Estimated cost: ' + fmt$(helTotalPaid) + ' total over ' + term + ' years at ' + fmtPct(helRate) + '.';
     bannerClass = 'verdict-hel';
@@ -151,7 +219,7 @@ function runDecision(){
     $('helocRec').classList.remove('hidden');
     $('helocCard').classList.add('recommended');
   } else {
-    banner = 'It\u2019s essentially a <strong>toss-up</strong>. Both products score evenly on your inputs. Default to the Home Equity Loan if you value certainty; choose the HELOC if you value flexibility.';
+    banner = 'It\u2019s essentially a <strong>toss-up</strong>. The HEL and HELOC score evenly on your inputs. Default to the Home Equity Loan if you value certainty; choose the HELOC if you value flexibility.';
     bannerClass = 'verdict-tie';
   }
 
@@ -159,11 +227,9 @@ function runDecision(){
   v.className = 'verdict-banner ' + bannerClass;
   v.innerHTML = banner;
 
-  if(credit < 670){
-    $('badCreditCallout').classList.remove('hidden');
-  } else {
-    $('badCreditCallout').classList.add('hidden');
-  }
+  const showPivot = (credit < 670 || payCap === 'no' || payCap === 'tight') && equityPct >= 20;
+  $('heaPivotCallout').classList.toggle('hidden', !showPivot);
+  $('proCallout').classList.toggle('hidden', !heaViable);
 
   $('inputPanel').classList.add('hidden');
   $('resultsPanel').classList.remove('hidden');
