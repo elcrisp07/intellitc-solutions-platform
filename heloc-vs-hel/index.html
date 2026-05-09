@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELOC vs. Home Equity Loan Decision Engine &mdash; IntelliTC Solutions</title>
+<meta name="description" content="Should you take a HELOC or a Home Equity Loan? Compare both side-by-side using your home value, mortgage balance, target borrow amount, and credit score.">
+<meta property="og:title" content="HELOC vs. Home Equity Loan Decision Engine &mdash; IntelliTC Solutions">
+<meta property="og:description" content="Decide between a HELOC and a Home Equity Loan with side-by-side payment math, CLTV check, and a bad-credit feasibility filter.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>
+.surprise-banner{
+  display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-lg);margin-bottom:var(--space-4);
+  background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.08));
+  border:1px solid var(--color-primary);
+}
+.surprise-banner svg{flex-shrink:0;color:var(--color-primary);}
+.surprise-banner-text{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+.surprise-banner-text strong{color:var(--color-primary);font-weight:600;}
+.tool-intro{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6;margin-bottom:var(--space-4);}
+.input-columns{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);}
+@media(max-width:600px){.input-columns{grid-template-columns:1fr;}}
+.input-columns h3{font-size:var(--text-sm);margin-bottom:var(--space-3);}
+.field input, .field select { min-height:48px; line-height:1.5; box-sizing:border-box; }
+.input-with-unit input { min-height:48px; line-height:1.5; box-sizing:border-box; }
+
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:var(--space-4) 0;}
+@media(max-width:640px){.compare-grid{grid-template-columns:1fr;}}
+.compare-card{
+  padding:var(--space-4);border-radius:var(--radius-lg);
+  border:2px solid var(--color-divider);background:var(--color-surface);
+  position:relative;
+}
+.compare-card.recommended{border-color:var(--color-primary);box-shadow:0 4px 16px rgba(1,105,111,.15);}
+.compare-card .badge-rec{
+  position:absolute;top:-10px;right:var(--space-3);
+  background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase;letter-spacing:.05em;
+}
+.compare-card h3{margin:0 0 var(--space-2);font-size:var(--text-base);font-weight:700;color:var(--color-text);}
+.compare-card .row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--color-divider);font-size:var(--text-sm);}
+.compare-card .row:last-of-type{border-bottom:none;}
+.compare-card .row span:first-child{color:var(--color-text-muted);}
+.compare-card .row span:last-child{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--color-text);}
+.compare-card .feature{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px dashed var(--color-divider);}
+
+.verdict-banner{padding:var(--space-4) var(--space-5);border-radius:var(--radius-lg);margin:var(--space-4) 0;font-size:var(--text-sm);line-height:1.5;}
+.verdict-heloc{background:rgba(1,105,111,.08);border:1px solid var(--color-primary);color:var(--color-text);}
+.verdict-hel{background:rgba(209,153,0,.10);border:1px solid #D19900;color:var(--color-text);}
+.verdict-tie{background:rgba(122,122,122,.08);border:1px solid var(--color-text-muted);color:var(--color-text);}
+.verdict-banner strong{color:var(--color-primary);}
+.verdict-banner.verdict-hel strong{color:#D19900;}
+
+.cltv-meter{margin:var(--space-3) 0;padding:var(--space-3) var(--space-4);background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-divider);}
+.cltv-meter-label{display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-2);}
+.cltv-meter-bar{height:10px;background:var(--color-divider);border-radius:var(--radius-full);overflow:hidden;}
+.cltv-meter-fill{height:100%;background:linear-gradient(90deg,#437A22 0%,#D19900 70%,#A84B2F 90%);transition:width .4s ease;}
+.cltv-status{font-size:var(--text-xs);margin-top:var(--space-2);font-weight:600;}
+.cltv-status.ok{color:#437A22;}
+.cltv-status.warn{color:#D19900;}
+.cltv-status.danger{color:#A84B2F;}
+
+.section-heading{font-size:var(--text-sm);margin:var(--space-5) 0 var(--space-2);font-weight:700;}
+
+.bad-credit-callout{
+  padding:var(--space-4);border-radius:var(--radius-lg);
+  border:1px solid var(--color-divider);background:var(--color-surface);
+  margin:var(--space-4) 0;
+}
+.bad-credit-callout h4{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;color:var(--color-primary);}
+.bad-credit-callout ul{margin:var(--space-2) 0 0 var(--space-4);padding:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6;}
+.bad-credit-callout li{margin-bottom:var(--space-1);}
+
+.fact-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin:var(--space-4) 0;
+}
+@media(max-width:640px){.fact-strip{grid-template-columns:1fr;}}
+.fact-card{
+  padding:var(--space-3);border-radius:var(--radius-md);
+  background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.05));
+  border:1px solid var(--color-divider);text-align:center;
+}
+.fact-card .fact-num{font-family:'JetBrains Mono',monospace;font-size:var(--text-lg);font-weight:700;color:var(--color-primary);margin-bottom:4px;}
+.fact-card .fact-label{font-size:11px;color:var(--color-text-muted);line-height:1.3;}
+
+.edu-section{
+  padding:var(--space-4);border-radius:var(--radius-lg);
+  background:var(--color-surface);border:1px solid var(--color-divider);
+  margin:var(--space-4) 0;
+}
+.edu-section h3{font-size:var(--text-sm);margin:0 0 var(--space-3);font-weight:700;color:var(--color-primary);}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
+@media(max-width:640px){.edu-grid{grid-template-columns:1fr;}}
+.edu-card h4{font-size:var(--text-xs);font-weight:700;color:var(--color-text);margin:0 0 var(--space-2);text-transform:uppercase;letter-spacing:.04em;}
+.edu-card p, .edu-card ul{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.55;margin:0 0 var(--space-2);}
+.edu-card ul{padding-left:var(--space-4);}
+.edu-card li{margin-bottom:4px;}
+
+.diff-table{width:100%;border-collapse:collapse;font-size:var(--text-xs);margin:var(--space-3) 0;}
+.diff-table th{text-align:left;font-weight:700;padding:var(--space-2) var(--space-3);border-bottom:2px solid var(--color-primary);color:var(--color-text);}
+.diff-table td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-divider);color:var(--color-text-muted);vertical-align:top;}
+.diff-table td:first-child{font-weight:600;color:var(--color-text);width:25%;}
+
+.alts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3);margin:var(--space-3) 0;}
+@media(max-width:640px){.alts-grid{grid-template-columns:1fr;}}
+.alt-card{padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--color-divider);background:var(--color-bg);}
+.alt-card h5{margin:0 0 var(--space-1);font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.04em;}
+.alt-card p{margin:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+
+.source-note{font-size:11px;color:var(--color-text-muted);font-style:italic;margin-top:var(--space-3);}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M5XCCZMN4F');</script>
+</head>
+<body>
+  <header class="header two-tier-header">
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" class="hdr-primary-link">Start Here</a>
+      <a href="../goal-pilot/index.html" class="hdr-primary-link">Goal Pilot</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html">Your Role?</a>
+    <a href="../workflows/index.html">Workflows</a>
+    <a href="../learning-paths/index.html">Learn</a>
+    <a href="../scenario-lab/index.html">Scenario Lab</a>
+    <a href="../seniors-corner/index.html">Senior's Corner</a>
+    <a href="../next-gen-corner/index.html">Next Gen Corner</a>
+    <a href="../certification/index.html">Certificate</a>
+    <a href="../guides/index.html">Guides</a>
+    <a href="../calculators/index.html">All Calculators</a>
+  </nav>
+</header>
+
+  <main class="main">
+
+    <!-- Input Panel -->
+    <section class="panel input-panel" id="inputPanel">
+      <div class="surprise-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <div class="surprise-banner-text"><strong>You found it.</strong> A hidden educational decision engine for a question every homeowner eventually faces: <em>HELOC or Home Equity Loan?</em></div>
+      </div>
+
+      <h1 class="panel-title">HELOC vs. Home Equity Loan</h1>
+      <p class="tool-intro">Both are second mortgages. Both put your house up as collateral. But they behave very differently &mdash; and the right one depends on <strong>how</strong> you plan to spend the money, <strong>how predictable</strong> your income is, and <strong>what your credit score</strong> can support. Plug in your numbers; we'll do the side-by-side math and tell you which one most likely fits.</p>
+
+      <!-- Equity-at-a-glance fact strip -->
+      <div class="fact-strip">
+        <div class="fact-card">
+          <div class="fact-num">$17.6T</div>
+          <div class="fact-label">Total U.S. homeowner equity (CoreLogic)</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-num">$315K+</div>
+          <div class="fact-label">Average homeowner equity per CoreLogic</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-num">80&ndash;90%</div>
+          <div class="fact-label">Typical lender max combined loan-to-value</div>
+        </div>
+      </div>
+
+      <div class="input-columns">
+        <div>
+          <h3>Your Home &amp; Mortgage</h3>
+          <div class="field">
+            <label for="homeValue">Home Value (appraised)</label>
+            <div class="input-with-unit"><span class="unit-prefix">$</span><input type="text" id="homeValue" value="400,000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="mortgageBalance">Current 1st Mortgage Balance</label>
+            <div class="input-with-unit"><span class="unit-prefix">$</span><input type="text" id="mortgageBalance" value="240,000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="lenderCltv">Lender Max CLTV</label>
+            <div class="input-with-unit"><input type="number" id="lenderCltv" value="85" min="70" max="95" step="1"><span class="unit-suffix">%</span></div>
+          </div>
+          <div class="field">
+            <label for="creditScore">Credit Score (FICO)</label>
+            <div class="input-with-unit"><input type="number" id="creditScore" value="720" min="500" max="850" step="1"></div>
+          </div>
+        </div>
+        <div>
+          <h3>Your Borrowing Need</h3>
+          <div class="field">
+            <label for="borrowAmount">Amount You Want to Borrow</label>
+            <div class="input-with-unit"><span class="unit-prefix">$</span><input type="text" id="borrowAmount" value="50,000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="useCase">Primary Use of Funds</label>
+            <select id="useCase">
+              <option value="renovation">Home Renovation (lump sum project)</option>
+              <option value="debt-consol">Debt Consolidation (pay off high-interest)</option>
+              <option value="ongoing">Ongoing or Phased Project (need $ over time)</option>
+              <option value="emergency">Emergency Fund / Safety Net</option>
+              <option value="education">Education / Tuition (paid in installments)</option>
+              <option value="business">Business Startup / Capital Needs</option>
+              <option value="unknown">Not sure exactly how much I&rsquo;ll need</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="incomeStability">Income Stability</label>
+            <select id="incomeStability">
+              <option value="stable" selected>Stable W-2 (predictable monthly)</option>
+              <option value="variable">Variable / Self-employed / Commission</option>
+              <option value="seasonal">Seasonal or Project-based</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ratePref">Interest Rate Preference</label>
+            <select id="ratePref">
+              <option value="fixed" selected>Fixed (predictable payment)</option>
+              <option value="variable">Variable OK (lower entry rate)</option>
+              <option value="dontknow">No strong preference</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="termYears">Repayment Term</label>
+            <div class="input-with-unit"><input type="number" id="termYears" value="15" min="5" max="30" step="1"><span class="unit-suffix">yrs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-run" style="margin-top:var(--space-5);width:100%;" onclick="runDecision()">Compare HELOC vs. Home Equity Loan</button>
+    </section>
+
+    <!-- Results Panel -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title">HELOC vs. Home Equity Loan &mdash; Your Decision</h2>
+        <button class="btn btn-ghost" data-back onclick="showInputs()">Modify Inputs</button>
+      </div>
+
+      <!-- Equity & CLTV check -->
+      <div class="cltv-meter">
+        <div class="cltv-meter-label">
+          <span>Combined Loan-to-Value (CLTV) after new loan</span>
+          <span id="cltvOut">&mdash;</span>
+        </div>
+        <div class="cltv-meter-bar"><div class="cltv-meter-fill" id="cltvFill" style="width:0%"></div></div>
+        <div class="cltv-status" id="cltvStatus">&mdash;</div>
+      </div>
+
+      <!-- Verdict banner -->
+      <div class="verdict-banner" id="verdictBanner">&mdash;</div>
+
+      <!-- Side-by-side comparison -->
+      <div class="compare-grid" id="compareGrid">
+        <div class="compare-card" id="hetCard">
+          <span class="badge-rec hidden" id="hetRec">Recommended</span>
+          <h3>Home Equity Loan</h3>
+          <div class="row"><span>Disbursement</span><span>Lump sum</span></div>
+          <div class="row"><span>Interest rate</span><span id="hetRate">&mdash;</span></div>
+          <div class="row"><span>Rate type</span><span>Fixed</span></div>
+          <div class="row"><span>Monthly payment</span><span id="hetPmt">&mdash;</span></div>
+          <div class="row"><span>Total interest</span><span id="hetInterest">&mdash;</span></div>
+          <div class="row"><span>Total cost</span><span id="hetTotal">&mdash;</span></div>
+          <div class="feature">Best when you know exactly how much you need, want a predictable payment, and don&rsquo;t plan to draw funds repeatedly. Closing costs are typical.</div>
+        </div>
+        <div class="compare-card" id="helocCard">
+          <span class="badge-rec hidden" id="helocRec">Recommended</span>
+          <h3>HELOC (Line of Credit)</h3>
+          <div class="row"><span>Disbursement</span><span>Draw as needed</span></div>
+          <div class="row"><span>Interest rate</span><span id="helocRate">&mdash;</span></div>
+          <div class="row"><span>Rate type</span><span>Variable</span></div>
+          <div class="row"><span>Interest-only pmt (draw period)</span><span id="helocPmtIO">&mdash;</span></div>
+          <div class="row"><span>Fully-amortized pmt (repayment)</span><span id="helocPmtAmort">&mdash;</span></div>
+          <div class="row"><span>Estimated total cost</span><span id="helocTotal">&mdash;</span></div>
+          <div class="feature">Best when the amount you&rsquo;ll actually need is uncertain, or your income comes in waves. You only pay interest on what you draw.</div>
+        </div>
+      </div>
+
+      <!-- Bad credit callout (only shown when score &lt; 670) -->
+      <div class="bad-credit-callout hidden" id="badCreditCallout">
+        <h4>Heads up &mdash; your score is in the &ldquo;harder to qualify&rdquo; range</h4>
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;margin-bottom:var(--space-2);">Home equity loans are <em>nonqualified mortgages</em> &mdash; lenders set their own rules, so approval is possible, but you&rsquo;ll need <strong>compensating factors</strong> and you&rsquo;ll pay a higher rate. To improve your odds:</p>
+        <ul>
+          <li>Build cash reserves &mdash; lenders like seeing 3&ndash;6 months of payments in the bank.</li>
+          <li>Drive your DTI well below 43% &mdash; pay off a small loan if you can.</li>
+          <li>Keep more equity in the home &mdash; ask for a lower CLTV (60&ndash;70%) instead of maxing out.</li>
+          <li>Show positive credit trajectory &mdash; on-time payments for 12+ months matter.</li>
+          <li>Dispute errors on your credit report; old, paid-off collections sometimes still drag you down.</li>
+        </ul>
+      </div>
+
+      <!-- Educational deep-dive -->
+      <h3 class="section-heading">The 5 Differences That Actually Matter</h3>
+      <div class="edu-section">
+        <table class="diff-table">
+          <thead>
+            <tr><th></th><th>Home Equity Loan</th><th>HELOC</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Disbursement</td><td>Cash up front in one lump sum</td><td>Draw cash as needed, up to a limit</td></tr>
+            <tr><td>Repayment</td><td>Fixed monthly payments</td><td>Open-ended; interest-only often allowed during draw period</td></tr>
+            <tr><td>Interest rate</td><td>Typically fixed</td><td>Usually variable</td></tr>
+            <tr><td>Interest charges</td><td>Apply to entire loan balance</td><td>Only on the amount you actually draw</td></tr>
+            <tr><td>Closing costs &amp; fees</td><td>Lender may charge points, closing costs, fees</td><td>Often no points; closing costs may be lower</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-heading">When Each One Wins</h3>
+      <div class="edu-section">
+        <div class="edu-grid">
+          <div class="edu-card">
+            <h4>Pick a HELOC When</h4>
+            <ul>
+              <li>You&rsquo;ll need money in the future, but you&rsquo;re not sure how much.</li>
+              <li>Your income has unpredictable ups and downs (self-employed, commission, seasonal).</li>
+              <li>You&rsquo;re comfortable with a variable interest rate that can move with the market.</li>
+              <li>You only want to pay interest on the portion of the credit line you actually tap.</li>
+            </ul>
+          </div>
+          <div class="edu-card">
+            <h4>Pick a Home Equity Loan When</h4>
+            <ul>
+              <li>You need money now (short-term) and you know exactly how much.</li>
+              <li>You&rsquo;re consolidating high-interest debt and want a predictable payoff date.</li>
+              <li>You want the certainty of a fixed interest rate and a fixed monthly payment.</li>
+              <li>You have a defined project (renovation, tuition installment, lump-sum purchase).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-heading">How &ldquo;Tappable Equity&rdquo; Is Calculated</h3>
+      <div class="edu-section">
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6;margin:0 0 var(--space-2);">Lenders compute tappable equity by multiplying your home value by their max CLTV, then subtracting your existing first mortgage. Most lenders cap CLTV at 80&ndash;90%; conservative homeowners often self-impose a 20% ownership buffer.</p>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <h4>Example A &middot; 90% CLTV</h4>
+            <p>Home value $300,000 &times; 90% = $270,000 max combined debt. If you owe $200,000 on the first mortgage, you can borrow another <strong>$70,000</strong>.</p>
+          </div>
+          <div class="edu-card">
+            <h4>Example B &middot; 80% Self-Imposed CLTV</h4>
+            <p>Home value $300,000 &times; 80% = $240,000 max combined debt. If you owe $200,000, you keep a 20% ownership stake and can borrow <strong>$40,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Pros &amp; Cons at a Glance</h3>
+      <div class="edu-section">
+        <div class="edu-grid">
+          <div class="edu-card">
+            <h4>HELOC &mdash; Pros</h4>
+            <ul>
+              <li>Pay interest only on the equity you&rsquo;ve actually tapped.</li>
+              <li>Flexible &mdash; draw, repay, redraw during the draw period.</li>
+              <li>Lower closing costs than a typical home equity loan.</li>
+            </ul>
+            <h4 style="margin-top:var(--space-3);">HELOC &mdash; Cons</h4>
+            <ul>
+              <li>Variable rate makes monthly payments less predictable.</li>
+              <li>Open-ended structure makes total cost hard to forecast.</li>
+              <li>Typically only available from banks and credit unions.</li>
+            </ul>
+          </div>
+          <div class="edu-card">
+            <h4>Home Equity Loan &mdash; Pros</h4>
+            <ul>
+              <li>Fixed interest rate locked for the life of the loan.</li>
+              <li>Monthly payment, term, and total cost are all known up-front.</li>
+              <li>Larger loan amounts available than personal loans or credit cards.</li>
+            </ul>
+            <h4 style="margin-top:var(--space-3);">Home Equity Loan &mdash; Cons</h4>
+            <ul>
+              <li>Second-mortgage rates run higher than first-mortgage rates.</li>
+              <li>Closing costs and lender points may apply.</li>
+              <li>If you sell or refinance early, you don&rsquo;t reap the full benefit of points paid.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Alternatives to Consider</h3>
+      <div class="edu-section">
+        <div class="alts-grid">
+          <div class="alt-card">
+            <h5>Cash-Out Refinance</h5>
+            <p>Replace your existing first mortgage with a larger one and pocket the difference. Usually offers a lower rate than a HELOC or HEL because it&rsquo;s a first mortgage &mdash; but the new rate applies to your entire balance, not just the cash-out portion.</p>
+          </div>
+          <div class="alt-card">
+            <h5>Home Equity Agreement (HEA)</h5>
+            <p>Receive upfront cash in exchange for a share of the home&rsquo;s future appreciation. No monthly payments, no interest rate &mdash; flexible qualification, useful for owners with poor credit or volatile income.</p>
+          </div>
+          <div class="alt-card">
+            <h5>Home Equity Credit Card</h5>
+            <p>A secured revolving credit product that uses your home equity as collateral. Faster funding than a traditional HEL, generally lower rate than an unsecured card, but a smaller universe of issuers.</p>
+          </div>
+          <div class="alt-card">
+            <h5>Personal Loan</h5>
+            <p>Unsecured lump-sum loan based on income, DTI, and credit. Funds quickly, no home as collateral, but rates run materially higher and loan amounts are typically smaller than home equity products.</p>
+          </div>
+        </div>
+        <p class="source-note">Source material: Credible &mdash; HELOC vs. Home Equity Loan and Home Equity Loans with Bad Credit. For educational purposes only; not lending or financial advice.</p>
+      </div>
+
+    </section>
+
+  </main>
+  <footer class="footer">
+    <p>This decision engine is for educational purposes only and does not constitute financial, legal, or lending advice. Confirm rates, CLTV limits, and program eligibility with a licensed mortgage lender.</p>
+    <p>&copy; 2025 IntelliTC Solutions &mdash; Powered by Infinite Workz Ventures LLC</p>
+  </footer>
+
+<script>
+const $ = id => document.getElementById(id);
+function num(id){ return Number(String($(id).value).replace(/[^0-9.\-]/g,''))||0; }
+function fmt$(n){ return '$' + Math.round(n).toLocaleString(); }
+function fmt$2(n){ return '$' + n.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function fmtPct(n){ return n.toFixed(2) + '%'; }
+
+// Format currency-style inputs as user types
+['homeValue','mortgageBalance','borrowAmount'].forEach(id=>{
+  const el = $(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const raw = String(el.value).replace(/[^0-9]/g,'');
+    if(raw==='') return;
+    el.value = Number(raw).toLocaleString();
+  });
+});
+
+function rateForScore(score, isHeloc){
+  // Rough industry-typical pricing as of mid-2026 for educational comparison.
+  // HEL is fixed; HELOCs price off prime + margin.
+  // Rates expressed in percent.
+  let baseHel, baseHeloc;
+  if(score >= 760){ baseHel = 8.25; baseHeloc = 8.50; }
+  else if(score >= 720){ baseHel = 8.75; baseHeloc = 9.00; }
+  else if(score >= 680){ baseHel = 9.50; baseHeloc = 9.75; }
+  else if(score >= 640){ baseHel = 10.75; baseHeloc = 10.99; }
+  else if(score >= 600){ baseHel = 12.50; baseHeloc = 12.75; }
+  else { baseHel = 14.00; baseHeloc = 14.25; }
+  return isHeloc ? baseHeloc : baseHel;
+}
+
+function monthlyPmt(principal, annualRatePct, years){
+  const r = (annualRatePct/100) / 12;
+  const n = years * 12;
+  if(r === 0) return principal / n;
+  return principal * r / (1 - Math.pow(1+r, -n));
+}
+
+function showInputs(){
+  $('inputPanel').classList.remove('hidden');
+  $('resultsPanel').classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function runDecision(){
+  const homeValue = num('homeValue');
+  const mortBal = num('mortgageBalance');
+  const lenderCltv = num('lenderCltv');
+  const credit = num('creditScore');
+  const borrow = num('borrowAmount');
+  const useCase = $('useCase').value;
+  const stability = $('incomeStability').value;
+  const ratePref = $('ratePref').value;
+  const term = num('termYears');
+
+  if(homeValue <= 0 || borrow <= 0 || term <= 0){
+    alert('Please fill in home value, borrow amount, and term.');
+    return;
+  }
+
+  // CLTV check
+  const newCombinedDebt = mortBal + borrow;
+  const newCltvPct = (newCombinedDebt / homeValue) * 100;
+  $('cltvOut').textContent = fmtPct(newCltvPct) + ' (max ' + lenderCltv + '%)';
+  $('cltvFill').style.width = Math.min(100, newCltvPct) + '%';
+
+  const cltvStat = $('cltvStatus');
+  cltvStat.classList.remove('ok','warn','danger');
+  if(newCltvPct <= lenderCltv - 5){
+    cltvStat.classList.add('ok');
+    cltvStat.textContent = 'You\u2019re within the lender\u2019s CLTV cap with room to spare.';
+  } else if(newCltvPct <= lenderCltv){
+    cltvStat.classList.add('warn');
+    cltvStat.textContent = 'Tight \u2014 you\u2019re right at the lender\u2019s CLTV ceiling. Expect closer scrutiny.';
+  } else {
+    cltvStat.classList.add('danger');
+    cltvStat.textContent = 'You exceed the lender\u2019s max CLTV by ' + (newCltvPct - lenderCltv).toFixed(1) + ' pts. You\u2019ll need to borrow less, raise the home value, or find a higher-CLTV lender.';
+  }
+
+  // Rate pricing
+  const helRate = rateForScore(credit, false);
+  const helocRate = rateForScore(credit, true);
+
+  // Home Equity Loan math (fully amortized)
+  const helPmt = monthlyPmt(borrow, helRate, term);
+  const helTotalPaid = helPmt * term * 12;
+  const helInterest = helTotalPaid - borrow;
+
+  $('hetRate').textContent = fmtPct(helRate);
+  $('hetPmt').textContent = fmt$(helPmt) + '/mo';
+  $('hetInterest').textContent = fmt$(helInterest);
+  $('hetTotal').textContent = fmt$(helTotalPaid);
+
+  // HELOC math: 10-year draw period interest-only on full balance + 20-year repayment OR user-chosen term split.
+  // Educational simplification: assume full draw is taken out (worst case for cost), 5-year I/O draw + (term-5) repayment.
+  const drawYears = Math.min(5, Math.max(1, Math.floor(term/3)));
+  const repayYears = term - drawYears;
+  const helocIOpmt = borrow * (helocRate/100) / 12;
+  const helocAmortPmt = repayYears > 0 ? monthlyPmt(borrow, helocRate, repayYears) : 0;
+  const helocTotalPaid = helocIOpmt * drawYears * 12 + helocAmortPmt * repayYears * 12;
+
+  $('helocRate').textContent = fmtPct(helocRate) + ' (variable)';
+  $('helocPmtIO').textContent = fmt$(helocIOpmt) + '/mo';
+  $('helocPmtAmort').textContent = fmt$(helocAmortPmt) + '/mo';
+  $('helocTotal').textContent = fmt$(helocTotalPaid) + ' (full draw)';
+
+  // Verdict logic: score each path
+  let helocScore = 0, helScore = 0;
+
+  // Use case
+  if(['ongoing','emergency','unknown','education'].includes(useCase)) helocScore += 3;
+  if(['renovation','debt-consol','business'].includes(useCase)) helScore += 3;
+
+  // Income stability
+  if(stability === 'stable') helScore += 2;
+  else helocScore += 2;
+
+  // Rate preference
+  if(ratePref === 'fixed') helScore += 2;
+  else if(ratePref === 'variable') helocScore += 2;
+
+  // Total cost
+  if(helTotalPaid < helocTotalPaid) helScore += 1;
+  else helocScore += 1;
+
+  let banner, bannerClass;
+  $('hetRec').classList.add('hidden');
+  $('helocRec').classList.add('hidden');
+  $('hetCard').classList.remove('recommended');
+  $('helocCard').classList.remove('recommended');
+
+  if(newCltvPct > lenderCltv){
+    banner = '<strong>Neither path works at this borrow amount.</strong> Your post-loan CLTV of ' + newCltvPct.toFixed(1) + '% exceeds the ' + lenderCltv + '% lender cap. Reduce the borrow amount to about ' + fmt$(homeValue * (lenderCltv/100) - mortBal) + ' or shop for a higher-CLTV lender.';
+    bannerClass = 'verdict-tie';
+  } else if(helScore > helocScore){
+    banner = 'Based on your inputs, a <strong>Home Equity Loan</strong> is the better fit. You know exactly how much you need, your income is stable, and a fixed rate gives you a predictable payoff. Estimated cost: ' + fmt$(helTotalPaid) + ' total over ' + term + ' years at ' + fmtPct(helRate) + '.';
+    bannerClass = 'verdict-hel';
+    $('hetRec').classList.remove('hidden');
+    $('hetCard').classList.add('recommended');
+  } else if(helocScore > helScore){
+    banner = 'Based on your inputs, a <strong>HELOC</strong> is the better fit. Your need is variable or your income is uneven, and the flexibility of drawing only what you use will likely save you money. Pay attention to the variable rate &mdash; budget as if it could rise 1&ndash;2 points.';
+    bannerClass = 'verdict-heloc';
+    $('helocRec').classList.remove('hidden');
+    $('helocCard').classList.add('recommended');
+  } else {
+    banner = 'It\u2019s essentially a <strong>toss-up</strong>. Both products score evenly on your inputs. Default to the Home Equity Loan if you value certainty; choose the HELOC if you value flexibility.';
+    bannerClass = 'verdict-tie';
+  }
+
+  const v = $('verdictBanner');
+  v.className = 'verdict-banner ' + bannerClass;
+  v.innerHTML = banner;
+
+  // Bad credit callout
+  if(credit < 670){
+    $('badCreditCallout').classList.remove('hidden');
+  } else {
+    $('badCreditCallout').classList.add('hidden');
+  }
+
+  $('inputPanel').classList.add('hidden');
+  $('resultsPanel').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>

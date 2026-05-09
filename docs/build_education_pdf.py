@@ -45,7 +45,7 @@ SURFACE = HexColor("#f9f8f5")
 
 W, H = letter  # 612 x 792
 
-OUTPUT = "/home/user/workspace/intellitc-education-enhancement-v10.pdf"
+OUTPUT = "/home/user/workspace/intellitc-solutions-platform/docs/intellitc-education-enhancement-v15.pdf"
 LOGO = "/home/user/workspace/intellitc-solutions-platform/assets/logo.jpg"
 
 # ─── Styles ───────────────────────────────────────────────────────────────
@@ -440,7 +440,7 @@ class CoverPage(Flowable):
         c.setFont("DMSans-Medium", 13)
         c.setFillColor(HexColor("#b8e0e3"))
         c.drawString(60, y_title - 72, "Strategic Enhancements to Make IntelliTC's")
-        c.drawString(60, y_title - 90, "Educational Model Uncopyable")
+        c.drawString(60, y_title - 90, "Educational Model Uncopyable -- Now Scaled to High Schools")
 
         # Gold divider
         c.setFillColor(GOLD)
@@ -449,9 +449,9 @@ class CoverPage(Flowable):
         # Meta info
         c.setFont("DMSans", 10)
         c.setFillColor(HexColor("#90c5c9"))
-        c.drawString(60, y_title - 135, "Strategic Briefing  |  April 2026")
+        c.drawString(60, y_title - 135, "Strategic Briefing  |  May 2026")
         c.drawString(60, y_title - 152, "IntelliTC Solutions  |  intellitcsolutions.com")
-        c.drawString(60, y_title - 169, "Version 10.0  |  All Education Phases Live")
+        c.drawString(60, y_title - 169, "Version 15.0  |  Next Gen Corner Scaled to High Schools")
 
         # Bottom metrics strip
         strip_y = 60
@@ -460,11 +460,11 @@ class CoverPage(Flowable):
 
         metrics = [
             ("5", "Education Phases"),
-            ("1,549", "Mind Map Definitions"),
-            ("23", "Benchmark Calculators"),
-            ("12", "Scenario Exercises"),
-            ("11", "PDF Guides"),
-            ("3", "Certification Tiers"),
+            ("1,604", "Mind Map Definitions"),
+            ("54", "Professional Calculators"),
+            ("4", "Next Gen Scenarios"),
+            ("100", "Curated U.S. Metros"),
+            ("50", "Entry-Level Jobs"),
         ]
         x_start = 40
         spacing = (w - 80) / len(metrics)
@@ -514,7 +514,7 @@ story.append(Spacer(1, 6))
 
 story.append(Paragraph(
     "IntelliTC Solutions has built a comprehensive education pipeline that converts raw computational tools into a "
-    "structured learning environment. This pipeline -- spanning five fully deployed phases with <b>1,549 interactive "
+    "structured learning environment. This pipeline -- spanning five fully deployed phases with <b>1,604 interactive "
     "mind map definitions</b> embedded across all 58 tools -- creates compounding switching costs that no competitor "
     "currently matches. Users do not merely calculate; they <b>learn, practice, certify, and grow</b> within the "
     "platform ecosystem.",
@@ -526,7 +526,7 @@ story.append(Spacer(1, 8))
 # KPI row
 story.append(make_kpi_row([
     ("Education Phases Deployed", "5/5", "#01696f"),
-    ("Mind Map Definitions", "1,549", "#D19900"),
+    ("Mind Map Definitions", "1,604", "#D19900"),
     ("Certification Question Pool", "146", "#01696f"),
     ("Calculators w/ Learn Mode", "23+", "#01696f"),
 ]))
@@ -535,7 +535,7 @@ story.append(Spacer(1, 8))
 
 story.append(Paragraph(
     "This document details every component of IntelliTC's education-integrated moat -- from the 5-phase pipeline and "
-    "1,549 hover-to-learn mind map definitions to certification and beyond -- and presents strategic enhancements to "
+    "1,604 hover-to-learn mind map definitions to certification and beyond -- and presents strategic enhancements to "
     "make this model structurally uncopyable. The goal: ensure that even if a competitor replicates our calculators, "
     "they cannot replicate the <b>learning journey</b> that keeps users engaged, advancing, and loyal.",
     body_style
@@ -545,7 +545,7 @@ story.append(Spacer(1, 4))
 
 # Sources footnote
 story.append(Paragraph(
-    '<font name="DMSans" size="7.5" color="#7a7974">Sources: IntelliTC Solutions platform data (April 2026); '
+    '<font name="DMSans" size="7.5" color="#7a7974">Sources: IntelliTC Solutions platform data (May 2026); '
     'Market analysis by Precedence Research, Grand View Research, IMARC Group.</font>',
     footnote_style
 ))
@@ -577,7 +577,7 @@ threat_rows = [
     ["DealCheck", "MEDIUM", "Strong -- templates + offer calc",
      "Minimal -- no mind maps or structured learning", "Tool-focused; no progression or certification"],
     ["Future AI Entrants", "CRITICAL", "Potentially unlimited via AI",
-     "Could auto-generate tutorials but not 1,549 curated definitions", "Speed of AI replication threatens pure-calculator plays"],
+     "Could auto-generate tutorials but not 1,604 curated definitions", "Speed of AI replication threatens pure-calculator plays"],
 ]
 
 story.append(make_table(threat_headers, threat_rows,
@@ -648,7 +648,7 @@ story.append(Paragraph(
     "Each education layer reinforces the others. A user who completes Phase 0 (Zero Experience) naturally "
     "progresses to Phase 1 (Learn Mode), then Phase 2 (Mind Map Tooltips + Learning Paths), then Phase 3 "
     "(Scenario Labs), and finally Phase 4 (ICREA Certification). At each stage, the cost of switching increases "
-    "because the user has invested time, built skills, absorbed 1,549 concept definitions, and earned credentials "
+    "because the user has invested time, built skills, absorbed 1,604 concept definitions, and earned credentials "
     "that exist only within the IntelliTC ecosystem.",
     body_style
 ))
@@ -770,7 +770,7 @@ pipeline_rows = [
     ["Phase 1", "Learn Mode Toggle", "LIVE (All Calculators)",
      "First-time calculator users", "Field-level tooltips + examples"],
     ["Phase 2", "Learn Mode + Mind Map Tooltips", "LIVE",
-     "Contextual learners", "1,549 hover-to-learn definitions + 8 learning paths"],
+     "Contextual learners", "1,604 hover-to-learn definitions + 8 learning paths"],
     ["Phase 3", "12 Scenario Lab Exercises", "LIVE",
      "Practice-oriented users", "Real-world guided scenarios"],
     ["Phase 4", "ICREA Certification", "LIVE",
@@ -958,7 +958,7 @@ story.append(Paragraph("Phase 2: Learn Mode + Mind Map Tooltips", h1_style))
 story.append(teal_divider())
 
 story.append(Paragraph(
-    '<font color="#7a7974">Status: LIVE  |  58 mind maps  |  1,549 definitions  |  8 learning paths</font>',
+    '<font color="#7a7974">Status: LIVE  |  58 mind maps  |  1,604 definitions  |  8 learning paths</font>',
     caption_style
 ))
 
@@ -989,7 +989,7 @@ story.append(Spacer(1, 6))
 
 story.append(make_kpi_row([
     ("Mind Maps Deployed", "58", "#01696f"),
-    ("Total Definitions", "1,549", "#D19900"),
+    ("Total Definitions", "1,604", "#D19900"),
     ("Avg Definitions/Tool", "~27", "#01696f"),
     ("Competitor Coverage", "0", "#c0392b"),
 ]))
@@ -998,7 +998,7 @@ story.append(Spacer(1, 8))
 
 story.append(Paragraph("Mind Map Architecture", h3_style))
 
-story.append(make_bullet("<b>Coverage:</b> 58 mind maps, one per calculator tool, spanning 1,549 individual concept definitions"))
+story.append(make_bullet("<b>Coverage:</b> 58 mind maps, one per calculator tool, spanning 1,604 individual concept definitions"))
 story.append(make_bullet("<b>Interaction:</b> Hover (desktop) or tap (mobile) on any leaf concept to see its definition in a styled tooltip"))
 story.append(make_bullet("<b>Visual Design:</b> Teal-accented tooltip with header and body, consistent with the platform design system"))
 story.append(make_bullet("<b>Accessibility:</b> Full dark mode support, mobile-responsive, collapsible accordion in compact view"))
@@ -1237,7 +1237,7 @@ story.append(Spacer(1, 6))
 
 story.append(make_kpi_row([
     ("Mind Maps Deployed", "58", "#01696f"),
-    ("Total Definitions", "1,549", "#D19900"),
+    ("Total Definitions", "1,604", "#D19900"),
     ("Avg per Calculator", "~27", "#01696f"),
     ("Competitor Equivalent", "None", "#c0392b"),
 ]))
@@ -1259,7 +1259,7 @@ story.append(Spacer(1, 6))
 
 story.append(make_bullet("<b>Collapsible Tree Structure:</b> Mind maps render as expandable/collapsible trees within each calculator, "
     "showing the hierarchy of concepts from high-level strategy down to individual input fields"))
-story.append(make_bullet("<b>Hover-to-Learn Definitions:</b> 1,549 individual definitions across all 58 tools, each written in "
+story.append(make_bullet("<b>Hover-to-Learn Definitions:</b> 1,604 individual definitions across all 58 tools, each written in "
     "plain language with practical context for real estate investors"))
 story.append(make_bullet("<b>Visual Relationship Mapping:</b> Users see how inputs connect to outputs and how concepts relate "
     "to each other -- building mental models rather than memorizing isolated formulas"))
@@ -1276,13 +1276,13 @@ mm_strat_headers = ["Dimension", "Impact", "Competitive Gap"]
 mm_strat_rows = [
     ["Passive Learning", "Users learn terminology without leaving the calculator",
      "No competitor offers embedded concept definitions"],
-    ["Content Depth", "1,549 curated definitions -- each human-authored",
+    ["Content Depth", "1,604 curated definitions -- each human-authored",
      "AI could generate but not replicate curated quality"],
     ["Visual Comprehension", "Concept trees show how variables interrelate",
      "No competitor visualizes calculator relationships"],
     ["Education Pipeline", "Phase 2 integration creates seamless learning",
      "Competitors lack structured education entirely"],
-    ["Moat Reinforcement", "1,549 definitions = massive replication barrier",
+    ["Moat Reinforcement", "1,604 definitions = massive replication barrier",
      "Months of expert authoring to replicate"],
 ]
 
@@ -1503,6 +1503,128 @@ story.append(Paragraph(
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# SECTION 8.5: NEXT GEN CORNER -- HIGH SCHOOL & COLLEGE PIPELINE (NEW v15)
+# ═══════════════════════════════════════════════════════════════════════════
+story.append(PageBreak())
+story.append(Paragraph("NEW: Next Gen Corner Scaled to High Schools", h1_style))
+story.append(gold_divider())
+
+story.append(Paragraph(
+    "Next Gen Corner is IntelliTC's pre-college education hub -- a free, no-account-needed environment where "
+    "high school and early-college students can run real budgeting and homeownership scenarios that match the "
+    "math their teachers used to assign on whiteboards. The v15 release expands Next Gen Corner from a single "
+    "prototype into a four-scenario suite, adds a curated dataset of 100 U.S. metros and 50 entry-level "
+    "occupations, and ships a dedicated <b>For Teachers</b> landing page with downloadable lesson materials. "
+    "This positions IntelliTC at the very top of the funnel -- before users have a job, a budget, or a credit "
+    "score -- and creates a credible on-ramp into the larger ICREA pipeline.",
+    body_style
+))
+
+story.append(Spacer(1, 8))
+
+story.append(Paragraph("The Four Scenarios", h2_style))
+
+ngc_headers = ["#", "Scenario", "Core Question", "What Students Practice"]
+ngc_rows = [
+    ["A", "City Life", "Can I afford to move there?",
+     "Pick from 100 metros and 50 jobs; the tool computes federal + state + FICA take-home, layers on rent and cost-of-living, and renders a verdict (Strong / Workable / Razor thin / Doesn't balance)."],
+    ["B", "The Roommate Reality", "Does splitting rent actually save me?",
+     "Compare living solo vs. with one or more roommates; see how rent share, utilities, and household expenses scale with each additional person."],
+    ["C", "The Starter Home", "Can I buy instead of rent?",
+     "Run a first-time buyer scenario with down payment, mortgage, taxes, insurance, and PMI -- compared head-to-head against renting in the same metro."],
+    ["D", "The House-Hack", "Can the property pay for itself?",
+     "Buy a small multi-unit, live in one and rent the others; the tool quantifies how much rental income offsets PITI and what cash flow looks like at break-even."],
+]
+
+story.append(make_table(ngc_headers, ngc_rows,
+    col_widths=[18, 95, 110, 204]))
+
+story.append(Spacer(1, 8))
+
+story.append(Paragraph("Curated, Not Crowded", h2_style))
+story.append(Paragraph(
+    "Rather than expose hundreds of zip codes and thousands of BLS occupations, Next Gen Corner ships with a "
+    "deliberately curated dataset that maps to how teenagers actually think about adult life: <b>100 U.S. metros</b> "
+    "covering every state and most major regional centers, and <b>50 entry-level occupations</b> grouped by education "
+    "tier (high-school diploma, two-year degree, four-year degree, military pathway). Median rent, utilities, "
+    "groceries, transit, and healthcare auto-fill from the chosen city -- but every field is overridable so "
+    "students can plug in a real apartment listing or a real job offer when they have one.",
+    body_style
+))
+
+story.append(Spacer(1, 8))
+
+story.append(Paragraph("For Teachers Landing Page", h2_style))
+story.append(Paragraph(
+    "The new <b>/for-teachers/</b> page is modeled on the existing /schools/ B2B page and takes a deliberately "
+    "different tone: 100% free, no account needed, designed to drop into a single 50-minute class period. "
+    "It explains how the City Life scenario maps to standard personal-finance curriculum, walks through a "
+    "warm-up / live-walkthrough / individual-work / pair-share / exit-ticket pacing structure, and ships three "
+    "downloadable PDFs -- a full lesson plan, a 4-criterion grading rubric with a printable student worksheet, "
+    "and a standards-alignment document covering Virginia EPF.10-EPF.16 (graduation requirement), California "
+    "AB 2927, Texas TEKS, New York Economics framework, and Florida SB 1054, plus CCSS and Jump$tart "
+    "crosswalks. The page is linked from the homepage, About, Contact, and Next Gen Corner footers.",
+    body_style
+))
+
+story.append(Spacer(1, 6))
+
+story.append(Paragraph("Lesson Materials Shipped with v15", h3_style))
+teacher_headers = ["#", "Asset", "Purpose"]
+teacher_rows = [
+    ["1", "City Life Lesson Plan (PDF)",
+     "Single-class 50-min pacing guide with instructor script, slide prompts, and discussion questions; includes a 'Want to extend it?' multi-day variant covering roommate, comparison-of-cities, jobs-in-same-city, and post-grad housing-plan exercises."],
+    ["2", "Rubric & Student Worksheet (PDF)",
+     "Four-criterion grading rubric (math accuracy, budget realism, written reflection, and presentation) on page 1; printable student capture worksheet on page 2."],
+    ["3", "Standards Alignment (PDF)",
+     "Maps the City Life scenario to Virginia's EPF.10-EPF.16 personal finance graduation requirement plus the major personal-finance standards in CA, TX, NY, and FL, with CCSS and Jump$tart crosswalks."],
+]
+story.append(make_table(teacher_headers, teacher_rows,
+    col_widths=[18, 145, 264]))
+
+story.append(Spacer(1, 8))
+
+story.append(Paragraph("Strategic Value", h2_style))
+story.append(make_bullet("<b>Top-of-funnel acquisition:</b> Captures users 5-10 years before they would otherwise discover IntelliTC, when their financial habits are being formed."))
+story.append(make_bullet("<b>Teacher-to-classroom distribution:</b> One adopting teacher exposes 30-150 students per academic year at zero variable cost; standards alignment lowers the friction for adoption."))
+story.append(make_bullet("<b>State-mandate tailwind:</b> Virginia (EPF), California (AB 2927), Florida (SB 1054), and a growing list of other states have adopted or are adopting personal-finance graduation requirements -- IntelliTC is positioned to be the free, math-correct tool teachers reach for."))
+story.append(make_bullet("<b>Brand at the household level:</b> Students take home homework artifacts (the worksheet, the verdict explanation) that their parents see -- a soft inbound channel with no paid acquisition cost."))
+story.append(make_bullet("<b>Pipeline into ICREA:</b> Students who use Next Gen Corner in 11th-12th grade are pre-qualified leads for the Phase 1-4 pipeline (Learn Mode, Mind Map Tooltips, Scenario Lab, ICREA certification) once they enter the workforce."))
+
+story.append(Spacer(1, 8))
+
+story.append(Paragraph("Pipeline Position", h2_style))
+pipeline_headers = ["Stage", "User Persona", "IntelliTC Surface"]
+pipeline_rows = [
+    ["Pre-college", "High school / early college student",
+     "Next Gen Corner (4 scenarios) + /for-teachers/ classroom kit"],
+    ["New to investing", "Working adult, zero RE experience",
+     "Phase 0 'Start Here', Learn Mode, 11 PDF Guides"],
+    ["Early practitioner", "Adult running first deals",
+     "23 Benchmark Calculators with Mind Map tooltips, 12 Scenario Lab exercises"],
+    ["Aspiring professional", "Adult building a credential",
+     "ICREA / ACREA / SCREA Certification (Phase 4)"],
+    ["Industry-recognized expert", "Certified investor / agent",
+     "Advanced tools, embeddable widgets, white-label opportunities"],
+]
+story.append(make_table(pipeline_headers, pipeline_rows,
+    col_widths=[88, 130, 209]))
+
+story.append(Spacer(1, 8))
+
+story.append(teal_divider())
+story.append(Paragraph(
+    "Next Gen Corner closes the only remaining gap in the IntelliTC education pipeline: the years before "
+    "someone has a paycheck. By shipping curated content (100 metros, 50 jobs), correct math (federal + state "
+    "+ FICA take-home), and teacher-ready materials (lesson plan, rubric, standards alignment) at zero cost "
+    "to the school, IntelliTC becomes the default tool for the personal-finance graduation requirements that "
+    "a growing number of states now mandate. This is durable, low-CAC distribution that compounds with every "
+    "adopting classroom.",
+    body_style
+))
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # SECTION 9: STRATEGIC ENHANCEMENTS
 # ═══════════════════════════════════════════════════════════════════════════
 story.append(PageBreak())
@@ -1599,11 +1721,14 @@ story.append(Spacer(1, 10))
 story.append(teal_divider())
 story.append(Paragraph(
     "IntelliTC Solutions has built something genuinely rare in the real estate technology space: a platform "
-    "where education and computation are inseparable. The five-phase pipeline -- now reinforced with 1,549 "
-    "interactive mind map definitions, benchmark tags, inline validation, 11 PDF guides, and the capabilities "
-    "strip -- creates an ecosystem that teaches, practices, certifies, and retains users at every stage of "
-    "their investment journey. The strategic enhancements outlined above will transform this strong position "
-    "into an unassailable one.",
+    "where education and computation are inseparable -- now extended into the high school classroom. The "
+    "five-phase pipeline -- reinforced with 1,604 interactive mind map definitions, 54 professional "
+    "calculators, inline validation, 11 PDF guides, and the capabilities strip -- now sits underneath a "
+    "pre-college layer (4 Next Gen Corner scenarios, 100 curated metros, 50 entry-level jobs, and a turnkey "
+    "For Teachers classroom kit aligned to state graduation requirements). Together this creates an ecosystem "
+    "that teaches, practices, certifies, and retains users from age 16 through their entire real estate "
+    "investment career. The strategic enhancements outlined above will transform this strong position into "
+    "an unassailable one.",
     body_style
 ))
 
@@ -1612,7 +1737,7 @@ story.append(Spacer(1, 10))
 # Document end
 story.append(divider())
 story.append(Paragraph(
-    '<font color="#7a7974" size="8">End of Document  |  IntelliTC Solutions  |  April 2026  |  CONFIDENTIAL</font>',
+    '<font color="#7a7974" size="8">End of Document  |  IntelliTC Solutions  |  May 2026  |  v15  |  CONFIDENTIAL</font>',
     ParagraphStyle("EndDoc", parent=caption_style, alignment=TA_CENTER)
 ))
 
