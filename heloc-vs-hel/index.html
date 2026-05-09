@@ -19,6 +19,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/base.css">
 <link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
 <link rel="stylesheet" href="../shared/feedback.css">
 <style>
 .surprise-banner{
@@ -427,172 +429,53 @@
     <p>&copy; 2025 IntelliTC Solutions &mdash; Powered by Infinite Workz Ventures LLC</p>
   </footer>
 
-<script>
-const $ = id => document.getElementById(id);
-function num(id){ return Number(String($(id).value).replace(/[^0-9.\-]/g,''))||0; }
-function fmt$(n){ return '$' + Math.round(n).toLocaleString(); }
-function fmt$2(n){ return '$' + n.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0}); }
-function fmtPct(n){ return n.toFixed(2) + '%'; }
+<script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "homeValue": "<strong>Home Value</strong> &mdash; The current appraised market value of your home. Lenders set the new loan ceiling as a percentage of this number minus your existing mortgage.",
+    "mortgageBalance": "<strong>1st Mortgage Balance</strong> &mdash; What you still owe on your primary mortgage. Combined with the new loan, this drives your CLTV ratio.",
+    "lenderCltv": "<strong>Lender Max CLTV</strong> &mdash; The combined loan-to-value cap your lender will allow (most cap at 80&ndash;90%). Higher caps usually require stronger credit.",
+    "creditScore": "<strong>Credit Score</strong> &mdash; Your FICO score drives the rate you&rsquo;re offered. Tiers shift roughly every 40 points: 760+, 720+, 680+, 640+, 600+, below 600.",
+    "borrowAmount": "<strong>Borrow Amount</strong> &mdash; How much cash you actually want from this loan. The CLTV meter will flag if it pushes you past your lender&rsquo;s ceiling.",
+    "useCase": "<strong>Primary Use of Funds</strong> &mdash; Lump-sum, predictable uses (renovation, debt consolidation, business) favor the Home Equity Loan. Phased or uncertain uses (ongoing project, emergency fund, education) favor the HELOC.",
+    "incomeStability": "<strong>Income Stability</strong> &mdash; Stable W-2 income pairs naturally with a fixed Home Equity Loan payment. Variable or commission-based income often pairs better with a HELOC&rsquo;s flexible draw.",
+    "ratePref": "<strong>Rate Preference</strong> &mdash; Fixed rates lock in certainty (favors HEL). Variable rates often start lower but float (favors HELOC). &lsquo;No preference&rsquo; lets the use case and income decide.",
+    "termYears": "<strong>Repayment Term</strong> &mdash; The total years you&rsquo;ll pay off the balance. Longer terms lower the payment but raise total interest paid."
+  },
+  "examples": [
+    {"name":"Stable W-2, Renovation","desc":"$400K home, $240K mortgage, 720 score, $50K renovation, fixed rate, 15-year term","values":{"homeValue":"400,000","mortgageBalance":"240,000","lenderCltv":"85","creditScore":"720","borrowAmount":"50,000","termYears":"15"}},
+    {"name":"Variable Income, Phased Project","desc":"$500K home, $260K mortgage, 740 score, $75K phased project, variable preference, 20-year term","values":{"homeValue":"500,000","mortgageBalance":"260,000","lenderCltv":"85","creditScore":"740","borrowAmount":"75,000","termYears":"20"}},
+    {"name":"Bad-Credit Test","desc":"$350K home, $210K mortgage, 620 score, $30K debt consolidation, fixed, 10-year term","values":{"homeValue":"350,000","mortgageBalance":"210,000","lenderCltv":"80","creditScore":"620","borrowAmount":"30,000","termYears":"10"}}
+  ],
+  "whyThisMatters": {
+    "title": "Why Compare HELOC vs. Home Equity Loan?",
+    "purpose": "Both products tap home equity, but they behave very differently in payment structure, rate type, and total cost. Picking the wrong one can mean paying thousands more in interest or running out of flexibility right when you need it. This decision engine pressure-tests the choice using your home value, mortgage balance, credit score, intended use of funds, and income stability — then shows the side-by-side math and a CLTV check.",
+    "whenToUse": [
+      "When deciding how to fund a renovation, debt consolidation, education, or emergency reserve",
+      "When evaluating whether you have enough tappable equity at your lender's CLTV cap",
+      "When stress-testing affordability with a lower credit score or variable income",
+      "When comparing home equity products against alternatives like cash-out refinance, HEA, or personal loans"
+    ],
+    "keyInsight": "On a fully drawn balance held to maturity, HELs and HELOCs land close on total cost. The HELOC's economic edge appears when you don't draw the full line; the HEL's edge is rate certainty plus a fixed payoff date."
+  },
+  "kpiExplains": {
+    "cltvOut": "<strong>Combined Loan-to-Value</strong> &mdash; (Existing mortgage + new loan) ÷ home value. Most lenders cap this at 80&ndash;90%. Higher CLTV means stricter qualifying and higher rates.",
+    "hetPmt": "<strong>HEL Monthly Payment</strong> &mdash; Fully amortized fixed payment at the rate priced for your credit tier. Same number every month for the life of the loan.",
+    "hetTotal": "<strong>HEL Total Cost</strong> &mdash; Sum of all 180/240/360 payments. Compare this against the HELOC total to see the true economic difference.",
+    "helocPmtIO": "<strong>HELOC Interest-Only Payment</strong> &mdash; Monthly payment during the draw period if you've drawn the full balance. Variable; tracks prime + margin.",
+    "helocPmtAmort": "<strong>HELOC Amortized Payment</strong> &mdash; The fully amortized payment that kicks in when the draw period ends and the line converts to repayment.",
+    "helocTotal": "<strong>HELOC Total Cost (full draw)</strong> &mdash; Worst-case total assuming you draw the entire line and hold it to maturity. Real cost is lower if you draw less."
+  },
+  "coupled": [
+    {"name":"Home Equity Calculator","folder":"home-equity","reason":"Compute your tappable equity before deciding which product to use."},
+    {"name":"Refinance Analyzer","folder":"refinance","reason":"Compare a cash-out refinance as an alternative to a HEL or HELOC."},
+    {"name":"Debt Snowball / Consolidation","folder":"debt-payoff","reason":"If consolidation is the goal, model the payoff timeline first."}
+  ]
+};</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
 
-// Format currency-style inputs as user types
-['homeValue','mortgageBalance','borrowAmount'].forEach(id=>{
-  const el = $(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const raw = String(el.value).replace(/[^0-9]/g,'');
-    if(raw==='') return;
-    el.value = Number(raw).toLocaleString();
-  });
-});
-
-function rateForScore(score, isHeloc){
-  // Rough industry-typical pricing as of mid-2026 for educational comparison.
-  // HEL is fixed; HELOCs price off prime + margin.
-  // Rates expressed in percent.
-  let baseHel, baseHeloc;
-  if(score >= 760){ baseHel = 8.25; baseHeloc = 8.50; }
-  else if(score >= 720){ baseHel = 8.75; baseHeloc = 9.00; }
-  else if(score >= 680){ baseHel = 9.50; baseHeloc = 9.75; }
-  else if(score >= 640){ baseHel = 10.75; baseHeloc = 10.99; }
-  else if(score >= 600){ baseHel = 12.50; baseHeloc = 12.75; }
-  else { baseHel = 14.00; baseHeloc = 14.25; }
-  return isHeloc ? baseHeloc : baseHel;
-}
-
-function monthlyPmt(principal, annualRatePct, years){
-  const r = (annualRatePct/100) / 12;
-  const n = years * 12;
-  if(r === 0) return principal / n;
-  return principal * r / (1 - Math.pow(1+r, -n));
-}
-
-function showInputs(){
-  $('inputPanel').classList.remove('hidden');
-  $('resultsPanel').classList.add('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function runDecision(){
-  const homeValue = num('homeValue');
-  const mortBal = num('mortgageBalance');
-  const lenderCltv = num('lenderCltv');
-  const credit = num('creditScore');
-  const borrow = num('borrowAmount');
-  const useCase = $('useCase').value;
-  const stability = $('incomeStability').value;
-  const ratePref = $('ratePref').value;
-  const term = num('termYears');
-
-  if(homeValue <= 0 || borrow <= 0 || term <= 0){
-    alert('Please fill in home value, borrow amount, and term.');
-    return;
-  }
-
-  // CLTV check
-  const newCombinedDebt = mortBal + borrow;
-  const newCltvPct = (newCombinedDebt / homeValue) * 100;
-  $('cltvOut').textContent = fmtPct(newCltvPct) + ' (max ' + lenderCltv + '%)';
-  $('cltvFill').style.width = Math.min(100, newCltvPct) + '%';
-
-  const cltvStat = $('cltvStatus');
-  cltvStat.classList.remove('ok','warn','danger');
-  if(newCltvPct <= lenderCltv - 5){
-    cltvStat.classList.add('ok');
-    cltvStat.textContent = 'You\u2019re within the lender\u2019s CLTV cap with room to spare.';
-  } else if(newCltvPct <= lenderCltv){
-    cltvStat.classList.add('warn');
-    cltvStat.textContent = 'Tight \u2014 you\u2019re right at the lender\u2019s CLTV ceiling. Expect closer scrutiny.';
-  } else {
-    cltvStat.classList.add('danger');
-    cltvStat.textContent = 'You exceed the lender\u2019s max CLTV by ' + (newCltvPct - lenderCltv).toFixed(1) + ' pts. You\u2019ll need to borrow less, raise the home value, or find a higher-CLTV lender.';
-  }
-
-  // Rate pricing
-  const helRate = rateForScore(credit, false);
-  const helocRate = rateForScore(credit, true);
-
-  // Home Equity Loan math (fully amortized)
-  const helPmt = monthlyPmt(borrow, helRate, term);
-  const helTotalPaid = helPmt * term * 12;
-  const helInterest = helTotalPaid - borrow;
-
-  $('hetRate').textContent = fmtPct(helRate);
-  $('hetPmt').textContent = fmt$(helPmt) + '/mo';
-  $('hetInterest').textContent = fmt$(helInterest);
-  $('hetTotal').textContent = fmt$(helTotalPaid);
-
-  // HELOC math: 10-year draw period interest-only on full balance + 20-year repayment OR user-chosen term split.
-  // Educational simplification: assume full draw is taken out (worst case for cost), 5-year I/O draw + (term-5) repayment.
-  const drawYears = Math.min(5, Math.max(1, Math.floor(term/3)));
-  const repayYears = term - drawYears;
-  const helocIOpmt = borrow * (helocRate/100) / 12;
-  const helocAmortPmt = repayYears > 0 ? monthlyPmt(borrow, helocRate, repayYears) : 0;
-  const helocTotalPaid = helocIOpmt * drawYears * 12 + helocAmortPmt * repayYears * 12;
-
-  $('helocRate').textContent = fmtPct(helocRate) + ' (variable)';
-  $('helocPmtIO').textContent = fmt$(helocIOpmt) + '/mo';
-  $('helocPmtAmort').textContent = fmt$(helocAmortPmt) + '/mo';
-  $('helocTotal').textContent = fmt$(helocTotalPaid) + ' (full draw)';
-
-  // Verdict logic: score each path
-  let helocScore = 0, helScore = 0;
-
-  // Use case
-  if(['ongoing','emergency','unknown','education'].includes(useCase)) helocScore += 3;
-  if(['renovation','debt-consol','business'].includes(useCase)) helScore += 3;
-
-  // Income stability
-  if(stability === 'stable') helScore += 2;
-  else helocScore += 2;
-
-  // Rate preference
-  if(ratePref === 'fixed') helScore += 2;
-  else if(ratePref === 'variable') helocScore += 2;
-
-  // Total cost
-  if(helTotalPaid < helocTotalPaid) helScore += 1;
-  else helocScore += 1;
-
-  let banner, bannerClass;
-  $('hetRec').classList.add('hidden');
-  $('helocRec').classList.add('hidden');
-  $('hetCard').classList.remove('recommended');
-  $('helocCard').classList.remove('recommended');
-
-  if(newCltvPct > lenderCltv){
-    banner = '<strong>Neither path works at this borrow amount.</strong> Your post-loan CLTV of ' + newCltvPct.toFixed(1) + '% exceeds the ' + lenderCltv + '% lender cap. Reduce the borrow amount to about ' + fmt$(homeValue * (lenderCltv/100) - mortBal) + ' or shop for a higher-CLTV lender.';
-    bannerClass = 'verdict-tie';
-  } else if(helScore > helocScore){
-    banner = 'Based on your inputs, a <strong>Home Equity Loan</strong> is the better fit. You know exactly how much you need, your income is stable, and a fixed rate gives you a predictable payoff. Estimated cost: ' + fmt$(helTotalPaid) + ' total over ' + term + ' years at ' + fmtPct(helRate) + '.';
-    bannerClass = 'verdict-hel';
-    $('hetRec').classList.remove('hidden');
-    $('hetCard').classList.add('recommended');
-  } else if(helocScore > helScore){
-    banner = 'Based on your inputs, a <strong>HELOC</strong> is the better fit. Your need is variable or your income is uneven, and the flexibility of drawing only what you use will likely save you money. Pay attention to the variable rate &mdash; budget as if it could rise 1&ndash;2 points.';
-    bannerClass = 'verdict-heloc';
-    $('helocRec').classList.remove('hidden');
-    $('helocCard').classList.add('recommended');
-  } else {
-    banner = 'It\u2019s essentially a <strong>toss-up</strong>. Both products score evenly on your inputs. Default to the Home Equity Loan if you value certainty; choose the HELOC if you value flexibility.';
-    bannerClass = 'verdict-tie';
-  }
-
-  const v = $('verdictBanner');
-  v.className = 'verdict-banner ' + bannerClass;
-  v.innerHTML = banner;
-
-  // Bad credit callout
-  if(credit < 670){
-    $('badCreditCallout').classList.remove('hidden');
-  } else {
-    $('badCreditCallout').classList.add('hidden');
-  }
-
-  $('inputPanel').classList.add('hidden');
-  $('resultsPanel').classList.remove('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-</script>
 <script src="../shared/feedback.js"></script>
 </body>
 </html>
