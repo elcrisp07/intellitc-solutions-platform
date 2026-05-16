@@ -243,33 +243,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="app.js"></script>
-<script>window.LEARN_DATA = {
-  "tooltips": {},
-  "examples": [],
-  "whyThisMatters": {
-    "title": "Why Use the RE Investment Analyzer?",
-    "purpose": "A streamlined investment analysis tool focused on key metrics that matter most — IRR, equity multiple, and cash-on-cash return. Designed for quick deal evaluation and comparison.",
-    "whenToUse": [
-      "For quick deal screening before doing a full investment analysis",
-      "To compare multiple deals side by side using standardized metrics",
-      "When you need a fast answer: is this deal worth pursuing?"
-    ],
-    "keyInsight": "Speed matters in competitive markets. This analyzer gives you the critical metrics in minutes, not hours. Use it to screen deals quickly, then do a deep-dive with the full Investment Analysis calculator on the winners."
-  },
-  "kpiExplains": {},
-  "coupled": [
-    {
-      "name": "Investment Analysis",
-      "folder": "investment-analysis",
-      "reason": "Full analysis once a deal passes initial screening"
-    },
-    {
-      "name": "Deal Grading",
-      "folder": "deal-grading",
-      "reason": "Score the deal across multiple dimensions"
-    }
-  ]
-};</script>
+<script>window.LEARN_DATA = {"tooltips": {"propertyAddress": "<strong>Property Address</strong> — The street address of the investment property. Used for reference and documentation purposes. Entering the actual address makes it easy to share or save the analysis for a specific deal.", "purchasePrice": "<strong>Purchase Price</strong> — The total price you're paying to acquire the property, including the contract price. This is the foundation for calculating your loan amount, equity position, and return metrics.", "downPaymentPct": "<strong>Down Payment (%)</strong> — The percentage of the purchase price you're paying in cash upfront. Investment property loans typically require 20-25% down. A higher down payment reduces your monthly payment and mortgage insurance but reduces your cash-on-cash return.", "interestRate": "<strong>Interest Rate</strong> — The annual interest rate on your mortgage. Even a 0.5% difference in rate has a meaningful impact on monthly cash flow over a 30-year loan. Shop multiple lenders — rate shopping for investment properties is worth the effort.", "loanTerm": "<strong>Loan Term</strong> — Number of years to repay the mortgage, typically 15 or 30. A 30-year term maximizes cash flow; a 15-year term builds equity faster. Most rental investors use 30-year terms to maximize monthly cash flow.", "closingCosts": "<strong>Closing Costs</strong> — All costs to close the purchase beyond the down payment: lender fees, title insurance, escrow fees, prepaid insurance, and property tax reserves. Typically 2-5% of purchase price for investment properties. This is part of your total cash invested.", "grossRent": "<strong>Gross Monthly Rent</strong> — The total rental income the property generates when fully occupied. Use current market rents for the area — not just what a current tenant is paying, especially on a below-market lease.", "vacancyRate": "<strong>Vacancy Rate (%)</strong> — The percentage of time the property is expected to be vacant on an annualized basis. A standard assumption is 5-8% for single-family and small multifamily in stable markets. Higher in seasonal or high-turnover markets.", "taxesYear": "<strong>Annual Property Taxes</strong> — The yearly property tax bill. Verify this with the county assessor — taxes can reassess significantly after a sale, especially in states that reassess at purchase price.", "insuranceYear": "<strong>Annual Insurance</strong> — The annual cost of your landlord insurance policy. Landlord policies typically cost 15-25% more than standard homeowner policies because they cover rental-specific risks like loss of rent.", "maintenancePct": "<strong>Maintenance (%)</strong> — Annual maintenance and repair costs as a percentage of gross rent. A common rule of thumb is 5-10% of rent for stable properties; older properties or those in harsh climates may need 10-15%.", "managementPct": "<strong>Property Management (%)</strong> — If using a property manager, their fee as a percentage of collected rent. Typically 8-12% for single-family; 6-8% for multifamily. Even self-managing investors should model this cost as a sanity check."}, "examples": [], "whyThisMatters": {"title": "Why Use the RE Investment Analyzer?", "purpose": "The RE Investment Analyzer evaluates a rental property's financial performance — calculating monthly cash flow, cap rate, cash-on-cash return, and other key metrics. It's for anyone considering a rental property purchase who wants a complete financial picture before making an offer.", "whenToUse": ["When evaluating a property listed on the MLS or off-market to quickly see whether it meets your return thresholds.", "When comparing two or more rental properties to objectively determine which one makes the better investment.", "Before making an offer — knowing your maximum acceptable purchase price based on target returns gives you a disciplined negotiating ceiling."], "keyInsight": "Rental property returns are highly sensitive to the vacancy rate and maintenance assumptions, yet investors routinely underestimate both. Running the analysis with conservative inputs (8% vacancy, 10% maintenance) reveals whether a deal has real margin — or just looks good on paper.", "proTip": "Back into the maximum purchase price by working from your target cash-on-cash return — this tells you exactly what you can afford to pay and keeps you disciplined when a seller won't negotiate."}, "kpiExplains": {}, "coupled": [{"name": "Cashflow Calculator", "folder": "cashflow", "reason": "Run a more detailed cash flow analysis with additional expense line items after getting a quick read from the RE Investment Analyzer."}, {"name": "DSCR Loan", "folder": "dscr-loan", "reason": "If financing with a DSCR loan (which qualifies based on property income, not your personal income), check whether the property's NOI meets lender requirements."}, {"name": "Sensitivity Grid", "folder": "sensitivity-grid", "reason": "Stress-test the investment across different purchase prices and rent levels to understand the range of possible outcomes."}, {"name": "Portfolio Manager", "folder": "portfolio-manager", "reason": "After acquiring, add this property to your portfolio dashboard to track how it contributes to your overall returns."}]};</script>
 <script src="mindmap-data.js"></script>
 <script src="../shared/mindmap.js"></script>
 <script src="../shared/learn-mode.js"></script>

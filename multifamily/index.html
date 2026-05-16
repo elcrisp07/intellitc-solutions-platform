@@ -271,54 +271,7 @@
   <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../about/index.html">About</a> &bull; <a href="../contact/index.html">Contact</a> &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
 </footer>
   <script src="./app.js"></script>
-<script>window.LEARN_DATA = {
-  "tooltips": {},
-  "examples": [
-    {
-      "name": "4-Unit Starter",
-      "desc": "First multifamily purchase — FHA-eligible, live in one unit",
-      "values": {}
-    },
-    {
-      "name": "8-Unit Value Add",
-      "desc": "Under-rented building with potential for rent increases after renovation",
-      "values": {}
-    },
-    {
-      "name": "16-Unit Apartment",
-      "desc": "Small apartment complex — crosses into commercial lending territory",
-      "values": {}
-    }
-  ],
-  "whyThisMatters": {
-    "title": "Why a Dedicated Multi-Family Calculator?",
-    "purpose": "Multi-family properties (2-20+ units) are valued based on income, not comparable sales. This calculator uses the income approach — the same method commercial appraisers and banks use to determine what a multi-family building is worth.",
-    "whenToUse": [
-      "When evaluating apartment buildings or multi-unit properties",
-      "To determine the value increase from raising rents or reducing expenses",
-      "When structuring an offer based on cap rate and NOI analysis"
-    ],
-    "keyInsight": "In multi-family, you create value by increasing NOI. Raising rents $50/unit across 10 units at a 7% cap rate increases the building's value by $85,714. That's forced appreciation — you control it."
-  },
-  "kpiExplains": {},
-  "coupled": [
-    {
-      "name": "Cap Rate",
-      "folder": "caprate",
-      "reason": "Cap rate is the primary valuation metric for multi-family"
-    },
-    {
-      "name": "Cash Flow",
-      "folder": "cashflow",
-      "reason": "Break down the per-unit cash flow picture"
-    },
-    {
-      "name": "DSCR Loan",
-      "folder": "dscr-loan",
-      "reason": "Multi-family loans are typically underwritten using DSCR"
-    }
-  ]
-};</script>
+<script>window.LEARN_DATA = {"tooltips": {"propertyAddress": "<strong>Property Address</strong> — Enter the property's street address for reference labeling. Does not affect any calculations.", "units": "<strong>Number of Units</strong> — Total count of rentable residential units in the building (e.g., 4 for a fourplex, 24 for a 24-unit apartment). This multiplied by average rent gives your gross income.", "price": "<strong>Purchase Price</strong> — The contract price you'll pay to acquire the property, in dollars. This determines your equity stake, loan size, and cost basis for return calculations.", "dp": "<strong>Down Payment</strong> — The cash you're putting in at purchase, entered as a percentage of price (e.g., 25). Multifamily lenders typically require 20–25% down for investment properties.", "rate": "<strong>Interest Rate</strong> — Annual interest rate on the acquisition loan, as a percent (e.g., 7.0). Commercial and investment property rates are usually 0.5–1.5% higher than primary residence rates.", "term": "<strong>Loan Term</strong> — Repayment period for the mortgage in years (typically 25 or 30 for residential multifamily). Longer terms lower monthly payments and improve cash flow.", "avgRent": "<strong>Average Rent per Unit</strong> — Average monthly rent collected per unit, in dollars. If units vary significantly in size or rent, use a weighted average. This is the core income driver.", "otherInc": "<strong>Other Income</strong> — Monthly income beyond unit rents: laundry, parking, pet fees, storage rentals, or late fees. Often overlooked but can add meaningfully to NOI on larger properties.", "vacancy": "<strong>Vacancy Rate</strong> — Percentage of unit-months expected to be unoccupied annually (e.g., 5–8%). Accounts for turnover between tenants and units sitting empty. Reduces effective gross income.", "rentGrowth": "<strong>Annual Rent Growth</strong> — Expected year-over-year rent increase percentage (e.g., 2–4%). Drives income growth in the projection model. Check local market trends for a realistic figure.", "expRatio": "<strong>Operating Expense Ratio</strong> — Operating expenses as a percentage of effective gross income (e.g., 40–50%). Covers maintenance, taxes, insurance, management, utilities, and reserves. Higher ratios on older buildings.", "expGrowth": "<strong>Annual Expense Growth</strong> — Expected year-over-year increase in operating expenses, as a percent (e.g., 2–3%). Inflation and deferred maintenance tend to push expenses up faster than rents on aging stock.", "exitCap": "<strong>Exit Cap Rate</strong> — The cap rate you expect to sell at in the future, as a percent (e.g., 5.5). If your exit cap is higher than your purchase cap, the property value will have compressed — plan accordingly."}, "examples": [], "whyThisMatters": {"title": "Why Use the Multifamily Calculator?", "purpose": "This tool analyzes a multifamily investment's core financial metrics — NOI, cap rate, cash-on-cash return, and DSCR — to determine whether the property is a sound deal at the asking price.", "whenToUse": ["You're evaluating a 2–20 unit apartment purchase and want to quickly check if the numbers pencil.", "You received a broker's marketing package and want to stress-test their pro forma against realistic vacancy and expense assumptions.", "You're comparing two multifamily deals side by side to determine which offers better returns for your capital."], "keyInsight": "The most common underwriting mistake in multifamily is using the seller's expense ratio rather than a market-standard one. Sellers often report 30–35% expense ratios on properties that realistically run 45–55% when management, capex reserves, and vacancies are properly accounted for.", "proTip": "Always run both a 'seller's numbers' scenario and a 'conservative' scenario — the spread between them reveals hidden risk and gives you a negotiation anchor for price reductions."}, "kpiExplains": {"kpiNOI": "Net Operating Income — effective gross income minus operating expenses, before debt service. This is the property's earning power independent of how it's financed. A higher NOI = a more valuable property.", "kpiCapRate": "Capitalization Rate: NOI ÷ Purchase Price, shown as a percentage. Reflects the unlevered yield. Market cap rates vary by location and property class — compare to local comps to judge relative value.", "kpiCoC": "Cash-on-Cash Return: annual pre-tax cash flow (after debt service) ÷ total cash invested. Shows the actual yield on your out-of-pocket capital. Most investors target 6–10%+ for multifamily deals.", "kpiDSCR": "Debt Service Coverage Ratio: NOI ÷ annual debt service. Lenders require 1.20–1.25 minimum. A higher DSCR means the income comfortably covers the loan payment — lower ratios risk lender concern and tighter terms."}, "coupled": [{"name": "DSCR Loan", "folder": "dscr-loan", "reason": "Once you've confirmed the deal makes sense, use the DSCR calculator to verify you can qualify for financing based on the property's income."}, {"name": "Cash-on-Cash Breakdown", "folder": "cash-on-cash-breakdown", "reason": "Drill deeper into how your cash-on-cash return changes across different leverage levels and financing scenarios."}, {"name": "Sensitivity Grid", "folder": "sensitivity-grid", "reason": "Run a matrix of purchase price vs. cap rate to visualize how deal quality shifts under different market conditions."}]};</script>
 <script src="mindmap-data.js"></script>
 <script src="../shared/mindmap.js"></script>
 <script src="../shared/learn-mode.js"></script>

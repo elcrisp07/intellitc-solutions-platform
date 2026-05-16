@@ -242,38 +242,7 @@
   <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../about/index.html">About</a> &bull; <a href="../contact/index.html">Contact</a> &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
 </footer>
   <script src="./app.js"></script>
-<script>window.LEARN_DATA = {
-  "tooltips": {},
-  "examples": [],
-  "whyThisMatters": {
-    "title": "Why Use a Sensitivity Grid?",
-    "purpose": "Investment returns depend on assumptions — rent growth, appreciation, vacancy, rates. The Sensitivity Grid shows how your returns change across a RANGE of assumptions, revealing which variables matter most and where the deal breaks.",
-    "whenToUse": [
-      "When stress-testing a deal against multiple scenarios simultaneously",
-      "To identify the 'break-even' point for each key variable",
-      "When presenting risk analysis to partners or lenders — the grid tells the complete story"
-    ],
-    "keyInsight": "Most investors run one scenario and make a decision. The Sensitivity Grid runs dozens. If a deal is profitable across 80% of the scenarios, it's robust. If it only works in the best case, it's fragile. This tool shows you the difference."
-  },
-  "kpiExplains": {},
-  "coupled": [
-    {
-      "name": "Investment Analysis",
-      "folder": "investment-analysis",
-      "reason": "Run the base case, then stress-test it with the Sensitivity Grid"
-    },
-    {
-      "name": "Cash Flow",
-      "folder": "cashflow",
-      "reason": "Cash flow is the most common variable to stress-test"
-    },
-    {
-      "name": "Deal Grading",
-      "folder": "deal-grading",
-      "reason": "The sensitivity analysis feeds into overall deal quality assessment"
-    }
-  ]
-};</script>
+<script>window.LEARN_DATA = {"tooltips": {"price": "<strong>Purchase Price</strong> — The base-case purchase price for the property. The sensitivity grid will vary one or two inputs around this base to show how outcomes change. Enter your most likely price scenario.", "dp": "<strong>Down Payment</strong> — Base-case down payment in dollars. This determines your starting loan balance and cash invested — the denominator in cash-on-cash and other return calculations.", "rate": "<strong>Interest Rate</strong> — Base-case annual mortgage interest rate. Rate is one of the most popular sensitivity variables because even small changes (0.25–0.5%) meaningfully shift monthly cash flow and returns.", "term": "<strong>Loan Term</strong> — Base-case loan term in years. Usually 30 for most investment analyses. Adjust only if you are specifically modeling shorter amortization strategies.", "rent": "<strong>Monthly Rent</strong> — Base-case gross monthly rent. Rent is typically the most impactful variable in a rental sensitivity analysis — a $100/month variation can shift annual cash flow by $1,200.", "var1": "<strong>Variable 1</strong> — The first axis of your sensitivity grid. Select which input to vary (e.g. rent, purchase price, or interest rate) and the range to test. The grid will display results across this variable's values going left to right.", "var2": "<strong>Variable 2</strong> — The second axis of your sensitivity grid. Select a second input to vary independently. The grid displays every combination of Variable 1 and Variable 2, giving you a full matrix of outcomes.", "opex": "<strong>Operating Expenses</strong> — Base-case annual operating costs as a percentage of gross rent. This includes property management, taxes, insurance, maintenance, and vacancy. Typical range: 40–55%.", "vac": "<strong>Vacancy Rate</strong> — Base-case vacancy percentage. Along with rent, vacancy is one of the most important sensitivity inputs because it directly reduces effective gross income. Enter as a percentage.", "appRate": "<strong>Appreciation Rate</strong> — Base-case annual property appreciation percentage. Used when the output metric includes equity or total return. Even conservative appreciation (3%/yr) dramatically improves long-term IRR.", "metric": "<strong>Output Metric</strong> — Choose what the grid displays in each cell: cash-on-cash return, monthly cash flow, cap rate, or another metric. Pick the KPI most relevant to your investment decision."}, "examples": [], "whyThisMatters": {"title": "Why Use the Sensitivity Grid?", "purpose": "This tool generates a two-dimensional table showing how your chosen return metric changes as two key variables shift simultaneously. It is designed for investors who want to understand the range of possible outcomes — not just the single base-case number — before committing to a deal.", "whenToUse": ["You are uncertain about future rent levels or interest rates and want to map out best-case, base-case, and worst-case returns in one view.", "You are negotiating on price and want to show a seller or partner the return at multiple price points vs. multiple rent scenarios.", "You are presenting a deal to an investor and want to demonstrate that positive returns persist across a wide range of market conditions."], "keyInsight": "Most deals look good in the base case — the sensitivity grid reveals whether your investment thesis holds up under stress. A deal that generates positive cash flow even in the bottom-left corner of the grid (worst price AND worst rent) has genuine margin of safety.", "proTip": "Use rent and interest rate as your two variables first — these are the inputs investors have the least control over and the most uncertainty about."}, "kpiExplains": {"kpiBest": "The best-case outcome in the grid: the highest return metric value achieved across all variable combinations tested. Represents the upside scenario if both variables move in your favor.", "kpiBase": "The return metric at your base-case inputs — the center or most likely scenario. This is the number you would use in a standard analysis. The grid shows how far reality can deviate from this.", "kpiWorst": "The worst-case outcome: the lowest return metric value across all variable combinations. If this is still acceptable (e.g. cash flow is still positive), the deal has strong downside protection.", "kpiRange": "The difference between the best-case and worst-case outcomes. A wide range means the investment is highly sensitive to assumption changes and carries more risk. A narrow range means returns are relatively stable across different scenarios."}, "coupled": [{"name": "Rental Analysis", "folder": "rental-analysis", "reason": "Run your base-case rental analysis first, then feed those inputs into the sensitivity grid to stress-test the deal."}, {"name": "Land Development", "folder": "land-development", "reason": "Development deals benefit enormously from sensitivity grids — model sale price vs. construction cost to find your profit floor."}, {"name": "Deal Grading", "folder": "deal-grading", "reason": "After running the sensitivity grid, score the deal using the deal grading tool to get a composite quality rating."}, {"name": "Cash Flow", "folder": "cashflow", "reason": "Plug your sensitivity-tested assumptions into a detailed cash flow projection for lender or partner presentation."}]};</script>
 <script src="mindmap-data.js"></script>
 <script src="../shared/mindmap.js"></script>
 <script src="../shared/learn-mode.js"></script>
