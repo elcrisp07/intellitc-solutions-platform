@@ -1711,7 +1711,74 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 .faq-item .faq-body p { margin: 0 0 var(--space-2); }
 .faq-item .faq-body a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
 .faq-item .faq-body a:hover { text-decoration: underline; }
+
+/* ═══════ SCROLL-FOCUS DIM ═══════ */
+.focus-section {
+  transition: opacity .55s ease, transform .55s ease, filter .55s ease;
+  opacity: 0.45;
+  transform: scale(0.985);
+  filter: saturate(.85);
+  will-change: opacity, transform;
+}
+.focus-section.is-focused {
+  opacity: 1;
+  transform: scale(1);
+  filter: saturate(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .focus-section, .focus-section.is-focused { transition: none; transform: none; opacity: 1; filter: none; }
+}
+
+/* ═══════ SECTION BREATHING ROOM ═══════ */
+.hero { padding-top: 6rem; padding-bottom: 4.5rem; }
+.problem-strip { margin-top: 5rem; margin-bottom: 4rem; }
+.problem-strip .ps-row { margin-top: 3rem; gap: 1.75rem; }
+.role-entry { margin-top: 4rem; margin-bottom: 5rem; padding-top: 2rem; }
+.role-entry-heading { margin-bottom: 3rem; }
+section + div:has(> .consider-this-banner),
+div:has(> .consider-this-banner) { margin-top: 4.5rem !important; margin-bottom: 4rem !important; }
+div:has(> .gateway-btn) { margin-top: 0 !important; margin-bottom: 4.5rem !important; }
+.platform-caps { margin-top: 4rem; margin-bottom: 4.5rem; padding-top: 2rem; padding-bottom: 2rem; }
+.teaser-strip { margin-top: 5rem; margin-bottom: 5rem; }
+.faq-section { margin-top: 5rem; margin-bottom: 5rem; }
+.email-capture { margin-top: 4.5rem; margin-bottom: 5rem; padding: 3rem 2.5rem; }
+@media (max-width: 720px) {
+  .hero { padding-top: 3.5rem; padding-bottom: 3rem; }
+  .problem-strip { margin-top: 3.25rem; margin-bottom: 2.75rem; }
+  .role-entry { margin-top: 2.75rem; margin-bottom: 3.5rem; }
+  div:has(> .consider-this-banner) { margin-top: 3rem !important; margin-bottom: 2.75rem !important; }
+  div:has(> .gateway-btn) { margin-bottom: 3rem !important; }
+  .platform-caps { margin-top: 2.75rem; margin-bottom: 3rem; }
+  .teaser-strip, .faq-section, .email-capture { margin-top: 3.25rem; margin-bottom: 3.25rem; }
+}
 </style>
+<script>
+  // Scroll-focus: dim sections that aren't in the viewport center band.
+  document.addEventListener('DOMContentLoaded', function() {
+    var header = document.querySelector('header.two-tier-header');
+    var footer = document.querySelector('footer.footer');
+    if (!header || !footer) return;
+    var node = header.nextElementSibling;
+    var targets = [];
+    while (node && node !== footer) {
+      var cls = (node.className || '').toString();
+      var skip = /video-lightbox|sp-overlay|wz-overlay|spotlight/i.test(cls);
+      if (!skip && (node.offsetHeight > 40)) {
+        node.classList.add('focus-section');
+        targets.push(node);
+      }
+      node = node.nextElementSibling;
+    }
+    if (!('IntersectionObserver' in window)) { targets.forEach(function(t){t.classList.add('is-focused');}); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.intersectionRatio > 0.35) e.target.classList.add('is-focused');
+        else e.target.classList.remove('is-focused');
+      });
+    }, { rootMargin: '-25% 0px -25% 0px', threshold: [0, 0.35, 0.6, 1] });
+    targets.forEach(function(t) { io.observe(t); });
+  });
+</script>
 </head>
 <body>
 <header class="header two-tier-header">
