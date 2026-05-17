@@ -546,6 +546,14 @@
   margin-bottom: var(--space-4);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.hero-badge:hover {
+  background: var(--color-primary-dark, #014e52);
+  transform: translateY(-1px);
+  color: #fff;
+  text-decoration: none;
 }
 .hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
@@ -1740,23 +1748,9 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero">
-  <span class="hero-badge">54 Professional Calculators</span>
+  <a href="./calculators/index.html" class="hero-badge">54 Professional Calculators</a>
   <h1>Make Smarter Real Estate Decisions</h1>
   <p>Professional-grade analysis tools for every step of your real estate journey — whether you're buying your first home or managing a portfolio.</p>
-  <a href="./goal-pilot/index.html" class="hero-wizard-trigger" style="text-decoration:none">
-    <span class="wizard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-    <span class="wizard-label">
-      <span class="wizard-label-title">Goal Pilot — What's Your Goal?</span>
-      <span class="wizard-label-sub">Describe your goal, get a step-by-step tool chain</span>
-    </span>
-  </a>
-  <button class="hero-wizard-trigger" id="heroWizardBtn" onclick="openWizard()" style="border-color:var(--color-border)">
-    <span class="wizard-icon" style="background:var(--color-surface-offset);color:var(--color-text-muted)"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-    <span class="wizard-label">
-      <span class="wizard-label-title">Not Sure Where to Start?</span>
-      <span class="wizard-label-sub">Find the right tools for you</span>
-    </span>
-  </button>
   <button class="hero-video-trigger" onclick="openVideoLightbox()">
     <span class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></span>
     <span class="play-label">
@@ -1780,9 +1774,9 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 
 <!-- ═══════ PROBLEM STATEMENT ═══════ -->
 <section class="problem-strip" aria-labelledby="ps-heading">
-  <span class="ps-eyebrow">Why this exists</span>
-  <h2 id="ps-heading">Real estate is the largest financial decision most people will ever make &mdash; and most of those decisions still get made on <em>gut and back‑of‑the‑napkin math</em>.</h2>
-  <p style="max-width:720px;margin:0 auto;color:var(--color-text-muted);font-size:var(--text-base);line-height:1.6">IntelliTC closes that gap with professional‑grade analysis, plain‑language guidance, and structured learning &mdash; designed to serve every age group and every experience level on the same platform.</p>
+  <h2 id="ps-heading" style="font-weight:700">Why use IntelliTC Solutions?</h2>
+  <p style="max-width:760px;margin:0 auto 1em;color:var(--color-text);font-size:var(--text-base);line-height:1.65">Real estate is the largest financial decision most people will ever make — and most of those decisions still get made on gut and back‑of‑the‑napkin math.</p>
+  <p style="max-width:760px;margin:0 auto;color:var(--color-text);font-size:var(--text-base);line-height:1.65">IntelliTC closes that gap with plain‑language guidance, and structured learning — designed to serve every age group and every experience level on the same platform.</p>
   <div class="ps-row">
     <div class="ps-stat">
       <span class="ps-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l3-6 3 3 4-8 5 9 3-2"/></svg></span>
@@ -2383,7 +2377,7 @@ document.addEventListener('keydown', function(e) {
       '</div>' +
       '<div class="wz-footer">' +
         '<span></span>' +
-        '<button class="wz-skip" onclick="closeWizard()">Skip — see all tools</button>' +
+        '<a class="wz-skip" href="./calculators/index.html">Skip — see all tools</a>' +
       '</div>';
   }
 
@@ -2409,7 +2403,7 @@ document.addEventListener('keydown', function(e) {
       '</div>' +
       '<div class="wz-footer">' +
         '<button class="wz-btn-back" onclick="wz_back()">Back</button>' +
-        '<button class="wz-skip" onclick="closeWizard()">Skip — see all tools</button>' +
+        '<a class="wz-skip" href="./calculators/index.html">Skip — see all tools</a>' +
       '</div>';
   }
 
