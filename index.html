@@ -1718,16 +1718,16 @@ button[data-theme-toggle]:hover { color: var(--color-primary); }
 
 /* ═══════ SCROLL-FOCUS DIM ═══════ */
 .focus-section {
-  transition: opacity .55s ease, transform .55s ease, filter .55s ease;
-  opacity: 0.45;
-  transform: scale(0.985);
-  filter: saturate(.85);
-  will-change: opacity, transform;
+  transition: opacity .6s ease, transform .6s ease, filter .6s ease;
+  opacity: 0.25;
+  transform: scale(0.97);
+  filter: saturate(.55) blur(.5px);
+  will-change: opacity, transform, filter;
 }
 .focus-section.is-focused {
   opacity: 1;
-  transform: scale(1);
-  filter: saturate(1);
+  transform: scale(1.015);
+  filter: saturate(1) blur(0);
 }
 @media (prefers-reduced-motion: reduce) {
   .focus-section, .focus-section.is-focused { transition: none; transform: none; opacity: 1; filter: none; }
