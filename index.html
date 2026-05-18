@@ -1776,10 +1776,17 @@ div:has(> .gateway-btn) { margin-top: 0 !important; margin-bottom: 4.5rem !impor
     if (!('IntersectionObserver' in window)) { targets.forEach(function(t){t.classList.add('is-focused');}); return; }
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.intersectionRatio > 0.35) e.target.classList.add('is-focused');
-        else e.target.classList.remove('is-focused');
+        // Tall mobile sections rarely cross 0.35 of their own area, so also light
+        // up when the section covers a meaningful share of the central band.
+        var bandH = (e.rootBounds && e.rootBounds.height) || window.innerHeight * 0.5;
+        var bandCoverage = bandH > 0 ? e.intersectionRect.height / bandH : 0;
+        if (bandCoverage > 0.45 || e.intersectionRatio > 0.35) {
+          e.target.classList.add('is-focused');
+        } else {
+          e.target.classList.remove('is-focused');
+        }
       });
-    }, { rootMargin: '-25% 0px -25% 0px', threshold: [0, 0.35, 0.6, 1] });
+    }, { rootMargin: '-25% 0px -25% 0px', threshold: [0, 0.1, 0.2, 0.35, 0.6, 1] });
     targets.forEach(function(t) { io.observe(t); });
   });
 </script>
