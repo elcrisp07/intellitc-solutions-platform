@@ -181,6 +181,30 @@
 }
 .disclaimer-box p { font-size:var(--text-xs); color:var(--color-text-muted); line-height:1.6; margin:0; }
 
+/* ── Hidden Gem Card (Late-Career Tax Diagnostic) ── */
+.sc-gem-section { max-width:var(--content-default); margin:0 auto; padding:0 var(--space-6) var(--space-10); }
+.sc-gem-heading { font-size:var(--text-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-primary); margin:0 0 var(--space-3); display:flex; align-items:center; gap:var(--space-2); }
+.sc-gem-card {
+  display:block; text-decoration:none;
+  padding:var(--space-6);
+  border-radius:var(--radius-xl);
+  border:2px dashed var(--color-primary);
+  background:linear-gradient(135deg, #d4eeef, #f5e6b8);
+  cursor:pointer; transition:border-style .2s, background .2s, transform .15s;
+}
+.sc-gem-card:hover { border-style:solid; background:linear-gradient(135deg, #b8e2e4, #f0d88f); transform:translateY(-2px); }
+.sc-gem-row { display:flex; align-items:flex-start; gap:var(--space-4); }
+.sc-gem-icon { font-size:2rem; flex-shrink:0; animation:gemPulse 2s ease-in-out infinite; }
+@keyframes gemPulse { 0%, 100% { transform:scale(1); opacity:0.85; } 50% { transform:scale(1.12); opacity:1; } }
+.sc-gem-body { flex:1; }
+.sc-gem-title { font-size:var(--text-lg); font-weight:700; color:var(--color-primary); margin:0 0 var(--space-1); }
+.sc-gem-desc { font-size:var(--text-sm); color:var(--color-text); line-height:1.6; margin:0 0 var(--space-3); }
+.sc-gem-meta { font-size:var(--text-xs); color:var(--color-text-muted); margin:0 0 var(--space-3); }
+.sc-gem-cta { display:inline-flex; align-items:center; gap:var(--space-2); padding:var(--space-2) var(--space-4); background:var(--color-primary); color:#fff; border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:600; }
+[data-theme="dark"] .sc-gem-card { background:linear-gradient(135deg, rgba(1,105,111,.28), rgba(209,153,0,.22)); border-color:rgba(1,105,111,.6); }
+[data-theme="dark"] .sc-gem-card:hover { background:linear-gradient(135deg, rgba(1,105,111,.38), rgba(209,153,0,.32)); border-color:var(--color-primary); }
+[data-theme="dark"] .sc-gem-desc { color:var(--color-text); }
+
 /* ── IRS Source Links ── */
 .irs-sources { margin-top:var(--space-5); }
 .irs-sources h4 { font-size:var(--text-xs); font-weight:600; color:var(--color-text-muted); margin:0 0 var(--space-2); text-transform:uppercase; letter-spacing:0.05em; }
@@ -255,6 +279,25 @@
       <button class="sc-tool-btn primary" onclick="showCalc('heloc')">Open Checker →</button>
     </div>
   </div>
+</section>
+
+<!-- ── Hidden Gem: Late-Career Tax Diagnostic ── -->
+<section class="sc-gem-section" id="scGemSection">
+  <p class="sc-gem-heading">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l-3 6 9 12 9-12-3-6z"/><path d="M11 3h2"/><path d="M2 9h20"/></svg>
+    Hidden Gem
+  </p>
+  <a class="sc-gem-card" href="../late-career-tax-diagnostic/index.html">
+    <div class="sc-gem-row">
+      <div class="sc-gem-icon">💎</div>
+      <div class="sc-gem-body">
+        <h3 class="sc-gem-title">Late-Career Tax Diagnostic</h3>
+        <p class="sc-gem-desc">Quantify the hidden tax cost of working past 60. Three modes — <strong>Diagnose</strong> the Real Net Value of one more year, <strong>Optimize</strong> a gap-year Roth conversion ladder, and <strong>Time the Exit</strong> across 62 / 62-70 / 70+ stages. Built around the seven mechanisms most retirees never aggregate: the SS Tax Torpedo, IRMAA's 2-year lookback, lost Roth gap years, ACA pre-65 subsidy, the new Senior Bonus Deduction, the SECURE Act's mandatory Roth catch-up, and the wage trap itself.</p>
+        <p class="sc-gem-meta">Includes a tax-year selector (default 2026) and a clear values-current footer so the brackets, thresholds, and sunset rules don't mislead you in later years.</p>
+        <span class="sc-gem-cta">Open Diagnostic →</span>
+      </div>
+    </div>
+  </a>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -433,6 +476,7 @@ function showCalc(type) {
   document.getElementById('scHome').style.display = 'none';
   document.querySelector('.sc-video-wrap').style.display = 'none';
   document.getElementById('scToolCards').style.display = 'none';
+  var gem = document.getElementById('scGemSection'); if (gem) gem.style.display = 'none';
   document.getElementById('giftPanel').classList.remove('active');
   document.getElementById('helocPanel').classList.remove('active');
   if (type === 'gift') document.getElementById('giftPanel').classList.add('active');
@@ -443,6 +487,7 @@ function showHome() {
   document.getElementById('scHome').style.display = '';
   document.querySelector('.sc-video-wrap').style.display = '';
   document.getElementById('scToolCards').style.display = '';
+  var gem2 = document.getElementById('scGemSection'); if (gem2) gem2.style.display = '';
   document.getElementById('giftPanel').classList.remove('active');
   document.getElementById('helocPanel').classList.remove('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
