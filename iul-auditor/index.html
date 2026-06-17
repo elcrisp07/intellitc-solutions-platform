@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../assets/logo-192.png">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#01696f">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IUL Auditor — IntelliTC Solutions</title>
+<meta name="description" content="An educational diagnostic of an existing Indexed Universal Life policy. Surfaces structural flags in funding, index strategy, loan architecture, riders, and illustration sanity. Not financial advice.">
+<meta property="og:image" content="../assets/og-image.jpg">
+<meta property="og:title" content="IUL Auditor — IntelliTC Solutions">
+<meta property="og:description" content="Educational diagnostic for existing IUL policies. Code-review-style structural flags. Never recommends action.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IUL Auditor — IntelliTC Solutions">
+<meta name="twitter:description" content="Educational diagnostic for existing IUL policies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/style.css">
+<link rel="stylesheet" href="../shared/learn-mode.css">
+<link rel="stylesheet" href="../shared/mindmap.css">
+<link rel="stylesheet" href="../shared/progress-save.css">
+<link rel="stylesheet" href="../shared/share-link.css">
+<link rel="stylesheet" href="../shared/tooltips.css">
+<link rel="stylesheet" href="../shared/feedback.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* ─── Surprise Banner ─── */
+.surprise-banner{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-lg);margin-bottom:var(--space-4);background:linear-gradient(135deg,var(--color-primary-surface),rgba(209,153,0,.08));border:1px solid var(--color-primary);}
+.surprise-banner svg{flex-shrink:0;color:var(--color-primary);}
+.surprise-banner-text{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+.surprise-banner-text strong{color:var(--color-primary);font-weight:600;}
+
+/* ─── Top Disclaimer Banner ─── */
+.disc-banner{display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);margin-bottom:var(--space-4);background:rgba(181,64,51,.08);border-left:4px solid #b54033;}
+.disc-banner-icon{flex-shrink:0;color:#b54033;}
+.disc-banner-text{font-size:var(--text-xs);color:var(--color-text);line-height:1.45;}
+.disc-banner-text strong{color:#b54033;font-weight:700;}
+
+/* ─── Mode pill (single mode for parity) ─── */
+.mode-tabs{display:flex;gap:var(--space-2);margin:var(--space-4) 0 var(--space-5);border-bottom:1px solid var(--color-divider);flex-wrap:wrap;}
+.mode-tab{padding:var(--space-3) var(--space-4);border:none;background:none;cursor:pointer;font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);border-bottom:3px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;}
+.mode-tab.active{color:var(--color-primary);border-bottom-color:var(--color-primary);}
+.mode-tab-desc{font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-4);line-height:1.5;}
+
+/* ─── Scorecard ─── */
+.scorecard{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin:var(--space-5) 0;}
+@media(max-width:640px){.scorecard{grid-template-columns:1fr;}}
+.sc-card{padding:var(--space-4);border-radius:var(--radius-md);text-align:center;border:1px solid var(--color-divider);background:var(--color-surface);}
+.sc-card.sc-critical{border-color:#b54033;background:linear-gradient(135deg,var(--color-surface),rgba(181,64,51,.07));}
+.sc-card.sc-caution{border-color:#D19900;background:linear-gradient(135deg,var(--color-surface),rgba(209,153,0,.08));}
+.sc-card.sc-info{border-color:var(--color-primary);background:linear-gradient(135deg,var(--color-surface),var(--color-primary-surface));}
+.sc-num{font-family:'JetBrains Mono',monospace;font-size:var(--text-3xl);font-weight:700;display:block;margin-bottom:var(--space-1);}
+.sc-card.sc-critical .sc-num{color:#b54033;}
+.sc-card.sc-caution .sc-num{color:#D19900;}
+.sc-card.sc-info .sc-num{color:var(--color-primary);}
+.sc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted);}
+
+/* ─── Findings ─── */
+.findings-section{margin:var(--space-5) 0;}
+.findings-section h3{font-size:var(--text-lg);font-weight:700;color:var(--color-text);margin:0 0 var(--space-3);}
+.findings-section .findings-help{font-size:var(--text-xs);color:var(--color-text-muted);margin:0 0 var(--space-4);line-height:1.5;}
+.finding-card{padding:var(--space-4);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-md);margin-bottom:var(--space-3);border-left-width:4px;}
+.finding-card.finding-critical{border-left-color:#b54033;}
+.finding-card.finding-caution{border-left-color:#D19900;}
+.finding-card.finding-informational{border-left-color:var(--color-primary);}
+.finding-head{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-3);}
+.finding-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--radius-full);letter-spacing:.06em;color:#fff;}
+.finding-badge-critical{background:#b54033;}
+.finding-badge-caution{background:#D19900;}
+.finding-badge-informational{background:var(--color-primary);}
+.finding-id{font-family:'JetBrains Mono',monospace;font-size:var(--text-xs);color:var(--color-text-muted);font-weight:600;}
+.finding-topic{font-size:var(--text-xs);color:var(--color-text-muted);}
+.finding-card p{margin:0 0 var(--space-2);font-size:var(--text-sm);color:var(--color-text);line-height:1.55;}
+.finding-card p:last-child{margin-bottom:0;}
+.finding-card .finding-consult{color:var(--color-text-muted);font-style:italic;border-top:1px dashed var(--color-divider);padding-top:var(--space-3);margin-top:var(--space-3);}
+.finding-empty{padding:var(--space-5);text-align:center;color:var(--color-text-muted);background:var(--color-surface-2);border-radius:var(--radius-md);font-size:var(--text-sm);line-height:1.55;}
+
+/* ─── Bench Callout ─── */
+.bench-callout{background:var(--color-surface);border-left:4px solid var(--color-primary);border-radius:var(--radius-md);padding:var(--space-4);margin:var(--space-4) 0;}
+.bench-callout h4{margin:0 0 var(--space-2);font-size:var(--text-sm);font-weight:700;color:var(--color-primary);}
+.bench-callout p{margin:0;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;}
+
+/* ─── Pair-With ─── */
+.pair-with{margin:var(--space-6) 0;padding:var(--space-5);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-lg);}
+.pair-with h3{font-size:var(--text-sm);font-weight:700;color:var(--color-primary);margin:0 0 var(--space-3);text-transform:uppercase;letter-spacing:.05em;}
+.pair-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);}
+@media(max-width:900px){.pair-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.pair-grid{grid-template-columns:1fr;}}
+.pair-card{padding:var(--space-3) var(--space-4);background:var(--color-surface-2);border:1px solid var(--color-divider);border-radius:var(--radius-md);text-decoration:none;color:var(--color-text);transition:border-color .15s,transform .15s;}
+.pair-card:hover{border-color:var(--color-primary);transform:translateY(-1px);}
+.pair-card-title{font-size:var(--text-sm);font-weight:700;color:var(--color-text);margin:0 0 var(--space-1);}
+.pair-card-desc{font-size:11px;color:var(--color-text-muted);line-height:1.4;margin:0;}
+
+/* ─── Mechanism Explainer (Learn Mode only) ─── */
+.me-explainer{display:none;margin:var(--space-6) 0;padding:var(--space-6);background:var(--color-surface-2);border:1px solid var(--color-primary);border-radius:var(--radius-lg);animation:learnFadeIn 300ms ease-out;}
+.learn-active .me-explainer{display:block;}
+.me-title{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-4);}
+.me-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4);}
+@media(max-width:768px){.me-grid{grid-template-columns:1fr;}}
+.me-card{padding:var(--space-4);background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-divider);}
+.me-card h4{font-size:var(--text-sm);font-weight:700;margin:0 0 var(--space-1);color:var(--color-text);}
+.me-card .me-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:var(--radius-full);margin-bottom:var(--space-2);background:rgba(1,105,111,.12);color:var(--color-primary);}
+.me-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;margin:0;}
+.me-source{font-size:11px;color:var(--color-text-muted);line-height:1.5;margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--color-divider);}
+
+/* ─── Values Footer ─── */
+.values-footer{margin-top:var(--space-6);padding:var(--space-4);background:var(--color-surface-2);border:1px dashed var(--color-divider);border-radius:var(--radius-md);font-size:11px;color:var(--color-text-muted);line-height:1.5;text-align:center;}
+.values-footer strong{color:var(--color-text);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IUL Auditor",
+  "description": "Educational diagnostic for existing Indexed Universal Life policies. Surfaces structural flags in funding, index strategy, loan architecture, riders, and illustration sanity. Not financial advice.",
+  "url": "https://intellitcsolutions.com/iul-auditor/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "creator": {"@type": "Organization", "name": "IntelliTC Solutions", "url": "https://intellitcsolutions.com"},
+  "isPartOf": {"@type": "WebSite", "name": "IntelliTC Solutions", "url": "https://intellitcsolutions.com"}
+}
+</script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5XCCZMN4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M5XCCZMN4F');
+</script>
+</head>
+<body>
+  <header class="header two-tier-header">
+  <div class="header-top">
+    <a href="../index.html" class="logo" style="text-decoration:none">
+      <img src="../assets/logo.jpg" alt="IntelliTC Solutions" width="32" height="32" style="border-radius:var(--radius-sm)">
+      <span class="logo-text">Intelli<span class="logo-accent">TC</span></span>
+    </a>
+    <div class="header-top-right">
+      <a href="../zero-experience/index.html" class="hdr-primary-link">Start Here</a>
+      <a href="../goal-pilot/index.html" class="hdr-primary-link">Goal Pilot</a>
+      <a href="../index.html" class="btn-home" aria-label="Go to homepage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <button data-theme-toggle aria-label="Switch theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="header-subnav">
+    <a href="../get-started/index.html">Your Role?</a>
+    <a href="../workflows/index.html">Workflows</a>
+    <a href="../learning-paths/index.html">Learn</a>
+    <a href="../scenario-lab/index.html">Scenario Lab</a>
+    <a href="../seniors-corner/index.html">Senior's Corner</a>
+    <a href="../next-gen-corner/index.html">Next Gen Corner</a>
+    <a href="../certification/index.html">Certificate</a>
+    <a href="../guides/index.html">Guides</a>
+    <a href="../calculators/index.html">All Calculators</a>
+  </nav>
+</header>
+  <main class="main">
+    <section class="panel input-panel" id="inputPanel">
+
+      <!-- Surprise / Hidden Gem Banner -->
+      <div class="surprise-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <span class="surprise-banner-text"><strong>You found it.</strong> This hidden educational tool reads the structure of an existing IUL policy &mdash; funding, index strategy, loan architecture, illustration math, and rider coverage &mdash; and surfaces structural flags in code-review style. It is a starting point for a conversation with a licensed advisor, not a substitute for one.</span>
+      </div>
+
+      <!-- Top Disclaimer Banner -->
+      <div class="disc-banner">
+        <svg class="disc-banner-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="disc-banner-text"><strong>Educational diagnostic only.</strong> Not financial, tax, insurance, or legal advice. Outputs reflect industry norms for the policy type entered and are not a recommendation to act on any existing contract. Always consult a licensed insurance professional.</span>
+      </div>
+
+      <h1 class="panel-title">IUL Auditor</h1>
+      <p class="panel-subtitle">A code-review of an existing Indexed Universal Life policy. Enter the structural parameters from your in-force illustration or annual statement &mdash; the Auditor reports structural flags against IUL norms, never recommends action.</p>
+
+      <!-- Mode pill (single-mode for parity with platform pattern) -->
+      <div class="mode-tabs" role="tablist">
+        <button class="mode-tab active" data-mode="audit" role="tab" aria-selected="true">Audit</button>
+      </div>
+      <p class="mode-tab-desc"><strong>Audit:</strong> the tool checks 25 structural rules across MEC proximity, funding split, DB option fit, index strategy mechanics, loan structure, illustration sanity (AG-49A), surrender liquidity, and rider coverage &mdash; and projects four cash-value paths to test lapse resistance.</p>
+
+      <div class="divider"></div>
+
+      <div class="params-grid">
+
+        <div class="param-group">
+          <h3 class="param-group-title">Insured Profile</h3>
+          <div class="field">
+            <label for="currentAge">Current Age</label>
+            <div class="input-with-unit"><input type="text" id="currentAge" value="58" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+          <div class="field">
+            <label for="issueAge">Policy Issue Age</label>
+            <div class="input-with-unit"><input type="text" id="issueAge" value="50" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+          <div class="field">
+            <label for="yearsInForce">Years In-Force</label>
+            <div class="input-with-unit"><input type="text" id="yearsInForce" value="8" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+          <div class="field">
+            <label for="rateClass">Rate Class</label>
+            <select id="rateClass">
+              <option value="prefplus">Preferred Plus</option>
+              <option value="preferred" selected>Preferred</option>
+              <option value="standardnt">Standard Non-Tobacco</option>
+              <option value="standard">Standard</option>
+              <option value="prefsmoker">Preferred Smoker</option>
+              <option value="stdsmoker">Standard Smoker</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="retirementAge">Stated Retirement Age</label>
+            <div class="input-with-unit"><input type="text" id="retirementAge" value="67" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Policy Structure</h3>
+          <div class="field">
+            <label for="faceAmount">Face Amount</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="faceAmount" value="500,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="dbOption">Death Benefit Option</label>
+            <select id="dbOption">
+              <option value="A" selected>Option A (Level)</option>
+              <option value="B">Option B (Increasing)</option>
+              <option value="C">Option C (Return of Premium)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="intent">Policy Intent</label>
+            <select id="intent">
+              <option value="accumulation" selected>Accumulation</option>
+              <option value="protection">Protection</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="carrier">Carrier (optional)</label>
+            <select id="carrier">
+              <option value="" selected>— Not Listed / Prefer Not to Specify —</option>
+              <option value="nlg">National Life Group</option>
+              <option value="pennmutual">Penn Mutual</option>
+              <option value="allianz">Allianz</option>
+              <option value="fg">F&amp;G</option>
+              <option value="nationwide">Nationwide</option>
+              <option value="symetra">Symetra</option>
+              <option value="other">Other</option>
+            </select>
+            <p class="field-note" style="font-size:11px;color:var(--color-text-muted);margin-top:4px;">Selection does not constitute endorsement. Used only for known-quirk flagging where applicable.</p>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Funding</h3>
+          <div class="field">
+            <label for="annualPremium">Planned Annual Premium</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="annualPremium" value="15,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="basePremium">Base Premium (portion)</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="basePremium" value="11,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="puaPremium">PUA Rider Premium (portion)</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="puaPremium" value="4,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="premiumsPaid">Premiums Paid To Date</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="premiumsPaid" value="120,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="sevenPayLimit">7-Pay Limit (from illustration)</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="sevenPayLimit" value="22,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="targetPremium">Target Premium (from illustration)</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="targetPremium" value="8,500" inputmode="numeric" data-currency></div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Index Strategy (Primary)</h3>
+          <div class="field">
+            <label for="indexType">Strategy Type</label>
+            <select id="indexType">
+              <option value="capped" selected>Capped (e.g. S&amp;P 500 with cap)</option>
+              <option value="uncapped">Uncapped w/ Spread</option>
+              <option value="volcontrol">Volatility-Controlled Index</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cap">Cap Rate</label>
+            <div class="input-with-unit"><input type="text" id="cap" value="9" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="floor">Floor</label>
+            <div class="input-with-unit"><input type="text" id="floor" value="0" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="participation">Participation Rate</label>
+            <div class="input-with-unit"><input type="text" id="participation" value="100" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="spread">Spread</label>
+            <div class="input-with-unit"><input type="text" id="spread" value="0" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="illustratedRate">Illustrated Crediting Rate</label>
+            <div class="input-with-unit"><input type="text" id="illustratedRate" value="6.0" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Current Values</h3>
+          <div class="field">
+            <label for="currentCV">Current Cash Value</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="currentCV" value="85,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="currentSV">Current Cash Surrender Value</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="currentSV" value="62,000" inputmode="numeric" data-currency></div>
+          </div>
+          <div class="field">
+            <label for="surrenderYearsLeft">Surrender Charge Years Remaining</label>
+            <div class="input-with-unit"><input type="text" id="surrenderYearsLeft" value="7" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+          <div class="field">
+            <label for="loanBalance">Current Loan Balance</label>
+            <div class="input-with-unit"><span class="unit">$</span><input type="text" id="loanBalance" value="0" inputmode="numeric" data-currency></div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Loan Structure</h3>
+          <div class="field">
+            <label for="loanType">Loan Type</label>
+            <select id="loanType">
+              <option value="variable">Variable (Participating)</option>
+              <option value="fixed">Fixed</option>
+              <option value="wash" selected>Wash / Zero-Cost</option>
+              <option value="indexed">Indexed</option>
+              <option value="none">No Loan Provision</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="loanRate">Loan Interest Rate Charged</label>
+            <div class="input-with-unit"><input type="text" id="loanRate" value="5.0" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="loanCredit">Loan Crediting Rate (loaned CV)</label>
+            <div class="input-with-unit"><input type="text" id="loanCredit" value="5.0" inputmode="decimal"><span class="unit">%</span></div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <h3 class="param-group-title">Riders &amp; Provisions</h3>
+          <div class="field">
+            <label for="overloan">Overloan Protection Rider</label>
+            <select id="overloan">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="chronicLTC">Chronic Illness or LTC Rider</label>
+            <select id="chronicLTC">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="lifetimeIncome">Lifetime Income Benefit Rider</label>
+            <select id="lifetimeIncome">
+              <option value="no" selected>No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nlgYears">No-Lapse Guarantee Period</label>
+            <div class="input-with-unit"><input type="text" id="nlgYears" value="10" inputmode="numeric"><span class="unit">yrs</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Run Audit</button>
+    </section>
+
+    <section class="panel results-panel hidden" id="resultsPanel">
+      <div class="results-header">
+        <h2 class="panel-title" id="resultsTitle">IUL Auditor — Findings</h2>
+        <button class="btn btn-ghost" data-back>Modify Inputs</button>
+      </div>
+
+      <!-- Top disclaimer (persisted in results too) -->
+      <div class="disc-banner">
+        <svg class="disc-banner-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="disc-banner-text"><strong>Educational diagnostic only.</strong> The Auditor surfaces structural facts about the parameters you entered. It does not recommend that you surrender, exchange, replace, buy, or sell any policy. Every finding ends with a "consult a licensed advisor" line for that reason.</span>
+      </div>
+
+      <!-- Scorecard -->
+      <div class="scorecard" id="scorecard">
+        <div class="sc-card sc-critical">
+          <span class="sc-num" id="scCritical">0</span>
+          <span class="sc-label">Critical</span>
+        </div>
+        <div class="sc-card sc-caution">
+          <span class="sc-num" id="scCaution">0</span>
+          <span class="sc-label">Caution</span>
+        </div>
+        <div class="sc-card sc-info">
+          <span class="sc-num" id="scInfo">0</span>
+          <span class="sc-label">Informational</span>
+        </div>
+      </div>
+
+      <!-- Findings -->
+      <div class="findings-section">
+        <h3>Findings</h3>
+        <p class="findings-help">Each finding cites the measured value, the industry norm for the policy type entered, and why the gap matters &mdash; then defers to a licensed advisor for any action.</p>
+        <div id="findingsList"></div>
+      </div>
+
+      <!-- Lapse Stress Chart -->
+      <div class="chart-grid" style="grid-template-columns:1fr;">
+        <div class="chart-card">
+          <h3 class="chart-title">Lapse Stress &mdash; Four Crediting Scenarios</h3>
+          <p class="chart-subtitle">Cash value path from current age through age 95, under: illustrated rate, historical median (illustrated &times; 0.85 capped at 6%), floor only, and a sustained 0% credit. A scenario hitting zero before age 90 is a structural lapse risk.</p>
+          <div class="chart-container chart-container-bar" style="height:340px;">
+            <canvas id="chartLapse"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bench Callout -->
+      <div class="bench-callout">
+        <h4>The Honest Read</h4>
+        <p>The 25 structural checks in this tool reflect public IUL norms and regulatory guidelines &mdash; including IRC §7702 / §7702A (MEC, life-insurance qualification), NAIC Actuarial Guideline 49A (illustration limits), and standard accumulation-IUL design principles. The math here is illustrative, not a carrier in-force re-illustration. Bring the findings list, your in-force illustration, and your most recent annual statement to a licensed life insurance professional before changing any policy provision.</p>
+      </div>
+
+      <!-- Pair-With Companions -->
+      <div class="pair-with">
+        <h3>Pair With</h3>
+        <div class="pair-grid">
+          <a class="pair-card" href="../iul-portfolio/index.html">
+            <div class="pair-card-title">IUL Portfolio Analyzer</div>
+            <p class="pair-card-desc">Project how an IUL policy interacts with a real-estate portfolio. The Auditor diagnoses; this one projects.</p>
+          </a>
+          <a class="pair-card" href="../iul/index.html">
+            <div class="pair-card-title">IUL Projection</div>
+            <p class="pair-card-desc">Forward illustration of cash-value growth and tax-free loan income under your assumed crediting rate.</p>
+          </a>
+          <a class="pair-card" href="../late-career-tax-diagnostic/index.html">
+            <div class="pair-card-title">Late-Career Tax Diagnostic</div>
+            <p class="pair-card-desc">Quantify the hidden tax cost of working past 60 &mdash; the income environment IUL loans operate in.</p>
+          </a>
+          <a class="pair-card" href="../capital-gains/index.html">
+            <div class="pair-card-title">Capital Gains Impact</div>
+            <p class="pair-card-desc">Stress how a brokerage gain interacts with your retirement-income tax surface alongside IUL loans.</p>
+          </a>
+          <a class="pair-card" href="../home-equity/index.html">
+            <div class="pair-card-title">HELOC vs HEL vs HEA</div>
+            <p class="pair-card-desc">Compare non-MAGI home-equity income streams against tax-free IUL policy loans.</p>
+          </a>
+          <a class="pair-card" href="../seniors-corner/index.html">
+            <div class="pair-card-title">Senior's Corner Hub</div>
+            <p class="pair-card-desc">Gift Tax, HELOC, and LCTD diagnostics for the same household.</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mechanism Explainer (Learn Mode only) -->
+      <div class="me-explainer">
+        <div class="me-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Eight Lenses the Auditor Reads Your Policy Through
+        </div>
+
+        <div class="me-grid">
+          <div class="me-card">
+            <h4>1. MEC Proximity (IRC §7702A)</h4>
+            <span class="me-tag">7-pay test, 100% trigger</span>
+            <p>Cumulative premium versus the carrier's 7-pay limit. Crossing 100% creates a Modified Endowment Contract for life &mdash; loans and withdrawals become LIFO-taxed to the extent of gain.</p>
+          </div>
+          <div class="me-card">
+            <h4>2. Funding Split (Base vs PUA)</h4>
+            <span class="me-tag">40&ndash;60% PUA norm</span>
+            <p>Max-funded accumulation IULs typically route 40&ndash;60% of premium to the PUA rider. Sub-15% PUA on an accumulation policy is the classic commission-optimized footprint.</p>
+          </div>
+          <div class="me-card">
+            <h4>3. DB Option Fit</h4>
+            <span class="me-tag">Option A for accumulation</span>
+            <p>Option A (level) minimizes net-amount-at-risk and cost-of-insurance drag as cash value grows. Options B and C raise the COI drag &mdash; appropriate only when the policy intent is death benefit or premium recovery, not accumulation.</p>
+          </div>
+          <div class="me-card">
+            <h4>4. Index Strategy Mechanics</h4>
+            <span class="me-tag">Cap, floor, participation, spread</span>
+            <p>A "double-cap" (sub-100% participation combined with a sub-10% cap) layers two limits invisibly. A negative floor exposes principal to index losses. Spreads above 3% on uncapped strategies convert "uncapped" into an effective cap.</p>
+          </div>
+          <div class="me-card">
+            <h4>5. Loan Architecture</h4>
+            <span class="me-tag">Variable / Fixed / Wash</span>
+            <p>Variable loans amplify gains and losses on the loan portion. Wash loans (loan rate = crediting rate on loaned CV) zero out the spread. Loan-to-CV ratios above 50% without overloan protection are the classic IUL lapse setup.</p>
+          </div>
+          <div class="me-card">
+            <h4>6. Illustration Sanity (AG-49A)</h4>
+            <span class="me-tag">5.5&ndash;6.5% typical max</span>
+            <p>NAIC AG-49A caps the maximum crediting rate an illustration can show, based on the lookback math of the strategy. Illustrations above 7% &mdash; particularly on volatility-controlled indices &mdash; are either pre-2020 or non-compliant.</p>
+          </div>
+          <div class="me-card">
+            <h4>7. Surrender Liquidity</h4>
+            <span class="me-tag">10&ndash;15 year norm</span>
+            <p>Surrender charge schedules extending past the stated retirement income year create a liquidity mismatch &mdash; cash surrender value is materially less than reported cash value during this window.</p>
+          </div>
+          <div class="me-card">
+            <h4>8. Rider Coverage</h4>
+            <span class="me-tag">Overloan, LTC, NLG</span>
+            <p>Overloan protection is essential for any policy structured for tax-free retirement income via loans. Chronic illness / LTC accelerators are typically low- or no-cost and become inaccessible once age advances.</p>
+          </div>
+        </div>
+
+        <div class="bench-callout" style="margin:var(--space-4) 0 0;">
+          <h4>What the Auditor Does Not Do</h4>
+          <p>The Auditor does not recommend that you surrender, exchange, replace, buy, or sell any policy. It does not calculate agent commission. It does not model 1035 exchanges or premium financing. It does not constitute suitability analysis. Every finding ends with "Consult a licensed advisor about [specific topic]" for those reasons.</p>
+        </div>
+
+        <p class="me-source">Sources: IRC §7702 / §7702A (life insurance qualification, Modified Endowment Contract rules); NAIC Actuarial Guideline 49A (illustration limits, adopted 2020 with subsequent revisions); standard accumulation-IUL design literature; Society of Actuaries research on IUL crediting mechanics; ACLI guidance on overloan protection rider implementation.</p>
+      </div>
+
+      <!-- Values Footer -->
+      <div class="values-footer">
+        <strong>Values current as of June 2026.</strong> Rule thresholds and norms used in this Auditor include: 0% structural floor for principal-protected IUL strategies; 40&ndash;60% PUA share as the accumulation-IUL norm; 9&ndash;12% cap range as the 2026 vanilla S&amp;P 500 capped-strategy norm; AG-49A maximum illustrated rate of approximately 5.5&ndash;6.5% for vanilla capped strategies and lower for volatility-controlled designs; 50% loan-to-cash-value ratio as the classic without-overloan-protection lapse threshold. The Auditor is a structural starting point &mdash; not a carrier in-force re-illustration.
+      </div>
+
+    </section>
+  </main>
+  <footer class="footer">
+  <p>This calculator is for educational purposes only and does not constitute financial, legal, tax, or insurance advice.</p>
+  <p><img src="../assets/logo.jpg" alt="" width="20" height="20" style="display:inline-block;vertical-align:middle;border-radius:3px;margin-right:6px">&copy; IntelliTC Solutions &bull; <a href="../about/index.html">About</a> &bull; <a href="../contact/index.html">Contact</a> &bull; <a href="../terms/index.html">Terms of Service</a> &bull; <a href="../privacy/index.html">Privacy Policy</a> &bull; <a href="mailto:testimony@intellitcsolutions.com">Share Your Experience</a></p>
+</footer>
+  <script src="./app.js"></script>
+<script>window.LEARN_DATA = {
+  "tooltips": {
+    "currentAge": "<strong>Current Age</strong> &mdash; Drives surrender-period vs. retirement-age fit and rider-coverage timing checks.",
+    "issueAge": "<strong>Policy Issue Age</strong> &mdash; The age at which the policy was issued. Cost of insurance scales with issue age; lower issue ages compound favorably.",
+    "yearsInForce": "<strong>Years In-Force</strong> &mdash; How long the policy has been active. Surrender periods and loan-type conversion windows are typically time-based.",
+    "rateClass": "<strong>Rate Class</strong> &mdash; Underwriting class assigned at issue. Better classes have materially lower per-thousand cost of insurance.",
+    "retirementAge": "<strong>Stated Retirement Age</strong> &mdash; Drives the surrender-runoff vs. income-start sanity check (R-061).",
+    "faceAmount": "<strong>Face Amount</strong> &mdash; The death benefit base. Larger face = larger monthly COI drag on cash value.",
+    "dbOption": "<strong>Death Benefit Option</strong> &mdash; A: level. B: face + cash value. C: face + return of premium. Option A is the accumulation-IUL norm because it shrinks net-amount-at-risk and COI as CV grows.",
+    "intent": "<strong>Policy Intent</strong> &mdash; What the policy was sold to do. Many funding/structure rules only fire when the in-force structure is inconsistent with the stated intent.",
+    "carrier": "<strong>Carrier</strong> &mdash; Optional. Used only for known-quirk flagging where applicable. Selection does not constitute endorsement.",
+    "annualPremium": "<strong>Planned Annual Premium</strong> &mdash; Total premium scheduled per year. Drives MEC-proximity and underfunding flags.",
+    "basePremium": "<strong>Base Premium</strong> &mdash; Portion of annual premium paying the underlying base policy. Higher base = higher commission and higher COI drag.",
+    "puaPremium": "<strong>PUA Rider Premium</strong> &mdash; Paid-Up Additions rider portion. Most of each PUA dollar goes to cash value rather than charges. Accumulation IULs target 40&ndash;60% PUA.",
+    "premiumsPaid": "<strong>Premiums Paid To Date</strong> &mdash; Cumulative premiums since issue. Used against the 7-pay limit to flag MEC proximity / violation.",
+    "sevenPayLimit": "<strong>7-Pay Limit</strong> &mdash; The IRC §7702A annual cap on cumulative premium across any 7-year window. Exceeding it makes the policy a Modified Endowment Contract permanently.",
+    "targetPremium": "<strong>Target Premium</strong> &mdash; The carrier's stated target premium. The portion of base premium above target is commissionable but is generally more efficient when routed to PUA instead.",
+    "indexType": "<strong>Strategy Type</strong> &mdash; Capped (with cap, no spread), Uncapped (with spread, no cap), or Volatility-Controlled (custom index with target-volatility).",
+    "cap": "<strong>Cap Rate</strong> &mdash; Upper limit on credited interest in a given index period. 2026 vanilla S&amp;P 500 capped IUL strategies commonly land in the 9&ndash;12% range.",
+    "floor": "<strong>Floor</strong> &mdash; Lower limit on credited interest. 0% is the principal-protection norm. Below 0% exposes principal to index losses.",
+    "participation": "<strong>Participation Rate</strong> &mdash; Percentage of index gain applied before cap. 100% is standard. Below 100% combined with a cap creates a stacked limit (double-cap).",
+    "spread": "<strong>Spread</strong> &mdash; Fixed percentage subtracted from index return before crediting. Common on uncapped strategies. Above 3% materially reduces expected return.",
+    "illustratedRate": "<strong>Illustrated Crediting Rate</strong> &mdash; The forward crediting assumption used in the in-force illustration you are working from. AG-49A typically caps this in the 5.5&ndash;6.5% range for vanilla capped strategies.",
+    "currentCV": "<strong>Current Cash Value</strong> &mdash; Reported policy cash value at the most recent statement date. Used by the lapse projector as the starting balance.",
+    "currentSV": "<strong>Current Cash Surrender Value</strong> &mdash; Cash value minus surrender charges. Diverges from CV during the surrender period.",
+    "surrenderYearsLeft": "<strong>Surrender Charge Years Remaining</strong> &mdash; Years until the surrender schedule fully runs off. Drives the liquidity-mismatch flags (R-060, R-061).",
+    "loanBalance": "<strong>Current Loan Balance</strong> &mdash; Outstanding policy loan principal. Combined with cash value to flag lapse-risk ratios.",
+    "loanType": "<strong>Loan Type</strong> &mdash; Variable (Participating), Fixed, Wash/Zero-Cost, Indexed, or None. Wash loans are the most efficient for retirement income; variable loans carry the most uncertainty.",
+    "loanRate": "<strong>Loan Interest Rate Charged</strong> &mdash; Annual rate the carrier charges on the outstanding loan principal.",
+    "loanCredit": "<strong>Loan Crediting Rate</strong> &mdash; Rate credited to the loaned portion of cash value (for wash and some participating loans). Loan cost minus loan credit equals the policyholder\u2019s net loan spread.",
+    "overloan": "<strong>Overloan Protection Rider</strong> &mdash; Carrier provision that prevents loan-driven lapse and the associated tax recognition event. Essential for any policy structured for tax-free retirement income via loans.",
+    "chronicLTC": "<strong>Chronic Illness or LTC Rider</strong> &mdash; Accelerates a portion of the death benefit for chronic-illness or LTC events. Frequently no-cost on accumulation IULs when included at issue.",
+    "lifetimeIncome": "<strong>Lifetime Income Benefit Rider</strong> &mdash; Optional rider on some carriers guaranteeing a stated income amount regardless of cash value performance. Adds cost.",
+    "nlgYears": "<strong>No-Lapse Guarantee Period</strong> &mdash; Years during which carrier guarantees in-force status given minimum premium payment, regardless of CV performance."
+  },
+  "examples": [
+    {"name":"Well-Structured Accumulation IUL","desc":"58 yrs, max-funded, Option A, 0% floor, wash loan, overloan protection","values":{"currentAge":"58","issueAge":"50","yearsInForce":"8","rateClass":"preferred","retirementAge":"67","faceAmount":"500000","dbOption":"A","intent":"accumulation","annualPremium":"18000","basePremium":"7500","puaPremium":"10500","premiumsPaid":"144000","sevenPayLimit":"22000","targetPremium":"8500","indexType":"capped","cap":"10","floor":"0","participation":"100","spread":"0","illustratedRate":"6.0","currentCV":"118000","currentSV":"95000","surrenderYearsLeft":"7","loanBalance":"0","loanType":"wash","loanRate":"5.0","loanCredit":"5.0","overloan":"yes","chronicLTC":"yes","lifetimeIncome":"no","nlgYears":"10"}},
+    {"name":"Commission-Optimized Mis-Sell (multiple flags)","desc":"55 yrs, low PUA, sub-8% cap, variable loan, no overloan, accumulation intent","values":{"currentAge":"55","issueAge":"48","yearsInForce":"7","rateClass":"preferred","retirementAge":"65","faceAmount":"750000","dbOption":"B","intent":"accumulation","annualPremium":"12000","basePremium":"10500","puaPremium":"1500","premiumsPaid":"84000","sevenPayLimit":"19500","targetPremium":"9800","indexType":"capped","cap":"7","floor":"0","participation":"80","spread":"0","illustratedRate":"7.5","currentCV":"55000","currentSV":"31000","surrenderYearsLeft":"12","loanBalance":"30000","loanType":"variable","loanRate":"6.5","loanCredit":"4.0","overloan":"no","chronicLTC":"no","lifetimeIncome":"no","nlgYears":"5"}},
+    {"name":"Volatility-Controlled w/ Pre-AG-49A Illustration","desc":"62 yrs, vol-controlled index with cap, illustrated at 7.5%","values":{"currentAge":"62","issueAge":"55","yearsInForce":"7","rateClass":"prefplus","retirementAge":"67","faceAmount":"600000","dbOption":"A","intent":"accumulation","annualPremium":"20000","basePremium":"8500","puaPremium":"11500","premiumsPaid":"140000","sevenPayLimit":"25000","targetPremium":"10000","indexType":"volcontrol","cap":"75","floor":"0","participation":"100","spread":"0","illustratedRate":"7.5","currentCV":"135000","currentSV":"118000","surrenderYearsLeft":"6","loanBalance":"0","loanType":"wash","loanRate":"5.0","loanCredit":"5.0","overloan":"yes","chronicLTC":"yes","lifetimeIncome":"no","nlgYears":"8"}}
+  ],
+  "whyThisMatters": {
+    "title": "Why Audit an Existing IUL?",
+    "purpose": "Indexed Universal Life policies are routinely misstructured at the point of sale &mdash; not because the product is bad, but because commission structures reward base premium, target premium, and longer surrender schedules rather than the PUA-heavy, wash-loan, Option-A design that actually serves accumulation. The IUL Auditor reads the structural parameters of an existing policy and reports the structural facts against industry norms.",
+    "whenToUse": [
+      "When a policy was sold years ago and you have never had it independently reviewed",
+      "When you are about to start tax-free retirement income via policy loans and want to test lapse resistance",
+      "When the illustration shows a 7%+ crediting rate that feels optimistic versus current market",
+      "When a chronic-illness or LTC need is approaching and you are not sure what your rider coverage actually looks like"
+    ],
+    "keyInsight": "The Auditor never tells you what to do with a policy. It tells you what your policy is. The decision &mdash; restructure, leave alone, or any other action &mdash; is a licensed-suitability conversation, not a calculator output."
+  },
+  "kpiExplains": {
+    "scCritical": "<strong>Critical Findings</strong> &mdash; Structural issues that materially affect the contract\u2019s tax treatment, lapse resistance, or stated purpose. These warrant a near-term conversation with a licensed advisor.",
+    "scCaution": "<strong>Caution Findings</strong> &mdash; Meaningful drags on the policy\u2019s ability to meet its stated intent. Worth understanding and discussing.",
+    "scInfo": "<strong>Informational Findings</strong> &mdash; Structural notes a licensed advisor should know about during any review."
+  },
+  "coupled": [
+    {"name":"IUL Portfolio Analyzer","folder":"iul-portfolio","reason":"Project how an audited IUL interacts with a real-estate portfolio over time"},
+    {"name":"IUL Projection","folder":"iul","reason":"Forward illustration of cash-value growth and loan income under your assumed crediting rate"},
+    {"name":"Late-Career Tax Diagnostic","folder":"late-career-tax-diagnostic","reason":"Test the retirement-income environment where IUL loans are actually used"},
+    {"name":"Capital Gains Impact","folder":"capital-gains","reason":"Stress brokerage gain interactions with the same household\u2019s tax surface"},
+    {"name":"HELOC vs HEL vs HEA","folder":"home-equity","reason":"Compare non-MAGI home-equity income alternatives to IUL policy loans"}
+  ]
+};</script>
+<script src="mindmap-data.js"></script>
+<script src="../shared/mindmap.js"></script>
+<script src="../shared/learn-mode.js"></script>
+<script src="../shared/export.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('../sw.js').catch(() => {});
+  });
+}
+</script>
+<script src="../shared/recent-tracker.js"></script>
+<script src="../shared/progress-save.js"></script>
+<script src="../shared/share-link.js"></script>
+<script src="../shared/tooltips.js"></script>
+<script src="../shared/feedback.js"></script>
+</body>
+</html>
