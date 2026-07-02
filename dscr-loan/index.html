@@ -109,6 +109,16 @@
 .benchmarks { display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-2); }
 .bm-tag { font-size:10px; background:var(--color-surface-offset,var(--color-surface)); color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius-sm,4px); padding:2px var(--space-2,6px); cursor:pointer; transition:all .15s; user-select:none; }
 .bm-tag:hover { background:var(--color-primary-surface,rgba(1,105,111,.08)); border-color:var(--color-primary); color:var(--color-primary); }
+
+/* Hidden Gem card */
+.hidden-gem-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-decoration:none;padding:var(--space-5) var(--space-4);border-radius:var(--radius-lg);border:2px dashed var(--color-primary);background:linear-gradient(135deg,#d4eeef,#f5e6b8);cursor:pointer;transition:border-color .2s,background .2s,transform .15s;max-width:560px;margin:var(--space-4) 0 0 auto;}
+.hidden-gem-card:hover{border-style:solid;background:linear-gradient(135deg,#b8e2e4,#f0d88f);transform:translateY(-2px);}
+.hidden-gem-card .gem-icon{font-size:1.75rem;margin-bottom:var(--space-2);animation:gemPulse 2s ease-in-out infinite;}
+@keyframes gemPulse{0%,100%{transform:scale(1);opacity:.85;}50%{transform:scale(1.12);opacity:1;}}
+.hidden-gem-card .gem-label{font-size:var(--text-sm);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-1);}
+.hidden-gem-card .gem-sub{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.4;}
+[data-theme="dark"] .hidden-gem-card{background:linear-gradient(135deg,rgba(1,105,111,.28),rgba(209,153,0,.22));border-color:rgba(1,105,111,.6);}
+[data-theme="dark"] .hidden-gem-card:hover{background:linear-gradient(135deg,rgba(1,105,111,.38),rgba(209,153,0,.32));border-color:var(--color-primary);}
 </style>
 </head>
 <body>
@@ -195,6 +205,11 @@
 </div>
 </div>
 
+      <a href="../dscr-subto-sellerfin-analyzer/" class="hidden-gem-card" aria-label="DSCR/SubTo/SellerFin Analyzer hidden gem">
+        <div class="gem-icon">&#x1F48E;</div>
+        <div class="gem-label">DSCR/SubTo/SellerFin Analyzer</div>
+        <div class="gem-sub">Beyond DSCR &mdash; model a Sub-To or Seller Finance deal with a live Capital Stack Structurer. Zero-down feasibility, house-of-cards flags, exit refi proceeds. Educational only.</div>
+      </a>
       <button id="calcBtn" class="btn btn-primary btn-run" onclick="calculate()">Calculate</button>
     </section>
     <section class="panel results-panel hidden" id="resultsPanel">
