@@ -8,6 +8,56 @@
 (function () {
   'use strict';
 
+  // ─── Learn Mode payload (hoisted so shared/learn-mode.js sees it at parse time) ───
+  window.LEARN_DATA = {
+    tooltips: {
+      purchasePrice: '<strong>Purchase Price (PSA)</strong> — The contract price from the Purchase &amp; Sale Agreement. Anchors the entire capital stack. Every leg (existing lien, new loan, seller carry, buyer cash) must sum to this number.',
+      existingBal: '<strong>Existing Mortgage Balance</strong> — Payoff amount on the seller\u2019s current loan that will remain in place under Sub-To. Verify via a written payoff statement from the seller\u2019s servicer; do not rely on the seller\u2019s memory.',
+      existingRate: '<strong>Existing Mortgage Rate</strong> — Interest rate on the loan that stays in place. This is the primary reason Sub-To works: locking in a low legacy rate that would be unavailable today.',
+      existingRemainingTerm: '<strong>Existing Mortgage Remaining Term</strong> — Years remaining on the original amortization. Determines annual debt service and how quickly the buyer\u2019s equity grows from principal paydown.',
+      firstLoanAmt: '<strong>New 1st-Position Loan</strong> — A new institutional loan (DSCR, hard money, or seller-carry) sitting in first-lien position. In pure Sub-To, this is $0. In Seller Finance mode, this is typically the seller-carry amount. In Hybrid it is a stacked new loan.',
+      firstLoanLTVCap: '<strong>1st-Position LTV Cap</strong> — Maximum loan-to-value the lender will underwrite. DSCR lenders typically cap at 75–80% of purchase or ARV. Exceeding this cap is a structural non-starter.',
+      tfAmount: '<strong>Transactional Funding</strong> — Same-day bridge capital used to fund a wet-close A-B leg in a double-close creative-finance transaction. Repaid the same day from the B-C leg proceeds. Fee is a real cost of capital.',
+      tfFee: '<strong>Transactional Fee</strong> — The transactional lender\u2019s fee, typically 1.5–3% of face amount. Even at 2.5% on a $300K bridge, that\u2019s $7,500 out of the deal — factor it into buyer out-of-pocket.',
+      escrow: '<strong>Escrow / Reserves</strong> — Cash into escrow at closing for tax and insurance reserves, plus any seller catch-up (delinquent taxes, past-due HOA). Required by most title companies.',
+      buyerCC: '<strong>Buyer Closing Costs</strong> — All buyer-side closing costs: title insurance, recording fees, attorney, inspection, appraisal. Typical range: 1.5–3% of purchase price.',
+      thirdParty: '<strong>3rd-Party Fees</strong> — Appraisal, doc prep, notary, wire, courier. Small individually but sum to $1,500–$3,000 on most deals.',
+      sellerFinAmt: '<strong>Seller Financing Amount</strong> — Auto-calculated as Purchase Price minus (Existing Mortgage + New 1st + Transactional + Cash to Seller). This is the plug that balances the stack. If negative, the buyer is overfunded and needs to reduce sources.',
+      sellerNoteTerm: '<strong>Seller Note Term</strong> — Length of the seller-carry note in years. Longer terms lower monthly debt service but extend seller exposure to buyer default risk.',
+      sellerNoteRate: '<strong>Seller Note Interest Rate</strong> — Annual interest rate on the seller-carry note. Typical creative-finance rates: 5–8%. Higher rates protect seller against inflation; lower rates make deals feasible.',
+      sellerNoteAmort: '<strong>Seller Note Amortization</strong> — Interest-only (I/O) minimizes monthly payment; Amortized creates principal paydown; Balloon combines low monthly with a lump-sum payoff. Balloon structures require a refinance plan.',
+      balloonYear: '<strong>Balloon Year</strong> — Year the balloon payoff is due (only if amortization = Balloon). Must align with your realistic refinance timeline. A 3-year balloon in a rising-rate environment is high-risk.',
+      cashToSeller: '<strong>Cash to Seller at Close</strong> — Down payment paid to seller at closing. Reduces the seller carry (Leg 2). Sellers often demand $5K–$50K at close to cover their own moving costs and back taxes.',
+      grossRent: '<strong>Gross Monthly Rent</strong> — Total rental income at full occupancy. Use market rent for comparable properties, not seller\u2019s pro forma.',
+      occupancy: '<strong>Occupancy</strong> — Occupancy percentage (100 − vacancy). Typical: 92–95%. Conservative underwriting uses 90%.',
+      opexPct: '<strong>Operating Expenses</strong> — Total OpEx as a percentage of Effective Gross Income (EGI). Includes taxes, insurance, repairs, management, utilities, CapEx reserve. Class B/C rentals average 40–50%.',
+      exitMethod: '<strong>Exit Method</strong> — Residential exit uses comp-based ARV (typical for 1–4 unit). Commercial exit uses NOI ÷ cap rate (5+ units or commercial DSCR refinance).',
+      exitLTV: '<strong>Exit LTV Cap</strong> — LTV the exit lender will underwrite. Residential DSCR: 75%. Commercial: 65–70%. Conservative underwriting: 70%.',
+      exitCompPrice: '<strong>Exit Comp Sale Price</strong> — Projected residential comp sale value at exit year. Anchor to a specific ZIP-code comp set, not seller optimism.',
+      exitNOI: '<strong>Exit Year NOI</strong> — Stabilized NOI at exit (commercial only). Reflects post-improvement rent bumps and expense reductions.',
+      exitCapRate: '<strong>Exit Cap Rate</strong> — Market cap rate at exit (commercial only). Use current-year comps from CoStar, Crexi, or broker-of-record data. Cap rates expand in rising-rate environments.',
+    },
+    concepts: [
+      {
+        heading: 'Capital Stack (Leg 1 / Leg 2)',
+        body: 'Every creative-finance deal has a senior debt position (Leg 1) and often a junior debt position (Leg 2). In Sub-To, Leg 1 = existing lien. In Seller Finance, Leg 1 = new seller-carry note. Hybrid stacks both. The Capital Stack Structurer visualizes the flow so you can see whether it balances — sources of funds must equal uses of funds at the closing table.'
+      },
+      {
+        heading: 'DSCR (Debt Service Coverage Ratio)',
+        body: 'Net Operating Income divided by total annual debt service. A DSCR of 1.25x means NOI is 125% of debt service — the industry-standard institutional threshold. Below 1.0 means the property loses money every month. Between 1.0 and 1.25 means it survives but any lender refi will require improvement.'
+      },
+      {
+        heading: 'House of Cards Risk',
+        body: 'A structure is fragile when combined leverage exceeds property value, cash-flow is negative, or the buyer extracts excessive cash at close. If rents drop or a senior lien is called (due-on-sale), the entire stack can collapse. This tool flags fragile structures — it does not endorse them.'
+      },
+      {
+        heading: 'Due-on-Sale Risk (Sub-To)',
+        body: 'Most mortgages contain a due-on-sale clause allowing the lender to demand full payoff when title transfers. Sub-To relies on either (a) the lender not noticing the transfer, or (b) placing title in a land trust to avoid triggering. Educational note: this is not a legal opinion — consult a real estate attorney in your state.'
+      }
+    ],
+    source: 'Field definitions and structural thresholds from IntelliTC Solutions internal creative-finance canon (1,604-term glossary). Structural flags reference standard institutional DSCR underwriting thresholds and NAR/AAPL creative-finance guidelines.'
+  };
+
   // ─── State ─────────────────────────────────────────────────────
   let currentMode = 'subto'; // 'subto' | 'sellerfin' | 'hybrid'
 
@@ -618,55 +668,5 @@
     applyModeVisibility();
     applyExitVisibility();
     recalc();
-
-    // Learn Mode payload
-    window.LEARN_DATA = {
-      tooltips: {
-        purchasePrice: '<strong>Purchase Price (PSA)</strong> — The contract price from the Purchase &amp; Sale Agreement. Anchors the entire capital stack. Every leg (existing lien, new loan, seller carry, buyer cash) must sum to this number.',
-        existingBal: '<strong>Existing Mortgage Balance</strong> — Payoff amount on the seller\u2019s current loan that will remain in place under Sub-To. Verify via a written payoff statement from the seller\u2019s servicer; do not rely on the seller\u2019s memory.',
-        existingRate: '<strong>Existing Mortgage Rate</strong> — Interest rate on the loan that stays in place. This is the primary reason Sub-To works: locking in a low legacy rate that would be unavailable today.',
-        existingRemainingTerm: '<strong>Existing Mortgage Remaining Term</strong> — Years remaining on the original amortization. Determines annual debt service and how quickly the buyer\u2019s equity grows from principal paydown.',
-        firstLoanAmt: '<strong>New 1st-Position Loan</strong> — A new institutional loan (DSCR, hard money, or seller-carry) sitting in first-lien position. In pure Sub-To, this is $0. In Seller Finance mode, this is typically the seller-carry amount. In Hybrid it is a stacked new loan.',
-        firstLoanLTVCap: '<strong>1st-Position LTV Cap</strong> — Maximum loan-to-value the lender will underwrite. DSCR lenders typically cap at 75–80% of purchase or ARV. Exceeding this cap is a structural non-starter.',
-        tfAmount: '<strong>Transactional Funding</strong> — Same-day bridge capital used to fund a wet-close A-B leg in a double-close creative-finance transaction. Repaid the same day from the B-C leg proceeds. Fee is a real cost of capital.',
-        tfFee: '<strong>Transactional Fee</strong> — The transactional lender\u2019s fee, typically 1.5–3% of face amount. Even at 2.5% on a $300K bridge, that\u2019s $7,500 out of the deal — factor it into buyer out-of-pocket.',
-        escrow: '<strong>Escrow / Reserves</strong> — Cash into escrow at closing for tax and insurance reserves, plus any seller catch-up (delinquent taxes, past-due HOA). Required by most title companies.',
-        buyerCC: '<strong>Buyer Closing Costs</strong> — All buyer-side closing costs: title insurance, recording fees, attorney, inspection, appraisal. Typical range: 1.5–3% of purchase price.',
-        thirdParty: '<strong>3rd-Party Fees</strong> — Appraisal, doc prep, notary, wire, courier. Small individually but sum to $1,500–$3,000 on most deals.',
-        sellerFinAmt: '<strong>Seller Financing Amount</strong> — Auto-calculated as Purchase Price minus (Existing Mortgage + New 1st + Transactional + Cash to Seller). This is the plug that balances the stack. If negative, the buyer is overfunded and needs to reduce sources.',
-        sellerNoteTerm: '<strong>Seller Note Term</strong> — Length of the seller-carry note in years. Longer terms lower monthly debt service but extend seller exposure to buyer default risk.',
-        sellerNoteRate: '<strong>Seller Note Interest Rate</strong> — Annual interest rate on the seller-carry note. Typical creative-finance rates: 5–8%. Higher rates protect seller against inflation; lower rates make deals feasible.',
-        sellerNoteAmort: '<strong>Seller Note Amortization</strong> — Interest-only (I/O) minimizes monthly payment; Amortized creates principal paydown; Balloon combines low monthly with a lump-sum payoff. Balloon structures require a refinance plan.',
-        balloonYear: '<strong>Balloon Year</strong> — Year the balloon payoff is due (only if amortization = Balloon). Must align with your realistic refinance timeline. A 3-year balloon in a rising-rate environment is high-risk.',
-        cashToSeller: '<strong>Cash to Seller at Close</strong> — Down payment paid to seller at closing. Reduces the seller carry (Leg 2). Sellers often demand $5K–$50K at close to cover their own moving costs and back taxes.',
-        grossRent: '<strong>Gross Monthly Rent</strong> — Total rental income at full occupancy. Use market rent for comparable properties, not seller\u2019s pro forma.',
-        occupancy: '<strong>Occupancy</strong> — Occupancy percentage (100 − vacancy). Typical: 92–95%. Conservative underwriting uses 90%.',
-        opexPct: '<strong>Operating Expenses</strong> — Total OpEx as a percentage of Effective Gross Income (EGI). Includes taxes, insurance, repairs, management, utilities, CapEx reserve. Class B/C rentals average 40–50%.',
-        exitMethod: '<strong>Exit Method</strong> — Residential exit uses comp-based ARV (typical for 1–4 unit). Commercial exit uses NOI ÷ cap rate (5+ units or commercial DSCR refinance).',
-        exitLTV: '<strong>Exit LTV Cap</strong> — LTV the exit lender will underwrite. Residential DSCR: 75%. Commercial: 65–70%. Conservative underwriting: 70%.',
-        exitCompPrice: '<strong>Exit Comp Sale Price</strong> — Projected residential comp sale value at exit year. Anchor to a specific ZIP-code comp set, not seller optimism.',
-        exitNOI: '<strong>Exit Year NOI</strong> — Stabilized NOI at exit (commercial only). Reflects post-improvement rent bumps and expense reductions.',
-        exitCapRate: '<strong>Exit Cap Rate</strong> — Market cap rate at exit (commercial only). Use current-year comps from CoStar, Crexi, or broker-of-record data. Cap rates expand in rising-rate environments.',
-      },
-      concepts: [
-        {
-          heading: 'Capital Stack (Leg 1 / Leg 2)',
-          body: 'Every creative-finance deal has a senior debt position (Leg 1) and often a junior debt position (Leg 2). In Sub-To, Leg 1 = existing lien. In Seller Finance, Leg 1 = new seller-carry note. Hybrid stacks both. The Capital Stack Structurer visualizes the flow so you can see whether it balances — sources of funds must equal uses of funds at the closing table.'
-        },
-        {
-          heading: 'DSCR (Debt Service Coverage Ratio)',
-          body: 'Net Operating Income divided by total annual debt service. A DSCR of 1.25x means NOI is 125% of debt service — the industry-standard institutional threshold. Below 1.0 means the property loses money every month. Between 1.0 and 1.25 means it survives but any lender refi will require improvement.'
-        },
-        {
-          heading: 'House of Cards Risk',
-          body: 'A structure is fragile when combined leverage exceeds property value, cash-flow is negative, or the buyer extracts excessive cash at close. If rents drop or a senior lien is called (due-on-sale), the entire stack can collapse. This tool flags fragile structures — it does not endorse them.'
-        },
-        {
-          heading: 'Due-on-Sale Risk (Sub-To)',
-          body: 'Most mortgages contain a due-on-sale clause allowing the lender to demand full payoff when title transfers. Sub-To relies on either (a) the lender not noticing the transfer, or (b) placing title in a land trust to avoid triggering. Educational note: this is not a legal opinion — consult a real estate attorney in your state.'
-        }
-      ],
-      source: 'Field definitions and structural thresholds from IntelliTC Solutions internal creative-finance canon (1,604-term glossary). Structural flags reference standard institutional DSCR underwriting thresholds and NAR/AAPL creative-finance guidelines.'
-    };
   });
 })();
